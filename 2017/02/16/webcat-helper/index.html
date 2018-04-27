@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="微信," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="为什么要写这个？反正和微信相关开发，我是怕了。到现在都没有明白什么是公众号，什么是服务号，开放平台和公众平台有啥区别？官网文档有时候个别地址还404；由于自己没有公司账号权限，每次还要让他们运营扫码登录，烦的一笔；所以特别记录下，方便自己和大家查阅。有什么不对的，请qq我改正:wrench: 接口文档地址 公众平台 https://mp.weixin.qq.com 开放平台 https://op">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信开发指南">
+<meta property="og:url" content="http://yoursite.com/2017/02/16/webcat-helper/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="为什么要写这个？反正和微信相关开发，我是怕了。到现在都没有明白什么是公众号，什么是服务号，开放平台和公众平台有啥区别？官网文档有时候个别地址还404；由于自己没有公司账号权限，每次还要让他们运营扫码登录，烦的一笔；所以特别记录下，方便自己和大家查阅。有什么不对的，请qq我改正:wrench: 接口文档地址 公众平台 https://mp.weixin.qq.com 开放平台 https://op">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-27T15:54:22.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信开发指南">
+<meta name="twitter:description" content="为什么要写这个？反正和微信相关开发，我是怕了。到现在都没有明白什么是公众号，什么是服务号，开放平台和公众平台有啥区别？官网文档有时候个别地址还404；由于自己没有公司账号权限，每次还要让他们运营扫码登录，烦的一笔；所以特别记录下，方便自己和大家查阅。有什么不对的，请qq我改正:wrench: 接口文档地址 公众平台 https://mp.weixin.qq.com 开放平台 https://op">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/16/webcat-helper/"/>
+
+
+
+
+
+  <title>微信开发指南 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/16/webcat-helper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信开发指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T18:42:41+08:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/微信/" itemprop="url" rel="index">
+                    <span itemprop="name">微信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+<h2 id="为什么要写这个？"><a href="#为什么要写这个？" class="headerlink" title="为什么要写这个？"></a>为什么要写这个？</h2><p>反正和微信相关开发，我是怕了。到现在都没有明白什么是公众号，什么是服务号，开放平台和公众平台有啥区别？<br>官网文档有时候个别地址还404；<br>由于自己没有公司账号权限，每次还要让他们运营扫码登录，烦的一笔；<br>所以特别记录下，方便自己和大家查阅。有什么不对的，请qq我改正:wrench:</p>
+<h2 id="接口文档地址"><a href="#接口文档地址" class="headerlink" title="接口文档地址"></a>接口文档地址</h2><ul>
+<li><a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">公众平台 https://mp.weixin.qq.com</a></li>
+<li><a href="https://open.weixin.qq.com/" target="_blank" rel="noopener">开放平台 https://open.weixin.qq.com</a></li>
+<li><a href="https://mp.weixin.qq.com/wiki" target="_blank" rel="noopener">公众平台 doc</a></li>
+<li><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419316505&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">开发平台 doc</a></li>
+<li><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="noopener">JS-SDK doc</a></li>
+<li><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">网页授权 doc</a></li>
+</ul>
+<h2 id="公众平台设置"><a href="#公众平台设置" class="headerlink" title="公众平台设置"></a>公众平台设置</h2><h3 id="设置开发者权限"><a href="#设置开发者权限" class="headerlink" title="设置开发者权限"></a>设置开发者权限</h3><p>如果你没有这样做再使用微信客户端是获取不到相关信息的<br><br><br></p>
+<h3 id="相关域名设置"><a href="#相关域名设置" class="headerlink" title="相关域名设置"></a>相关域名设置</h3>
+
+<ol>
+<li><p>业务域名<br>设置业务域名后，在微信内访问该域名下页面时，不会被<strong>重新排版</strong>。（比如：如下图一些非法不安全的提示。）</p>
+
+</li>
+<li><p>JS调用域名（JSSDK）<br>你在哪些域名下，可以调用微信的SDK，使用微信提供的接口，友情提示：<strong>可设置顶级域名</strong></p>
+
+</li>
+<li><p>网页授权域名<br><strong>貌似不能设置顶级域名，自行做页面中间跳转</strong>（由于域名固定，所以只能自己写重定向地址完成特殊需求跳转）</p>
+
+</li>
+<li><p>设置白名单<br>开发&gt;基本设置&gt;设置白名单，不然微信不会平白无故接受你的请求</p>
+
+</li>
+</ol>
+<h3 id="JSSDK使用步骤"><a href="#JSSDK使用步骤" class="headerlink" title="JSSDK使用步骤"></a>JSSDK使用步骤</h3><ol>
+<li>绑定域名<br> 先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。 
+ </li>
+<li>引入JS文件<br> <a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" target="_blank" rel="noopener">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a></li>
+<li>通过config接口注入权限验证配置（附录有Q&amp;A）<br> <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="noopener">config配置</a></li>
+</ol>
+<h2 id="开放平台设置"><a href="#开放平台设置" class="headerlink" title="开放平台设置"></a>开放平台设置</h2><h3 id="设置回调域名"><a href="#设置回调域名" class="headerlink" title="设置回调域名"></a>设置回调域名</h3>
+
+<h2 id="授权方式地址"><a href="#授权方式地址" class="headerlink" title="授权方式地址"></a>授权方式地址</h2><h3 id="公众平台"><a href="#公众平台" class="headerlink" title="公众平台"></a><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">公众平台</a></h3><blockquote>
+<p><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect" target="_blank" rel="noopener">https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect</a> </p>
+</blockquote>
+<h3 id="开发平台（扫码）"><a href="#开发平台（扫码）" class="headerlink" title="开发平台（扫码）"></a><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419316505&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">开发平台（扫码）</a></h3><blockquote>
+<p><a href="https://open.weixin.qq.com/connect/qrconnect?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect" target="_blank" rel="noopener">https://open.weixin.qq.com/connect/qrconnect?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect</a></p>
+</blockquote>
+<h3 id="参数说明（参考，具体api文档查阅）"><a href="#参数说明（参考，具体api文档查阅）" class="headerlink" title="参数说明（参考，具体api文档查阅）"></a>参数说明（参考，具体api文档查阅）</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appid</td>
+<td>是</td>
+<td>公众号的唯一标识</td>
+</tr>
+<tr>
+<td>redirect_uri</td>
+<td>是</td>
+<td>授权后重定向的回调链接地址，<strong>请使用urlEncode对链接进行处理</strong></td>
+</tr>
+<tr>
+<td>response_type</td>
+<td>是</td>
+<td>code</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>是</td>
+<td><strong>snsapi_base</strong> （不弹出授权页面，直接跳转，只能获取用户openid），<strong>snsapi_userinfo</strong> （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）</td>
+</tr>
+<tr>
+<td>state</td>
+<td>否</td>
+<td>重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节</td>
+</tr>
+<tr>
+<td>#wechat_redirect</td>
+<td>是</td>
+<td>无论直接打开还是做页面302重定向时候，必须带此参数</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/23/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/16/webcat-helper/" rel="prev" title="微信开发指南">
+                微信开发指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要写这个？"><span class="nav-number">1.</span> <span class="nav-text">为什么要写这个？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口文档地址"><span class="nav-number">2.</span> <span class="nav-text">接口文档地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公众平台设置"><span class="nav-number">3.</span> <span class="nav-text">公众平台设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置开发者权限"><span class="nav-number">3.1.</span> <span class="nav-text">设置开发者权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关域名设置"><span class="nav-number">3.2.</span> <span class="nav-text">相关域名设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSSDK使用步骤"><span class="nav-number">3.3.</span> <span class="nav-text">JSSDK使用步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放平台设置"><span class="nav-number">4.</span> <span class="nav-text">开放平台设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置回调域名"><span class="nav-number">4.1.</span> <span class="nav-text">设置回调域名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#授权方式地址"><span class="nav-number">5.</span> <span class="nav-text">授权方式地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公众平台"><span class="nav-number">5.1.</span> <span class="nav-text">公众平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发平台（扫码）"><span class="nav-number">5.2.</span> <span class="nav-text">开发平台（扫码）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明（参考，具体api文档查阅）"><span class="nav-number">5.3.</span> <span class="nav-text">参数说明（参考，具体api文档查阅）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
