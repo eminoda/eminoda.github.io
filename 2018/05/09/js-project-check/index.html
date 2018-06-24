@@ -82,7 +82,7 @@
 <meta name="description" content="eslint，和jslint等一样，都是js方向的检验工具。目标就是提前有规则的规范项目代码，提供error、warn提示，避免人为疏忽造成的错误，提升代码健壮性，稳定性。eslint对比其他工具，具有更强大的功能，社区有非常多的plugins，对不同脚手架的前端工具都能使用，vscode等ide也有支持插件。官方也给出了best practice，任何人都能简单的享受那种安全感 代码校验好处">
 <meta name="keywords" content="eslint">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS工程化之代码校验">
+<meta property="og:title" content="JS工程化之代码QA校验">
 <meta property="og:url" content="http://yoursite.com/2018/05/09/js-project-check/index.html">
 <meta property="og:site_name" content="NextInnovation">
 <meta property="og:description" content="eslint，和jslint等一样，都是js方向的检验工具。目标就是提前有规则的规范项目代码，提供error、warn提示，避免人为疏忽造成的错误，提升代码健壮性，稳定性。eslint对比其他工具，具有更强大的功能，社区有非常多的plugins，对不同脚手架的前端工具都能使用，vscode等ide也有支持插件。官方也给出了best practice，任何人都能简单的享受那种安全感 代码校验好处">
@@ -105,9 +105,9 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/09/js-project-check/warn-4.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/09/js-project-check/error-3.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/09/js-project-check/warn-3.png">
-<meta property="og:updated_time" content="2018-05-09T15:13:24.370Z">
+<meta property="og:updated_time" content="2018-05-29T13:40:59.757Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS工程化之代码校验">
+<meta name="twitter:title" content="JS工程化之代码QA校验">
 <meta name="twitter:description" content="eslint，和jslint等一样，都是js方向的检验工具。目标就是提前有规则的规范项目代码，提供error、warn提示，避免人为疏忽造成的错误，提升代码健壮性，稳定性。eslint对比其他工具，具有更强大的功能，社区有非常多的plugins，对不同脚手架的前端工具都能使用，vscode等ide也有支持插件。官方也给出了best practice，任何人都能简单的享受那种安全感 代码校验好处">
 <meta name="twitter:image" content="http://yoursite.com/2018/05/09/js-project-check/eslint.png">
 
@@ -145,7 +145,7 @@
 
 
 
-  <title>JS工程化之代码校验 | NextInnovation</title>
+  <title>JS工程化之代码QA校验 | NextInnovation</title>
   
 
 
@@ -280,7 +280,6 @@
 
   <div id="posts" class="posts-expand">
     
-
   
 
   
@@ -309,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JS工程化之代码校验</h1>
+          <h1 class="post-title" itemprop="name headline">JS工程化之代码QA校验</h1>
         
 
         <div class="post-meta">
@@ -355,8 +354,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/eslint/" itemprop="url" rel="index">
-                    <span itemprop="name">eslint</span>
+                  <a href="/categories/前端/工程化/" itemprop="url" rel="index">
+                    <span itemprop="name">工程化</span>
                   </a>
                 </span>
 
@@ -455,36 +454,43 @@
 <h2 id="那些不容易察觉的问题代码"><a href="#那些不容易察觉的问题代码" class="headerlink" title="那些不容易察觉的问题代码"></a>那些不容易察觉的问题代码</h2><h3 id="会引起麻烦的error（必须修改）"><a href="#会引起麻烦的error（必须修改）" class="headerlink" title="会引起麻烦的error（必须修改）"></a>会引起麻烦的error（必须修改）</h3><ol>
 <li><p>[eslint] Unexpected trailing comma. (comma-dangle)</p>
 <img src="/2018/05/09/js-project-check/error-1.png" title="不允许逗号结尾">
+<p>代码不和规范，压缩代码可能会出错。</p>
 </li>
 <li><p>[eslint] Unexpected trailing comma. (comma-dangle)</p>
 <img src="/2018/05/09/js-project-check/error-2.png" title="===&==">
+<p>由于js太过灵活，弱类型的判断通过可能会引致执行逻辑错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var test = &apos;1&apos;;</span><br><span class="line">if(test&gt;0)&#123;</span><br><span class="line">    test = test.toFixed(2); //TypeError: &quot;1&quot;.toFixed is not a function</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>[eslint] Expected { after ‘if’ condition. (curly)</p>
 <img src="/2018/05/09/js-project-check/error-4.png" title="if后跟代码块">
+<p>代码不和规范，压缩代码可能会出错。</p>
 </li>
 <li><p>[eslint] Duplicate key ‘strToArr’. (no-dupe-keys)</p>
 <img src="/2018/05/09/js-project-check/error-5.png" title="重复定义">
+<p>处理冲突、代码复制粘贴、项目重构后造成的疏漏</p>
 </li>
 <li><p>[eslint] ‘PC_URL’ is not defined. (no-undef)</p>
 <img src="/2018/05/09/js-project-check/error-6.png" title="变量没有定义">
 <img src="/2018/05/09/js-project-check/error-9.png" title="变量没有定义">
 <img src="/2018/05/09/js-project-check/error-11.png" title="变量没有定义">
 </li>
-<li><p>[eslint] ‘API’ is defined but never used. (no-unused-vars)<br>变量没有使用</p>
+<li><p>[eslint] ‘API’ is defined but never used. (no-unused-vars)<br>变量没有使用，一定程度会导致打包额外不需要的文件</p>
 </li>
 <li><p>[eslint] Return statement should not contain assignment. (no-return-assign)</p>
 <img src="/2018/05/09/js-project-check/error-7.png" title="return中不要执行逻辑">
 </li>
 <li><p>[eslint] Import in body of module; reorder to top. (import/first)</p>
 <img src="/2018/05/09/js-project-check/error-8.png" title="import置于顶部">
+<p>方便维护查找引用</p>
 </li>
-<li><p>error  Type of the default value for ‘list’ prop must be a function  vue/require-valid-default-prop</p>
+<li><p>error  Type of the default value for ‘list’ prop must be a function  vue/require-valid-default-prop<br>vue prop需要明确返回类型，array object都是引用类型，需要指定清晰</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">  propA: &#123;</span><br><span class="line">    type: String,</span><br><span class="line">    default: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  propB: &#123;</span><br><span class="line">    type: String,</span><br><span class="line">    default: []</span><br><span class="line">  &#125;,</span><br><span class="line">  propC: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: []</span><br><span class="line">  &#125;,</span><br><span class="line">  propD: &#123;</span><br><span class="line">    type: Array,</span><br><span class="line">    default: []</span><br><span class="line">  &#125;,</span><br><span class="line">  propE: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: &#123; message: &apos;hello&apos; &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="不容忽视的警告（不影响功能，但会造成其他麻烦）"><a href="#不容忽视的警告（不影响功能，但会造成其他麻烦）" class="headerlink" title="不容忽视的警告（不影响功能，但会造成其他麻烦）"></a>不容忽视的警告（不影响功能，但会造成其他麻烦）</h3><ol>
 <li><p>[eslint] Missing space before value for key ‘updatePzType’. (key-spacing)</p>
  <img src="/2018/05/09/js-project-check/warn-1.png" title="缺少空格">
+<p> 减少因代码格式化风格不同，导致代码冲突，不易查看别人代码情况</p>
 </li>
 <li><p>[eslint] Trailing spaces not allowed. (no-trailing-spaces)</p>
  <img src="/2018/05/09/js-project-check/warn-2.png" title="缺少空格"></li>
@@ -493,9 +499,11 @@
 </li>
 <li><p>[eslint] Expected the Promise rejection reason to be an Error. (prefer-promise-reject-errors)</p>
 <img src="/2018/05/09/js-project-check/error-3.png" title="需要reject error对象">
+<p>reject要符合语义</p>
 </li>
 <li><p>[eslint] Redundant use of <code>await</code> on a return value. (no-return-await)</p>
 <img src="/2018/05/09/js-project-check/warn-3.png" title="不能返回await">
+<p>虽然逻辑没问题，但指出了es6等语法理解不深刻，使用不当的问题</p>
 </li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本来测试通过的代码，在eslint的帮助下，暴露了更多的安全隐患，和测试人员没有发现的问题。<br>js本来就灵活多变，稍不留神就会给自己埋下大坑，如果没有提前检测机制，根本就是防不胜防。<br>如果你还没用，赶紧使用起来…</p>
@@ -548,6 +556,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/10/eslint-and-test/" rel="prev" title="代码QA检查和单元测试">
+                代码QA检查和单元测试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -628,7 +640,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -639,7 +651,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -650,7 +662,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

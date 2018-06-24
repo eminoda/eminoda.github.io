@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,nginx," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。 netstat Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告     参数 说明     -a 显示所有socket，包括正在监听的。   -c 每隔1秒就重新显示一遍，直到用户中断它。   -i 显示所有网络接口的信息，格式“netst">
+<meta name="keywords" content="linux,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux常用命令">
+<meta property="og:url" content="http://yoursite.com/2017/07/28/linux-command/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。 netstat Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告     参数 说明     -a 显示所有socket，包括正在监听的。   -c 每隔1秒就重新显示一遍，直到用户中断它。   -i 显示所有网络接口的信息，格式“netst">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/07/28/linux-command/1.png">
+<meta property="og:updated_time" content="2018-05-29T13:40:59.679Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux常用命令">
+<meta name="twitter:description" content="不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。 netstat Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告     参数 说明     -a 显示所有socket，包括正在监听的。   -c 每隔1秒就重新显示一遍，直到用户中断它。   -i 显示所有网络接口的信息，格式“netst">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/28/linux-command/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/28/linux-command/"/>
+
+
+
+
+
+  <title>linux常用命令 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/linux-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux常用命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-28T09:47:48+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。</p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a><a href="https://baike.baidu.com/item/Netstat" target="_blank" rel="noopener">netstat</a></h2><blockquote>
+<p>Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>显示所有socket，包括正在监听的。</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>每隔1秒就重新显示一遍，直到用户中断它。</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>显示所有网络接口的信息，格式“netstat -i”。</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>以网络IP地址代替名称，显示出网络连接情形。</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>显示核心路由表，格式同“route -e”。</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>显示TCP协议的连接情况</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>显示UDP协议的连接情况。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示正在进行的工作。</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>显示建立相关连接的程序名和PID。</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>显示在创建每个连接或侦听端口时涉及的可执行程序。</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>显示以太网统计。此选项可以与 -s 选项结合使用。</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>显示外部地址的完全限定域名(FQDN)。</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>显示与每个连接相关的所属进程 ID。</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>显示每个协议的统计。</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示 NetworkDirect 连接、侦听器和共享端点。</td>
+</tr>
+<tr>
+<td>-y</td>
+<td>显示所有连接的 TCP 连接模板。无法与其他选项结合使用。</td>
+</tr>
+</tbody>
+</table>
+<p>举例：显示所有tcp，udp的监听中的ip信息，包含程序名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -alptun |grep nginx</span><br></pre></td></tr></table></figure></p>
+<p>备注：如果非0.0.0.0:port而是ip:port，确认下nginx下server中listen数值<br><img src="/2017/07/28/linux-command/1.png" title="nginx显示0.0.0.0和ip的区别"></p>
+<h2 id="ps"><a href="#ps" class="headerlink" title="ps"></a><a href="http://www.cnblogs.com/wangkangluo1/archive/2011/09/23/2185938.html" target="_blank" rel="noopener">ps</a></h2><p>查看进程的命令</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-A</td>
+<td>显示所有进程（等价于-e）(utility)</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>显示一个终端的所有进程，除了会话引线</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>忽略选择。</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>显示所有进程，但省略所有的会话引线(utility)</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示没有控制终端的进程，同时显示各个命令的具体路径。dx不可合用。（utility）</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>pid 进程使用cpu的时间</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>uid or username 选择有效的用户id或者是用户名</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>gid or groupname 显示组的所有进程。</td>
+</tr>
+<tr>
+<td>U</td>
+<td>username 显示该用户下的所有进程，且显示各个命令的详细路径。如:ps U zhang;(utility)</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>全部列出，通常和其他选项联用。如：ps -fa or ps -fx and so on.</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>长格式（有F,wchan,C 等字段）</td>
+</tr>
+<tr>
+<td>-j</td>
+<td>作业格式</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>用户自定义格式。</td>
+</tr>
+<tr>
+<td>v</td>
+<td>以虚拟存储器格式显示</td>
+</tr>
+<tr>
+<td>s</td>
+<td>以信号格式显示</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>显示所有的线程</td>
+</tr>
+<tr>
+<td>-H</td>
+<td>显示进程的层次(和其它的命令合用，如：ps -Ha)（utility）</td>
+</tr>
+<tr>
+<td>e</td>
+<td>命令之后显示环境（如：ps -d e; ps -a e）(utility)</td>
+</tr>
+<tr>
+<td>h</td>
+<td>不显示第一行</td>
+</tr>
+</tbody>
+</table>
+<p>举例：列出特定进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep node</span><br><span class="line">USER PID    %CPU    %MEM    VSZ     RSS     TTY     STAT    START   TIME    COMMAND</span><br><span class="line">root 1819   0.0     0.4     968256  36988   ?       Sl      May16   0:04    /mydata/node-v4.4.1/bin/node /usr/share/nodeProject/com.cfniu.www/bin/www.js</span><br><span class="line">USER: 行程拥有者</span><br><span class="line">PID: pid</span><br><span class="line">%CPU: 占用的 CPU 使用率</span><br><span class="line">%MEM: 占用的记忆体使用率</span><br><span class="line">VSZ: 占用的虚拟记忆体大小</span><br><span class="line">RSS: 占用的记忆体大小</span><br><span class="line">TTY: 终端的次要装置号码 (minor device number of tty)</span><br></pre></td></tr></table></figure></p>
+<h2 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h2><p><a href="https://curl.haxx.se/docs/httpscripting.html" target="_blank" rel="noopener">curl api</a></p>
+<h2 id="ulimit"><a href="#ulimit" class="headerlink" title="ulimit"></a><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-ulimit/" target="_blank" rel="noopener">ulimit</a></h2><blockquote>
+<p>通过一些参数选项来管理不同种类的系统资源</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-H</td>
+<td>设置硬资源限制.</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>设置软资源限制.</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>显示当前所有的资源限制.</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>size:设置core文件的最大值.单位:blocks</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>size:设置数据段的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>size:设置创建文件的最大值.单位:blocks</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>size:设置在内存中锁定进程的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>size:设置可以使用的常驻内存的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>size:设置内核可以同时打开的文件描述符的最大值.单位:n</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>size:设置管道缓冲区的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>size:设置堆栈的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>size:设置CPU使用时间的最大上限.单位:seconds</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>size:设置虚拟内存的最大值.单位:kbytes</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>&lt;程序数目&gt; 　用户最多可开启的程序数目</td>
+</tr>
+</tbody>
+</table>
+<p>举例：nginx: [warn] 65536 worker_connections exceed open file resource limit: 65535</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# nginx </span><br><span class="line">nginx: [warn] 65536 worker_connections exceed open file resource limit: 65535</span><br><span class="line"># 查询现在文件打开最大值</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n</span><br><span class="line">65535</span><br><span class="line"># 重新设置</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n 65536</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n</span><br><span class="line">65536</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/15/webcat-problem-collection/" rel="next" title="微信JS-SDK开发中的问题">
+                <i class="fa fa-chevron-left"></i> 微信JS-SDK开发中的问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/23/java-version-change/" rel="prev" title="同一环境配置多个java版本">
+                同一环境配置多个java版本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps"><span class="nav-number">2.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curl"><span class="nav-number">3.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ulimit"><span class="nav-number">4.</span> <span class="nav-text">ulimit</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
