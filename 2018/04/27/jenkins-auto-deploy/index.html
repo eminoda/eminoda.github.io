@@ -96,8 +96,14 @@
 <meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/config-5.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/config-6.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/example-3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-2.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-3.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-4.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-5.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/github-6.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/27/jenkins-auto-deploy/example-2.gif">
-<meta property="og:updated_time" content="2018-05-04T13:48:39.189Z">
+<meta property="og:updated_time" content="2018-08-03T14:36:51.461Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jenkins自动部署（github）">
 <meta name="twitter:description" content="看了初识jenkins,应该对jenkins有个入门级的了解。在这篇文章中，将继续进阶学习jenkins的持续集成，结合github完成自动化构建部署。 来看个传统方式 我们要经历哪些步骤？  打开IDE，进入项目 构建项目 将build后的包复制出来 打开ftp工具，进入指定路径 上传包 打开shell工具，进入指定路径。 解压包。并重启服务器  怎么说你也要经历这7步，你说很ok，很方便。那我">
@@ -335,8 +341,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/运维/" itemprop="url" rel="index">
-                    <span itemprop="name">运维</span>
+                  <a href="/categories/工程化/" itemprop="url" rel="index">
+                    <span itemprop="name">工程化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工程化/自动化/" itemprop="url" rel="index">
+                    <span itemprop="name">自动化</span>
                   </a>
                 </span>
 
@@ -399,23 +416,15 @@
 <h3 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h3><p>安装SSH插件，并授权到发布Server。这样jenkins可以和发布Server建立起通信关系。<br><img src="/2018/04/27/jenkins-auto-deploy/config-2.png" title="下载插件"><br><img src="/2018/04/27/jenkins-auto-deploy/config-3.png" title="配置ssh认证"><br><img src="/2018/04/27/jenkins-auto-deploy/config-4.png" title="配置ssh认证"></p>
 <p>可以定义上传package的路径，自定义一些shell脚本<br><img src="/2018/04/27/jenkins-auto-deploy/config-5.png" title="构建时候对远端server做一些处理"><br><img src="/2018/04/27/jenkins-auto-deploy/config-6.png" title="foo"></p>
 <h2 id="持续部署（github-hook）"><a href="#持续部署（github-hook）" class="headerlink" title="持续部署（github hook）"></a>持续部署（github hook）</h2><p>和持续集成不同的是，发布是自动触发的。这里拿github hook举例。<br><img src="/2018/04/27/jenkins-auto-deploy/example-3.jpg"></p>
-<h3 id="github设置"><a href="#github设置" class="headerlink" title="github设置"></a>github设置</h3><pre><code>选择github权限，哪些event会触发任务
-{% asset_img github-1.png 设置token %}
-
-生成token，这里在jenkins需要使用，切记保存好，下次会是不同的token!
-{% asset_img github-2.png 保存好token %}
-
-设置Jenkins hook，github最终调用这个Api
-{% asset_img github-3.png 进入项目，开启jenkins服务 %}
-</code></pre><h3 id="jenkins设置"><a href="#jenkins设置" class="headerlink" title="jenkins设置"></a>jenkins设置</h3><pre><code>将github的token，配置到jenkins中
-{% asset_img github-4.png 设置github credentials %}
-
-在全局设置中，测试token的链接状态
-{% asset_img github-5.png 配置github credentials %}
-
-在job中，定义触发器
-{% asset_img github-6.png 开始hook %}
-</code></pre><h2 id="现在的发布会变成什么样？"><a href="#现在的发布会变成什么样？" class="headerlink" title="现在的发布会变成什么样？"></a>现在的发布会变成什么样？</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.gif">
+<h3 id="github设置"><a href="#github设置" class="headerlink" title="github设置"></a>github设置</h3><p>选择github权限，哪些event会触发任务<br><img src="/2018/04/27/jenkins-auto-deploy/github-1.png" title="设置token"></p>
+<p>生成token，这里在jenkins需要使用，切记保存好，下次会是不同的token!</p>
+<img src="/2018/04/27/jenkins-auto-deploy/github-2.png" title="保存好token">
+<p>设置Jenkins hook，github最终调用这个Api</p>
+<img src="/2018/04/27/jenkins-auto-deploy/github-3.png" title="进入项目，开启jenkins服务">
+<h3 id="jenkins设置"><a href="#jenkins设置" class="headerlink" title="jenkins设置"></a>jenkins设置</h3><p>将github的token，配置到jenkins中<br><img src="/2018/04/27/jenkins-auto-deploy/github-4.png" title="设置github credentials"></p>
+<p>在全局设置中，测试token的链接状态<br><img src="/2018/04/27/jenkins-auto-deploy/github-5.png" title="配置github credentials"></p>
+<p>在job中，定义触发器<br><img src="/2018/04/27/jenkins-auto-deploy/github-6.png" title="开始hook"></p>
+<h2 id="现在的发布会变成什么样？"><a href="#现在的发布会变成什么样？" class="headerlink" title="现在的发布会变成什么样？"></a>现在的发布会变成什么样？</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.gif">
 <p>我们要经历哪些步骤？</p>
 <ul>
 <li>提交代码</li>
@@ -556,7 +565,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -567,7 +576,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -578,7 +587,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
