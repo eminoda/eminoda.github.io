@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx基础学习进阶">
+<meta property="og:url" content="http://yoursite.com/2018/08/10/nginx-basic-learn/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-18T14:37:25.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx基础学习进阶">
+<meta name="twitter:description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/10/nginx-basic-learn/"/>
+
+
+
+
+
+  <title>nginx基础学习进阶 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/10/nginx-basic-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nginx基础学习进阶</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T17:36:36+08:00">
+                2018-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>内容摘自<a href="http://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener">nginx官方文档</a>，自己配合实例更细致的熟悉nginx</p>
+</blockquote>
+<h1 id="命令启动，停止，重启-配置"><a href="#命令启动，停止，重启-配置" class="headerlink" title="命令启动，停止，重启 配置"></a>命令启动，停止，重启 配置</h1><p>一旦nginx运行起来，通过如下方式invoking nginx的控制变更：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx -s stop // 停服</span><br><span class="line">nginx -s quit // 优雅的停服</span><br><span class="line">nginx -s reload // 重启配置文件</span><br><span class="line">nginx -s reopen // 重新打开log文件</span><br></pre></td></tr></table></figure></p>
+<h2 id="quit-和-stop有何区别？"><a href="#quit-和-stop有何区别？" class="headerlink" title="quit 和 stop有何区别？"></a>quit 和 stop有何区别？</h2><p>quit会等最近一个request响应结束后退出进程（graceful shutdown）。<br>比如一个服务会hold起数秒，即使执行了quit命令，还是会等结果处理完毕后关闭nginx。<br>stop则马上停止。</p>
+<h2 id="配置文件错误，reload是否会影响线上？"><a href="#配置文件错误，reload是否会影响线上？" class="headerlink" title="配置文件错误，reload是否会影响线上？"></a>配置文件错误，reload是否会影响线上？</h2><p>不会，如果configure错误，nginx将roll back回老的配置文件，直到配置正确才会真正reload起效。</p>
+<h2 id="除了stop等，怎么停止nginx服务？"><a href="#除了stop等，怎么停止nginx服务？" class="headerlink" title="除了stop等，怎么停止nginx服务？"></a>除了stop等，怎么停止nginx服务？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ps -ax | grep nginx</span><br><span class="line">26318 ?        Ss     0:00 nginx: master process nginx</span><br><span class="line">26351 ?        S      0:00 nginx: worker process</span><br><span class="line">26357 pts/3    R+     0:00 grep --color=auto nginx</span><br><span class="line"># 需要停止master进程</span><br><span class="line">kill -s QUIT 26318</span><br></pre></td></tr></table></figure>
+<h2 id="了解更多nginx控制命令"><a href="#了解更多nginx控制命令" class="headerlink" title="了解更多nginx控制命令"></a><a href="http://nginx.org/en/docs/control.html" target="_blank" rel="noopener">了解更多nginx控制命令</a></h2><h1 id="nginx配置文件的结构"><a href="#nginx配置文件的结构" class="headerlink" title="nginx配置文件的结构"></a>nginx配置文件的结构</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="文件服务"><a href="#文件服务" class="headerlink" title="文件服务"></a>文件服务</h1><p>静态文件管理也是Nginx最大的特色之一<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># prefix compared with the URI from the request</span><br><span class="line"># url: http://test.eminoda.com:81/hello/yuyu.jpg</span><br><span class="line">location / &#123;</span><br><span class="line">    root /root/mydata; # 根据URI地址，寻找/data/www下匹配的静态资源</span><br><span class="line">&#125;</span><br><span class="line"># 匹配/test路径，并在设置root下，寻找URI资源</span><br><span class="line"># url: http://test.eminoda.com:81/test/yuyu.jpg</span><br><span class="line">location /test/ &#123;</span><br><span class="line">    root /root/mydata/; # 对value后添加/斜杠不敏感</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="root-和-alias的区别？"><a href="#root-和-alias的区别？" class="headerlink" title="root 和 alias的区别？"></a>root 和 alias的区别？</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root</td>
+<td>http, server, location, if in location</td>
+</tr>
+<tr>
+<td>alias</td>
+<td>location</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># url: http://test.eminoda.com:81/hello/yuyu.jpg</span><br><span class="line">location /hello/ &#123;</span><br><span class="line">    alias  /root/mydata/test/; # ok</span><br><span class="line">&#125;</span><br><span class="line">location /hello &#123;</span><br><span class="line">    alias  /root/mydata/test; # ok</span><br><span class="line">&#125;</span><br><span class="line">location /hello/ &#123;</span><br><span class="line">    alias  /root/mydata/test; # error 会对斜杠进行匹配替换，需注意。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="怎么权衡root和alias的使用？"><a href="#怎么权衡root和alias的使用？" class="headerlink" title="怎么权衡root和alias的使用？"></a>怎么权衡root和alias的使用？</h2><p>如果location匹配路径和指令的value最后部分相同时，建议使用root。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">    alias /data/w3/images/;</span><br><span class="line">&#125;</span><br><span class="line"># better</span><br><span class="line">location /images/ &#123;</span><br><span class="line">    root /data/w3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="alias-和-正则匹配问题？"><a href="#alias-和-正则匹配问题？" class="headerlink" title="alias 和 正则匹配问题？"></a>alias 和 正则匹配问题？</h2><p>如果location 包含regex expression，就会匹配正则捕获内容，在alias中替换（而非替换整个location路径）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># file: /root/mydata/test/yuyu.jpg</span><br><span class="line"># url: http://test.eminoda.com:81/yuyu.jpg ok</span><br><span class="line"># url：http://test.eminoda.com:81/foo/yuyu.jpg error $1实际访问/root/mydata/test/foo/yuyu.jpg</span><br><span class="line">location ~ ^/(.+\.(?:gif|jpg|png))$ &#123;</span><br><span class="line">    alias /root/mydata/test/$1;</span><br><span class="line">&#125;</span><br><span class="line"># url: http://test.eminoda.com:81/foo/yuyu.jpg</span><br><span class="line">location ~ ^/foo/(.*\.jpg)$ &#123;</span><br><span class="line">    alias /root/mydata/test/$1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="设置简单的代理Proxy服务"><a href="#设置简单的代理Proxy服务" class="headerlink" title="设置简单的代理Proxy服务"></a><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">设置简单的代理Proxy服务</a></h1><p>使用nginx代理，可能是解决我们日常开发，服务调用的最大原因</p>
+<p>在了解proxy之前，先看下location路径匹配</p>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>范围</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>location</td>
+<td>server, location</td>
+<td>location [ = &#124; ~ &#124; ~* &#124; ^~ ] uri { … }</td>
+</tr>
+</tbody>
+</table>
+<p>location依赖request的URI。按优先级排序。<br>=: 绝对匹配，exact match<br>~*：正则，case-insensitive matching<br>~：正则，case-sensitive matching<br>^~：不能和uri定义的配置重复，prefix match<br>uri：路径URI匹配，uri match</p>
+<p><strong>举个经典的范例</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">    [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">    [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location /documents/ &#123;</span><br><span class="line">    [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">    [ configuration D ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">    [ configuration E ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>首先命中绝对匹配</li>
+<li>如果有符合regex规则，则进入正则匹配。</li>
+<li>剩下根据uri匹配</li>
+</ul>
+<p><strong>normalized URI 标准化URI</strong></p>
+<ul>
+<li>decode参数</li>
+<li>解析相对路径</li>
+<li>解析斜杠（merge_slashes）</li>
+</ul>
+<p><strong>merge_slashes</strong></p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Syntax</td>
+<td>merge_slashes on &#124; off;</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>merge_slashes on;</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>http, server</td>
+</tr>
+</tbody>
+</table>
+<p>打开 merge_slashes 配置，将允许 //foo之类多斜杠的路径匹配</p>
+<h2 id="proxy-pass"><a href="#proxy-pass" class="headerlink" title="proxy_pass"></a>proxy_pass</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>proxy_pass</td>
+<td>location, if in location, limit_except</td>
+</tr>
+</tbody>
+</table>
+<p><strong>proxy_pass定义了URI的区别</strong></p>
+<p><strong>specified without a URI</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /users/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>request URI在location匹配后，原样传送给server</p>
+<p><strong>specified with a URI</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /foo &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001/users/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果proxy_pass is specified with a URI，当request URI在location命中，URI将替换被location匹配中的request URI的part（注意location 需要后面维护个/）</p>
+<blockquote>
+<p>If the proxy_pass directive is specified with a URI, then when a request is passed to the server, the part of a normalized request URI matching the location is replaced by a URI specified in the directive</p>
+</blockquote>
+<p>访问：<strong><a href="http://test.eminoda.com:81/foo/" target="_blank" rel="noopener">http://test.eminoda.com:81/foo/</a></strong>，实际请求：<a href="http://127.0.0.1:3001/users//，/users/替换/foo+剩下的请求/" target="_blank" rel="noopener">http://127.0.0.1:3001/users//，/users/替换/foo+剩下的请求/</a><br>访问：<strong><a href="http://test.eminoda.com:81/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/foo</a></strong>，实际请求：<a href="http://127.0.0.1:3001/users/" target="_blank" rel="noopener">http://127.0.0.1:3001/users/</a></p>
+<p><strong>修改配置：注意location的/</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /foo/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001/users/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>按照上例子的访问地址，实际请求都是：<a href="http://127.0.0.1:3001/users/" target="_blank" rel="noopener">http://127.0.0.1:3001/users/</a><br>原以为：可能访问/foo，浏览器会默认添加/，然后根据URI的规则，总会替换location匹配的request URI，到后端服务固定统一成/user/。<strong>但是错了</strong>。</p>
+<p>浏览器分别输入/foo，当location /foo，浏览器不会默认添加/，而 location /foo/ 则会自动添加。感觉像是location告诉浏览器你给我变的样子<br>查阅location文档：<br>如果location规则尾部包含斜杠（location /foo/），在响应时会发送301永久重定向，地址后面自动加上斜杠（这就是为何浏览器会有斜杠的原因）</p>
+<blockquote>
+<p>If a location is defined by a prefix string that ends with the slash character, and requests are processed by one of proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, memcached_pass, or grpc_pass, then the special processing is performed. In response to a request with URI equal to this string, but without the trailing slash, a permanent redirect with the code 301 will be returned to the requested URI with the slash appended.</p>
+</blockquote>
+<h3 id="proxy-pass有些其他规则，request-URI不确定被替换更改"><a href="#proxy-pass有些其他规则，request-URI不确定被替换更改" class="headerlink" title="proxy_pass有些其他规则，request URI不确定被替换更改"></a>proxy_pass有些其他规则，request URI不确定被替换更改</h3><p><strong>location定义正则，同时proxy_pass不能定义URI</strong><br><strong>location定义中有rewrite break，后跟proxy_pass</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    rewrite    /name/([^/]+) /users?name=$1 break;</span><br><span class="line">    proxy_pass http://127.0.0.1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>proxy_pass使用变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1$request_uri;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="rewrite"><a href="#rewrite" class="headerlink" title="rewrite"></a>rewrite</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rewrite</td>
+<td>server, location, if</td>
+</tr>
+</tbody>
+</table>
+<p>rewrite regex replacement [flag];<br>如果正则匹配到request URI，URI则会和replacement替换</p>
+<h3 id="last"><a href="#last" class="headerlink" title="last"></a>last</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test1 &#123;</span><br><span class="line">    rewrite ^/rewrite /last last;</span><br><span class="line">&#125;</span><br><span class="line">location /last &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location，rewrite命中，发起/last请求，在location中继续寻找</p>
+<p><strong>修改配置：location做如下修改</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test1/ &#123;</span><br><span class="line">    rewrite ^/rewrite /last last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location不会命中，rewrite则不会匹配到<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1/" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1/</a></strong>，可以命中<br>通常在location路径访问斜杠会忽视此处细节，建议如果location最后的URI是request URI则写/，不然就不要添加</p>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test2 &#123;</span><br><span class="line">    rewrite ^/rewrite/test2/foo /break break;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br><span class="line">location /break/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location命中，rewrite未匹配，之后请求proxy_pass<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location中rewrite命中，发起/break，由于之后是proxy_pass，则实际访问 <strong><a href="http://127.0.0.1:3001/break" target="_blank" rel="noopener">http://127.0.0.1:3001/break</a></strong></p>
+<p><strong>修改配置：结合上例，主要体现ngx_http_rewrite_module这个点</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test2 &#123;</span><br><span class="line">    rewrite ^/rewrite/test2/foo /break break;</span><br><span class="line">    return 500;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location匹配，rewrite未匹配，直接访问return 返回500<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location中rewrite命中，发起/break，注意<strong>break会停止ngx_http_rewrite_module模块的指令</strong>，则不会像上例一样，或者last寻找新的location。会在本地寻找 ooxx/break 资源，无则返回404；</p>
+<h3 id="redirect"><a href="#redirect" class="headerlink" title="redirect"></a>redirect</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rewrite ^/redirect1 / redirect ;</span><br><span class="line">rewrite ^/redirect2 http://test.eminoda.com:81 redirect ;</span><br></pre></td></tr></table></figure>
+<p>返回302 code，如果不以协议“http://”, “https://”, or “$scheme”开头的匹配，则替换</p>
+<h3 id="permanent"><a href="#permanent" class="headerlink" title="permanent"></a>permanent</h3><blockquote>
+<p>returns a permanent redirect with the 301 code.</p>
+</blockquote>
+<p>###<br><strong>ngx_http_rewrite_module</strong></p>
+<ul>
+<li>break</li>
+<li>if</li>
+<li>return</li>
+<li>rewrite</li>
+<li>rewrite_log</li>
+<li>set</li>
+<li>uninitialized_variable_warn</li>
+</ul>
+<p>##<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html" target="_blank" rel="noopener">了解更多</a></p>
+<h1 id="设置FastCGI代理"><a href="#设置FastCGI代理" class="headerlink" title="设置FastCGI代理"></a>设置FastCGI代理</h1><p>以后再看看cgi到底是啥</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/03/js-promise-return/" rel="next" title="prmoise返回遇到个问题">
+                <i class="fa fa-chevron-left"></i> prmoise返回遇到个问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/14/mongo-backup/" rel="prev" title="mongo数据库的备份迁移">
+                mongo数据库的备份迁移 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令启动，停止，重启-配置"><span class="nav-number">1.</span> <span class="nav-text">命令启动，停止，重启 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#quit-和-stop有何区别？"><span class="nav-number">1.1.</span> <span class="nav-text">quit 和 stop有何区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件错误，reload是否会影响线上？"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件错误，reload是否会影响线上？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除了stop等，怎么停止nginx服务？"><span class="nav-number">1.3.</span> <span class="nav-text">除了stop等，怎么停止nginx服务？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解更多nginx控制命令"><span class="nav-number">1.4.</span> <span class="nav-text">了解更多nginx控制命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx配置文件的结构"><span class="nav-number">2.</span> <span class="nav-text">nginx配置文件的结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件服务"><span class="nav-number">3.</span> <span class="nav-text">文件服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#root-和-alias的区别？"><span class="nav-number">3.1.</span> <span class="nav-text">root 和 alias的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么权衡root和alias的使用？"><span class="nav-number">3.2.</span> <span class="nav-text">怎么权衡root和alias的使用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alias-和-正则匹配问题？"><span class="nav-number">3.3.</span> <span class="nav-text">alias 和 正则匹配问题？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置简单的代理Proxy服务"><span class="nav-number">4.</span> <span class="nav-text">设置简单的代理Proxy服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#location"><span class="nav-number">4.1.</span> <span class="nav-text">location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-pass"><span class="nav-number">4.2.</span> <span class="nav-text">proxy_pass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy-pass有些其他规则，request-URI不确定被替换更改"><span class="nav-number">4.2.1.</span> <span class="nav-text">proxy_pass有些其他规则，request URI不确定被替换更改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rewrite"><span class="nav-number">4.3.</span> <span class="nav-text">rewrite</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#last"><span class="nav-number">4.3.1.</span> <span class="nav-text">last</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#break"><span class="nav-number">4.3.2.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redirect"><span class="nav-number">4.3.3.</span> <span class="nav-text">redirect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permanent"><span class="nav-number">4.3.4.</span> <span class="nav-text">permanent</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置FastCGI代理"><span class="nav-number">5.</span> <span class="nav-text">设置FastCGI代理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -88,7 +88,7 @@
 <meta property="og:description" content="不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。 netstat Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告     参数 说明     -a 显示所有socket，包括正在监听的。   -c 每隔1秒就重新显示一遍，直到用户中断它。   -i 显示所有网络接口的信息，格式“netst">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2017/07/28/linux-command/1.png">
-<meta property="og:updated_time" content="2018-08-03T14:36:51.415Z">
+<meta property="og:updated_time" content="2018-08-18T14:37:25.307Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux常用命令">
 <meta name="twitter:description" content="不是专业运维，有时候操作服务器也是烦的一笔。记录几个常用命令，基本日常生活够用了。 netstat Netstat是在内核中访问网络连接状态及其相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告     参数 说明     -a 显示所有socket，包括正在监听的。   -c 每隔1秒就重新显示一遍，直到用户中断它。   -i 显示所有网络接口的信息，格式“netst">
@@ -326,7 +326,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
                 </span>
@@ -603,6 +614,11 @@
 </table>
 <p>举例：nginx: [warn] 65536 worker_connections exceed open file resource limit: 65535</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# nginx </span><br><span class="line">nginx: [warn] 65536 worker_connections exceed open file resource limit: 65535</span><br><span class="line"># 查询现在文件打开最大值</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n</span><br><span class="line">65535</span><br><span class="line"># 重新设置</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n 65536</span><br><span class="line">[root@iZbp18tya24l2k7vs6b7j4Z ~]# ulimit -n</span><br><span class="line">65536</span><br></pre></td></tr></table></figure>
+<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 操作系统内核信息</span><br><span class="line">[root@iZ2365bvzwbZ ~]# uname -a</span><br><span class="line">Linux iZ2365bvzwbZ 2.6.32-696.23.1.el6.x86_64 #1 SMP Tue Mar 13 22:44:18 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line"># 操作系统版本信息</span><br><span class="line">[root@iZ2365bvzwbZ ~]# cat /proc/version</span><br><span class="line">Linux version 2.6.32-696.23.1.el6.x86_64 (mockbuild@x86-01.bsys.centos.org) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) ) #1 SMP Tue Mar 13 22:44:18 UTC 2018</span><br><span class="line"></span><br><span class="line"># 操作系统发行版信息</span><br><span class="line">[root@iZ2365bvzwbZ ~]# cat /etc/issue</span><br><span class="line">CentOS release 6.8 (Final)</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line"># bit类型</span><br><span class="line">[root@iZ2365bvzwbZ ~]# getconf LONG_BIT </span><br><span class="line">64</span><br><span class="line">You have new mail in /var/spool/mail/root</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.cnblogs.com/YangJieCheng/p/5907166.html" target="_blank" rel="noopener">https://www.cnblogs.com/YangJieCheng/p/5907166.html</a></li>
+</ol>
+
       
     </div>
     
@@ -735,7 +751,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -746,7 +762,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -757,7 +773,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -790,7 +806,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps"><span class="nav-number">2.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curl"><span class="nav-number">3.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ulimit"><span class="nav-number">4.</span> <span class="nav-text">ulimit</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ps"><span class="nav-number">2.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curl"><span class="nav-number">3.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ulimit"><span class="nav-number">4.</span> <span class="nav-text">ulimit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统信息"><span class="nav-number">5.</span> <span class="nav-text">系统信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
             
 
           </div>

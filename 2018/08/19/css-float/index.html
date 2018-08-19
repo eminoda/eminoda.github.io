@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接  什么是FloatFloat是CSS用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：  在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。  在网页设计中">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css 浮动[译]">
+<meta property="og:url" content="http://yoursite.com/2018/08/19/css-float/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="原文链接  什么是FloatFloat是CSS用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：  在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。  在网页设计中">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/print-layout.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/web-text-wrap.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/web-layout.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/reflow-example-1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/reflow-example-2.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/unclearedfooter.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/clearedfooter.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/directionalclearing.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/collapse.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/whywecollapse.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/grid-blocks.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/grid-blocks-cleared.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/pushdown2.png">
+<meta property="og:updated_time" content="2018-08-19T14:45:18.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css 浮动[译]">
+<meta name="twitter:description" content="原文链接  什么是FloatFloat是CSS用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：  在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。  在网页设计中">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/19/css-float/print-layout.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/19/css-float/"/>
+
+
+
+
+
+  <title>css 浮动[译] | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/19/css-float/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">css 浮动[译]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-19T22:45:18+08:00">
+                2018-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="https://css-tricks.com/all-about-floats/" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<h2 id="什么是Float"><a href="#什么是Float" class="headerlink" title="什么是Float"></a>什么是Float</h2><p>Float是CSS用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：</p>
+<img src="/2018/08/19/css-float/print-layout.png">
+<p>在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。</p>
+<img src="/2018/08/19/css-float/web-text-wrap.png">
+<p>在网页设计中，页面元素依托css的float属性，使得图片被排版在文字里。<strong>浮动的元素依旧是网页流式的一部分</strong>。和绝对定位是有区别的。绝对定位的元素脱离页面流式布局，如同排版布局中告诉程序页面去忽略文字。绝对定位的元素不会影响其他元素，无论是否紧挨着接触。</p>
+<p>浮动代码示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#sidebar &#123;</span><br><span class="line">  float: right;			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通常float有四个合法值，left、right更别是元素方向定位。none(默认值)定义元素不适用float，inherit跟随父元素的浮动值。</p>
+<h2 id="Float使用场景？"><a href="#Float使用场景？" class="headerlink" title="Float使用场景？"></a>Float使用场景？</h2><p>除了之前说的字体环绕图片，float通常用于web页面的布局。</p>
+<img src="/2018/08/19/css-float/web-layout.png">
+<p>float在小范围的布局也非常使用。拿页面一个小区域举例：如果我们需要浮动图像，当图片尺寸改变时该区域盒子内的文字将重新渲染自适应。</p>
+<img src="/2018/08/19/css-float/reflow-example-1.png">
+<p>当然同样的效果relative定位和absolute定位也可以实现，但是该区域内的文本不会重新渲染并自适应。</p>
+<img src="/2018/08/19/css-float/reflow-example-2.png">
+<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>float的类似元素是clear。设置了clear的元素不会随意移动到浮动元素周边，而是会绕过浮动元素，如下图：</p>
+<img src="/2018/08/19/css-float/unclearedfooter.png">
+<p>如上图，侧边栏定义right float 并且比内容局域短。页脚则会移动到浮动元素后的空缺位置。为了修复这个问题，定义clear使得页脚待到内容和侧边栏之下这个位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#footer &#123;</span><br><span class="line">  clear: both;			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<img src="/2018/08/19/css-float/clearedfooter.png">
+<p>clear也有四个值。both是最为常用，可以清楚任意方向的浮动。left,right用于清楚指定方向的浮动。none默认值，无清除效果。inherit在IE中支持不友好。</p>
+<img src="/2018/08/19/css-float/directionalclearing.png">
+<h2 id="高度塌陷"><a href="#高度塌陷" class="headerlink" title="高度塌陷"></a>高度塌陷</h2><p>使用float最容易疑惑的问题是怎么让包裹浮动元素的父元素有效。如果父元素不含其它元素但只有浮动元素，其高度将一定塌陷。如果没有明显的背景色等参照很难发现这个问题。</p>
+<img src="/2018/08/19/css-float/collapse.png">
+<p>塌陷现象有点反人类，如下例子可能更为糟糕：</p>
+<img src="/2018/08/19/css-float/whywecollapse.png">
+<p>block元素如果已经自适应float元素，我们将遇到两个段落之间不自然的空隙，没有什么好方法修复。遇到这样的问题，我们的设计师将崩溃。</p>
+<p>塌陷现象在浏览器布局问题中是极其常见的，需要在容器中的浮动元素之后和容器闭合之前来解决处理此类问题。</p>
+<h2 id="清楚浮动的技巧"><a href="#清楚浮动的技巧" class="headerlink" title="清楚浮动的技巧"></a>清楚浮动的技巧</h2><p>如果你处理这类问题当提前知道随后元素是什么，你可以使用clear:both来解决问题。这样不需要特殊修改和额外的标签处理。当然万事不会那样顺利，我们需要更多的清除浮动的工具类。</p>
+<h3 id="使用空的Div清空元素"><a href="#使用空的Div清空元素" class="headerlink" title="使用空的Div清空元素"></a>使用空的Div清空元素</h3><p>一个空的div，<strong><div style="clear: both;"></div></strong>，当然你可以使用其他标签如<br>，但是div是最为常见的，浏览器也没有针对它有特殊样式，指定功能，同时我们也不会对其做全局css处理。这个方法会被语义“信徒”认为是可笑的，在页面中无任何含义。虽然不能说他们错，但是我们这样做没有对页面造成影响。</p>
+<h3 id="使用Overflow"><a href="#使用Overflow" class="headerlink" title="使用Overflow"></a>使用Overflow</h3><p>在父元素上定义overflow溢出属性。如果将其设置为auto、hidden，包含浮动的父元素将立竿见影地清除浮动。堪称优雅的方式，不需要添加额外标签。而然如果你发现如果在原有页面基础上又添加一个div来运用此方法，将等同于非语义的div方式，并且效果不会很好。记住overflow不是专门用来清除浮动的，当心不要隐藏内容或者触发非预期的滚动条。</p>
+<h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>添加一个css伪元素(pseudo selector)，如：:after。相比添加overflow在父元素上，你可以添加“.clearfix”来使用这个方法。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123; </span><br><span class="line">   <span class="attribute">content</span>: <span class="string">"."</span>; </span><br><span class="line">   <span class="attribute">visibility</span>: hidden; </span><br><span class="line">   <span class="attribute">display</span>: block; </span><br><span class="line">   <span class="attribute">height</span>: <span class="number">0</span>; </span><br><span class="line">   <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这将用一个很小的真实存在的内容区域放在需要解决浮动问题的父元素中。当然这不是全部代码，如果你想兼容一些其他版本的浏览器。</p>
+<h2 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析"></a>场景分析</h2><p>不同场景需要不同的清除浮动的方法，如下（处理不同类型的网格块）：</p>
+<img src="/2018/08/19/css-float/grid-blocks.png">
+<p>为了更好的展示相同的块，我们想要每个颜色相同则重启一行。对于这个需求，当颜色改变时，我们可以使用overflow、伪类方式。或者在每个颜色相同的组下使用div方式，当然不管添加三个充当父类的div或者额外添加的三个div，你自己决定那个更好？</p>
+<img src="/2018/08/19/css-float/grid-blocks-cleared.png">
+<h2 id="float问题（浏览器兼容）"><a href="#float问题（浏览器兼容）" class="headerlink" title="float问题（浏览器兼容）"></a>float问题（浏览器兼容）</h2><p>float总是会因为没考虑周全而显得解决地很鸡肋。这种脆弱性通常来自ie6和浮动相关的bug。全世界都在放弃ie6的支持，可能你不关心，但对于关心的人来说会出现很多问题。</p>
+<h3 id="顶掉其他元素"><a href="#顶掉其他元素" class="headerlink" title="顶掉其他元素"></a>顶掉其他元素</h3><p>发生在当一个元素在一个比他更窄的浮动元素内部（图片居多）。绝大多数浏览器将渲染这个图片到浮动元素外，但不会差得很多。ie将扩展浮动元素包裹其中的图片，这就会影响布局。会把其他元素往下挤掉</p>
+<img src="/2018/08/19/css-float/pushdown2.png">
+<p>解决这个问题：你可以使用<strong>overflow:hidden</strong>来解除多余的部分。</p>
+<h3 id="边距扩大"><a href="#边距扩大" class="headerlink" title="边距扩大"></a>边距扩大</h3><p>使用ie6另一件事是，如果在float同一方向上使用margin，将使得双倍的margin。<br>解决这个问题：设置<strong>display:inline</strong>在浮动元素上，它依旧保持block元素特性。</p>
+<h3 id="3px坑"><a href="#3px坑" class="headerlink" title="3px坑"></a>3px坑</h3><p>当文字旁是浮动元素，其间的3px将被神奇的抹去。<br>解决这个问题：浮动元素上额外设置长宽。</p>
+<h3 id="底部margin-bug"><a href="#底部margin-bug" class="headerlink" title="底部margin bug"></a>底部margin bug</h3><p>ie7上，父浮动元素内包含子浮动元素，子元素的bottom margin将失效。<br>解决这个问题：更为换padding。</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>如果想实现图文混排，float外没有第二选择。当然你可以查看<a href="http://blog.ideashower.com/post/15139639050/css-text-wrapper" target="_blank" rel="noopener">rather clever technique</a>，将文本包裹在非规则的形状内。对于页面局部当然还有其他方案，可查看<a href="https://alistapart.com/article/fauxabsolutepositioning" target="_blank" rel="noopener">Faux Absolute Positioning</a>，关于css3实现更好的布局方式<br><a href="https://www.w3.org/TR/2009/WD-css3-layout-20090402/" target="_blank" rel="noopener">Template Layout Module</a></p>
+<p><a href="https://css-tricks.com/video-screencasts/42-all-about-floats-screencast/" target="_blank" rel="noopener">作者的视频截图</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/17/http-hijack/" rel="next" title="http 运营商劫持">
+                <i class="fa fa-chevron-left"></i> http 运营商劫持
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Float"><span class="nav-number">1.</span> <span class="nav-text">什么是Float</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Float使用场景？"><span class="nav-number">2.</span> <span class="nav-text">Float使用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动"><span class="nav-number">3.</span> <span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高度塌陷"><span class="nav-number">4.</span> <span class="nav-text">高度塌陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清楚浮动的技巧"><span class="nav-number">5.</span> <span class="nav-text">清楚浮动的技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用空的Div清空元素"><span class="nav-number">5.1.</span> <span class="nav-text">使用空的Div清空元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Overflow"><span class="nav-number">5.2.</span> <span class="nav-text">使用Overflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪类"><span class="nav-number">5.3.</span> <span class="nav-text">伪类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景分析"><span class="nav-number">6.</span> <span class="nav-text">场景分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float问题（浏览器兼容）"><span class="nav-number">7.</span> <span class="nav-text">float问题（浏览器兼容）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顶掉其他元素"><span class="nav-number">7.1.</span> <span class="nav-text">顶掉其他元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边距扩大"><span class="nav-number">7.2.</span> <span class="nav-text">边距扩大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3px坑"><span class="nav-number">7.3.</span> <span class="nav-text">3px坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底部margin-bug"><span class="nav-number">7.4.</span> <span class="nav-text">底部margin bug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多"><span class="nav-number">8.</span> <span class="nav-text">更多</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
