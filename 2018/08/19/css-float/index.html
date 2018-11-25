@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/grid-blocks.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/grid-blocks-cleared.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/19/css-float/pushdown2.png">
-<meta property="og:updated_time" content="2018-08-19T14:45:18.702Z">
+<meta property="og:updated_time" content="2018-11-09T14:35:03.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css 浮动[译]">
 <meta name="twitter:description" content="原文链接  什么是FloatFloat是CSS用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：  在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。  在网页设计中">
@@ -402,11 +402,11 @@
 <img src="/2018/08/19/css-float/reflow-example-1.png">
 <p>当然同样的效果relative定位和absolute定位也可以实现，但是该区域内的文本不会重新渲染并自适应。</p>
 <img src="/2018/08/19/css-float/reflow-example-2.png">
-<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>float的类似元素是clear。设置了clear的元素不会随意移动到浮动元素周边，而是会绕过浮动元素，如下图：</p>
+<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>float的类似元素是clear。设置了clear的元素不会随意移动到浮动元素周边，而是会排在浮动元素之下，图例将更好的说明：</p>
 <img src="/2018/08/19/css-float/unclearedfooter.png">
-<p>如上图，侧边栏定义right float 并且比内容局域短。页脚则会移动到浮动元素后的空缺位置。为了修复这个问题，定义clear使得页脚待到内容和侧边栏之下这个位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#footer &#123;</span><br><span class="line">  clear: both;			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上例，侧边栏定义right float 并且比内容局域短。页脚则会移动到浮动元素后的空缺位置。为了修复这个问题，定义clear使得页脚待到内容和侧边栏之下这个位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#footer &#123;</span><br><span class="line">  clear: both;			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <img src="/2018/08/19/css-float/clearedfooter.png">
-<p>clear也有四个值。both是最为常用，可以清楚任意方向的浮动。left,right用于清楚指定方向的浮动。none默认值，无清除效果。inherit在IE中支持不友好。</p>
+<p>clear也有四个值。both是最为常用，可以清除任意方向的浮动。left,right用于清除指定方向的浮动。none默认值，无清除效果。inherit在IE中支持不友好。</p>
 <img src="/2018/08/19/css-float/directionalclearing.png">
 <h2 id="高度塌陷"><a href="#高度塌陷" class="headerlink" title="高度塌陷"></a>高度塌陷</h2><p>使用float最容易疑惑的问题是怎么让包裹浮动元素的父元素有效。如果父元素不含其它元素但只有浮动元素，其高度将一定塌陷。如果没有明显的背景色等参照很难发现这个问题。</p>
 <img src="/2018/08/19/css-float/collapse.png">
@@ -414,9 +414,10 @@
 <img src="/2018/08/19/css-float/whywecollapse.png">
 <p>block元素如果已经自适应float元素，我们将遇到两个段落之间不自然的空隙，没有什么好方法修复。遇到这样的问题，我们的设计师将崩溃。</p>
 <p>塌陷现象在浏览器布局问题中是极其常见的，需要在容器中的浮动元素之后和容器闭合之前来解决处理此类问题。</p>
-<h2 id="清楚浮动的技巧"><a href="#清楚浮动的技巧" class="headerlink" title="清楚浮动的技巧"></a>清楚浮动的技巧</h2><p>如果你处理这类问题当提前知道随后元素是什么，你可以使用clear:both来解决问题。这样不需要特殊修改和额外的标签处理。当然万事不会那样顺利，我们需要更多的清除浮动的工具类。</p>
-<h3 id="使用空的Div清空元素"><a href="#使用空的Div清空元素" class="headerlink" title="使用空的Div清空元素"></a>使用空的Div清空元素</h3><p>一个空的div，<strong><div style="clear: both;"></div></strong>，当然你可以使用其他标签如<br>，但是div是最为常见的，浏览器也没有针对它有特殊样式，指定功能，同时我们也不会对其做全局css处理。这个方法会被语义“信徒”认为是可笑的，在页面中无任何含义。虽然不能说他们错，但是我们这样做没有对页面造成影响。</p>
-<h3 id="使用Overflow"><a href="#使用Overflow" class="headerlink" title="使用Overflow"></a>使用Overflow</h3><p>在父元素上定义overflow溢出属性。如果将其设置为auto、hidden，包含浮动的父元素将立竿见影地清除浮动。堪称优雅的方式，不需要添加额外标签。而然如果你发现如果在原有页面基础上又添加一个div来运用此方法，将等同于非语义的div方式，并且效果不会很好。记住overflow不是专门用来清除浮动的，当心不要隐藏内容或者触发非预期的滚动条。</p>
+<h2 id="清除浮动的技巧"><a href="#清除浮动的技巧" class="headerlink" title="清除浮动的技巧"></a>清除浮动的技巧</h2><p>如果你处理这类问题当提前知道随后元素是什么，你可以使用clear:both来解决问题。这样不需要特殊修改和额外的标签处理。当然万事不会那样顺利，我们需要更多的清除浮动的工具类。</p>
+<h3 id="使用空的Div清空元素"><a href="#使用空的Div清空元素" class="headerlink" title="使用空的Div清空元素"></a>使用空的Div清空元素</h3><p>一个空的div:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;clear: both;&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当然你可以使用其他标签如<br>，但是div是最为常见的，浏览器也没有针对它有特殊样式，指定功能，同时我们也不会对其做全局css处理。这个方法会被语义“信徒”认为是可笑的，在页面中无任何含义。虽然不能说他们错，但是我们这样做没有对页面造成影响。</p>
+<h3 id="使用Overflow"><a href="#使用Overflow" class="headerlink" title="使用Overflow"></a>使用Overflow</h3><p>在父元素上定义overflow溢出属性。如果将其设置为auto、hidden，包含浮动的父元素将立竿见影地清除浮动。堪称优雅的方式，不需要添加额外标签。而然如果你发现如果在原有页面基础上又添加一个div来运用此方法，将等同于非语义的div方式，并且效果不会很好。<strong>记住overflow不是专门用来清除浮动的，当心不要隐藏内容或者触发非预期的滚动条</strong>。</p>
 <h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>添加一个css伪元素(pseudo selector)，如：:after。相比添加overflow在父元素上，你可以添加“.clearfix”来使用这个方法。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123; </span><br><span class="line">   <span class="attribute">content</span>: <span class="string">"."</span>; </span><br><span class="line">   <span class="attribute">visibility</span>: hidden; </span><br><span class="line">   <span class="attribute">display</span>: block; </span><br><span class="line">   <span class="attribute">height</span>: <span class="number">0</span>; </span><br><span class="line">   <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这将用一个很小的真实存在的内容区域放在需要解决浮动问题的父元素中。当然这不是全部代码，如果你想兼容一些其他版本的浏览器。</p>
 <h2 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析"></a>场景分析</h2><p>不同场景需要不同的清除浮动的方法，如下（处理不同类型的网格块）：</p>
@@ -481,6 +482,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/20/css-flex/" rel="prev" title="flex 弹性布局">
+                flex 弹性布局 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -561,7 +566,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -572,7 +577,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -583,7 +588,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -616,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Float"><span class="nav-number">1.</span> <span class="nav-text">什么是Float</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Float使用场景？"><span class="nav-number">2.</span> <span class="nav-text">Float使用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动"><span class="nav-number">3.</span> <span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高度塌陷"><span class="nav-number">4.</span> <span class="nav-text">高度塌陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清楚浮动的技巧"><span class="nav-number">5.</span> <span class="nav-text">清楚浮动的技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用空的Div清空元素"><span class="nav-number">5.1.</span> <span class="nav-text">使用空的Div清空元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Overflow"><span class="nav-number">5.2.</span> <span class="nav-text">使用Overflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪类"><span class="nav-number">5.3.</span> <span class="nav-text">伪类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景分析"><span class="nav-number">6.</span> <span class="nav-text">场景分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float问题（浏览器兼容）"><span class="nav-number">7.</span> <span class="nav-text">float问题（浏览器兼容）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顶掉其他元素"><span class="nav-number">7.1.</span> <span class="nav-text">顶掉其他元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边距扩大"><span class="nav-number">7.2.</span> <span class="nav-text">边距扩大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3px坑"><span class="nav-number">7.3.</span> <span class="nav-text">3px坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底部margin-bug"><span class="nav-number">7.4.</span> <span class="nav-text">底部margin bug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多"><span class="nav-number">8.</span> <span class="nav-text">更多</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Float"><span class="nav-number">1.</span> <span class="nav-text">什么是Float</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Float使用场景？"><span class="nav-number">2.</span> <span class="nav-text">Float使用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动"><span class="nav-number">3.</span> <span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高度塌陷"><span class="nav-number">4.</span> <span class="nav-text">高度塌陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动的技巧"><span class="nav-number">5.</span> <span class="nav-text">清除浮动的技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用空的Div清空元素"><span class="nav-number">5.1.</span> <span class="nav-text">使用空的Div清空元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Overflow"><span class="nav-number">5.2.</span> <span class="nav-text">使用Overflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪类"><span class="nav-number">5.3.</span> <span class="nav-text">伪类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景分析"><span class="nav-number">6.</span> <span class="nav-text">场景分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float问题（浏览器兼容）"><span class="nav-number">7.</span> <span class="nav-text">float问题（浏览器兼容）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顶掉其他元素"><span class="nav-number">7.1.</span> <span class="nav-text">顶掉其他元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边距扩大"><span class="nav-number">7.2.</span> <span class="nav-text">边距扩大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3px坑"><span class="nav-number">7.3.</span> <span class="nav-text">3px坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底部margin-bug"><span class="nav-number">7.4.</span> <span class="nav-text">底部margin bug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多"><span class="nav-number">8.</span> <span class="nav-text">更多</span></a></li></ol></div>
             
 
           </div>

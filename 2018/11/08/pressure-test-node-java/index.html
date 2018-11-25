@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="test,ab," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背景引出线上网站遭受攻击，首页被强刷，导致服务器node性能过载，影响用户正常页面访问。 大致架构：客户端发起请求 –&amp;gt; node（充当中间件，访问后端API渲染页面） –&amp;gt; java（处理业务逻辑）–&amp;gt; database 现象&amp;amp;问题   现象 疑惑     Nodejs cup 满负载 与Nodejs高性能不符？   后端 Java 的负载和Node相反 怎么性能优于N">
+<meta name="keywords" content="test,ab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node和java性能对比">
+<meta property="og:url" content="http://yoursite.com/2018/11/08/pressure-test-node-java/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="背景引出线上网站遭受攻击，首页被强刷，导致服务器node性能过载，影响用户正常页面访问。 大致架构：客户端发起请求 –&amp;gt; node（充当中间件，访问后端API渲染页面） –&amp;gt; java（处理业务逻辑）–&amp;gt; database 现象&amp;amp;问题   现象 疑惑     Nodejs cup 满负载 与Nodejs高性能不符？   后端 Java 的负载和Node相反 怎么性能优于N">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/08/pressure-test-node-java/java.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/08/pressure-test-node-java/node.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/08/pressure-test-node-java/java_node.png">
+<meta property="og:updated_time" content="2018-11-25T14:39:52.867Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node和java性能对比">
+<meta name="twitter:description" content="背景引出线上网站遭受攻击，首页被强刷，导致服务器node性能过载，影响用户正常页面访问。 大致架构：客户端发起请求 –&amp;gt; node（充当中间件，访问后端API渲染页面） –&amp;gt; java（处理业务逻辑）–&amp;gt; database 现象&amp;amp;问题   现象 疑惑     Nodejs cup 满负载 与Nodejs高性能不符？   后端 Java 的负载和Node相反 怎么性能优于N">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/08/pressure-test-node-java/java.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/08/pressure-test-node-java/"/>
+
+
+
+
+
+  <title>node和java性能对比 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/08/pressure-test-node-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node和java性能对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-08T17:33:36+08:00">
+                2018-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/test/" itemprop="url" rel="index">
+                    <span itemprop="name">test</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="背景引出"><a href="#背景引出" class="headerlink" title="背景引出"></a>背景引出</h1><p>线上网站遭受攻击，首页被强刷，导致服务器node性能过载，影响用户正常页面访问。</p>
+<p>大致架构：客户端发起请求 –&gt; node（充当中间件，访问后端API渲染页面） –&gt; java（处理业务逻辑）–&gt; database</p>
+<h1 id="现象-amp-问题"><a href="#现象-amp-问题" class="headerlink" title="现象&amp;问题"></a>现象&amp;问题</h1><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>疑惑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nodejs cup 满负载</td>
+<td>与Nodejs高性能不符？</td>
+</tr>
+<tr>
+<td>后端 Java 的负载和Node相反</td>
+<td>怎么性能优于Nodejs？</td>
+</tr>
+</tbody>
+</table>
+<h1 id="node和java来个简单测试（偏娱乐向）"><a href="#node和java来个简单测试（偏娱乐向）" class="headerlink" title="node和java来个简单测试（偏娱乐向）"></a>node和java来个简单测试（偏娱乐向）</h1><h2 id="前期测试准备"><a href="#前期测试准备" class="headerlink" title="前期测试准备"></a>前期测试准备</h2><p>分别用以下方式模拟一个线上获取用户信息的接口：</p>
+<ol>
+<li>node直连mysql</li>
+<li>node调用java接口来获取数据。</li>
+</ol>
+<p>框架：koa+koa-router+sequelize+request+pm2</p>
+<p>备注：由于不太清楚后端业务数据取值逻辑，尽可能还原response data，会存在一定的数据包偏差。</p>
+<p><strong>简要代码</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">router.all(<span class="string">'/api/java'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> uid = ctx.cookies.get(<span class="string">'uid'</span>);</span><br><span class="line">        <span class="comment">// request代理给后端java API接口</span></span><br><span class="line">	ctx.body = <span class="keyword">await</span> <span class="keyword">new</span> Http(&#123;ctx&#125;).request(&#123;</span><br><span class="line">		url: <span class="string">'/user/getbalance'</span></span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">router.all(<span class="string">'/api/node'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> uid = ctx.cookies.get(<span class="string">'uid'</span>);</span><br><span class="line">        <span class="comment">// 通过sequelize从mysql查询</span></span><br><span class="line">	<span class="keyword">let</span> data = <span class="keyword">await</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">		user.balance(uid),</span><br><span class="line">		user.integral(uid),</span><br><span class="line">		user.coupon(uid),</span><br><span class="line">		user.memberProp(uid)</span><br><span class="line">	]);</span><br><span class="line">	ctx.body = data</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="分组测试-amp-结论"><a href="#分组测试-amp-结论" class="headerlink" title="分组测试&amp;结论"></a>分组测试&amp;结论</h2><p>在测试环境，直接局域网ab测试，避免网络io损耗。<br>测试不同并发条件（100-&gt;200-&gt;500-&gt;1k-&gt;2k），1w请求总耗时；<strong>同时node增加核数（1核-&gt;2核-&gt;4核-&gt;8核）</strong></p>
+<h3 id="Java测试（node代理给java）"><a href="#Java测试（node代理给java）" class="headerlink" title="Java测试（node代理给java）"></a>Java测试（node代理给java）</h3><p>再次备注：通过node访问java接口。（要模拟线上环境，会因为node的瓶颈造成java负载过低）。</p>
+<img src="/2018/11/08/pressure-test-node-java/java.png" title="图1（红 深蓝 浅蓝 橘色代表cpu核数）">
+<h3 id="Node测试"><a href="#Node测试" class="headerlink" title="Node测试"></a>Node测试</h3><p>node直连数据库<br><img src="/2018/11/08/pressure-test-node-java/node.png" title="图2（红 深蓝 浅蓝 橘色代表cpu核数）"></p>
+<h3 id="Java-amp-node"><a href="#Java-amp-node" class="headerlink" title="Java&amp;node"></a>Java&amp;node</h3><p>直接访问java接口，硬碰硬<br><img src="/2018/11/08/pressure-test-node-java/java_node.png" title="图3"></p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><ol>
+<li>node的强项处理非阻塞异步IO，但由于是单进程，虽然请求数量增加↑，实际到达java应用的请求被限制在一个峰值max，解释了<strong>图1红柱：当cpu1核时，并发数增多，耗时不变</strong></li>
+<li>知道了node cpu瓶颈的原因，通过<strong>pm2</strong>增加核数，让java得到更多的资源去处理。<strong>图1深蓝浅蓝：cpu核数增加，耗时缩短</strong></li>
+<li>当cpu升值8核（测试环境满核），node基本不会hold住任何请求（top小于50%），直接丢到java端，到达java请求数倍增，但由于java语言特点（同步阻塞式）、外界因素（测试环境复杂），相反时间没有得到下降而是有上升趋势。<strong>图1橘色：有上升趋势</strong></li>
+<li>依托于多核的性能，node充分利用硬件资源，核数增加↑，执行能力正比例上升↑。<strong>图2：耗时随cpu核数增加，而倍减</strong></li>
+<li><strong>结合图1，图2：</strong>打开cpu限制后，不难发现node性能迅速上升，符合<strong>外界宣传</strong>，（注：使用了Promise.all更加快了异步处理速度）</li>
+<li><strong>图3：node性能好于java</strong>，但并发2k时，两者还是不分上下，还是要分不同场景对2者有个组合使用（注：因为数据库等原因，java在处理业务时，会大批出现jdbc等问题）</li>
+</ol>
+<h1 id="apach-ab"><a href="#apach-ab" class="headerlink" title="apach ab"></a>apach ab</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p><a href="https://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener">apache ab</a></p>
+<p>运行脚本:ab + 请求数量 + 并发数量 + 测试地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost pressure_analysis]# ab -n 10000 -c 1000 http://127.0.0.1:3301/anal/api/java</span><br></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Concurrency Level</td>
+<td>1000</td>
+<td>并发数量</td>
+</tr>
+<tr>
+<td>Complete requests</td>
+<td>10000</td>
+<td>全部完成的请求数量</td>
+</tr>
+<tr>
+<td>Time taken for tests</td>
+<td>7.907 seconds</td>
+<td>运行测试脚本总用时</td>
+</tr>
+<tr>
+<td>Total transferred</td>
+<td>2880000 bytes</td>
+<td>数据包大小</td>
+</tr>
+<tr>
+<td>Requests per second</td>
+<td>1264.76 [#/sec] (mean)</td>
+<td>平均每秒请求数量（Complete requests/Time taken for tests）</td>
+</tr>
+<tr>
+<td>Time per request</td>
+<td>790.661 [ms] (mean)</td>
+<td>单个请求平均耗时（Concurrency Level*Time taken for tests）</td>
+</tr>
+<tr>
+<td>Transfer rate</td>
+<td>355.71 [Kbytes/sec] received</td>
+<td>数据包传输速率</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ab工具使用到的一些问题"><a href="#ab工具使用到的一些问题" class="headerlink" title="ab工具使用到的一些问题"></a>ab工具使用到的一些问题</h2><h3 id="apr-socket-recv-Connection-reset-by-peer-104"><a href="#apr-socket-recv-Connection-reset-by-peer-104" class="headerlink" title="apr_socket_recv: Connection reset by peer (104)"></a>apr_socket_recv: Connection reset by peer (104)</h3><blockquote>
+<p>sysctl命令被用于在内核运行时动态地修改内核的运行参数，可用的内核参数在目录/proc/sys中。它包含一些TCP/ip堆栈和虚拟内存系统的高级选项， 这可以让有经验的管理员提高引人注目的系统性能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost pressure_analysis]# vim /etc/sysctl.conf</span><br><span class="line">net.ipv4.tcp_syncookies = 0</span><br><span class="line"></span><br><span class="line">[root@localhost pressure_analysis]# sysctl -p</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="socket-Too-many-open-files-24"><a href="#socket-Too-many-open-files-24" class="headerlink" title="socket: Too many open files (24)"></a>socket: Too many open files (24)</h3><blockquote>
+<p>ulimit用来限制系统用户对shell资源的访问</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 注意到open files限制1024</span><br><span class="line">[root@localhost pressure_analysis]# ulimit -a</span><br><span class="line">core file size          (blocks, -c) 0</span><br><span class="line">data seg size           (kbytes, -d) unlimited</span><br><span class="line">scheduling priority             (-e) 0</span><br><span class="line">file size               (blocks, -f) unlimited</span><br><span class="line">pending signals                 (-i) 257702</span><br><span class="line">max locked memory       (kbytes, -l) 64</span><br><span class="line">max memory size         (kbytes, -m) unlimited</span><br><span class="line">open files                      (-n) 1024</span><br><span class="line">pipe size            (512 bytes, -p) 8</span><br><span class="line">POSIX message queues     (bytes, -q) 819200</span><br><span class="line">real-time priority              (-r) 0</span><br><span class="line">stack size              (kbytes, -s) 10240</span><br><span class="line">cpu time               (seconds, -t) unlimited</span><br><span class="line">max user processes              (-u) 257702</span><br><span class="line">virtual memory          (kbytes, -v) unlimited</span><br><span class="line">file locks                      (-x) unlimited</span><br><span class="line"></span><br><span class="line"># 修改配置</span><br><span class="line">[root@localhost pressure_analysis]# ulimit  -n 5000</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://man.linuxde.net/sysctl" target="_blank" rel="noopener">linux命令</a></li>
+<li><a href="https://www.cnblogs.com/felixzh/p/8295471.html" target="_blank" rel="noopener">sysctl</a></li>
+<li><a href="https://blog.csdn.net/hexuan1/article/details/45191549" target="_blank" rel="noopener">ulimit</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/test/" rel="tag"># test</a>
+          
+            <a href="/tags/ab/" rel="tag"># ab</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/29/webpack-require-font/" rel="next" title="webpack 中使用sass-loader 如何正确加载font字体">
+                <i class="fa fa-chevron-left"></i> webpack 中使用sass-loader 如何正确加载font字体
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/16/ab-test-post/" rel="prev" title="apache ab 工具如何发送post请求">
+                apache ab 工具如何发送post请求 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景引出"><span class="nav-number">1.</span> <span class="nav-text">背景引出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#现象-amp-问题"><span class="nav-number">2.</span> <span class="nav-text">现象&amp;问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node和java来个简单测试（偏娱乐向）"><span class="nav-number">3.</span> <span class="nav-text">node和java来个简单测试（偏娱乐向）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期测试准备"><span class="nav-number">3.1.</span> <span class="nav-text">前期测试准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组测试-amp-结论"><span class="nav-number">3.2.</span> <span class="nav-text">分组测试&amp;结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java测试（node代理给java）"><span class="nav-number">3.2.1.</span> <span class="nav-text">Java测试（node代理给java）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node测试"><span class="nav-number">3.2.2.</span> <span class="nav-text">Node测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-amp-node"><span class="nav-number">3.2.3.</span> <span class="nav-text">Java&amp;node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">3.2.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apach-ab"><span class="nav-number">4.</span> <span class="nav-text">apach ab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">4.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ab工具使用到的一些问题"><span class="nav-number">4.2.</span> <span class="nav-text">ab工具使用到的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#apr-socket-recv-Connection-reset-by-peer-104"><span class="nav-number">4.2.1.</span> <span class="nav-text">apr_socket_recv: Connection reset by peer (104)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-Too-many-open-files-24"><span class="nav-number">4.2.2.</span> <span class="nav-text">socket: Too many open files (24)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
