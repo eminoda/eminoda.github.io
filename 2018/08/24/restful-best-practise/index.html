@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="node restful," />
+  <meta name="keywords" content="http,restful," />
 
 
 
@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供API的质量和方式。不谈restful巴拉巴拉的概念，但从实际落地的效果，看下几个常见的best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户 更新用户">
-<meta name="keywords" content="node restful">
+<meta name="description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供 API 的质量和方式。不谈 restful 巴拉巴拉的概念，但从实际落地的效果，看下几个常见的 best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户">
+<meta name="keywords" content="http,restful">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Restful 最佳实践">
 <meta property="og:url" content="http://yoursite.com/2018/08/24/restful-best-practise/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供API的质量和方式。不谈restful巴拉巴拉的概念，但从实际落地的效果，看下几个常见的best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户 更新用户">
+<meta property="og:description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供 API 的质量和方式。不谈 restful 巴拉巴拉的概念，但从实际落地的效果，看下几个常见的 best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/08/24/restful-best-practise/HATEOAS.png">
-<meta property="og:updated_time" content="2018-11-09T14:35:04.822Z">
+<meta property="og:updated_time" content="2019-04-11T15:26:18.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Restful 最佳实践">
-<meta name="twitter:description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供API的质量和方式。不谈restful巴拉巴拉的概念，但从实际落地的效果，看下几个常见的best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户 更新用户">
+<meta name="twitter:description" content="前言restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供 API 的质量和方式。不谈 restful 巴拉巴拉的概念，但从实际落地的效果，看下几个常见的 best practice 接口定义规范   resource get post put delete     /users 获取用户列表 新增用户">
 <meta name="twitter:image" content="http://yoursite.com/2018/08/24/restful-best-practise/HATEOAS.png">
 
 
@@ -326,8 +326,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
                   </a>
                 </span>
 
@@ -337,8 +337,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/restful/" itemprop="url" rel="index">
-                    <span itemprop="name">restful</span>
+                  <a href="/categories/开发/node/" itemprop="url" rel="index">
+                    <span itemprop="name">node</span>
                   </a>
                 </span>
 
@@ -374,7 +374,7 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供API的质量和方式。<br>不谈restful巴拉巴拉的概念，但从实际落地的效果，看下几个常见的best practice</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>restful（Representational State Transfer）近年来听到的次数逐渐增多，自打前后端分离开始流行，服务端越来越侧重提供 API 的质量和方式。<br>不谈 restful 巴拉巴拉的概念，但从实际落地的效果，看下几个常见的 best practice</p>
 <h2 id="接口定义规范"><a href="#接口定义规范" class="headerlink" title="接口定义规范"></a>接口定义规范</h2><table>
 <thead>
 <tr>
@@ -395,25 +395,27 @@
 </tr>
 <tr>
 <td>/users/:id</td>
-<td>根据id获取用户</td>
+<td>根据 id 获取用户</td>
 <td>return 405</td>
-<td>根据id更新用户</td>
+<td>根据 id 更新用户</td>
 <td>删除指定用户</td>
 </tr>
 </tbody>
 </table>
-<p>这是rest最明显的特点，通过Http请求方法来判断<strong>同一资源</strong>的不同操作方式的展现。</p>
+<p>这是 rest 最明显的特点，通过 Http 请求方法来判断<strong>同一资源</strong>的不同操作方式的展现。</p>
 <ul>
-<li>同一资源在不同http method实现不同需求</li>
+<li>同一资源在不同 http method 实现不同需求</li>
 <li>接口最好用复数</li>
 <li><strong>资源获取</strong>（users，products）以名词代替动词</li>
 <li><strong>非资源</strong>（calc…）以动词定义</li>
 <li>接口以资源定义，不要按照功能语义功能</li>
 </ul>
-<p>切记不要使用如下方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/getUsers</span><br><span class="line">/addUsers</span><br><span class="line">/user</span><br><span class="line">/frozenUsers</span><br><span class="line">/activeUser</span><br></pre></td></tr></table></figure></p>
-<h2 id="请求参数定义"><a href="#请求参数定义" class="headerlink" title="请求参数定义"></a>请求参数定义</h2><p>比如维护get api 或者添加query params方式来改变用户状态。应该使用post、put等来修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/users/:id/frozen</span><br><span class="line">/users/:id?frozen=1</span><br></pre></td></tr></table></figure></p>
-<h2 id="不同的错误处理"><a href="#不同的错误处理" class="headerlink" title="不同的错误处理"></a>不同的错误处理</h2><p>提供针对不同情况的response code和描述错误的信息</p>
-<h2 id="返回状态码限制"><a href="#返回状态码限制" class="headerlink" title="返回状态码限制"></a>返回状态码限制</h2><p>同一接口在不同的method下，不同错误处理，返回的状态码不同。</p>
+<p>切记不要使用如下方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/getUsers</span><br><span class="line">/addUsers</span><br><span class="line">/user</span><br><span class="line">/frozenUsers</span><br><span class="line">/activeUser</span><br></pre></td></tr></table></figure>
+<h2 id="请求参数定义"><a href="#请求参数定义" class="headerlink" title="请求参数定义"></a>请求参数定义</h2><p>比如维护 get api 或者添加 query params 方式来改变用户状态。应该使用 post、put 等来修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/users/:id/frozen</span><br><span class="line">/users/:id?frozen=1</span><br></pre></td></tr></table></figure>
+<h2 id="不同的错误处理"><a href="#不同的错误处理" class="headerlink" title="不同的错误处理"></a>不同的错误处理</h2><p>提供针对不同情况的 response code 和描述错误的信息</p>
+<h2 id="返回状态码限制"><a href="#返回状态码限制" class="headerlink" title="返回状态码限制"></a>返回状态码限制</h2><p>同一接口在不同的 method 下，不同错误处理，返回的状态码不同。</p>
 <ul>
 <li>200 OK</li>
 <li>400 Bad Request</li>
@@ -423,15 +425,16 @@
 <li>500 Internal Server Error</li>
 </ul>
 <h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.example.com/v1/users</span><br></pre></td></tr></table></figure>
-<h2 id="HATEOAS驱动"><a href="#HATEOAS驱动" class="headerlink" title="HATEOAS驱动"></a>HATEOAS驱动</h2><p>HATEOAS(hypermedia as the engine of application state)<br>整个rest构建的服务，以超文本作为应用状态来驱动。客户端对资源的获取渐进式的方式按需获取。<br><img src="/2018/08/24/restful-best-practise/HATEOAS.png" title="HATEOAS"></p>
+<h2 id="HATEOAS-驱动"><a href="#HATEOAS-驱动" class="headerlink" title="HATEOAS 驱动"></a>HATEOAS 驱动</h2><p>HATEOAS(hypermedia as the engine of application state)<br>整个 rest 构建的服务，以超文本作为应用状态来驱动。客户端对资源的获取渐进式的方式按需获取。<br><img src="/2018/08/24/restful-best-practise/HATEOAS.png" title="HATEOAS"></p>
 <ul>
 <li>第一个层次（Level 0）的 Web 服务只是使用 HTTP 作为传输方式，实际上只是远程方法调用（RPC）的一种具体形式。SOAP 和 XML-RPC 都属于此类。</li>
 <li>第二个层次（Level 1）的 Web 服务引入了资源的概念。每个资源有对应的标识符和表达。</li>
 <li>第三个层次（Level 2）的 Web 服务使用不同的 HTTP 方法来进行不同的操作，并且使用 HTTP 状态码来表示不同的结果。如 HTTP GET 方法来获取资源，HTTP DELETE 方法来删除资源。</li>
 <li>第四个层次（Level 3）的 Web 服务使用 HATEOAS。在资源的表达中包含了链接信息。客户端可以根据链接来发现可以执行的动作。</li>
 </ul>
-<p>定义了4个level，不过我们大多停留在0,1级，说白了就是不规范的rest</p>
-<p>如：获取学校<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/api/schools</span><br><span class="line">&#123;</span><br><span class="line">    students:&#123;</span><br><span class="line">        url:&apos;/api/students&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    teachers:&#123;</span><br><span class="line">        url:&apos;/api/teachers&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义了 4 个 level，不过我们大多停留在 0,1 级，说白了就是不规范的 rest</p>
+<p>如：获取学校</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/api/schools</span><br><span class="line">&#123;</span><br><span class="line">    students:&#123;</span><br><span class="line">        url:&apos;/api/students&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    teachers:&#123;</span><br><span class="line">        url:&apos;/api/teachers&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p><a href="https://github.com/waylau/rest-in-action" target="_blank" rel="noopener">rest action</a></p>
 
       
@@ -460,7 +463,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/node-restful/" rel="tag"># node restful</a>
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+            <a href="/tags/restful/" rel="tag"># restful</a>
           
         </div>
       
@@ -566,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +593,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -621,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口定义规范"><span class="nav-number">1.1.</span> <span class="nav-text">接口定义规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数定义"><span class="nav-number">1.2.</span> <span class="nav-text">请求参数定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同的错误处理"><span class="nav-number">1.3.</span> <span class="nav-text">不同的错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回状态码限制"><span class="nav-number">1.4.</span> <span class="nav-text">返回状态码限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本控制"><span class="nav-number">1.5.</span> <span class="nav-text">版本控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HATEOAS驱动"><span class="nav-number">1.6.</span> <span class="nav-text">HATEOAS驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展阅读"><span class="nav-number">1.7.</span> <span class="nav-text">扩展阅读</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口定义规范"><span class="nav-number">1.1.</span> <span class="nav-text">接口定义规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数定义"><span class="nav-number">1.2.</span> <span class="nav-text">请求参数定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同的错误处理"><span class="nav-number">1.3.</span> <span class="nav-text">不同的错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回状态码限制"><span class="nav-number">1.4.</span> <span class="nav-text">返回状态码限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本控制"><span class="nav-number">1.5.</span> <span class="nav-text">版本控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HATEOAS-驱动"><span class="nav-number">1.6.</span> <span class="nav-text">HATEOAS 驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展阅读"><span class="nav-number">1.7.</span> <span class="nav-text">扩展阅读</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -641,7 +646,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

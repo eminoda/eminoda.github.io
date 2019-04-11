@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="node npm," />
+  <meta name="keywords" content="npm," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="用了那么多npm包，那怎么自己上传一个package呢？随便一Baidu其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我们使用npm，">
-<meta name="keywords" content="node npm">
+<meta name="description" content="用了那么多 npm 包，那怎么自己上传一个 package 呢？随便一 Baidu 其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么 unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我">
+<meta name="keywords" content="npm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="npm发布公共包">
+<meta property="og:title" content="npm 发布公共包">
 <meta property="og:url" content="http://yoursite.com/2018/08/03/npm-publish/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="用了那么多npm包，那怎么自己上传一个package呢？随便一Baidu其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我们使用npm，">
+<meta property="og:description" content="用了那么多 npm 包，那怎么自己上传一个 package 呢？随便一 Baidu 其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么 unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-18T14:37:25.385Z">
+<meta property="og:updated_time" content="2019-04-11T15:26:18.959Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="npm发布公共包">
-<meta name="twitter:description" content="用了那么多npm包，那怎么自己上传一个package呢？随便一Baidu其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我们使用npm，">
+<meta name="twitter:title" content="npm 发布公共包">
+<meta name="twitter:description" content="用了那么多 npm 包，那怎么自己上传一个 package 呢？随便一 Baidu 其实都有解决方法，此文只作为个人笔记记录。 省去千言万语，你自己点进去看吧 先看看怎么 unpublish It is generally considered bad behavior to remove versions of a library that others are depending on!  我">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>npm发布公共包 | NextInnovation</title>
+  <title>npm 发布公共包 | NextInnovation</title>
   
 
 
@@ -289,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">npm发布公共包</h1>
+          <h1 class="post-title" itemprop="name headline">npm 发布公共包</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
                   </a>
                 </span>
 
@@ -335,7 +335,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/node/" itemprop="url" rel="index">
+                  <a href="/categories/开发/node/" itemprop="url" rel="index">
                     <span itemprop="name">node</span>
                   </a>
                 </span>
@@ -372,27 +372,30 @@
       
 
       
-        <p>用了那么多npm包，那怎么自己上传一个package呢？随便一Baidu其实都有解决方法，此文只作为个人笔记记录。</p>
+        <p>用了那么多 npm 包，那怎么自己上传一个 package 呢？随便一 Baidu 其实都有解决方法，此文只作为个人笔记记录。</p>
 <p><a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank" rel="noopener">省去千言万语，你自己点进去看吧</a></p>
-<h1 id="先看看怎么unpublish"><a href="#先看看怎么unpublish" class="headerlink" title="先看看怎么unpublish"></a><a href="https://docs.npmjs.com/cli/unpublish" target="_blank" rel="noopener">先看看怎么unpublish</a></h1><blockquote>
+<h1 id="先看看怎么-unpublish"><a href="#先看看怎么-unpublish" class="headerlink" title="先看看怎么 unpublish"></a><a href="https://docs.npmjs.com/cli/unpublish" target="_blank" rel="noopener">先看看怎么 unpublish</a></h1><blockquote>
 <p>It is generally considered bad behavior to remove versions of a library that others are depending on!</p>
 </blockquote>
-<p>我们使用npm，都是云上的东西，如果你写的玩意正好被他人用着，哪天<strong>种子下不到了</strong>，的确会造成很多人的麻烦。<br>如果真的迫不得已，还是使用deprecate，<a href="https://www.npmjs.com/policies/unpublish" target="_blank" rel="noopener">了解更多卸载政策？</a>。</p>
-<p>这里只是做个卸载发布的测试<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除不了</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm unpublish niu-util@<span class="number">1.0</span><span class="number">.0</span></span><br><span class="line">npm ERR! code E400</span><br><span class="line">npm ERR! You can no longer unpublish <span class="keyword">this</span> version. Please deprecate it instead</span><br><span class="line">npm ERR! npm deprecate -f <span class="string">'niu-util@*'</span> <span class="string">"this package has been deprecated"</span> : <span class="number">1</span><span class="number">-77</span>fa60bb9a3929ac7ce6b933673ba6bf</span><br><span class="line"><span class="comment">// 使其失效</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm deprecate niu-util <span class="string">"this is demo"</span></span><br><span class="line"><span class="comment">// 从个人账户删除这个pkg</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm owner rm eminoda niu-util</span><br><span class="line">- eminoda (niu-util)</span><br></pre></td></tr></table></figure></p>
-<h1 id="回归正题，怎么上传自己的pkg"><a href="#回归正题，怎么上传自己的pkg" class="headerlink" title="回归正题，怎么上传自己的pkg"></a>回归正题，怎么上传自己的pkg</h1><ol>
-<li><p>创建一个npm account<br>自己去网上注册个号，没什么说的</p>
+<p>我们使用 npm，都是云上的东西，如果你写的玩意正好被他人用着，哪天<strong>种子下不到了</strong>，的确会造成很多人的麻烦。<br>如果真的迫不得已，还是使用 deprecate，<a href="https://www.npmjs.com/policies/unpublish" target="_blank" rel="noopener">了解更多卸载政策？</a>。</p>
+<p>这里只是做个卸载发布的测试</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除不了</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm unpublish niu-util@<span class="number">1.0</span><span class="number">.0</span></span><br><span class="line">npm ERR! code E400</span><br><span class="line">npm ERR! You can no longer unpublish <span class="keyword">this</span> version. Please deprecate it instead</span><br><span class="line">npm ERR! npm deprecate -f <span class="string">'niu-util@*'</span> <span class="string">"this package has been deprecated"</span> : <span class="number">1</span><span class="number">-77</span>fa60bb9a3929ac7ce6b933673ba6bf</span><br><span class="line"><span class="comment">// 使其失效</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm deprecate niu-util <span class="string">"this is demo"</span></span><br><span class="line"><span class="comment">// 从个人账户删除这个pkg</span></span><br><span class="line">E:\my_work\github\myBlog&gt;npm owner rm eminoda niu-util</span><br><span class="line">- eminoda (niu-util)</span><br></pre></td></tr></table></figure>
+<h1 id="回归正题，怎么上传自己的-pkg"><a href="#回归正题，怎么上传自己的-pkg" class="headerlink" title="回归正题，怎么上传自己的 pkg"></a>回归正题，怎么上传自己的 pkg</h1><ol>
+<li><p>创建一个 npm account<br>自己去网上注册个号，没什么说的</p>
 </li>
 <li><p>登录账号</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E:\my_work\github\myBlog&gt;npm adduser</span><br><span class="line">Username: eminoda</span><br><span class="line">Password:</span><br><span class="line">Email: (<span class="keyword">this</span> IS public) <span class="number">123456789</span>@qq.com</span><br><span class="line">Logged <span class="keyword">in</span> <span class="keyword">as</span> eminoda on https:<span class="comment">//registry.npmjs.org/.</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank" rel="noopener">创建&amp;编写package.json，发布</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"@eminoda/jest-cli"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"simple jest command"</span>,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="string">"license"</span>: <span class="string">"ISC"</span></span><br><span class="line">&#125;</span><br><span class="line">npm publish</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://docs.npmjs.com/getting-started/scoped-packages" target="_blank" rel="noopener">当然你也可以自定义scope</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义scope</span></span><br><span class="line">E:\jest&gt;npm init --scope=eminoda</span><br><span class="line"><span class="comment">// 设置scope</span></span><br><span class="line">E:\jest&gt;npm config set scope eminoda</span><br><span class="line"><span class="comment">// 如果没有公开，将无法提交</span></span><br><span class="line">E:\jest&gt;npm publish</span><br><span class="line">npm ERR! publish Failed PUT <span class="number">402</span></span><br><span class="line">npm ERR! code E402</span><br><span class="line">npm ERR! You must sign up <span class="keyword">for</span> private packages : @eminoda/jest-cli</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log <span class="keyword">of</span> <span class="keyword">this</span> run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\<span class="number">2018</span><span class="number">-08</span><span class="number">-03</span>T15_21_14_351Z-debug.log</span><br><span class="line"></span><br><span class="line">E:\jest&gt;npm publish --access=public</span><br><span class="line">+ @eminoda/jest-cli@<span class="number">0.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h1><p>本来如前言说的，半年前上传过一个module，那时Baidu一贴基本包就上去了。但如果落地到知识的总结还是有很多需要学习的。，现在会考虑更多东西，对应的扩展面也大了。<br>比如：包上传上去，总要考虑如何delete、update。总看到别人@username命名的库名…都得到了解答。这20分钟收获简单，但意义不小。<br>如果你也看到这里了，<a href="https://www.npmjs.com/package/hexo-jwt" target="_blank" rel="noopener">不妨下载个小包？hexo-jwt</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E:\my_work\github\myBlog&gt;npm adduser</span><br><span class="line">Username: eminoda</span><br><span class="line">Password:</span><br><span class="line">Email: (<span class="keyword">this</span> IS public) <span class="number">123456789</span>@qq.com</span><br><span class="line">Logged <span class="keyword">in</span> <span class="keyword">as</span> eminoda on https:<span class="comment">//registry.npmjs.org/.</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank" rel="noopener">创建&amp;编写 package.json，发布</a></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"@eminoda/jest-cli"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"simple jest command"</span>,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="string">"license"</span>: <span class="string">"ISC"</span></span><br><span class="line">&#125;</span><br><span class="line">npm publish</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><a href="https://docs.npmjs.com/getting-started/scoped-packages" target="_blank" rel="noopener">当然你也可以自定义 scope</a></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义scope</span></span><br><span class="line">E:\jest&gt;npm init --scope=eminoda</span><br><span class="line"><span class="comment">// 设置scope</span></span><br><span class="line">E:\jest&gt;npm config set scope eminoda</span><br><span class="line"><span class="comment">// 如果没有公开，将无法提交</span></span><br><span class="line">E:\jest&gt;npm publish</span><br><span class="line">npm ERR! publish Failed PUT <span class="number">402</span></span><br><span class="line">npm ERR! code E402</span><br><span class="line">npm ERR! You must sign up <span class="keyword">for</span> private packages : @eminoda/jest-cli</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log <span class="keyword">of</span> <span class="keyword">this</span> run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\<span class="number">2018</span><span class="number">-08</span><span class="number">-03</span>T15_21_14_351Z-debug.log</span><br><span class="line"></span><br><span class="line">E:\jest&gt;npm publish --access=public</span><br><span class="line">+ @eminoda/jest-cli@<span class="number">0.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<h1 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h1><p>本来如前言说的，半年前上传过一个 module，那时 Baidu 一贴基本包就上去了。但如果落地到知识的总结还是有很多需要学习的。，现在会考虑更多东西，对应的扩展面也大了。<br>比如：包上传上去，总要考虑如何 delete、update。总看到别人@username 命名的库名…都得到了解答。这 20 分钟收获简单，但意义不小。<br>如果你也看到这里了，<a href="https://www.npmjs.com/package/hexo-jwt" target="_blank" rel="noopener">不妨下载个小包？hexo-jwt</a></p>
 
       
     </div>
@@ -420,7 +423,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/node-npm/" rel="tag"># node npm</a>
+            <a href="/tags/npm/" rel="tag"># npm</a>
           
         </div>
       
@@ -433,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/11/vue-basic-learn/" rel="next" title="vue框架学习--基础js知识点">
-                <i class="fa fa-chevron-left"></i> vue框架学习--基础js知识点
+              <a href="/2018/07/11/vue-basic-learn/" rel="next" title="vue 框架学习--基础js知识点">
+                <i class="fa fa-chevron-left"></i> vue 框架学习--基础js知识点
               </a>
             
           </div>
@@ -443,8 +446,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/03/js-promise-return/" rel="prev" title="prmoise返回遇到个问题">
-                prmoise返回遇到个问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/03/js-promise-return/" rel="prev" title="prmoise 返回遇到个问题">
+                prmoise 返回遇到个问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -526,7 +529,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -548,7 +551,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -581,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先看看怎么unpublish"><span class="nav-number">1.</span> <span class="nav-text">先看看怎么unpublish</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回归正题，怎么上传自己的pkg"><span class="nav-number">2.</span> <span class="nav-text">回归正题，怎么上传自己的pkg</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结下"><span class="nav-number">3.</span> <span class="nav-text">总结下</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先看看怎么-unpublish"><span class="nav-number">1.</span> <span class="nav-text">先看看怎么 unpublish</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回归正题，怎么上传自己的-pkg"><span class="nav-number">2.</span> <span class="nav-text">回归正题，怎么上传自己的 pkg</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结下"><span class="nav-number">3.</span> <span class="nav-text">总结下</span></a></li></ol></div>
             
 
           </div>
@@ -601,7 +604,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

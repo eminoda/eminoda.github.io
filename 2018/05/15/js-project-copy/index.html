@@ -82,7 +82,7 @@
 <meta name="description" content="项目复杂了，人员沟通不通畅，开发进度赶时间，不可避免的会造成代码的重复。为了实现一个相似功能，可能会ctrl+c，ctrl+v然后修改个参数，草草交差。给后期增加更大的维护成本。 其实这违反了DRY原则（Don’t repeat yourself），说起来好像很高大上，其实它就是软件设计中一种最佳实践的开发模式。通过抽象、消除重复数据，避免数据冗余。 那我们怎么检测平时工程项目中的重复代码呢？下">
 <meta name="keywords" content="quality">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js重复代码块检查">
+<meta property="og:title" content="js 重复代码块检查">
 <meta property="og:url" content="http://yoursite.com/2018/05/15/js-project-copy/index.html">
 <meta property="og:site_name" content="NextInnovation">
 <meta property="og:description" content="项目复杂了，人员沟通不通畅，开发进度赶时间，不可避免的会造成代码的重复。为了实现一个相似功能，可能会ctrl+c，ctrl+v然后修改个参数，草草交差。给后期增加更大的维护成本。 其实这违反了DRY原则（Don’t repeat yourself），说起来好像很高大上，其实它就是软件设计中一种最佳实践的开发模式。通过抽象、消除重复数据，避免数据冗余。 那我们怎么检测平时工程项目中的重复代码呢？下">
@@ -92,9 +92,9 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/15/js-project-copy/example-2.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/15/js-project-copy/example-3.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/15/js-project-copy/example-4.png">
-<meta property="og:updated_time" content="2018-08-18T14:37:25.370Z">
+<meta property="og:updated_time" content="2019-04-11T15:26:18.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js重复代码块检查">
+<meta name="twitter:title" content="js 重复代码块检查">
 <meta name="twitter:description" content="项目复杂了，人员沟通不通畅，开发进度赶时间，不可避免的会造成代码的重复。为了实现一个相似功能，可能会ctrl+c，ctrl+v然后修改个参数，草草交差。给后期增加更大的维护成本。 其实这违反了DRY原则（Don’t repeat yourself），说起来好像很高大上，其实它就是软件设计中一种最佳实践的开发模式。通过抽象、消除重复数据，避免数据冗余。 那我们怎么检测平时工程项目中的重复代码呢？下">
 <meta name="twitter:image" content="http://yoursite.com/2018/05/15/js-project-copy/dry.jpg">
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>js重复代码块检查 | NextInnovation</title>
+  <title>js 重复代码块检查 | NextInnovation</title>
   
 
 
@@ -295,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js重复代码块检查</h1>
+          <h1 class="post-title" itemprop="name headline">js 重复代码块检查</h1>
         
 
         <div class="post-meta">
@@ -330,8 +330,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
                   </a>
                 </span>
 
@@ -341,7 +341,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/工程化/" itemprop="url" rel="index">
+                  <a href="/categories/开发/工程化/" itemprop="url" rel="index">
                     <span itemprop="name">工程化</span>
                   </a>
                 </span>
@@ -382,18 +382,20 @@
 <p>项目复杂了，人员沟通不通畅，开发进度赶时间，不可避免的会造成代码的重复。为了实现一个相似功能，可能会<strong>ctrl+c，ctrl+v</strong>然后修改个参数，草草交差。给后期增加更大的维护成本。</p>
 <p>其实这违反了<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="noopener"><strong>DRY</strong>原则（Don’t repeat yourself）</a>，说起来好像很高大上，其实它就是软件设计中一种最佳实践的开发模式。通过抽象、消除重复数据，避免数据冗余。</p>
 <p>那我们怎么检测平时工程项目中的重复代码呢？下面介绍几个工具：</p>
-<h2 id="jsinspect"><a href="#jsinspect" class="headerlink" title="jsinspect"></a><a href="https://github.com/danielstjules/jsinspect" target="_blank" rel="noopener">jsinspect</a></h2><p>Detect copy-pasted and structurally similar code<br>值得注意的，只支持js和jsx</p>
+<h2 id="jsinspect"><a href="#jsinspect" class="headerlink" title="jsinspect"></a><a href="https://github.com/danielstjules/jsinspect" target="_blank" rel="noopener">jsinspect</a></h2><p>Detect copy-pasted and structurally similar code<br>值得注意的，只支持 js 和 jsx</p>
 <blockquote>
 <p>The tool accepts a list of paths to parse and prints any found matches. Any directories among the paths are walked recursively, and only .js and .jsx files are analyzed</p>
 </blockquote>
-<p>快速使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g jsinspect</span><br><span class="line">jsinspect -t 50 ./server/src/js</span><br></pre></td></tr></table></figure></p>
+<p>快速使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g jsinspect</span><br><span class="line">jsinspect -t 50 ./server/src/js</span><br></pre></td></tr></table></figure>
 <p>效果：<br><img src="/2018/05/15/js-project-copy/example-1.png" title="检测出类似代码块"></p>
-<p>当然你还可以在project root下新建.jsinspectrc，配置更多参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;threshold&quot;:     30,// 指定规则命中的节点数量</span><br><span class="line">  &quot;identifiers&quot;:   true,// variables, methods, properties, etc</span><br><span class="line">  &quot;literals&quot;:      true,// strings, numbers, etc.</span><br><span class="line">  &quot;color&quot;:         true,</span><br><span class="line">  &quot;minInstances&quot;:  2,// 最小匹配数量</span><br><span class="line">  &quot;ignore&quot;:        &quot;test|spec|node_modules&quot;,</span><br><span class="line">  &quot;reporter&quot;:      &quot;default&quot;,// 报告格式，还有pmd、json</span><br><span class="line">  &quot;truncate&quot;:      10// 截取行数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="jscpd"><a href="#jscpd" class="headerlink" title="jscpd"></a><a href="https://github.com/kucherenko/jscpd" target="_blank" rel="noopener">jscpd</a></h2><p>Copy/paste detector for programming source code. </p>
+<p>当然你还可以在 project root 下新建.jsinspectrc，配置更多参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;threshold&quot;:     30,// 指定规则命中的节点数量</span><br><span class="line">  &quot;identifiers&quot;:   true,// variables, methods, properties, etc</span><br><span class="line">  &quot;literals&quot;:      true,// strings, numbers, etc.</span><br><span class="line">  &quot;color&quot;:         true,</span><br><span class="line">  &quot;minInstances&quot;:  2,// 最小匹配数量</span><br><span class="line">  &quot;ignore&quot;:        &quot;test|spec|node_modules&quot;,</span><br><span class="line">  &quot;reporter&quot;:      &quot;default&quot;,// 报告格式，还有pmd、json</span><br><span class="line">  &quot;truncate&quot;:      10// 截取行数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="jscpd"><a href="#jscpd" class="headerlink" title="jscpd"></a><a href="https://github.com/kucherenko/jscpd" target="_blank" rel="noopener">jscpd</a></h2><p>Copy/paste detector for programming source code.</p>
 <p>和 jsinspect 不同：</p>
 <ol>
-<li>它支持多种extension的语言</li>
-<li>具有report导出功能</li>
+<li>它支持多种 extension 的语言</li>
+<li>具有 report 导出功能</li>
 </ol>
 <table>
 <thead>
@@ -451,17 +453,19 @@
 </tr>
 </tbody>
 </table>
-<p>快速使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install jscpd -g</span><br><span class="line">jscpd --languages vue --path ./src</span><br></pre></td></tr></table></figure></p>
-<p>同样，也可以定义配置文件<strong>.cpd.yaml</strong>，简化命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">path: &quot;./src&quot; //校验路径</span><br><span class="line">output: &quot;../jscpd-report.xml&quot; //report文件</span><br><span class="line">languages:</span><br><span class="line">  - vue</span><br><span class="line">blame: false //是否显示详细信息，会列出git等信息</span><br><span class="line">verbose: false //是否输出具体信息</span><br><span class="line">files:</span><br><span class="line">  - &quot;./**/*.vue&quot; //需要加载的文件</span><br><span class="line">exclude:</span><br><span class="line">  - &quot;./pages/Test.vue&quot; //ignore路径</span><br><span class="line">reporter: xml</span><br><span class="line">languages-exts:</span><br><span class="line">  javascript:</span><br><span class="line">    - es</span><br><span class="line">    - es5</span><br><span class="line">    - es6</span><br><span class="line">    - es7</span><br></pre></td></tr></table></figure></p>
+<p>快速使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install jscpd -g</span><br><span class="line">jscpd --languages vue --path ./src</span><br></pre></td></tr></table></figure>
+<p>同样，也可以定义配置文件<strong>.cpd.yaml</strong>，简化命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">path: &quot;./src&quot; //校验路径</span><br><span class="line">output: &quot;../jscpd-report.xml&quot; //report文件</span><br><span class="line">languages:</span><br><span class="line">  - vue</span><br><span class="line">blame: false //是否显示详细信息，会列出git等信息</span><br><span class="line">verbose: false //是否输出具体信息</span><br><span class="line">files:</span><br><span class="line">  - &quot;./**/*.vue&quot; //需要加载的文件</span><br><span class="line">exclude:</span><br><span class="line">  - &quot;./pages/Test.vue&quot; //ignore路径</span><br><span class="line">reporter: xml</span><br><span class="line">languages-exts:</span><br><span class="line">  javascript:</span><br><span class="line">    - es</span><br><span class="line">    - es5</span><br><span class="line">    - es6</span><br><span class="line">    - es7</span><br></pre></td></tr></table></figure>
 <p>效果：<br><img src="/2018/05/15/js-project-copy/example-2.png" title="检测出类似代码块，这里关掉了verbose"></p>
 <h2 id="PMD"><a href="#PMD" class="headerlink" title="PMD"></a><a href="https://pmd.github.io/pmd-6.3.0/index.html" target="_blank" rel="noopener">PMD</a></h2><blockquote>
 <p>an extensible cross-language static code analyzer. It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. Additionally it includes CPD, the copy-paste-detector. CPD finds duplicated code.</p>
 </blockquote>
 <p>感觉很高大上，不过感觉很不友好</p>
 <ol>
-<li>需要安装java环境，命令行方式不易上手（可能我玩不来，cmd没有跑出来）。</li>
-<li>npm不支持，无法匹配前端脚手架。</li>
-<li>不支持vue等语言（可能是我玩不来）</li>
+<li>需要安装 java 环境，命令行方式不易上手（可能我玩不来，cmd 没有跑出来）。</li>
+<li>npm 不支持，无法匹配前端脚手架。</li>
+<li>不支持 vue 等语言（可能是我玩不来）</li>
 <li>上面两个插件基本可以解决目前遇到的问题</li>
 </ol>
 <p>效果：<br><img src="/2018/05/15/js-project-copy/example-3.png" title="下载解压pmd，点击图上bat"><br><img src="/2018/05/15/js-project-copy/example-4.png" title="图形化界面"></p>
@@ -598,7 +602,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,7 +624,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -673,7 +677,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

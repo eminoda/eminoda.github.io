@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="cdn," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CDN 阿里云内容分发网络（Alibaba Cloud Content Delivery Network，简称 CDN）将您源站资源缓存至阿里云遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用 CDN 节点上已经缓存的资源。   在不同区域、不同场景下使用 CDN 加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。  阿里云 C">
+<meta name="keywords" content="cdn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云 CDN 使用">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="CDN 阿里云内容分发网络（Alibaba Cloud Content Delivery Network，简称 CDN）将您源站资源缓存至阿里云遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用 CDN 节点上已经缓存的资源。   在不同区域、不同场景下使用 CDN 加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。  阿里云 C">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/setting-cdn.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/setting-cdn-result.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/setting-domain.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/setting-domain-result.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/ok.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/fresh.png">
+<meta property="og:updated_time" content="2019-04-11T15:26:19.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="阿里云 CDN 使用">
+<meta name="twitter:description" content="CDN 阿里云内容分发网络（Alibaba Cloud Content Delivery Network，简称 CDN）将您源站资源缓存至阿里云遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用 CDN 节点上已经缓存的资源。   在不同区域、不同场景下使用 CDN 加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。  阿里云 C">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/18/performance-aliyun-cdn/setting-cdn.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/performance-aliyun-cdn/"/>
+
+
+
+
+
+  <title>阿里云 CDN 使用 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/performance-aliyun-cdn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阿里云 CDN 使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T15:47:55+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/网站优化/" itemprop="url" rel="index">
+                    <span itemprop="name">网站优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h1><blockquote>
+<p>阿里云内容分发网络（Alibaba Cloud Content Delivery Network，简称 CDN）将您源站资源缓存至阿里云遍布全球的加速节点上。当终端用户请求访问和获取这些资源时，无需回源，系统将就近调用 CDN 节点上已经缓存的资源。</p>
+</blockquote>
+<blockquote>
+<p>在不同区域、不同场景下使用 CDN 加速您网站内容的分发，将有效分担源站压力，避免网络拥塞，提升用户访问资源的速度和体验。</p>
+</blockquote>
+<h1 id="阿里云-CDN-服务"><a href="#阿里云-CDN-服务" class="headerlink" title="阿里云 CDN 服务"></a>阿里云 CDN 服务</h1><p><a href="https://help.aliyun.com/document_detail/27144.html?spm=5176.11785003.0.0.50bc142faX2uwE" target="_blank" rel="noopener">万网/阿里云解析与配置 CNAME 流程</a></p>
+<h2 id="开通-CDN"><a href="#开通-CDN" class="headerlink" title="开通 CDN"></a>开通 CDN</h2><p>默认开通是 <strong>流量模式</strong>，根据不同站点的流量选择不同类型的套餐。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ol>
+<li>进到 CDN 控制台，添加新配置</li>
+</ol>
+<ul>
+<li><strong>加速域名</strong> 支持泛解析。（这是给 <strong>使用方</strong> 的域名）</li>
+<li>缓存资源类型 这里选择小文件，诸如：js、css 等</li>
+<li><p>来源 目前选择域名来源，自定义不同的二级域名</p>
+<img src="/2019/02/18/performance-aliyun-cdn/setting-cdn.png" title="示例">
+</li>
+</ul>
+<ol start="2">
+<li><p>记录 CNAME 设置完后，稍等片刻就会出现 CNAME，之后域名解析需要使用</p>
+ <img src="/2019/02/18/performance-aliyun-cdn/setting-cdn-result.png" title="示例">
+</li>
+<li><p><strong>域名解析</strong> 配置修改新增一条 CNAME 类型的记录</p>
+ <img src="/2019/02/18/performance-aliyun-cdn/setting-domain.png" title="示例"> <img src="/2019/02/18/performance-aliyun-cdn/setting-domain-result.png" title="示例">
+</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>验证 CDN 是否配置正确：确认 cdn 域名是否解析到 CNAME 上。 <img src="/2019/02/18/performance-aliyun-cdn/ok.png" title="示例"></p>
+<p>实际效果：</p>
+<p>比如之前有个资源地址：<a href="http://image.shidouhua.cn/cdn1.png" target="_blank" rel="noopener">http://image.shidouhua.cn/cdn1.png</a></p>
+<p>当来自客户端的请求获取服务器资源时：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首次 200</span></span><br><span class="line"><span class="number">58.247</span><span class="number">.91</span><span class="number">.82</span> - - [<span class="number">15</span>/Feb/<span class="number">2019</span>:<span class="number">17</span>:<span class="number">27</span>:<span class="number">00</span> +<span class="number">0800</span>] <span class="string">"GET /cdn1.png HTTP/1.1"</span> <span class="number">200</span> <span class="number">117773</span> <span class="string">"-"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36"</span> <span class="string">"-"</span></span><br><span class="line"><span class="comment">// 第二次 因为浏览器缓存，304</span></span><br><span class="line"><span class="number">58.247</span><span class="number">.91</span><span class="number">.82</span> - - [<span class="number">15</span>/Feb/<span class="number">2019</span>:<span class="number">17</span>:<span class="number">27</span>:<span class="number">11</span> +<span class="number">0800</span>] <span class="string">"GET /cdn1.png HTTP/1.1"</span> <span class="number">304</span> <span class="number">0</span> <span class="string">"-"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36"</span> <span class="string">"-"</span></span><br></pre></td></tr></table></figure>
+<p>当有了 CDN 后，资源地址 <strong>更改</strong> 为：<a href="http://imagecdn.shidouhua.cn/cdn1.png" target="_blank" rel="noopener">http://imagecdn.shidouhua.cn/cdn1.png</a></p>
+<p>如果配置都 ok ，客户端不会从服务器获取资源，而是从 CDN 节点拿数据，从而 <strong>降低服务器负载，加速网站</strong></p>
+<h2 id="更新-CDN-缓存"><a href="#更新-CDN-缓存" class="headerlink" title="更新 CDN 缓存"></a>更新 CDN 缓存</h2><p>因为缓存，所以就算原服务器更新的资源，客户端也不会及时生效，这就需要在资源变动时主动通知 CND 节点更新新资源。</p>
+<p>手动方式：</p>
+<img src="/2019/02/18/performance-aliyun-cdn/fresh.png" title="示例">
+<p>缺点：对于大量资源通过这种方式很难控制</p>
+<p>接口方式： <a href="https://help.aliyun.com/document_detail/27200.html?spm=a2c4g.11186623.6.809.24182c7dfXR2eu" target="_blank" rel="noopener">RefreshObjectCaches 等</a></p>
+<p>优点：可定制化</p>
+<p>缺点：需要开发（但可参考<a href="https://www.npmjs.com/package/refresh-aliyun-cdn" target="_blank" rel="noopener">refresh-aliyun-cdn</a>）</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cdn/" rel="tag"># cdn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/13/jenkins-shell-kill/" rel="next" title="jenkins 执行脚本成功，但进程未启动">
+                <i class="fa fa-chevron-left"></i> jenkins 执行脚本成功，但进程未启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/14/node-express-cache/" rel="prev" title="开启 Express 模板缓存">
+                开启 Express 模板缓存 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CDN"><span class="nav-number">1.</span> <span class="nav-text">CDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#阿里云-CDN-服务"><span class="nav-number">2.</span> <span class="nav-text">阿里云 CDN 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开通-CDN"><span class="nav-number">2.1.</span> <span class="nav-text">开通 CDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">2.3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新-CDN-缓存"><span class="nav-number">2.4.</span> <span class="nav-text">更新 CDN 缓存</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="场景测试环境后台java测试环境是java1.7，而因为要安装jenkins集成测试，配置新的tomcat，最低环境需要1.8。但要确保不影响测试原有Java环境。 步骤 修改etc/profile 文件 12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改tomcat catalina.sh，指定java环境 1234#">
+<meta name="description" content="场景测试环境后台 java 测试环境是 java1.7，而因为要安装 jenkins 集成测试，配置新的 tomcat，最低环境需要 1.8。但要确保不影响测试原有 Java 环境。 步骤 修改 etc/profile 文件  12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改 tomcat catalina.sh，指定">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="同一环境配置多个java版本">
+<meta property="og:title" content="同一环境配置多个 java 版本">
 <meta property="og:url" content="http://yoursite.com/2017/10/23/java-version-change/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="场景测试环境后台java测试环境是java1.7，而因为要安装jenkins集成测试，配置新的tomcat，最低环境需要1.8。但要确保不影响测试原有Java环境。 步骤 修改etc/profile 文件 12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改tomcat catalina.sh，指定java环境 1234#">
+<meta property="og:description" content="场景测试环境后台 java 测试环境是 java1.7，而因为要安装 jenkins 集成测试，配置新的 tomcat，最低环境需要 1.8。但要确保不影响测试原有 Java 环境。 步骤 修改 etc/profile 文件  12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改 tomcat catalina.sh，指定">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-18T14:37:25.323Z">
+<meta property="og:updated_time" content="2019-04-11T15:26:18.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="同一环境配置多个java版本">
-<meta name="twitter:description" content="场景测试环境后台java测试环境是java1.7，而因为要安装jenkins集成测试，配置新的tomcat，最低环境需要1.8。但要确保不影响测试原有Java环境。 步骤 修改etc/profile 文件 12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改tomcat catalina.sh，指定java环境 1234#">
+<meta name="twitter:title" content="同一环境配置多个 java 版本">
+<meta name="twitter:description" content="场景测试环境后台 java 测试环境是 java1.7，而因为要安装 jenkins 集成测试，配置新的 tomcat，最低环境需要 1.8。但要确保不影响测试原有 Java 环境。 步骤 修改 etc/profile 文件  12# 新增加java1.8的配置export JAVA_HOME8=/mydata/jdk1.8.0_144/bin  修改 tomcat catalina.sh，指定">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>同一环境配置多个java版本 | NextInnovation</title>
+  <title>同一环境配置多个 java 版本 | NextInnovation</title>
   
 
 
@@ -289,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">同一环境配置多个java版本</h1>
+          <h1 class="post-title" itemprop="name headline">同一环境配置多个 java 版本</h1>
         
 
         <div class="post-meta">
@@ -324,8 +324,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
                   </a>
                 </span>
 
@@ -335,7 +335,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/java/" itemprop="url" rel="index">
+                  <a href="/categories/开发/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
                 </span>
@@ -372,14 +372,15 @@
       
 
       
-        <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>测试环境后台java测试环境是java1.7，而因为要安装jenkins集成测试，配置新的tomcat，最低环境需要1.8。但要确保不影响测试原有Java环境。</p>
+        <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>测试环境后台 java 测试环境是 java1.7，而因为要安装 jenkins 集成测试，配置新的 tomcat，最低环境需要 1.8。但要确保不影响测试原有 Java 环境。</p>
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li><p>修改etc/profile 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 新增加java1.8的配置</span><br><span class="line">export JAVA_HOME8=/mydata/jdk1.8.0_144/bin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改tomcat catalina.sh，指定java环境</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># OS specific support.  $var _must_ be set to either true or false.</span><br><span class="line"></span><br><span class="line">export JAVA_HOME=/mydata/jdk1.8.0_144</span><br><span class="line">export JRE_HOME=/mydata/jdk1.8.0_144</span><br></pre></td></tr></table></figure></li>
+<li>修改 etc/profile 文件</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 新增加java1.8的配置</span><br><span class="line">export JAVA_HOME8=/mydata/jdk1.8.0_144/bin</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改 tomcat catalina.sh，指定 java 环境</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># OS specific support.  $var _must_ be set to either true or false.</span><br><span class="line"></span><br><span class="line">export JAVA_HOME=/mydata/jdk1.8.0_144</span><br><span class="line">export JRE_HOME=/mydata/jdk1.8.0_144</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -420,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/28/linux-command/" rel="next" title="linux常用命令">
-                <i class="fa fa-chevron-left"></i> linux常用命令
+              <a href="/2017/07/28/linux-command/" rel="next" title="linux 常用命令">
+                <i class="fa fa-chevron-left"></i> linux 常用命令
               </a>
             
           </div>
@@ -513,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +536,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -588,7 +589,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

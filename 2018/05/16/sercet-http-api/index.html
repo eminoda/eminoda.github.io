@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="近期，公司老板发起一个关于api设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升api的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的access_token机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的code具有唯一性和过期性 授权过程中的redirect_uri，微信会对授权链接做正则强匹配校验（se">
+<meta name="description" content="近期，公司老板发起一个关于 api 设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升 api 的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的 access_token 机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的 code 具有唯一性和过期性 授权过程中的 redirect_uri，微信会对授权链接做正">
 <meta name="keywords" content="http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="提升接口API的安全等级">
 <meta property="og:url" content="http://yoursite.com/2018/05/16/sercet-http-api/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="近期，公司老板发起一个关于api设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升api的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的access_token机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的code具有唯一性和过期性 授权过程中的redirect_uri，微信会对授权链接做正则强匹配校验（se">
+<meta property="og:description" content="近期，公司老板发起一个关于 api 设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升 api 的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的 access_token 机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的 code 具有唯一性和过期性 授权过程中的 redirect_uri，微信会对授权链接做正">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/05/16/sercet-http-api/http.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/05/16/sercet-http-api/wx.png">
-<meta property="og:updated_time" content="2018-08-18T14:37:25.370Z">
+<meta property="og:updated_time" content="2019-04-11T15:26:18.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="提升接口API的安全等级">
-<meta name="twitter:description" content="近期，公司老板发起一个关于api设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升api的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的access_token机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的code具有唯一性和过期性 授权过程中的redirect_uri，微信会对授权链接做正则强匹配校验（se">
+<meta name="twitter:description" content="近期，公司老板发起一个关于 api 设计、安全签名的探讨…，然后就有一项课后作业：  有什么方式能提升 api 的安全  看看别人家怎么做的？自身经验不多，来简单看下微信的 access_token 机制来思考下，我们有哪些可以学习。   用户除了主动授权，没有暴露过其他敏感信息–Oauth2 授权获取的 code 具有唯一性和过期性 授权过程中的 redirect_uri，微信会对授权链接做正">
 <meta name="twitter:image" content="http://yoursite.com/2018/05/16/sercet-http-api/http.jpg">
 
 
@@ -327,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
                   </a>
                 </span>
 
@@ -338,8 +338,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/http/" itemprop="url" rel="index">
-                    <span itemprop="name">http</span>
+                  <a href="/categories/开发/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
                   </a>
                 </span>
 
@@ -376,36 +376,36 @@
 
       
         <img src="/2018/05/16/sercet-http-api/http.jpg">
-<p>近期，公司老板发起一个关于api设计、安全签名的探讨…，然后就有一项课后作业：</p>
+<p>近期，公司老板发起一个关于 api 设计、安全签名的探讨…，然后就有一项课后作业：</p>
 <blockquote>
-<p>有什么方式能提升api的安全</p>
+<p>有什么方式能提升 api 的安全</p>
 </blockquote>
-<h2 id="看看别人家怎么做的？"><a href="#看看别人家怎么做的？" class="headerlink" title="看看别人家怎么做的？"></a>看看别人家怎么做的？</h2><p>自身经验不多，来简单看下<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">微信的access_token机制来思考下</a>，我们有哪些可以学习。</p>
+<h2 id="看看别人家怎么做的？"><a href="#看看别人家怎么做的？" class="headerlink" title="看看别人家怎么做的？"></a>看看别人家怎么做的？</h2><p>自身经验不多，来简单看下<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">微信的 access_token 机制来思考下</a>，我们有哪些可以学习。</p>
 <img src="/2018/05/16/sercet-http-api/wx.png" title="简易的用户授权过程">
 <ol>
 <li>用户除了主动授权，没有暴露过其他敏感信息–Oauth2</li>
-<li>授权获取的code具有<strong>唯一性</strong>和<strong>过期性</strong></li>
-<li>授权过程中的redirect_uri，微信会对授权链接做正则强匹配校验（server要是使坏，就把你close掉）</li>
-<li>server事先有后续获取access_token提供请求参数sercetKey（必须只保存在服务器，不允许传给客户端）</li>
-<li>微信信任的access_token，调用有<strong>次数限制</strong>，和<strong>有效期</strong></li>
+<li>授权获取的 code 具有<strong>唯一性</strong>和<strong>过期性</strong></li>
+<li>授权过程中的 redirect_uri，微信会对授权链接做正则强匹配校验（server 要是使坏，就把你 close 掉）</li>
+<li>server 事先有后续获取 access_token 提供请求参数 sercetKey（必须只保存在服务器，不允许传给客户端）</li>
+<li>微信信任的 access_token，调用有<strong>次数限制</strong>，和<strong>有效期</strong></li>
 </ol>
-<h2 id="具体到我们，能做什么"><a href="#具体到我们，能做什么" class="headerlink" title="具体到我们，能做什么"></a>具体到我们，能做什么</h2><h3 id="使用https代替http方式"><a href="#使用https代替http方式" class="headerlink" title="使用https代替http方式"></a>使用https代替http方式</h3><h3 id="提供权限控制"><a href="#提供权限控制" class="headerlink" title="提供权限控制"></a>提供权限控制</h3><p>对于公用的服务，你必须是某某权限才能访问这些api，可能你没有登录什么都干不了。<br>比如，只有服务端才能获取微信的token，因为服务端才有secretKey等条件</p>
-<h3 id="使用JWT"><a href="#使用JWT" class="headerlink" title="使用JWT"></a><a href="https://github.com/auth0/node-jsonwebtoken" target="_blank" rel="noopener">使用JWT</a></h3><ol>
-<li>规范化security tokens机制</li>
-<li>服务端可以配置sercetKey（salt），增加破解难度</li>
-<li>具有过期性质的配置，可能你不需要在弄个缓存服务来做超时这事<br>备注，需要服务端产生JWT给client。避免客户端自己生成</li>
+<h2 id="具体到我们，能做什么"><a href="#具体到我们，能做什么" class="headerlink" title="具体到我们，能做什么"></a>具体到我们，能做什么</h2><h3 id="使用-https-代替-http-方式"><a href="#使用-https-代替-http-方式" class="headerlink" title="使用 https 代替 http 方式"></a>使用 https 代替 http 方式</h3><h3 id="提供权限控制"><a href="#提供权限控制" class="headerlink" title="提供权限控制"></a>提供权限控制</h3><p>对于公用的服务，你必须是某某权限才能访问这些 api，可能你没有登录什么都干不了。<br>比如，只有服务端才能获取微信的 token，因为服务端才有 secretKey 等条件</p>
+<h3 id="使用-JWT"><a href="#使用-JWT" class="headerlink" title="使用 JWT"></a><a href="https://github.com/auth0/node-jsonwebtoken" target="_blank" rel="noopener">使用 JWT</a></h3><ol>
+<li>规范化 security tokens 机制</li>
+<li>服务端可以配置 sercetKey（salt），增加破解难度</li>
+<li>具有过期性质的配置，可能你不需要在弄个缓存服务来做超时这事<br>备注，需要服务端产生 JWT 给 client。避免客户端自己生成</li>
 </ol>
-<h3 id="特殊API给予特殊控制"><a href="#特殊API给予特殊控制" class="headerlink" title="特殊API给予特殊控制"></a>特殊API给予特殊控制</h3><p>防止一些敏感接口重复调用，高频调用等情况发生</p>
-<h3 id="参数验证"><a href="#参数验证" class="headerlink" title="参数验证"></a>参数验证</h3><p>不要相信前端提交的表单，或者接口携带的参数不会出什么问题。<br>保不齐传个负数，丢个0给你处理。甚至于留个超大的文件塞爆你的库</p>
-<h3 id="注意敏感信息的请求方式"><a href="#注意敏感信息的请求方式" class="headerlink" title="注意敏感信息的请求方式"></a>注意敏感信息的请求方式</h3><p>账号密码等名该应该放置于request body里，或header中</p>
-<h3 id="注意请求头的Content-Type"><a href="#注意请求头的Content-Type" class="headerlink" title="注意请求头的Content-Type"></a>注意请求头的Content-Type</h3><p>比如：上传图片，必须是image/jpeg，你gif、png不行，其他更不行。<br>Access-Control-Allow-Origin，允许哪些跨域网站可以访问我们支援。</p>
-<h3 id="使用REST来规范你的接口"><a href="#使用REST来规范你的接口" class="headerlink" title="使用REST来规范你的接口"></a>使用REST来规范你的接口</h3><ol>
-<li>限制Http方法<br> 根据Restful接口的规范，万物皆资源，获取的方法需要特定的方式。<br> GET 用来获取资源，<br> POST 用来新建资源（也可以用于更新资源），<br> PUT 用来更新资源，<br> DELETE 用来删除资源…</li>
-<li>提供更丰富的Http status code</li>
-<li>提供<em>友好的</em>错误提示<br> 不要提示详细，具体的错误细节给到client。那只存在日志或其他地方</li>
+<h3 id="特殊-API-给予特殊控制"><a href="#特殊-API-给予特殊控制" class="headerlink" title="特殊 API 给予特殊控制"></a>特殊 API 给予特殊控制</h3><p>防止一些敏感接口重复调用，高频调用等情况发生</p>
+<h3 id="参数验证"><a href="#参数验证" class="headerlink" title="参数验证"></a>参数验证</h3><p>不要相信前端提交的表单，或者接口携带的参数不会出什么问题。<br>保不齐传个负数，丢个 0 给你处理。甚至于留个超大的文件塞爆你的库</p>
+<h3 id="注意敏感信息的请求方式"><a href="#注意敏感信息的请求方式" class="headerlink" title="注意敏感信息的请求方式"></a>注意敏感信息的请求方式</h3><p>账号密码等名该应该放置于 request body 里，或 header 中</p>
+<h3 id="注意请求头的-Content-Type"><a href="#注意请求头的-Content-Type" class="headerlink" title="注意请求头的 Content-Type"></a>注意请求头的 Content-Type</h3><p>比如：上传图片，必须是 image/jpeg，你 gif、png 不行，其他更不行。<br>Access-Control-Allow-Origin，允许哪些跨域网站可以访问我们支援。</p>
+<h3 id="使用-REST-来规范你的接口"><a href="#使用-REST-来规范你的接口" class="headerlink" title="使用 REST 来规范你的接口"></a>使用 REST 来规范你的接口</h3><ol>
+<li>限制 Http 方法<br>根据 Restful 接口的规范，万物皆资源，获取的方法需要特定的方式。<br>GET 用来获取资源，<br>POST 用来新建资源（也可以用于更新资源），<br>PUT 用来更新资源，<br>DELETE 用来删除资源…</li>
+<li>提供更丰富的 Http status code</li>
+<li>提供<em>友好的</em>错误提示<br>不要提示详细，具体的错误细节给到 client。那只存在日志或其他地方</li>
 </ol>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
-<p><a href="https://www.owasp.org/index.php/REST_Security_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/REST_Security_Cheat_Sheet</a><br>  <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">RESTful API Authentication Basics</a><br>  <a href="https://stormpath.com/blog/secure-your-rest-api-right-way" target="_blank" rel="noopener">How to Secure Your REST API using Proven Best Practices</a><br>  <a href="https://www.cnblogs.com/doseoer/p/5676297.html" target="_blank" rel="noopener">header的安全配置指南</a><br>  <a href="https://www.zhihu.com/question/27785028" target="_blank" rel="noopener">REST 架构该怎么生动地理解？</a><br>  <a href="https://github.com/aisuhua/restful-api-design-references" target="_blank" rel="noopener">REST的许多文献</a><br>  <a href="http://tool.oschina.net/commons/" target="_blank" rel="noopener">http://tool.oschina.net/commons/</a></p>
+<p><a href="https://www.owasp.org/index.php/REST_Security_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/REST_Security_Cheat_Sheet</a><br><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">RESTful API Authentication Basics</a><br><a href="https://stormpath.com/blog/secure-your-rest-api-right-way" target="_blank" rel="noopener">How to Secure Your REST API using Proven Best Practices</a><br><a href="https://www.cnblogs.com/doseoer/p/5676297.html" target="_blank" rel="noopener">header 的安全配置指南</a><br><a href="https://www.zhihu.com/question/27785028" target="_blank" rel="noopener">REST 架构该怎么生动地理解？</a><br><a href="https://github.com/aisuhua/restful-api-design-references" target="_blank" rel="noopener">REST 的许多文献</a><br><a href="http://tool.oschina.net/commons/" target="_blank" rel="noopener">http://tool.oschina.net/commons/</a></p>
 </blockquote>
 
       
@@ -447,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/15/js-project-copy/" rel="next" title="js重复代码块检查">
-                <i class="fa fa-chevron-left"></i> js重复代码块检查
+              <a href="/2018/05/15/js-project-copy/" rel="next" title="js 重复代码块检查">
+                <i class="fa fa-chevron-left"></i> js 重复代码块检查
               </a>
             
           </div>
@@ -540,7 +540,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -562,7 +562,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -595,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#看看别人家怎么做的？"><span class="nav-number">1.</span> <span class="nav-text">看看别人家怎么做的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体到我们，能做什么"><span class="nav-number">2.</span> <span class="nav-text">具体到我们，能做什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用https代替http方式"><span class="nav-number">2.1.</span> <span class="nav-text">使用https代替http方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提供权限控制"><span class="nav-number">2.2.</span> <span class="nav-text">提供权限控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用JWT"><span class="nav-number">2.3.</span> <span class="nav-text">使用JWT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊API给予特殊控制"><span class="nav-number">2.4.</span> <span class="nav-text">特殊API给予特殊控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数验证"><span class="nav-number">2.5.</span> <span class="nav-text">参数验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意敏感信息的请求方式"><span class="nav-number">2.6.</span> <span class="nav-text">注意敏感信息的请求方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意请求头的Content-Type"><span class="nav-number">2.7.</span> <span class="nav-text">注意请求头的Content-Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用REST来规范你的接口"><span class="nav-number">2.8.</span> <span class="nav-text">使用REST来规范你的接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#看看别人家怎么做的？"><span class="nav-number">1.</span> <span class="nav-text">看看别人家怎么做的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体到我们，能做什么"><span class="nav-number">2.</span> <span class="nav-text">具体到我们，能做什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-https-代替-http-方式"><span class="nav-number">2.1.</span> <span class="nav-text">使用 https 代替 http 方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提供权限控制"><span class="nav-number">2.2.</span> <span class="nav-text">提供权限控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-JWT"><span class="nav-number">2.3.</span> <span class="nav-text">使用 JWT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊-API-给予特殊控制"><span class="nav-number">2.4.</span> <span class="nav-text">特殊 API 给予特殊控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数验证"><span class="nav-number">2.5.</span> <span class="nav-text">参数验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意敏感信息的请求方式"><span class="nav-number">2.6.</span> <span class="nav-text">注意敏感信息的请求方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意请求头的-Content-Type"><span class="nav-number">2.7.</span> <span class="nav-text">注意请求头的 Content-Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-REST-来规范你的接口"><span class="nav-number">2.8.</span> <span class="nav-text">使用 REST 来规范你的接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -615,7 +615,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
