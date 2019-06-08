@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="npm," />
+  <meta name="keywords" content="npm,">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/03/npm-publish/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/03/npm-publish/">
 
 
 
@@ -164,7 +164,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">NextInnovation</span>
         <span class="logo-line-after"><i></i></span>
@@ -194,7 +194,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -204,7 +204,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -214,7 +214,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -224,7 +224,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -234,7 +234,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -276,7 +276,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -312,7 +312,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -394,7 +394,7 @@
 <ol start="4">
 <li><a href="https://docs.npmjs.com/getting-started/scoped-packages" target="_blank" rel="noopener">当然你也可以自定义 scope</a></li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义scope</span></span><br><span class="line">E:\jest&gt;npm init --scope=eminoda</span><br><span class="line"><span class="comment">// 设置scope</span></span><br><span class="line">E:\jest&gt;npm config set scope eminoda</span><br><span class="line"><span class="comment">// 如果没有公开，将无法提交</span></span><br><span class="line">E:\jest&gt;npm publish</span><br><span class="line">npm ERR! publish Failed PUT <span class="number">402</span></span><br><span class="line">npm ERR! code E402</span><br><span class="line">npm ERR! You must sign up <span class="keyword">for</span> private packages : @eminoda/jest-cli</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log <span class="keyword">of</span> <span class="keyword">this</span> run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\<span class="number">2018</span><span class="number">-08</span><span class="number">-03</span>T15_21_14_351Z-debug.log</span><br><span class="line"></span><br><span class="line">E:\jest&gt;npm publish --access=public</span><br><span class="line">+ @eminoda/jest-cli@<span class="number">0.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义scope</span></span><br><span class="line">E:\jest&gt;npm init --scope=eminoda</span><br><span class="line"><span class="comment">// 设置scope</span></span><br><span class="line">E:\jest&gt;npm config <span class="keyword">set</span> scope eminoda</span><br><span class="line">// 如果没有公开，将无法提交</span><br><span class="line">E:\jest&gt;npm publish</span><br><span class="line">npm ERR! publish Failed PUT 402</span><br><span class="line">npm ERR! code E402</span><br><span class="line">npm ERR! You must sign up for private packages : @eminoda/jest-cli</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\2018-08-03T15_21_14_351Z-debug.log</span><br><span class="line"></span><br><span class="line">E:\jest&gt;npm publish --access=public</span><br><span class="line">+ @eminoda/jest-cli@0.0.1</span><br></pre></td></tr></table></figure>
 <h1 id="总结下"><a href="#总结下" class="headerlink" title="总结下"></a>总结下</h1><p>本来如前言说的，半年前上传过一个 module，那时 Baidu 一贴基本包就上去了。但如果落地到知识的总结还是有很多需要学习的。，现在会考虑更多东西，对应的扩展面也大了。<br>比如：包上传上去，总要考虑如何 delete、update。总看到别人@username 命名的库名…都得到了解答。这 20 分钟收获简单，但意义不小。<br>如果你也看到这里了，<a href="https://www.npmjs.com/package/hexo-jwt" target="_blank" rel="noopener">不妨下载个小包？hexo-jwt</a></p>
 
       
@@ -407,7 +407,7 @@
       <div>
         <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
     <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
-    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
     <div>好好学习，天天向上!</div>
     <div>欢迎留言，一起讨论前端问题</div>
 </div>
@@ -514,9 +514,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="/images/eminoda/header.jpg"
-                alt="Eminoda" />
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
             
               <p class="site-author-name" itemprop="name">Eminoda</p>
               <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
@@ -529,7 +527,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -540,7 +538,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -551,7 +549,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
