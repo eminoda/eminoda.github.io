@@ -88,7 +88,7 @@
 <meta property="og:description" content="函数 function 作为 js 里的一等公民，这样一句话做前端的总多多少少听说过。其实更为准确应该描述为 First-class functions。 对于 first-class function 可以翻译成 头等函数、一等函数。 即使 js 没有像 java 一样有类的概念，但通过 function 各种风骚的操作，让我们在 面向函数编程 中更欢乐的使用 js。 语言支持对于 函数模型 实">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/27/js-special-function/function-limit.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:19.002Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js 里不平凡的函数">
 <meta name="twitter:description" content="函数 function 作为 js 里的一等公民，这样一句话做前端的总多多少少听说过。其实更为准确应该描述为 First-class functions。 对于 first-class function 可以翻译成 头等函数、一等函数。 即使 js 没有像 java 一样有类的概念，但通过 function 各种风骚的操作，让我们在 面向函数编程 中更欢乐的使用 js。 语言支持对于 函数模型 实">
@@ -337,8 +337,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/js/" itemprop="url" rel="index">
-                    <span itemprop="name">js</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -384,16 +384,16 @@
 <li>能让函数作为参数作为输入</li>
 <li>输出一个函数</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> s = a + b;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mySum</span>(<span class="params">sum, c</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> sum(<span class="number">1</span>, <span class="number">2</span>) + c;</span><br><span class="line">&#125;</span><br><span class="line">mySum(sum, <span class="number">3</span>); <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = a + b;</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mySum</span>(<span class="params">sum, c</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> sum(<span class="number">1</span>, <span class="number">2</span>) + c;</span><br><span class="line">&#125;</span><br><span class="line">mySum(sum, <span class="number">3</span>); <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
 <h2 id="偏函数-Partial-Application"><a href="#偏函数-Partial-Application" class="headerlink" title="偏函数 Partial Application"></a>偏函数 Partial Application</h2><blockquote>
 <p>In computer science, partial application (or partial function application) refers to the process of fixing a number of arguments to a function, producing another function of smaller arity. Given a function <strong>f:(X * Y * Z)-&gt; N</strong>, we might fix (or ‘bind’) the first argument, producing a function of type <strong>partial(f):(Y * Z)-&gt;N</strong>.</p>
 </blockquote>
 <p>简单理解就是写个 <strong>偏函数</strong> ，效果是实现某功能需要的参数发生了变化，参数变成更小/少的元（arity）</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pSum</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> sum.bind(<span class="literal">null</span>, <span class="number">1</span>, c)(); <span class="comment">//1+2</span></span><br><span class="line">&#125;</span><br><span class="line">pSum(<span class="number">2</span>); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pSum</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> sum.bind(<span class="literal">null</span>, <span class="number">1</span>, c)(); <span class="comment">//1+2</span></span><br><span class="line">&#125;</span><br><span class="line">pSum(<span class="number">2</span>); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
 <h2 id="柯里函数-Currying"><a href="#柯里函数-Currying" class="headerlink" title="柯里函数 Currying"></a>柯里函数 Currying</h2><blockquote>
 <p>在计算机科学中，柯里化（英语：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currySum</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> a + b + c;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line">currySum(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>); <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currySum</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> a + b + c;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">currySum(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>); <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>糊里糊涂说了几个概念，其实对于 <strong>面向函数编程</strong> 的 js 来说，了解这些会提升编程体验，和知道设计模式是一个道理。除了装 X，更多的可是使我们能容易理解优秀框架的代码，从而落实到工作中。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function" target="_blank" rel="noopener">mdn-First-class_Function</a></li>
@@ -535,7 +535,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -546,7 +546,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -557,7 +557,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

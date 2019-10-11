@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;	expect.assertions(1);	return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;		expect(data).not.toBeNull();	&amp;#125">
+<meta name="description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;  expect.assertions(1);  return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;    expect(data).not.toBeNull();">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="prmoise 返回遇到个问题">
 <meta property="og:url" content="http://yoursite.com/2018/08/03/js-promise-return/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;	expect.assertions(1);	return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;		expect(data).not.toBeNull();	&amp;#125">
+<meta property="og:description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;  expect.assertions(1);  return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;    expect(data).not.toBeNull();">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.957Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="prmoise 返回遇到个问题">
-<meta name="twitter:description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;	expect.assertions(1);	return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;		expect(data).not.toBeNull();	&amp;#125">
+<meta name="twitter:description" content="new Promise 如何 return Promise123456test(&apos;book&amp;gt;&amp;gt;saveBook&apos;, () =&amp;gt; &amp;#123;  expect.assertions(1);  return spiderService.getBookBasicInfo().then(data =&amp;gt; &amp;#123;    expect(data).not.toBeNull();">
 
 
 
@@ -335,8 +335,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/js/" itemprop="url" rel="index">
-                    <span itemprop="name">js</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -372,7 +372,7 @@
       
 
       
-        <h2 id="new-Promise-如何-return-Promise"><a href="#new-Promise-如何-return-Promise" class="headerlink" title="new Promise 如何 return Promise"></a>new Promise 如何 return Promise</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'book&gt;&gt;saveBook'</span>, () =&gt; &#123;</span><br><span class="line">	expect.assertions(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> spiderService.getBookBasicInfo().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">		expect(data).not.toBeNull();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+        <h2 id="new-Promise-如何-return-Promise"><a href="#new-Promise-如何-return-Promise" class="headerlink" title="new Promise 如何 return Promise"></a>new Promise 如何 return Promise</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'book&gt;&gt;saveBook'</span>, () =&gt; &#123;</span><br><span class="line">  expect.assertions(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> spiderService.getBookBasicInfo().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    expect(data).not.toBeNull();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>在用 Jest 时候，发现无论怎么设置 timeout 总是超时，然后发现如下代码是有问题的：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">getBookBasicInfo: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// create new Promise</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        spider</span><br><span class="line">            .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!err) &#123;</span><br><span class="line">                    <span class="comment">// some code</span></span><br><span class="line">                    ...</span><br><span class="line">                    <span class="comment">// return Promise,这段有问题</span></span><br><span class="line">                    <span class="keyword">return</span> bookService.saveBook(books);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    reject(err);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实应该把 <strong>bookService.saveBook(books)</strong> 获取到 promise 的 resolve 和 reject,给新的 Promise 使用</p>
@@ -427,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/10/nginx-basic-learn/" rel="prev" title="nginx基础学习进阶">
-                nginx基础学习进阶 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/10/nginx-basic-learn/" rel="prev" title="nginx 基础学习进阶">
+                nginx 基础学习进阶 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -508,7 +508,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +519,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -530,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

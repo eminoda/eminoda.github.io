@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;	printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exiti">
+<meta name="description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;  printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exit">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux signals 标识">
 <meta property="og:url" content="http://yoursite.com/2019/01/21/linux-signals/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;	printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exiti">
+<meta property="og:description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;  printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exit">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-11T15:26:19.058Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux signals 标识">
-<meta name="twitter:description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;	printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exiti">
+<meta name="twitter:description" content="linux standard signals15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 graceful-process ，然后看到如下代码： 1234process.once(&apos;SIGTERM&apos;, () =&amp;gt; &amp;#123;  printLogLevels.info &amp;amp;&amp;amp; logger.info(&apos;[%s] receive signal SIGTERM, exit">
 
 
 
@@ -335,8 +335,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
                   </a>
                 </span>
 
@@ -373,7 +373,7 @@
 
       
         <h1 id="linux-standard-signals"><a href="#linux-standard-signals" class="headerlink" title="linux standard signals"></a>linux standard signals</h1><p>15 年左右，阿里的“死马”（我忘记花名叫啥了）提到了 <a href="https://www.npmjs.com/package/graceful-process" target="_blank" rel="noopener">graceful-process</a> ，然后看到如下代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">process.once(<span class="string">'SIGTERM'</span>, () =&gt; &#123;</span><br><span class="line">	printLogLevels.info &amp;&amp; logger.info(<span class="string">'[%s] receive signal SIGTERM, exiting with code:0'</span>, label);</span><br><span class="line">	exit(<span class="number">0</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">process.once(<span class="string">'SIGTERM'</span>, () =&gt; &#123;</span><br><span class="line">  printLogLevels.info &amp;&amp; logger.info(<span class="string">'[%s] receive signal SIGTERM, exiting with code:0'</span>, label);</span><br><span class="line">  exit(<span class="number">0</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>process 因为是 EventEmitter 的延伸类，具备监听事件功能。但是 <strong>SIGTERM</strong> 是什么？在 Node 官网只看到这样一个地址：<a href="http://man7.org/linux/man-pages/man7/signal.7.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man7/signal.7.html</a></p>
 <p>下面一起来了解下：</p>
 <h2 id="signal"><a href="#signal" class="headerlink" title="signal"></a>signal</h2><p>首先 <strong>signal</strong> 是 Linux 支持 POSIX 范式约定的标识。</p>
@@ -680,7 +680,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -691,7 +691,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -702,7 +702,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

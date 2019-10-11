@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="提前告知 参考 尤大的SSR指南 本文 DEMO 已上传至github，最好拉下来跑下效果，了解SSR 因为 搞不定 对SSR还是心存疑虑，起码不会投入到实际运用  为什么要做SSR——服务端渲染 为了SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临的问题 从前后端">
+<meta name="description" content="提前告知 参考 尤大的 SSR 指南 本文 DEMO 已上传至 github，最好拉下来跑下效果，了解 SSR 因为 搞不定 对 SSR 还是心存疑虑，起码不会投入到实际运用  为什么要做 SSR——服务端渲染 为了 SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临">
 <meta name="keywords" content="vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue-SSR 服务器渲染实践">
 <meta property="og:url" content="http://yoursite.com/2018/11/25/vue-ssr-quickstart/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="提前告知 参考 尤大的SSR指南 本文 DEMO 已上传至github，最好拉下来跑下效果，了解SSR 因为 搞不定 对SSR还是心存疑虑，起码不会投入到实际运用  为什么要做SSR——服务端渲染 为了SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临的问题 从前后端">
+<meta property="og:description" content="提前告知 参考 尤大的 SSR 指南 本文 DEMO 已上传至 github，最好拉下来跑下效果，了解 SSR 因为 搞不定 对 SSR 还是心存疑虑，起码不会投入到实际运用  为什么要做 SSR——服务端渲染 为了 SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/11/25/vue-ssr-quickstart/ssr.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.998Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-SSR 服务器渲染实践">
-<meta name="twitter:description" content="提前告知 参考 尤大的SSR指南 本文 DEMO 已上传至github，最好拉下来跑下效果，了解SSR 因为 搞不定 对SSR还是心存疑虑，起码不会投入到实际运用  为什么要做SSR——服务端渲染 为了SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临的问题 从前后端">
+<meta name="twitter:description" content="提前告知 参考 尤大的 SSR 指南 本文 DEMO 已上传至 github，最好拉下来跑下效果，了解 SSR 因为 搞不定 对 SSR 还是心存疑虑，起码不会投入到实际运用  为什么要做 SSR——服务端渲染 为了 SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名 优化页面渲染，节省资源损耗。尤其首屏展示 服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题 生成静态网站…  怎么做——面临">
 <meta name="twitter:image" content="http://yoursite.com/2018/11/25/vue-ssr-quickstart/ssr.png">
 
 
@@ -337,8 +337,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/vue/" itemprop="url" rel="index">
-                    <span itemprop="name">vue</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -375,12 +375,12 @@
 
       
         <h1 id="提前告知"><a href="#提前告知" class="headerlink" title="提前告知"></a>提前告知</h1><ul>
-<li>参考 <a href="https://ssr.vuejs.org" target="_blank" rel="noopener"><strong>尤大的SSR指南</strong></a></li>
-<li>本文 DEMO 已上传至github，最好拉下来跑下效果，了解SSR</li>
-<li>因为 <strong>搞不定</strong> 对SSR还是心存疑虑，起码不会投入到实际运用</li>
+<li>参考 <a href="https://ssr.vuejs.org" target="_blank" rel="noopener"><strong>尤大的 SSR 指南</strong></a></li>
+<li>本文 DEMO 已上传至 github，最好拉下来跑下效果，了解 SSR</li>
+<li>因为 <strong>搞不定</strong> 对 SSR 还是心存疑虑，起码不会投入到实际运用</li>
 </ul>
-<h1 id="为什么要做SSR——服务端渲染"><a href="#为什么要做SSR——服务端渲染" class="headerlink" title="为什么要做SSR——服务端渲染"></a>为什么要做SSR——服务端渲染</h1><ul>
-<li>为了SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名</li>
+<h1 id="为什么要做-SSR——服务端渲染"><a href="#为什么要做-SSR——服务端渲染" class="headerlink" title="为什么要做 SSR——服务端渲染"></a>为什么要做 SSR——服务端渲染</h1><ul>
+<li>为了 SEO，为了更好地给爬虫抓取页面信息。提升搜索引擎排名</li>
 <li>优化页面渲染，节省资源损耗。尤其首屏展示</li>
 <li>服务端控制必要的业务逻辑，解决信息屏蔽、安全等问题</li>
 <li>生成静态网站…</li>
@@ -392,18 +392,18 @@
 <li>前后端怎么进行信息交互</li>
 </ul>
 <h1 id="一张图说明"><a href="#一张图说明" class="headerlink" title="一张图说明"></a>一张图说明</h1><img src="/2018/11/25/vue-ssr-quickstart/ssr.png" title="来自官网，做了些标注">
-<p>这是vue-ssr的核心结构，从上图中我们能看到解决了上述考虑到的问题。</p>
+<p>这是 vue-ssr 的核心结构，从上图中我们能看到解决了上述考虑到的问题。</p>
 <ul>
 <li>不用担心工作量，配置 <strong>entry</strong> 定制前后端的差异，其他交给 <strong>webpack</strong> 打包输出</li>
-<li>前后端的数据通过 <strong>vuex</strong> 的store进行管理，browser解析 <strong>window.<strong>INITIAL_STATE</strong></strong> 拿到所需的一切</li>
-<li>通过 <strong>vue-router</strong> 提前解析处理 <strong>async</strong> 的业务逻辑，render页面准备输出到浏览器</li>
-<li>如果觉得复杂有困难，除了看着SSR的上手文档，也能尝试官网推荐的 <a href="https://nuxtjs.org/" target="_blank" rel="noopener">https://nuxtjs.org/</a> 和 <a href="https://github.com/vuejs/vue-hackernews-2.0/" target="_blank" rel="noopener">https://github.com/vuejs/vue-hackernews-2.0/</a></li>
+<li>前后端的数据通过 <strong>vuex</strong> 的 store 进行管理，browser 解析 <strong>window.</strong>INITIAL_STATE<em>**</em> 拿到所需的一切</li>
+<li>通过 <strong>vue-router</strong> 提前解析处理 <strong>async</strong> 的业务逻辑，render 页面准备输出到浏览器</li>
+<li>如果觉得复杂有困难，除了看着 SSR 的上手文档，也能尝试官网推荐的 <a href="https://nuxtjs.org/" target="_blank" rel="noopener">https://nuxtjs.org/</a> 和 <a href="https://github.com/vuejs/vue-hackernews-2.0/" target="_blank" rel="noopener">https://github.com/vuejs/vue-hackernews-2.0/</a></li>
 </ul>
-<p>感谢尤大提供了健全的SSR方案，不过为了能更好的实现服务端渲染，还是建议从官方的DEMO开始。</p>
+<p>感谢尤大提供了健全的 SSR 方案，不过为了能更好的实现服务端渲染，还是建议从官方的 DEMO 开始。</p>
 <h1 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h1><p><a href="https://github.com/eminoda/vue-ssr" target="_blank" rel="noopener">https://github.com/eminoda/vue-ssr</a></p>
 <ul>
-<li>“抄”的vue-ssr的demo，如果看文档有问题，可以参考下。</li>
-<li>异步路由报错，没有解决。原因是third build plugins提供了browser的变量，不知道以后会不会修正。</li>
+<li>“抄”的 vue-ssr 的 demo，如果看文档有问题，可以参考下。</li>
+<li>异步路由报错，没有解决。原因是 third build plugins 提供了 browser 的变量，不知道以后会不会修正。</li>
 </ul>
 
       
@@ -536,7 +536,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -547,7 +547,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -558,7 +558,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -591,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提前告知"><span class="nav-number">1.</span> <span class="nav-text">提前告知</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要做SSR——服务端渲染"><span class="nav-number">2.</span> <span class="nav-text">为什么要做SSR——服务端渲染</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#怎么做——面临的问题"><span class="nav-number">3.</span> <span class="nav-text">怎么做——面临的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一张图说明"><span class="nav-number">4.</span> <span class="nav-text">一张图说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考代码"><span class="nav-number">5.</span> <span class="nav-text">参考代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#提前告知"><span class="nav-number">1.</span> <span class="nav-text">提前告知</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要做-SSR——服务端渲染"><span class="nav-number">2.</span> <span class="nav-text">为什么要做 SSR——服务端渲染</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#怎么做——面临的问题"><span class="nav-number">3.</span> <span class="nav-text">怎么做——面临的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一张图说明"><span class="nav-number">4.</span> <span class="nav-text">一张图说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考代码"><span class="nav-number">5.</span> <span class="nav-text">参考代码</span></a></li></ol></div>
             
 
           </div>

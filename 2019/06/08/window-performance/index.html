@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/06/08/window-performance/result.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/08/window-performance/timing.png">
-<meta property="og:updated_time" content="2019-06-07T16:38:37.027Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端性能检查 performance">
 <meta name="twitter:description" content="看 Vue 时注意到如下代码： 1234567startTag = `vue-perf-start:$&amp;#123;vm._uid&amp;#125;`;endTag = `vue-perf-end:$&amp;#123;vm._uid&amp;#125;`;mark(startTag);do_work();vm._name = formatComponentName(vm, false);mark(endTag);mea">
@@ -338,8 +338,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/性能/" itemprop="url" rel="index">
-                    <span itemprop="name">性能</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -377,56 +377,56 @@
       
         <p>看 Vue 时注意到如下代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">startTag = <span class="string">`vue-perf-start:<span class="subst">$&#123;vm._uid&#125;</span>`</span>;</span><br><span class="line">endTag = <span class="string">`vue-perf-end:<span class="subst">$&#123;vm._uid&#125;</span>`</span>;</span><br><span class="line">mark(startTag);</span><br><span class="line">do_work();</span><br><span class="line">vm._name = formatComponentName(vm, <span class="literal">false</span>);</span><br><span class="line">mark(endTag);</span><br><span class="line">measure(<span class="string">`vue <span class="subst">$&#123;vm._name&#125;</span> init`</span>, startTag, endTag);</span><br></pre></td></tr></table></figure>
-<p>基本能猜到里面是在做什么，分别在 do_work() 前后打标点，然后计算执行该方法的消耗</p>
+<p>基本能猜到里面是在做什么， 分别在 do_work() 前后打标点， 然后计算执行该方法的消耗</p>
 <p>mark 和 measure 定义如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> perf = <span class="built_in">window</span>.performance;</span><br><span class="line">mark = <span class="function"><span class="params">tag</span> =&gt;</span> perf.mark(tag);</span><br><span class="line">measure = <span class="function">(<span class="params">name, startTag, endTag</span>) =&gt;</span> &#123;</span><br><span class="line">	perf.measure(name, startTag, endTag);</span><br><span class="line">	perf.clearMarks(startTag);</span><br><span class="line">	perf.clearMarks(endTag);</span><br><span class="line">	<span class="comment">// perf.clearMeasures(name)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>我没有用过 window.performance，那它到底是什么？现在开始学习吧。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> perf = <span class="built_in">window</span>.performance;</span><br><span class="line">mark = <span class="function"><span class="params">tag</span> =&gt;</span> perf.mark(tag);</span><br><span class="line">measure = <span class="function">(<span class="params">name, startTag, endTag</span>) =&gt;</span> &#123;</span><br><span class="line">  perf.measure(name, startTag, endTag);</span><br><span class="line">  perf.clearMarks(startTag);</span><br><span class="line">  perf.clearMarks(endTag);</span><br><span class="line">  <span class="comment">// perf.clearMeasures(name)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我没有用过 window.performance， 那它到底是什么？ 现在开始学习吧。</p>
 <h1 id="window-performance"><a href="#window-performance" class="headerlink" title="window.performance"></a>window.performance</h1><blockquote>
-<p>Web Performance API 允许网页访问某些函数来测量网页和 Web 应用程序的性能，包括 Navigation Timing API 和高分辨率时间数据。</p>
+<p>Web Performance API 允许网页访问某些函数来测量网页和 Web 应用程序的性能， 包括 Navigation Timing API 和高分辨率时间数据。</p>
 </blockquote>
-<p>既然是性能测量，那看下如何设置？</p>
+<p>既然是性能测量， 那看下如何设置？</p>
 <h2 id="如何预埋测试区域"><a href="#如何预埋测试区域" class="headerlink" title="如何预埋测试区域"></a>如何预埋测试区域</h2><p>这涉及 mark() 和 measure() 两个 api。</p>
 <p><strong>mark()</strong></p>
-<p>根据给出 name 值，在浏览器的性能输入缓冲区中创建一个相关的timestamp</p>
+<p>根据给出 name 值， 在浏览器的性能输入缓冲区中创建一个相关的 timestamp</p>
 <p><strong>measure()</strong></p>
 <p>在浏览器的指定 start mark 和 end mark 间的性能输入缓冲区中创建一个指定的 timestamp</p>
 <p>看个例子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> perf = <span class="built_in">window</span>.performance;</span><br><span class="line"></span><br><span class="line">perf.mark(<span class="string">'test-start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	perf.mark(<span class="string">'test-end'</span>);</span><br><span class="line">	perf.measure(<span class="string">'test'</span>, <span class="string">'test-start'</span>, <span class="string">'test-end'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-<p>用 setTimeout 模拟执行某个耗时事件，前后分别用 mark() 进行预埋测试点，最后用 measure() 进行测试。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> perf = <span class="built_in">window</span>.performance;</span><br><span class="line"></span><br><span class="line">perf.mark(<span class="string">'test-start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  perf.mark(<span class="string">'test-end'</span>);</span><br><span class="line">  perf.measure(<span class="string">'test'</span>, <span class="string">'test-start'</span>, <span class="string">'test-end'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>用 setTimeout 模拟执行某个耗时事件， 前后分别用 mark() 进行预埋测试点， 最后用 measure() 进行测试。</p>
 <h2 id="怎么查看埋点性能值"><a href="#怎么查看埋点性能值" class="headerlink" title="怎么查看埋点性能值"></a>怎么查看埋点性能值</h2><p>我们可以使用如下方法获得所有的性能结果</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perf.getEntries(); <span class="comment">// return PerformanceEntry</span></span><br></pre></td></tr></table></figure>
 <p><strong>PerformanceEntry</strong></p>
 <blockquote>
-<p>对象代表了 performance 时间列表中的单个 metric 数据. 每一个 performance entry 都可以在应用运行过程中通过手动构建 mark 或者 measure (例如调用 mark() 方法) 生成. 此外, Performance entries 在资源加载的时候，也会被动生成（例如图片、script、css等资源加载）</p>
+<p>对象代表了 performance 时间列表中的单个 metric 数据. 每一个 performance entry 都可以在应用运行过程中通过手动构建 mark 或者 measure (例如调用 mark() 方法) 生成. 此外, Performance entries 在资源加载的时候， 也会被动生成（例如图片、 script、 css 等资源加载）</p>
 </blockquote>
 <img src="/2019/06/08/window-performance/result.png" title="getEntries">
-<p>以上结果较多，可以用这两个 api 进行筛选输出（name or entryType）：</p>
+<p>以上结果较多， 可以用这两个 api 进行筛选输出（name or entryType）：</p>
 <ul>
 <li>performance.getEntriesByName(name, type);</li>
 <li>performance.getEntriesByType(type);</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">perf.getEntriesByName(<span class="string">'test'</span>);</span><br><span class="line"><span class="comment">// 会输出一个 [PerformanceMeasure] 数组对象</span></span><br><span class="line"><span class="comment">// [&#123;</span></span><br><span class="line"><span class="comment">//      duration: 1000.4449998959899</span></span><br><span class="line"><span class="comment">//      entryType: "measure"</span></span><br><span class="line"><span class="comment">//      name: "test"</span></span><br><span class="line"><span class="comment">//      startTime: 1374241.1400000565</span></span><br><span class="line"><span class="comment">// &#125;]</span></span><br></pre></td></tr></table></figure>
-<h2 id="timing-和-memory"><a href="#timing-和-memory" class="headerlink" title="timing 和 memory"></a>timing 和 memory</h2><p>既然 performance 是获取有关浏览器性能的接口，那肯定提供了页面性能的指标属性</p>
+<h2 id="timing-和-memory"><a href="#timing-和-memory" class="headerlink" title="timing 和 memory"></a>timing 和 memory</h2><p>既然 performance 是获取有关浏览器性能的接口， 那肯定提供了页面性能的指标属性</p>
 <ul>
 <li><p>navigation</p>
-<p>  提供了在指定的时间段里发生的操作相关信息，包括页面是加载还是刷新、发生了多少次重定向等等。</p>
-</li>
-<li><p>timing </p>
-<p>  包含延迟相关的性能信息。</p>
-</li>
+<pre><code>提供了在指定的时间段里发生的操作相关信息， 包括页面是加载还是刷新、 发生了多少次重定向等等。
+</code></pre></li>
+<li><p>timing</p>
+<pre><code>包含延迟相关的性能信息。
+</code></pre></li>
 <li><p>memory</p>
-<p>  Chrome 添加的一个非标准扩展，这个属性提供了一个可以获取到基本内存使用情况的对象。</p>
-</li>
+<pre><code>Chrome 添加的一个非标准扩展， 这个属性提供了一个可以获取到基本内存使用情况的对象。
+</code></pre></li>
 </ul>
-<p>通过这些属性，类似上面 measure 的 demo，就能知道浏览器在执行 dom，请求响应，加载等异步处理项目上的损耗。</p>
+<p>通过这些属性， 类似上面 measure 的 demo， 就能知道浏览器在执行 dom， 请求响应， 加载等异步处理项目上的损耗。</p>
 <img src="/2019/06/08/window-performance/timing.png" title="timing">
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
-<p>我只是知识点的“加工者”，更多内容请查阅原文链接 :thought_balloon: ，同时感谢原作者的付出：</p>
+<p>我只是知识点的“加工者”， 更多内容请查阅原文链接 :thought_balloon: ， 同时感谢原作者的付出：</p>
 </blockquote>
 <ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/performance" target="_blank" rel="noopener">Window​.performance MDN</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Performance" target="_blank" rel="noopener">Performance MDN</a></li>
-<li><a href="https://juejin.im/entry/58ba9cb5128fe100643da2cc" target="_blank" rel="noopener">前端性能监控：window.performance 掘金</a></li>
+<li><a href="https://juejin.im/entry/58ba9cb5128fe100643da2cc" target="_blank" rel="noopener">前端性能监控： window.performance 掘金</a></li>
 </ul>
 
       
@@ -477,6 +477,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/05/elasticsearch-detail-document/" rel="prev" title="Elasticsearch Document 文档操作">
+                Elasticsearch Document 文档操作 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -555,7 +559,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -566,7 +570,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -577,7 +581,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

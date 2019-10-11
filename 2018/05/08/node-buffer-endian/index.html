@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies的bug，我也不会去查阅了解这个文章标题中2个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读15分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gulliver">
+<meta name="description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies 的 bug，我也不会去查阅了解这个文章标题中 2 个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读 15 分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gu">
 <meta name="keywords" content="node">
 <meta property="og:type" content="article">
-<meta property="og:title" content="readInt16BE 和 readInt16LE的区别">
+<meta property="og:title" content="readInt16BE 和 readInt16LE 的区别">
 <meta property="og:url" content="http://yoursite.com/2018/05/08/node-buffer-endian/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies的bug，我也不会去查阅了解这个文章标题中2个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读15分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gulliver">
+<meta property="og:description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies 的 bug，我也不会去查阅了解这个文章标题中 2 个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读 15 分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gu">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/endian.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/endian-1.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/endian-2.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/buffer-1.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/try.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.898Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.221Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="readInt16BE 和 readInt16LE的区别">
-<meta name="twitter:description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies的bug，我也不会去查阅了解这个文章标题中2个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读15分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gulliver">
+<meta name="twitter:title" content="readInt16BE 和 readInt16LE 的区别">
+<meta name="twitter:description" content="放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和进制扯上关系了。这是个扩展出来的话题，要不是看getCookies 的 bug，我也不会去查阅了解这个文章标题中 2 个规范有什么区别。  下面就慢慢学习吧？（以下内容大概阅读 15 分钟） 端（endian）的起源“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gu">
 <meta name="twitter:image" content="http://yoursite.com/2018/05/08/node-buffer-endian/endian.jpg">
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>readInt16BE 和 readInt16LE的区别 | NextInnovation</title>
+  <title>readInt16BE 和 readInt16LE 的区别 | NextInnovation</title>
   
 
 
@@ -295,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">readInt16BE 和 readInt16LE的区别</h1>
+          <h1 class="post-title" itemprop="name headline">readInt16BE 和 readInt16LE 的区别</h1>
         
 
         <div class="post-meta">
@@ -341,8 +341,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/node/" itemprop="url" rel="index">
-                    <span itemprop="name">node</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -378,25 +378,26 @@
       
 
       
-        <p>放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和<strong>进制</strong>扯上关系了。这是个扩展出来的话题，要不是看<a href="https://news.ycombinator.com/item?id=16975025" target="_blank" rel="noopener">getCookies的bug</a>，我也不会去查阅了解这个文章标题中2个规范有什么区别。</p>
+        <p>放张图，如果不出所料，大家应该也不知道什么意思。毕竟写个页面为毛和<strong>进制</strong>扯上关系了。这是个扩展出来的话题，要不是看<a href="https://news.ycombinator.com/item?id=16975025" target="_blank" rel="noopener">getCookies 的 bug</a>，我也不会去查阅了解这个文章标题中 2 个规范有什么区别。</p>
 <img src="/2018/05/08/node-buffer-endian/endian.jpg" title="big endian 和 little endian">
-<p>下面就慢慢学习吧？（以下内容大概阅读15分钟）</p>
-<h2 id="端（endian）的起源"><a href="#端（endian）的起源" class="headerlink" title="端（endian）的起源"></a><a href="https://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82%E5%BA%8F" target="_blank" rel="noopener">端（endian）的起源</a></h2><p>“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gulliver’s Travels）。小说中，小人国为水煮蛋该从大的一端（Big-End）剥开还是小的一端（Little-End）剥开而争论，争论的双方分别被称为“大端派”和“小端派”。以下是1726年关于大小端之争历史的描述：</p>
+<p>下面就慢慢学习吧？（以下内容大概阅读 15 分钟）</p>
+<h2 id="端（endian）的起源"><a href="#端（endian）的起源" class="headerlink" title="端（endian）的起源"></a><a href="https://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82%E5%BA%8F" target="_blank" rel="noopener">端（endian）的起源</a></h2><p>“endian”一词来源于十八世纪爱尔兰作家乔纳森·斯威夫特（Jonathan Swift）的小说《格列佛游记》（Gulliver’s Travels）。小说中，小人国为水煮蛋该从大的一端（Big-End）剥开还是小的一端（Little-End）剥开而争论，争论的双方分别被称为“大端派”和“小端派”。以下是 1726 年关于大小端之争历史的描述：</p>
 <blockquote>
-<p>“我下面要告诉你的是，Lilliput和Blefuscu这两大强国在过去36个月里一直在苦战。战争开始是由于以下的原因：我们大家都认为，吃鸡蛋前，原始的方法是打破鸡蛋较大的一端，可是当今皇帝的祖父小时候吃鸡蛋，一次按古法打鸡蛋时碰巧将一个手指弄破了。因此他的父亲，当时的皇帝，就下了一道敕令，命令全体臣民吃鸡蛋时打破鸡蛋较小的一端，违令者重罚。老百姓们对这项命令极其反感。历史告诉我们，由此曾经发生过6次叛乱，其中一个皇帝送了命，另一个丢了王位。这些叛乱大多都是由Blefuscu的国王大臣们煽动起来的。叛乱平息后，流亡的人总是逃到那个帝国去寻求避难。据估计，先后几次有11000人情愿受死也不肯去打破鸡蛋较小的一端。关于这一争端，曾出版过几百本大部著作，不过大端派的书一直是受禁的，法律也规定该派任何人不得做官。”<br>— 《格列夫游记》 第一卷第4章 蒋剑锋（译）</p>
+<p>“我下面要告诉你的是，Lilliput 和 Blefuscu 这两大强国在过去 36 个月里一直在苦战。战争开始是由于以下的原因：我们大家都认为，吃鸡蛋前，原始的方法是打破鸡蛋较大的一端，可是当今皇帝的祖父小时候吃鸡蛋，一次按古法打鸡蛋时碰巧将一个手指弄破了。因此他的父亲，当时的皇帝，就下了一道敕令，命令全体臣民吃鸡蛋时打破鸡蛋较小的一端，违令者重罚。老百姓们对这项命令极其反感。历史告诉我们，由此曾经发生过 6 次叛乱，其中一个皇帝送了命，另一个丢了王位。这些叛乱大多都是由 Blefuscu 的国王大臣们煽动起来的。叛乱平息后，流亡的人总是逃到那个帝国去寻求避难。据估计，先后几次有 11000 人情愿受死也不肯去打破鸡蛋较小的一端。关于这一争端，曾出版过几百本大部著作，不过大端派的书一直是受禁的，法律也规定该派任何人不得做官。”<br>— 《格列夫游记》 第一卷第 4 章 蒋剑锋（译）</p>
 </blockquote>
-<h2 id="什么是Big-Endian、Little-Endian"><a href="#什么是Big-Endian、Little-Endian" class="headerlink" title="什么是Big Endian、Little Endian"></a>什么是Big Endian、Little Endian</h2><p>Big Endian:低地址存放最高有效字节<br>示例中，最高位字节是0x0A 存储在最低的内存地址处。下一个字节0x0B存在后面的地址处。正类似于十六进制字节从左到右的阅读顺序。<br><img src="/2018/05/08/node-buffer-endian/endian-1.png" title="摘自维基百科"><br>最低位字节是0x0D 存储在最低的内存地址处。后面字节依次存在后面的地址处。<br>Little Endian:低地址存放最低有效字节<br><img src="/2018/05/08/node-buffer-endian/endian-2.png" title="摘自维基百科"></p>
-<h2 id="那和node有毛关系？"><a href="#那和node有毛关系？" class="headerlink" title="那和node有毛关系？"></a>那和node有毛关系？</h2><p>下面几个api熟悉么？Buffer看见过吧？<br><img src="/2018/05/08/node-buffer-endian/buffer-1.png" title="buffer api"><br>node玩了许久，其实也就是调调接口，底层api接触的不多，如果不再查漏补缺可能来年就要被淘汰了，出去找工作都不好意思说有node经验。</p>
-<p>通过一个例子，来看下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//请问，分别输出多少？</span><br><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;).readUInt16BE(0);</span><br><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;).readUInt16LE(0);</span><br></pre></td></tr></table></figure></p>
+<h2 id="什么是-Big-Endian、Little-Endian"><a href="#什么是-Big-Endian、Little-Endian" class="headerlink" title="什么是 Big Endian、Little Endian"></a>什么是 Big Endian、Little Endian</h2><p>Big Endian:低地址存放最高有效字节<br>示例中，最高位字节是 0x0A 存储在最低的内存地址处。下一个字节 0x0B 存在后面的地址处。正类似于十六进制字节从左到右的阅读顺序。<br><img src="/2018/05/08/node-buffer-endian/endian-1.png" title="摘自维基百科"><br>最低位字节是 0x0D 存储在最低的内存地址处。后面字节依次存在后面的地址处。<br>Little Endian:低地址存放最低有效字节<br><img src="/2018/05/08/node-buffer-endian/endian-2.png" title="摘自维基百科"></p>
+<h2 id="那和-node-有毛关系？"><a href="#那和-node-有毛关系？" class="headerlink" title="那和 node 有毛关系？"></a>那和 node 有毛关系？</h2><p>下面几个 api 熟悉么？Buffer 看见过吧？<br><img src="/2018/05/08/node-buffer-endian/buffer-1.png" title="buffer api"><br>node 玩了许久，其实也就是调调接口，底层 api 接触的不多，如果不再查漏补缺可能来年就要被淘汰了，出去找工作都不好意思说有 node 经验。</p>
+<p>通过一个例子，来看下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//请问，分别输出多少？</span><br><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;).readUInt16BE(0);</span><br><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;).readUInt16LE(0);</span><br></pre></td></tr></table></figure>
 <p>开始解题：</p>
 <ol>
-<li><p>先看下Buffer.from什么意思？<br>// 根据编码，解析string，返回一个数组buffer<br>Buffer.from(str[, encoding]) returns a new Buffer containing a copy of the provided string.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;);//&lt;Buffer 00 0a&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>readUInt16XX 到底怎么算？<br>看node api描述：readUInt16BE() returns big endian, readUInt16LE() returns little endian。<br>好了，看到这个就大致明白开头恶补的端的知识点(大端：顺着取位，小端：倒着取位)<br>那么，根据前面的buffer data，有以下计算过程：<br>00(16进制) -&gt; 0(10进制) -&gt; 00000000(2进制)（<strong>8bit（位）=1byte（字节）</strong>=1B）<br>0a -&gt; 10(10) -&gt; 00001010(2)<br>结果就非常好算了：<br>readUInt16BE(0) = 00000000 00001010 = 10<br>readUInt16LE(0) = 00001010 00000000 = 2560</p>
-</li>
+<li>先看下 Buffer.from 什么意思？<br>// 根据编码，解析 string，返回一个数组 buffer<br>Buffer.from(str[, encoding]) returns a new Buffer containing a copy of the provided string.</li>
 </ol>
-<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>那就练下？看下某个库中p的值是怎么在实际运用的<br><img src="/2018/05/08/node-buffer-endian/try.png" title="getCookie"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Buffer.from(&apos;000A&apos;, &apos;hex&apos;);//&lt;Buffer 00 0a&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>readUInt16XX 到底怎么算？<br>看 node api 描述：readUInt16BE() returns big endian, readUInt16LE() returns little endian。<br>好了，看到这个就大致明白开头恶补的端的知识点(大端：顺着取位，小端：倒着取位)<br>那么，根据前面的 buffer data，有以下计算过程：<br>00(16 进制) -&gt; 0(10 进制) -&gt; 00000000(2 进制)（<strong>8bit（位）=1byte（字节）</strong>=1B）<br>0a -&gt; 10(10) -&gt; 00001010(2)<br>结果就非常好算了：<br>readUInt16BE(0) = 00000000 00001010 = 10<br>readUInt16LE(0) = 00001010 00000000 = 2560</li>
+</ol>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>那就练下？看下某个库中 p 的值是怎么在实际运用的<br><img src="/2018/05/08/node-buffer-endian/try.png" title="getCookie"></p>
 
       
     </div>
@@ -437,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/06/gumdam-sd-exia/" rel="next" title="SD能天使Exia 制作小记">
-                <i class="fa fa-chevron-left"></i> SD能天使Exia 制作小记
+              <a href="/2018/05/06/gumdam-sd-exia/" rel="next" title="SD 能天使 Exia 制作小记">
+                <i class="fa fa-chevron-left"></i> SD 能天使 Exia 制作小记
               </a>
             
           </div>
@@ -447,8 +448,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/08/npm-unsafe/" rel="prev" title="npm模块别乱下载，说不好就出事了">
-                npm模块别乱下载，说不好就出事了 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/08/npm-unsafe/" rel="prev" title="npm 模块别乱下载，说不好就出事了">
+                npm 模块别乱下载，说不好就出事了 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -528,7 +529,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -539,7 +540,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -550,7 +551,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -583,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#端（endian）的起源"><span class="nav-number">1.</span> <span class="nav-text">端（endian）的起源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Big-Endian、Little-Endian"><span class="nav-number">2.</span> <span class="nav-text">什么是Big Endian、Little Endian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那和node有毛关系？"><span class="nav-number">3.</span> <span class="nav-text">那和node有毛关系？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际应用"><span class="nav-number">4.</span> <span class="nav-text">实际应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#端（endian）的起源"><span class="nav-number">1.</span> <span class="nav-text">端（endian）的起源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-Big-Endian、Little-Endian"><span class="nav-number">2.</span> <span class="nav-text">什么是 Big Endian、Little Endian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那和-node-有毛关系？"><span class="nav-number">3.</span> <span class="nav-text">那和 node 有毛关系？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际应用"><span class="nav-number">4.</span> <span class="nav-text">实际应用</span></a></li></ol></div>
             
 
           </div>

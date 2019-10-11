@@ -88,7 +88,7 @@
 <meta property="og:description" content="服务端怎么做 form 表单提交？ 场景有个 node 服务 serverA 用于做业务接口中间层，完成和下游服务器之间的数据“加工”。普通 ajax api 完全可以胜任，但是遇到 表单提交 脑袋就有些懵逼。 比如：serverA 有个 order 订单接口，需要把客户端传过来的数据处理成 form 格式，然后再 submit 到第三方服务端，第三方服务端将回告一个支付页面给客户端。 如果在浏览">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/02/13/http-form-submit/1.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:19.060Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务端做 form 表单提交">
 <meta name="twitter:description" content="服务端怎么做 form 表单提交？ 场景有个 node 服务 serverA 用于做业务接口中间层，完成和下游服务器之间的数据“加工”。普通 ajax api 完全可以胜任，但是遇到 表单提交 脑袋就有些懵逼。 比如：serverA 有个 order 订单接口，需要把客户端传过来的数据处理成 form 格式，然后再 submit 到第三方服务端，第三方服务端将回告一个支付页面给客户端。 如果在浏览">
@@ -337,8 +337,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/其他/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -378,11 +378,11 @@
 <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>有个 node 服务 serverA 用于做业务接口中间层，完成和下游服务器之间的数据“加工”。普通 ajax api 完全可以胜任，但是遇到 <strong>表单提交</strong> 脑袋就有些懵逼。</p>
 <p>比如：serverA 有个 order 订单接口，需要把客户端传过来的数据处理成 form 格式，然后再 submit 到第三方服务端，第三方服务端将回告一个支付页面给客户端。</p>
 <p>如果在浏览器端，我们可以直接这样做：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"xxx"</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"xxx"</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>然后 js 一个 submit 就完事了，现在因为这个中间层，这样的动作需要放到服务端来完成，就有些不知所措（在 <strong>林同学</strong> 点播后有了如下方案）。</p>
 <h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>在服务端创建一个新接口，用于接受到 order 请求后，把下游服务器换成自己这个新接口（自己请求自己）</p>
 <p>在这个新接口，处理客户端数据，并且提供一个渲染页面：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>platform<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"form1"</span> <span class="attr">id</span>=<span class="string">"form1"</span> <span class="attr">action</span>=<span class="string">"$&#123;ctx.query.url&#125;"</span> <span class="attr">method</span>=<span class="string">"$&#123;ctx.query.method&#125;"</span>&gt;</span></span><br><span class="line">			$&#123;inputList&#125;</span><br><span class="line">		<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">			<span class="comment">// “自动” 提交</span></span></span><br><span class="line"><span class="javascript">			<span class="built_in">document</span>.getElementById(<span class="string">'form1'</span>).submit();</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>platform<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"form1"</span> <span class="attr">id</span>=<span class="string">"form1"</span> <span class="attr">action</span>=<span class="string">"$&#123;ctx.query.url&#125;"</span> <span class="attr">method</span>=<span class="string">"$&#123;ctx.query.method&#125;"</span>&gt;</span></span><br><span class="line">      $&#123;inputList&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// “自动” 提交</span></span></span><br><span class="line"><span class="javascript">      <span class="built_in">document</span>.getElementById(<span class="string">'form1'</span>).submit();</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当客户端接口到此页面后自动提交表单给第三方服务，即可</p>
 <img src="/2019/02/13/http-form-submit/1.png" title="示例">
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于这样一个业务场景的解决方案，不需要高超的代码能力，但一定要有坚实的实战经验，和牢靠基础知识。</p>
@@ -521,7 +521,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -532,7 +532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -543,7 +543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

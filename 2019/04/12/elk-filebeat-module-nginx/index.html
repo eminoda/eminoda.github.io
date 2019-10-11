@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition">
+<meta name="description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition。">
 <meta name="keywords" content="elk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Filebeat 修改内置 modules （nginx）">
 <meta property="og:url" content="http://yoursite.com/2019/04/12/elk-filebeat-module-nginx/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition">
+<meta property="og:description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/elk-filebeat-module-nginx/modules.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/elk-filebeat-module-nginx/request_time.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/12/elk-filebeat-module-nginx/dashboard.png">
-<meta property="og:updated_time" content="2019-05-18T15:10:22.904Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Filebeat 修改内置 modules （nginx）">
-<meta name="twitter:description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition">
+<meta name="twitter:description" content="Filebeat modulesFilebeat 内置提供了许多 开箱即用 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。 提供如下功能：  Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。 提供 Elasticsearch Ingest Node pipeline definition。">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/12/elk-filebeat-module-nginx/modules.png">
 
 
@@ -339,8 +339,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/elk/" itemprop="url" rel="index">
-                    <span itemprop="name">elk</span>
+                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
                   </a>
                 </span>
 
@@ -376,46 +376,49 @@
       
 
       
-        <h1 id="Filebeat-modules"><a href="#Filebeat-modules" class="headerlink" title="Filebeat modules"></a>Filebeat modules</h1><p>Filebeat 内置提供了许多 <strong>开箱即用</strong> 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。</p>
+        <h2 id="Filebeat-modules"><a href="#Filebeat-modules" class="headerlink" title="Filebeat modules"></a>Filebeat modules</h2><p>Filebeat 内置提供了许多 <strong>开箱即用</strong> 的 modules （模块），对日志文件做简单的收集和解析处理，相比于直接使用 logstash 方便了很多。</p>
 <p>提供如下功能：</p>
 <ul>
 <li>Filebeat input 配置。设置 log 文件的抓取路径，能根据不同系统设置不同路径。</li>
-<li>提供 Elasticsearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.0/ingest.html" target="_blank" rel="noopener">Ingest Node</a> pipeline definition （未了解）。大概通过管道解析预处理元数据到 elasticsearch</li>
+<li>提供 Elasticsearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.0/ingest.html" target="_blank" rel="noopener">Ingest Node</a> pipeline definition。大概通过管道解析预处理元数据到 elasticsearch</li>
 <li>Fields 字段定义</li>
 <li>简单的 Kibana dashboards 仪表盘示例和 visualize 图标分析</li>
 </ul>
 <p>内置模块：<br><img src="/2019/04/12/elk-filebeat-module-nginx/modules.png" title="内置模块"></p>
-<h1 id="修改-nginx-modules"><a href="#修改-nginx-modules" class="headerlink" title="修改 nginx modules"></a>修改 nginx modules</h1><p>但是问题来了，内置的 nginx modules 只是针对 nginx 的默认 log 格式，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span><br><span class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span><br><span class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这篇的目的通过修改 Filebeat 内置模块 nginx，以适应业务访问日志分析。</p>
+<h2 id="修改-nginx-modules"><a href="#修改-nginx-modules" class="headerlink" title="修改 nginx modules"></a>修改 nginx modules</h2><p>内置的 nginx modules 只是针对 nginx 的默认 log 格式，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    log_format  main  <span class="string">'$remote_addr - $remote_user [$time_local] "$request" '</span></span><br><span class="line">                      <span class="string">'$status $body_bytes_sent "$http_referer" '</span></span><br><span class="line">                      <span class="string">'"$http_user_agent" "$http_x_forwarded_for"'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但现实，我们的 nginx log 会包含更多字段，比如：请求的响应时间、爬虫打标、登录用户 Id 记录…</p>
 <p>这里示范如何修改默认 nginx 配置来达到业务需求。</p>
-<h2 id="看下目前-nginx-日志格式"><a href="#看下目前-nginx-日志格式" class="headerlink" title="看下目前 nginx 日志格式"></a>看下目前 nginx 日志格式</h2><p>先来熟悉下目前 nginx 的日志格式，和看下 filebeat 抓取的元数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    log_format main &apos;$remote_addr $http_x_forwarded_for - &apos;</span><br><span class="line">                    &apos;[$time_local] $request $status $body_bytes_sent $request_time &apos;</span><br><span class="line">                    &apos;$uid &apos;</span><br><span class="line">                    &apos;$http_user_agent &apos;</span><br><span class="line">                    &apos;$spider&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>日志输出（为方便对比，换行展示）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">123.125.71.107 - -</span><br><span class="line">[15/May/2019:13:30:27 +0800] GET /news/d72203.html HTTP/1.1 200 28434 0.177</span><br><span class="line">1234567890</span><br><span class="line">Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)</span><br><span class="line">Baiduspider</span><br></pre></td></tr></table></figure>
+<h2 id="看下目前-nginx-日志格式"><a href="#看下目前-nginx-日志格式" class="headerlink" title="看下目前 nginx 日志格式"></a>看下目前 nginx 日志格式</h2><p>先来熟悉下目前 nginx 自定义设置的日志格式 format：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    log_format main <span class="string">'$remote_addr $http_x_forwarded_for - '</span></span><br><span class="line">                    <span class="string">'[$time_local] $request $status $body_bytes_sent $request_time '</span></span><br><span class="line">                    <span class="string">'$uid '</span></span><br><span class="line">                    <span class="string">'$http_user_agent '</span></span><br><span class="line">                    <span class="string">'$spider'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在默认的日志格式上，简单做了取舍和顺序换位。也增加了业务上的字段，比如：用户 uid；爬虫标识 spider</p>
+<p>实际日志输出（为方便对比，换行展示）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123.125</span><span class="number">.71</span><span class="number">.107</span> - -</span><br><span class="line">[<span class="number">15</span>/May/<span class="number">2019</span>:<span class="number">13</span>:<span class="number">30</span>:<span class="number">27</span> +<span class="number">0800</span>] GET /news/d72203.html HTTP/<span class="number">1.1</span> <span class="number">200</span> <span class="number">28434</span> <span class="number">0.177</span></span><br><span class="line"><span class="number">1234567890</span></span><br><span class="line">Mozilla/<span class="number">5.0</span> (compatible; Baiduspider/<span class="number">2.0</span>; +http:<span class="comment">//www.baidu.com/search/spider.html)</span></span><br><span class="line">Baiduspider</span><br></pre></td></tr></table></figure>
 <h2 id="修改解析规则"><a href="#修改解析规则" class="headerlink" title="修改解析规则"></a>修改解析规则</h2><ol>
 <li><p>修改 modules 默认引导文件 manifest.yml</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /mydata/filebeat-6.7.1-linux-x86_64/module/nginx/access/manifest.yml</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var:</span><br><span class="line">    - name: paths</span><br><span class="line">        default:</span><br><span class="line">            # 如果你 nginx log 输出路径和默认不一致，需要修改</span><br><span class="line">            - /var/log/nginx/*access.log*</span><br><span class="line">        ...</span><br><span class="line">    # 重新指定提取规则文件</span><br><span class="line">    # ingest_pipeline: ingest/default.json</span><br><span class="line">    ingest_pipeline: ingest/pro.json</span><br></pre></td></tr></table></figure>
+<p>可能 nginx 输出的 log 路径有所不同，需要修改日志读取目录路径；已经新定义 ingest 解析规则文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /mydata/filebeat<span class="number">-6.7</span><span class="number">.1</span>-linux-x86_64/<span class="built_in">module</span>/nginx/access/manifest.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">var:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">paths</span></span><br><span class="line"><span class="attr">        default:</span></span><br><span class="line">            <span class="comment"># 如果你 nginx log 输出路径和默认不一致，需要修改</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">/var/log/nginx/*access.log*</span></span><br><span class="line">        <span class="string">...</span></span><br><span class="line">    <span class="comment"># 重新指定提取规则文件</span></span><br><span class="line">    <span class="comment"># ingest_pipeline: ingest/default.json</span></span><br><span class="line"><span class="attr">    ingest_pipeline:</span> <span class="string">ingest/pro.json</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>修改 ingest 规则文件</p>
-<p> 参照上一个修改，此处文件已经变更为 pro.json</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /mydata/filebeat-6.7.1-linux-x86_64/module/nginx/access/ingest/pro.json</span><br></pre></td></tr></table></figure>
-<p> 注意：patterns 为单行内容（为方便对比，换行展示）</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"grok"</span>: &#123;</span><br><span class="line">    <span class="string">"field"</span>: <span class="string">"message"</span>,</span><br><span class="line">    <span class="string">"patterns"</span>: [</span><br><span class="line">        <span class="string">"\"?%&#123;IP_LIST:nginx.access.remote_ip_list&#125; %&#123;IP_LIST:nginx.access.forward_ip_list&#125; -</span></span><br><span class="line"><span class="string">        \\[%&#123;HTTPDATE:nginx.access.time&#125;\\] %&#123;GREEDYDATA:nginx.access.info&#125; %&#123;NUMBER:nginx.access.response_code:long&#125; %&#123;NUMBER:nginx.access.body_sent.bytes:long&#125; %&#123;NUMBER:nginx.access.request_time:float&#125;</span></span><br><span class="line"><span class="string">        (%&#123;NUMBER:nginx.access.uid&#125;|-)</span></span><br><span class="line"><span class="string">        %&#123;GREEDYDATA:nginx.access.agent&#125;</span></span><br><span class="line"><span class="string">        %&#123;SPIDER:nginx.access.spider&#125;"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"pattern_definitions"</span>: &#123;</span><br><span class="line">        <span class="string">"IP_LIST"</span>: <span class="string">"%&#123;IP&#125;(\"?,?\\s*%&#123;IP&#125;)*|-"</span>,</span><br><span class="line">        <span class="string">"SPIDER"</span>: <span class="string">"%&#123;WORD&#125;|-"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"ignore_missing"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p> 基本是在原有基础上做字段的位置变更，和字段的添加，没有对配置文件 <strong>大改</strong> （也怕改崩 :neutral_face:）</p>
+<p>参照上一个修改，此处文件已经变更为 pro.json</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /mydata/filebeat<span class="number">-6.7</span><span class="number">.1</span>-linux-x86_64/<span class="built_in">module</span>/nginx/access/ingest/pro.json</span><br></pre></td></tr></table></figure>
+<p>注意：patterns 为单行内容（为方便对比，换行展示）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"grok"</span>: &#123;</span><br><span class="line">    <span class="string">"field"</span>: <span class="string">"message"</span>,</span><br><span class="line">    <span class="string">"patterns"</span>: [</span><br><span class="line">        <span class="string">"\"?%&#123;IP_LIST:nginx.access.remote_ip_list&#125; %&#123;IP_LIST:nginx.access.forward_ip_list&#125; -</span></span><br><span class="line"><span class="string">        \\[%&#123;HTTPDATE:nginx.access.time&#125;\\] %&#123;GREEDYDATA:nginx.access.info&#125; %&#123;NUMBER:nginx.access.response_code:long&#125; %&#123;NUMBER:nginx.access.body_sent.bytes:long&#125; %&#123;NUMBER:nginx.access.request_time:float&#125;</span></span><br><span class="line"><span class="string">        (%&#123;NUMBER:nginx.access.uid&#125;|-)</span></span><br><span class="line"><span class="string">        %&#123;GREEDYDATA:nginx.access.agent&#125;</span></span><br><span class="line"><span class="string">        %&#123;SPIDER:nginx.access.spider&#125;"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"pattern_definitions"</span>: &#123;</span><br><span class="line">        <span class="string">"IP_LIST"</span>: <span class="string">"%&#123;IP&#125;(\"?,?\\s*%&#123;IP&#125;)*|-"</span>,</span><br><span class="line">        <span class="string">"SPIDER"</span>: <span class="string">"%&#123;WORD&#125;|-"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"ignore_missing"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>基本是在原有基础上做字段的位置变更，和字段的添加，没有对配置文件 <strong>大改</strong> （也怕改崩 :neutral_face:）</p>
 </li>
 <li><p>清空 elastisearch 相关内容（未了解，很佛系的操作）</p>
-<p> 大改是清除旧索引、模板等历史“缓存”数据</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE http://192.168.1.65:9201/_ingest/pipeline/*</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE http://192.168.1.65:9201/_template/*</span><br></pre></td></tr></table></figure>
+<p>主要作用是清除旧索引、模板等历史“缓存”数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE http:<span class="comment">//192.168.1.65:9201/_ingest/pipeline/*</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE http:<span class="comment">//192.168.1.65:9201/_template/*</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重启 Filebeat ，读取新数据</p>
 </li>
 <li><p>重建 Kibana Index 索引</p>
-<p> 如果你能搜索到你新添加的 Field 字段，恭喜你成功了。</p>
- <img src="/2019/04/12/elk-filebeat-module-nginx/request_time.png">
-<p> 如果失败，可能有如下原因：</p>
+<p>如果你能搜索到你新添加的 Field 字段，恭喜你成功了。</p>
+<img src="/2019/04/12/elk-filebeat-module-nginx/request_time.png">
+<p>如果失败，可能有如下原因：</p>
 <ul>
 <li>参照步骤 4，可能还有其他数据需要删除</li>
 <li>解析规则有问题，比如少个引号，少个空格之类</li>
@@ -556,7 +559,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -567,7 +570,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -578,7 +581,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -611,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Filebeat-modules"><span class="nav-number">1.</span> <span class="nav-text">Filebeat modules</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改-nginx-modules"><span class="nav-number">2.</span> <span class="nav-text">修改 nginx modules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#看下目前-nginx-日志格式"><span class="nav-number">2.1.</span> <span class="nav-text">看下目前 nginx 日志格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改解析规则"><span class="nav-number">2.2.</span> <span class="nav-text">修改解析规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dashboard-实际效果"><span class="nav-number">2.3.</span> <span class="nav-text">Dashboard 实际效果</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Filebeat-modules"><span class="nav-number">1.</span> <span class="nav-text">Filebeat modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-nginx-modules"><span class="nav-number">2.</span> <span class="nav-text">修改 nginx modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看下目前-nginx-日志格式"><span class="nav-number">3.</span> <span class="nav-text">看下目前 nginx 日志格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改解析规则"><span class="nav-number">4.</span> <span class="nav-text">修改解析规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dashboard-实际效果"><span class="nav-number">5.</span> <span class="nav-text">Dashboard 实际效果</span></a></li></ol></div>
             
 
           </div>

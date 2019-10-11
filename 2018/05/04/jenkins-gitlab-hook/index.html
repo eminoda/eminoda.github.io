@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="jenkins,">
+  <meta name="keywords" content="jenkins,gitlab,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="我们已经用了 github 的 web hook 完成了和 jenkins hook 的对接。还需要了解的同学请看下jenkins 自动部署（github）当然对于公司不想开源 source，肯定内部需要搭建自己的版本管理平台，比如 gitlab。这里讲解下配置过程，可能会解决你遇到的问题。 选择版本下面给出我们的环境，尽可能保持一致以免发生不可描述的问题。  gitlab v10.7.2如果还">
-<meta name="keywords" content="jenkins">
+<meta name="keywords" content="jenkins,gitlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins 配置 gitlab hook">
 <meta property="og:url" content="http://yoursite.com/2018/05/04/jenkins-gitlab-hook/index.html">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/04/jenkins-gitlab-hook/gitlab-old.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/04/jenkins-gitlab-hook/gitlab-old-setting.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/04/jenkins-gitlab-hook/jenkins-scm.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.897Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jenkins 配置 gitlab hook">
 <meta name="twitter:description" content="我们已经用了 github 的 web hook 完成了和 jenkins hook 的对接。还需要了解的同学请看下jenkins 自动部署（github）当然对于公司不想开源 source，肯定内部需要搭建自己的版本管理平台，比如 gitlab。这里讲解下配置过程，可能会解决你遇到的问题。 选择版本下面给出我们的环境，尽可能保持一致以免发生不可描述的问题。  gitlab v10.7.2如果还">
@@ -350,8 +350,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/工程化/" itemprop="url" rel="index">
-                    <span itemprop="name">工程化</span>
+                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
                   </a>
                 </span>
 
@@ -398,10 +398,10 @@
 <h2 id="配置-gitlab"><a href="#配置-gitlab" class="headerlink" title="配置 gitlab"></a>配置 gitlab</h2><ol>
 <li><p>开启权限，不然你可能会遇到如下错误</p>
 <img src="/2018/05/04/jenkins-gitlab-hook/gitlab-1.png">
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Requests to the local network are not allowed</span><br></pre></td></tr></table></figure>
- <img src="/2018/05/04/jenkins-gitlab-hook/error-1.png">
-<p> 备注下，如果是默认安装 gitlab，其日志输出在如下位置</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/gitlab/gitlab-rails/production.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Requests to the local network are not allowed</span><br></pre></td></tr></table></figure>
+<img src="/2018/05/04/jenkins-gitlab-hook/error-1.png">
+<p>备注下，如果是默认安装 gitlab，其日志输出在如下位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/gitlab/gitlab-rails/production.log</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>生成 token，他这个比较 6，还有有效期</p>
 <img src="/2018/05/04/jenkins-gitlab-hook/gitlab-2.png">
@@ -412,8 +412,8 @@
 <li><p>测试一下</p>
 <img src="/2018/05/04/jenkins-gitlab-hook/gitlab-4.png">
 <p>会出现如下错误，是 jenkins 的 gitlab 插件没有配置好。<a href="https://github.com/jenkinsci/gitlab-plugin/issues/375" target="_blank" rel="noopener">原因:https://github.com/jenkinsci/gitlab-plugin/issues/375</a></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">executed successfully but returned HTTP 403</span><br></pre></td></tr></table></figure>
- <img src="/2018/05/04/jenkins-gitlab-hook/error-2.png">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">executed successfully but returned HTTP 403</span><br></pre></td></tr></table></figure>
+<img src="/2018/05/04/jenkins-gitlab-hook/error-2.png">
 </li>
 </ol>
 <h2 id="配置-jenkins"><a href="#配置-jenkins" class="headerlink" title="配置 jenkins"></a>配置 jenkins</h2><ol>
@@ -475,6 +475,8 @@
           
             <a href="/tags/jenkins/" rel="tag"># jenkins</a>
           
+            <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+          
         </div>
       
 
@@ -486,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/03/vue-axios/" rel="next" title="vue HTTP封装">
-                <i class="fa fa-chevron-left"></i> vue HTTP封装
+              <a href="/2018/05/03/vue-axios/" rel="next" title="vue HTTP 封装">
+                <i class="fa fa-chevron-left"></i> vue HTTP 封装
               </a>
             
           </div>
@@ -496,8 +498,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/06/gumdam-sd-exia/" rel="prev" title="SD能天使Exia 制作小记">
-                SD能天使Exia 制作小记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/06/gumdam-sd-exia/" rel="prev" title="SD 能天使 Exia 制作小记">
+                SD 能天使 Exia 制作小记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -577,7 +579,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +590,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -599,7 +601,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

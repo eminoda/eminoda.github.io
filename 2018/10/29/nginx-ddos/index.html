@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致node服务cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了xx云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防xx攻击的付费服务 从">
+<meta name="description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致 node 服务 cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了 xx 云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防 xx 攻击">
 <meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 nginx 防刷">
 <meta property="og:url" content="http://yoursite.com/2018/10/29/nginx-ddos/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致node服务cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了xx云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防xx攻击的付费服务 从">
+<meta property="og:description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致 node 服务 cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了 xx 云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防 xx 攻击">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/10/29/nginx-ddos/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/29/nginx-ddos/2.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/29/nginx-ddos/3.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/29/nginx-ddos/4.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.992Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 nginx 防刷">
-<meta name="twitter:description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致node服务cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了xx云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防xx攻击的付费服务 从">
+<meta name="twitter:description" content="今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致 node 服务 cpu 100%，页面渲染直接被崩掉。 这类问题对于互联网开发来说，见怪不怪。什么 Ddos、CC 等等吧，总之就是被人盯上了，想办法攻守转换吧。 解决方式云方案对于像我们一样小公司来说，为了减少运维成本，都用上了 xx 云。对于国内一些的云肯定提供了 解决方案  扩容，买机器硬杠 使用防 xx 攻击">
 <meta name="twitter:image" content="http://yoursite.com/2018/10/29/nginx-ddos/1.png">
 
 
@@ -340,8 +340,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
+                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
                   </a>
                 </span>
 
@@ -377,37 +377,39 @@
       
 
       
-        <p>今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致node服务cpu 100%，页面渲染直接被崩掉。</p>
+        <p>今天，没错就是今天，发生一个意料之中的线上问题：服务器被攻击，页面疯狂被刷，导致 node 服务 cpu 100%，页面渲染直接被崩掉。</p>
 <p>这类问题对于互联网开发来说，见怪不怪。什么 <strong>Ddos、CC</strong> 等等吧，总之就是被人盯上了，想办法攻守转换吧。</p>
-<p><strong>解决方式</strong><br><strong>云方案</strong><br>对于像我们一样小公司来说，为了减少运维成本，都用上了xx云。对于国内一些的云肯定提供了 <strong>解决方案</strong></p>
+<p><strong>解决方式</strong><br><strong>云方案</strong><br>对于像我们一样小公司来说，为了减少运维成本，都用上了 xx 云。对于国内一些的云肯定提供了 <strong>解决方案</strong></p>
 <ul>
 <li>扩容，买机器硬杠</li>
-<li>使用防xx攻击的付费服务</li>
-<li>从访问日志中找出ip，添加黑名单</li>
+<li>使用防 xx 攻击的付费服务</li>
+<li>从访问日志中找出 ip，添加黑名单</li>
 </ul>
 <p>当然这些不是重点，类似方案专业的运维肯定能提供很多。主要引出 Nginx 方案</p>
-<p><strong>Nginx限流</strong><br>如果你还未使用过nginx，不防看下这篇文章 <a href="https://eminoda.github.io/2018/10/19/nginx-product-practice/" target="_blank" rel="noopener">nginx 线上那些实用的最佳实践</a> ，可能会有架设一台Nginx的想法。</p>
-<p><strong>解决思路</strong>：在后台服务，比如node、java之上，专门提供一台nginx，负责各种请求的接入。因为覆盖了所有请求，我们可以对非法的请求通过nginx来做限流，或者我们业务上的一些代理转发等。</p>
+<p><strong>Nginx 限流</strong><br>如果你还未使用过 nginx，不防看下这篇文章 <a href="https://eminoda.github.io/2018/10/19/nginx-product-practice/" target="_blank" rel="noopener">nginx 线上那些实用的最佳实践</a> ，可能会有架设一台 Nginx 的想法。</p>
+<p><strong>解决思路</strong>：在后台服务，比如 node、java 之上，专门提供一台 nginx，负责各种请求的接入。因为覆盖了所有请求，我们可以对非法的请求通过 nginx 来做限流，或者我们业务上的一些代理转发等。</p>
 <ol>
 <li>链接数限制</li>
 </ol>
-<p><a href="http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html#limit_conn" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html#limit_conn</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    limit_conn_zone     $binary_remote_addr     zone=perip:10m;</span><br><span class="line">    server&#123;</span><br><span class="line">        location = / &#123;</span><br><span class="line">            # 限制链接数1个</span><br><span class="line">            limit_conn perip 1;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>测试：并发发送5个request</p>
-<p>nginx.log<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=42.827815233418384 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=20.655923601902337 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=53.32509284109306 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:37 +0800] &quot;GET /?r=81.48015710993863 HTTP/1.1&quot; 200 12715 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:37 +0800] &quot;GET /?r=26.774798805224908 HTTP/1.1&quot; 200 12715 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br></pre></td></tr></table></figure></p>
-<p>结果：只有2个请求状态200，符合配置预期</p>
+<p><a href="http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html#limit_conn" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html#limit_conn</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    limit_conn_zone     $binary_remote_addr     zone=perip:10m;</span><br><span class="line">    server&#123;</span><br><span class="line">        location = / &#123;</span><br><span class="line">            # 限制链接数1个</span><br><span class="line">            limit_conn perip 1;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试：并发发送 5 个 request</p>
+<p>nginx.log</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=42.827815233418384 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=20.655923601902337 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:36 +0800] &quot;GET /?r=53.32509284109306 HTTP/1.1&quot; 503 213 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:37 +0800] &quot;GET /?r=81.48015710993863 HTTP/1.1&quot; 200 12715 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br><span class="line">58.247.91.82 - - [29/Oct/2018:16:49:37 +0800] &quot;GET /?r=26.774798805224908 HTTP/1.1&quot; 200 12715 &quot;-&quot; &quot;-&quot; &quot;-&quot;</span><br></pre></td></tr></table></figure>
+<p>结果：只有 2 个请求状态 200，符合配置预期</p>
 <ol start="2">
-<li>访问频率限制<br><a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_limit_req_module.html</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=10r/s;</span><br><span class="line">    server&#123;</span><br><span class="line">        location = / &#123;</span><br><span class="line">            limit_req zone=reqps burst=2;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>访问频率限制<br><a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_limit_req_module.html</a></li>
 </ol>
-<p>测试：并发5个请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=10r/s;</span><br><span class="line">    server&#123;</span><br><span class="line">        location = / &#123;</span><br><span class="line">            limit_req zone=reqps burst=2;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试：并发 5 个请求</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=10r/s;</span><br><span class="line">limit_req zone=reqps;</span><br></pre></td></tr></table></figure>
 <img src="/2018/10/29/nginx-ddos/1.png">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=10r/s;</span><br><span class="line">limit_req zone=reqps burst=3; #最多额外允许3个请求</span><br></pre></td></tr></table></figure>
 <img src="/2018/10/29/nginx-ddos/2.png">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=1r/s; #每秒设置1个请求</span><br><span class="line">limit_req zone=reqps burst=3; #最多额外允许3个请求</span><br></pre></td></tr></table></figure>
-<p><strong>注意：当rate为1r/s时，burst的请求将延至执行</strong><br><img src="/2018/10/29/nginx-ddos/3.png"></p>
+<p><strong>注意：当 rate 为 1r/s 时，burst 的请求将延至执行</strong><br><img src="/2018/10/29/nginx-ddos/3.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone      $binary_remote_addr     zone=reqps:10m rate=1r/s; #每秒设置1个请求</span><br><span class="line">limit_req zone=reqps burst=3 nodelay; #最多额外允许3个请求</span><br></pre></td></tr></table></figure>
-<p><strong>设置nodelay，取消延迟；</strong><br><img src="/2018/10/29/nginx-ddos/4.png"></p>
+<p><strong>设置 nodelay，取消延迟；</strong><br><img src="/2018/10/29/nginx-ddos/4.png"></p>
 
       
     </div>
@@ -458,8 +460,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/29/webpack-require-font/" rel="prev" title="webpack 中使用sass-loader 如何正确加载font字体">
-                webpack 中使用sass-loader 如何正确加载font字体 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/29/webpack-require-font/" rel="prev" title="webpack 中使用 sass-loader 如何正确加载 font 字体">
+                webpack 中使用 sass-loader 如何正确加载 font 字体 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,7 +532,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -541,7 +543,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -552,7 +554,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/02/09/git-quickstart/g7.png">
 <meta property="og:image" content="http://yoursite.com/2017/02/09/git-quickstart/g8.png">
 <meta property="og:image" content="http://yoursite.com/2017/02/09/git-quickstart/g9.png">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.829Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.187Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git 快速入门">
 <meta name="twitter:description" content="版本控制 集中化的版本控制系统   分布式版本控制系统   区别  无网络，用 svn，不能向数据库提交修改 控制文件方式_ svn：随时间逐步增加 _ git：快照流    git 的三种状态    cli 基本操作 服务器端创建项目   克隆项目   123456shixinghao@SC-201611201637 MINGW64 /e/my_work/github$ git clone gi">
@@ -356,8 +356,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/工程化/" itemprop="url" rel="index">
-                    <span itemprop="name">工程化</span>
+                  <a href="/categories/开发/开发工具/" itemprop="url" rel="index">
+                    <span itemprop="name">开发工具</span>
                   </a>
                 </span>
 
@@ -428,29 +428,29 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git status -s</span><br><span class="line">$ git diff</span><br></pre></td></tr></table></figure>
 <ol start="4">
 <li><p>提交</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;init&apos;</span><br><span class="line">[master 4618f45] init</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 index.txt</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shixinghao@SC-201611201637 MINGW64 /e/my_work/github/hello-git (master)</span><br><span class="line">$ git commit -a -m &apos;init&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;init&apos;</span><br><span class="line">[master 4618f45] init</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 index.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shixinghao@SC-201611201637 MINGW64 /e/my_work/github/hello-git (master)</span><br><span class="line">$ git commit -a -m &apos;init&apos;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>移除文件<br>提交区删除</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm index.txt</span><br><span class="line">$ git rm index.txt</span><br></pre></td></tr></table></figure>
-<p> 暂存区删除</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rm -f index.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm index.txt</span><br><span class="line">$ git rm index.txt</span><br></pre></td></tr></table></figure>
+<p>暂存区删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rm -f index.txt</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>撤销<br>覆盖提交</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;initial commit&apos;</span><br><span class="line">$ git add forgotten_file</span><br><span class="line">$ git commit --amend</span><br></pre></td></tr></table></figure>
-<p> 撤销暂存区</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset HEAD 2.txt</span><br></pre></td></tr></table></figure>
-<p> 还原至上次提交版本</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- 2.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;initial commit&apos;</span><br><span class="line">$ git add forgotten_file</span><br><span class="line">$ git commit --amend</span><br></pre></td></tr></table></figure>
+<p>撤销暂存区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset HEAD 2.txt</span><br></pre></td></tr></table></figure>
+<p>还原至上次提交版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- 2.txt</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><ol>
 <li><p>新建分支</p>
 <img src="/2017/02/09/git-quickstart/9.png">
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch v1.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch v1.0</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>切换分支</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout v1.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout v1.0</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>分支移动</p>
 <img src="/2017/02/09/git-quickstart/10.png" title="checkout到testing分支">
@@ -628,7 +628,7 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -639,7 +639,7 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -650,7 +650,7 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

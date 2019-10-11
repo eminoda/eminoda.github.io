@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="elk,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Reading and Writing documentsElasticsearch 中的索引 index 被划分在 分片 shards 中，每个 shard 会有多个副本 copies。 这些 copies 称为副本集 replication group，在添加和移除 documents 的过程中会同步这些 copies。 因为数据集的同步化，让我们在不同 shards 中获取数据一致性，这样称">
+<meta name="keywords" content="elk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch Document 文档操作">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/elasticsearch-detail-document/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="Reading and Writing documentsElasticsearch 中的索引 index 被划分在 分片 shards 中，每个 shard 会有多个副本 copies。 这些 copies 称为副本集 replication group，在添加和移除 documents 的过程中会同步这些 copies。 因为数据集的同步化，让我们在不同 shards 中获取数据一致性，这样称">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch Document 文档操作">
+<meta name="twitter:description" content="Reading and Writing documentsElasticsearch 中的索引 index 被划分在 分片 shards 中，每个 shard 会有多个副本 copies。 这些 copies 称为副本集 replication group，在添加和移除 documents 的过程中会同步这些 copies。 因为数据集的同步化，让我们在不同 shards 中获取数据一致性，这样称">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/05/elasticsearch-detail-document/">
+
+
+
+
+
+  <title>Elasticsearch Document 文档操作 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/elasticsearch-detail-document/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Elasticsearch Document 文档操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T16:37:22+08:00">
+                2019-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Reading-and-Writing-documents"><a href="#Reading-and-Writing-documents" class="headerlink" title="Reading and Writing documents"></a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#_introduction" target="_blank" rel="noopener">Reading and Writing documents</a></h2><p>Elasticsearch 中的索引 index 被划分在 <strong>分片 shards</strong> 中，每个 shard 会有多个副本 copies。</p>
+<p>这些 copies 称为副本集 <strong>replication group</strong>，在添加和移除 documents 的过程中会同步这些 copies。</p>
+<p>因为数据集的同步化，让我们在不同 shards 中获取数据一致性，这样称为 replication model 数据副本模型。</p>
+<p>Elasticsearch 的数据副本模型 replication model 基于主备份模型 primary-backup model，类似分布式存储系统（Replication in Log-Based Distributed Storage Systems）</p>
+<p>关于 documents 的读写设计思想如下：</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#_basic_write_model" target="_blank" rel="noopener">basic_write_model</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#_basic_read_model" target="_blank" rel="noopener">basic_read_model</a></li>
+</ul>
+<h2 id="Index-API"><a href="#Index-API" class="headerlink" title="Index API"></a>Index API</h2><h3 id="添加新索引（设置了索引-id）"><a href="#添加新索引（设置了索引-id）" class="headerlink" title="添加新索引（设置了索引 id）"></a>添加新索引（设置了索引 id）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT eminoda_test/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;eminoda&quot;,</span><br><span class="line">  &quot;age&quot;:&quot;30&quot;,</span><br><span class="line">  &quot;skill&quot;:&quot;vue node&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,  # 索引名称</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,           # 类型</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 1,</span><br><span class="line">  &quot;result&quot; : &quot;created&quot;,</span><br><span class="line">  &quot;_shards&quot; : &#123;               # 见下 shards 描述</span><br><span class="line">    &quot;total&quot; : 2,              # 一共在多少个 shard copies 上操作</span><br><span class="line">    &quot;successful&quot; : 1,         # 有多少个 shard copies 成功执行</span><br><span class="line">    &quot;failed&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_seq_no&quot; : 0,</span><br><span class="line">  &quot;_primary_term&quot; : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：如果再次执行上述操作，result 将为 updated ，可以设置 <strong>op_type</strong> 参数，使已创建的 doc 再次创建有报错提示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT eminoda_test/_doc/1?op_type=create</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;eminoda&quot;,</span><br><span class="line">  &quot;age&quot;:&quot;30&quot;,</span><br><span class="line">  &quot;skill&quot;:&quot;vue node&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;error&quot;: &#123;</span><br><span class="line">    &quot;root_cause&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;type&quot;: &quot;version_conflict_engine_exception&quot;,</span><br><span class="line">        &quot;reason&quot;: &quot;[_doc][1]: version conflict, document already exists (current version [2])&quot;,</span><br><span class="line">        &quot;index_uuid&quot;: &quot;bzQU4HCBRxeDAfyX7IPnHw&quot;,</span><br><span class="line">        &quot;shard&quot;: &quot;3&quot;,</span><br><span class="line">        &quot;index&quot;: &quot;eminoda_test&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;type&quot;: &quot;version_conflict_engine_exception&quot;,</span><br><span class="line">    &quot;reason&quot;: &quot;[_doc][1]: version conflict, document already exists (current version [2])&quot;,</span><br><span class="line">    &quot;index_uuid&quot;: &quot;bzQU4HCBRxeDAfyX7IPnHw&quot;,</span><br><span class="line">    &quot;shard&quot;: &quot;3&quot;,</span><br><span class="line">    &quot;index&quot;: &quot;eminoda_test&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot;: 409</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="shards"><a href="#shards" class="headerlink" title="shards"></a>shards</h3><p>你可以直接阅读 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html#scalability" target="_blank" rel="noopener">shards</a></p>
+<p>首先，Elasticsearch 可以按照用户设置进行扩容 increase capacity ，会自动分发 automatically distributes 数据到节点，查询操作在各个节点上平衡负载。Elasticsearch 有自己的策略。</p>
+<p>Elasticsearch 的 index 索引在一个逻辑分组上 or 多个物理分区上 physical shards ，每个分区 shards 又一个属于它的索引 index。</p>
+<p>数据的分发将一个索引横跨多个 shards ，多个 shards 有横跨多个 nodes 节点。Elasticsearch 会自己控制数据的冗余 redundancy，使这些 shards 平衡。</p>
+<p>shards 分为两种类型：</p>
+<ul>
+<li>primaries 主区</li>
+<li>replicas 副本区</li>
+</ul>
+<p>replicas 是从 primaries 中备份数据，每个 document 索引 index 只属于一个 primaries。</p>
+<h3 id="添加索引（未指定-id）"><a href="#添加索引（未指定-id）" class="headerlink" title="添加索引（未指定 id）"></a>添加索引（未指定 id）</h3><p>上例使用 PUT 指定了索引 id，使用 POST 可以使用让 elasticsearch 自己生成索引值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST eminoda_test/\_doc</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;eminoda2&quot;,</span><br><span class="line">  &quot;age&quot;:&quot;30&quot;,</span><br><span class="line">  &quot;skill&quot;:&quot;vue node&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;I7nuwGsBjRxZrv4loy0h&quot;,</span><br><span class="line">  &quot;_version&quot; : 1,</span><br><span class="line">  &quot;result&quot; : &quot;created&quot;,</span><br><span class="line">  &quot;_shards&quot; : &#123;</span><br><span class="line">    &quot;total&quot; : 2,</span><br><span class="line">    &quot;successful&quot; : 1,</span><br><span class="line">    &quot;failed&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_seq_no&quot; : 0,</span><br><span class="line">  &quot;_primary_term&quot; : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="关闭新建索引"><a href="#关闭新建索引" class="headerlink" title="关闭新建索引"></a>关闭新建索引</h3><p>更改规则，关闭自建索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">  &quot;persistent&quot;: &#123;</span><br><span class="line">    &quot;action.auto_create_index&quot;:&quot;false&quot; # 默认 true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个再通过 POST、PUT 就无法新建索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;error&quot; : &#123;</span><br><span class="line">    &quot;root_cause&quot; : [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;type&quot; : &quot;index_not_found_exception&quot;,</span><br><span class="line">        &quot;reason&quot; : &quot;no such index&quot;,</span><br><span class="line">        &quot;resource.type&quot; : &quot;index_expression&quot;,</span><br><span class="line">        &quot;resource.id&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">        &quot;index_uuid&quot; : &quot;_na_&quot;,</span><br><span class="line">        &quot;index&quot; : &quot;eminoda_test&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;type&quot; : &quot;index_not_found_exception&quot;,</span><br><span class="line">    &quot;reason&quot; : &quot;no such index&quot;,</span><br><span class="line">    &quot;resource.type&quot; : &quot;index_expression&quot;,</span><br><span class="line">    &quot;resource.id&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">    &quot;index_uuid&quot; : &quot;_na_&quot;,</span><br><span class="line">    &quot;index&quot; : &quot;eminoda_test&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;status&quot; : 404</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="routing"><a href="#routing" class="headerlink" title="routing"></a>routing</h3><p>可以这是一个 <strong>控制器</strong> ，比如 routing，设置一个简单的映射关系，让查询更快速高效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST eminoda_test/_doc?routing=admin</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"eminoda2"</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="string">"30"</span>,</span><br><span class="line">  <span class="string">"skill"</span>:<span class="string">"vue node"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查询的数据中会新添加 _routing 字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;X7n9wGsBjRxZrv4lpy1O&quot;,</span><br><span class="line">  &quot;_score&quot; : 1.0,</span><br><span class="line">  &quot;_routing&quot; : &quot;admin&quot;,</span><br><span class="line">  &quot;_source&quot; : &#123;</span><br><span class="line">    &quot;name&quot; : &quot;eminoda2&quot;,</span><br><span class="line">    &quot;age&quot; : &quot;30&quot;,</span><br><span class="line">    &quot;skill&quot; : &quot;vue node&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Get-API"><a href="#Get-API" class="headerlink" title="Get API"></a>Get API</h2><h3 id="指定-id-查询"><a href="#指定-id-查询" class="headerlink" title="指定 id 查询"></a>指定 id 查询</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET eminoda_test/_doc/1</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 1,</span><br><span class="line">  &quot;_seq_no&quot; : 0,</span><br><span class="line">  &quot;_primary_term&quot; : 1,</span><br><span class="line">  &quot;found&quot; : true,</span><br><span class="line">  &quot;_source&quot; : &#123;</span><br><span class="line">    &quot;name&quot; : &quot;eminoda&quot;,</span><br><span class="line">    &quot;age&quot; : &quot;30&quot;,</span><br><span class="line">    &quot;skill&quot; : &quot;vue node&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="屏蔽-source-数据信息"><a href="#屏蔽-source-数据信息" class="headerlink" title="屏蔽 _source 数据信息"></a>屏蔽 _source 数据信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET eminoda_test/_doc/1?_source=false</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 1,</span><br><span class="line">  &quot;_seq_no&quot; : 0,</span><br><span class="line">  &quot;_primary_term&quot; : 1,</span><br><span class="line">  &quot;found&quot; : true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="stored-fields-过滤信息"><a href="#stored-fields-过滤信息" class="headerlink" title="stored_fields 过滤信息"></a>stored_fields 过滤信息</h3><p>定义数据类型，每个字段 Field 上定义额外属性 store</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">PUT eminoda_test</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;_doc&quot;:&#123;</span><br><span class="line">      &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;nick&quot;:&#123;</span><br><span class="line">          &quot;type&quot;:&quot;text&quot;,</span><br><span class="line">          &quot;store&quot;:true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;nick2&quot;:&#123;</span><br><span class="line">          &quot;type&quot;:&quot;text&quot;,</span><br><span class="line">          &quot;store&quot;:false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PUT eminoda_test/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;nick&quot;:&quot;abc&quot;,</span><br><span class="line">  &quot;nick2&quot;:&quot;efg&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 <strong>stored_fields</strong> 查询，定义 store=false 的字段将被过滤出去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET eminoda_test/_doc/1?stored_fields=nick,nick2</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 1,</span><br><span class="line">  &quot;_seq_no&quot; : 0,</span><br><span class="line">  &quot;_primary_term&quot; : 1,</span><br><span class="line">  &quot;found&quot; : true,</span><br><span class="line">  &quot;fields&quot; : &#123;</span><br><span class="line">    &quot;nick&quot; : [</span><br><span class="line">      &quot;abc&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Delete-API"><a href="#Delete-API" class="headerlink" title="Delete API"></a>Delete API</h2><h3 id="删除单个"><a href="#删除单个" class="headerlink" title="删除单个"></a>删除单个</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE eminoda_test/_doc/1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 2,</span><br><span class="line">  &quot;result&quot; : &quot;deleted&quot;,</span><br><span class="line">  &quot;_shards&quot; : &#123;</span><br><span class="line">    &quot;total&quot; : 2,</span><br><span class="line">    &quot;successful&quot; : 1,</span><br><span class="line">    &quot;failed&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_seq_no&quot; : 1,</span><br><span class="line">  &quot;_primary_term&quot; : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="全部删除"><a href="#全部删除" class="headerlink" title="全部删除"></a>全部删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE eminoda_test</span><br></pre></td></tr></table></figure>
+<h2 id="Update-API"><a href="#Update-API" class="headerlink" title="Update API"></a>Update API</h2><p>如果没有特殊指定 op_type=create ，PUT 操作会对已添加的 doc 进行 udpate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">PUT eminoda_test/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;eminoda&quot;,</span><br><span class="line">  &quot;age&quot;:&quot;30&quot;,</span><br><span class="line">  &quot;skill&quot;:&quot;vue node&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;_index&quot; : &quot;eminoda_test&quot;,</span><br><span class="line">  &quot;_type&quot; : &quot;_doc&quot;,</span><br><span class="line">  &quot;_id&quot; : &quot;1&quot;,</span><br><span class="line">  &quot;_version&quot; : 2,</span><br><span class="line">  &quot;result&quot; : &quot;updated&quot;,</span><br><span class="line">  &quot;_shards&quot; : &#123;</span><br><span class="line">    &quot;total&quot; : 2,</span><br><span class="line">    &quot;successful&quot; : 1,</span><br><span class="line">    &quot;failed&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_seq_no&quot; : 1,</span><br><span class="line">  &quot;_primary_term&quot; : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="根据查询语句更新"><a href="#根据查询语句更新" class="headerlink" title="根据查询语句更新"></a>根据查询语句更新</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST eminoda_test/_update_by_query</span><br><span class="line">&#123;</span><br><span class="line">  &quot;script&quot;: &#123;</span><br><span class="line">    &quot;source&quot;: &quot;ctx._source.age = 33&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;term&quot;: &#123;</span><br><span class="line">      &quot;age&quot;: 30</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;took&quot; : 7,             #操作用时</span><br><span class="line">  &quot;timed_out&quot; : false,</span><br><span class="line">  &quot;total&quot; : 1,</span><br><span class="line">  &quot;updated&quot; : 1,</span><br><span class="line">  &quot;deleted&quot; : 0,</span><br><span class="line">  &quot;batches&quot; : 1,</span><br><span class="line">  &quot;version_conflicts&quot; : 0,</span><br><span class="line">  &quot;noops&quot; : 0,</span><br><span class="line">  &quot;retries&quot; : &#123;</span><br><span class="line">    &quot;bulk&quot; : 0,</span><br><span class="line">    &quot;search&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;throttled_millis&quot; : 0,</span><br><span class="line">  &quot;requests_per_second&quot; : -1.0,</span><br><span class="line">  &quot;throttled_until_millis&quot; : 0,</span><br><span class="line">  &quot;failures&quot; : [ ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Bluk-API"><a href="#Bluk-API" class="headerlink" title="Bluk API"></a>Bluk API</h3><p>版本估计不对，没试出来</p>
+<h3 id="ReIndex-API"><a href="#ReIndex-API" class="headerlink" title="ReIndex API"></a>ReIndex API</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST _reindex</span><br><span class="line">&#123;</span><br><span class="line">  &quot;source&quot;: &#123;</span><br><span class="line">    &quot;index&quot;: &quot;eminoda_test&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dest&quot;:&#123;</span><br><span class="line">    &quot;index&quot;:&quot;eminoda_test_bak&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#! Deprecation: the default number of shards will change from [5] to [1] in 7.0.0; if you wish to continue using the default of [5] shards, you must manage this on the create index request or with an index template</span><br><span class="line">&#123;</span><br><span class="line">  &quot;took&quot; : 97,</span><br><span class="line">  &quot;timed_out&quot; : false,</span><br><span class="line">  &quot;total&quot; : 1,</span><br><span class="line">  &quot;updated&quot; : 0,</span><br><span class="line">  &quot;created&quot; : 1,</span><br><span class="line">  &quot;deleted&quot; : 0,</span><br><span class="line">  &quot;batches&quot; : 1,</span><br><span class="line">  &quot;version_conflicts&quot; : 0,</span><br><span class="line">  &quot;noops&quot; : 0,</span><br><span class="line">  &quot;retries&quot; : &#123;</span><br><span class="line">    &quot;bulk&quot; : 0,</span><br><span class="line">    &quot;search&quot; : 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;throttled_millis&quot; : 0,</span><br><span class="line">  &quot;requests_per_second&quot; : -1.0,</span><br><span class="line">  &quot;throttled_until_millis&quot; : 0,</span><br><span class="line">  &quot;failures&quot; : [ ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elk/" rel="tag"># elk</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/08/window-performance/" rel="next" title="前端性能检查 performance">
+                <i class="fa fa-chevron-left"></i> 前端性能检查 performance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/08/elasticsearch-detail-dsl/" rel="prev" title="elasticsearch 查询语言 Query DSL">
+                elasticsearch 查询语言 Query DSL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">82</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reading-and-Writing-documents"><span class="nav-number">1.</span> <span class="nav-text">Reading and Writing documents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Index-API"><span class="nav-number">2.</span> <span class="nav-text">Index API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加新索引（设置了索引-id）"><span class="nav-number">2.1.</span> <span class="nav-text">添加新索引（设置了索引 id）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shards"><span class="nav-number">2.2.</span> <span class="nav-text">shards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加索引（未指定-id）"><span class="nav-number">2.3.</span> <span class="nav-text">添加索引（未指定 id）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭新建索引"><span class="nav-number">2.4.</span> <span class="nav-text">关闭新建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#routing"><span class="nav-number">2.5.</span> <span class="nav-text">routing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-API"><span class="nav-number">3.</span> <span class="nav-text">Get API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指定-id-查询"><span class="nav-number">3.1.</span> <span class="nav-text">指定 id 查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏蔽-source-数据信息"><span class="nav-number">3.2.</span> <span class="nav-text">屏蔽 _source 数据信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stored-fields-过滤信息"><span class="nav-number">3.3.</span> <span class="nav-text">stored_fields 过滤信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete-API"><span class="nav-number">4.</span> <span class="nav-text">Delete API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除单个"><span class="nav-number">4.1.</span> <span class="nav-text">删除单个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全部删除"><span class="nav-number">4.2.</span> <span class="nav-text">全部删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update-API"><span class="nav-number">5.</span> <span class="nav-text">Update API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据查询语句更新"><span class="nav-number">5.1.</span> <span class="nav-text">根据查询语句更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bluk-API"><span class="nav-number">5.2.</span> <span class="nav-text">Bluk API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReIndex-API"><span class="nav-number">5.3.</span> <span class="nav-text">ReIndex API</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

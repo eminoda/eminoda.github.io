@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+<meta name="description" content="内容摘自nginx 官方文档，自己配合实例更细致的熟悉 nginx  命令启动，停止，重启 配置一旦 nginx 运行起来，通过如下方式 invoking nginx 的控制变更： 1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 st">
 <meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx基础学习进阶">
+<meta property="og:title" content="nginx 基础学习进阶">
 <meta property="og:url" content="http://yoursite.com/2018/08/10/nginx-basic-learn/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+<meta property="og:description" content="内容摘自nginx 官方文档，自己配合实例更细致的熟悉 nginx  命令启动，停止，重启 配置一旦 nginx 运行起来，通过如下方式 invoking nginx 的控制变更： 1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 st">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-11T15:26:18.960Z">
+<meta property="og:updated_time" content="2019-09-09T16:48:43.233Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx基础学习进阶">
-<meta name="twitter:description" content="内容摘自nginx官方文档，自己配合实例更细致的熟悉nginx  命令启动，停止，重启 配置一旦nginx运行起来，通过如下方式invoking nginx的控制变更：1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 stop有何区别？">
+<meta name="twitter:title" content="nginx 基础学习进阶">
+<meta name="twitter:description" content="内容摘自nginx 官方文档，自己配合实例更细致的熟悉 nginx  命令启动，停止，重启 配置一旦 nginx 运行起来，通过如下方式 invoking nginx 的控制变更： 1234nginx -s stop // 停服nginx -s quit // 优雅的停服nginx -s reload // 重启配置文件nginx -s reopen // 重新打开log文件 quit 和 st">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>nginx基础学习进阶 | NextInnovation</title>
+  <title>nginx 基础学习进阶 | NextInnovation</title>
   
 
 
@@ -289,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nginx基础学习进阶</h1>
+          <h1 class="post-title" itemprop="name headline">nginx 基础学习进阶</h1>
         
 
         <div class="post-meta">
@@ -335,8 +335,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
                   </a>
                 </span>
 
@@ -373,18 +373,22 @@
 
       
         <blockquote>
-<p>内容摘自<a href="http://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener">nginx官方文档</a>，自己配合实例更细致的熟悉nginx</p>
+<p>内容摘自<a href="http://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener">nginx 官方文档</a>，自己配合实例更细致的熟悉 nginx</p>
 </blockquote>
-<h1 id="命令启动，停止，重启-配置"><a href="#命令启动，停止，重启-配置" class="headerlink" title="命令启动，停止，重启 配置"></a>命令启动，停止，重启 配置</h1><p>一旦nginx运行起来，通过如下方式invoking nginx的控制变更：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx -s stop // 停服</span><br><span class="line">nginx -s quit // 优雅的停服</span><br><span class="line">nginx -s reload // 重启配置文件</span><br><span class="line">nginx -s reopen // 重新打开log文件</span><br></pre></td></tr></table></figure></p>
-<h2 id="quit-和-stop有何区别？"><a href="#quit-和-stop有何区别？" class="headerlink" title="quit 和 stop有何区别？"></a>quit 和 stop有何区别？</h2><p>quit会等最近一个request响应结束后退出进程（graceful shutdown）。<br>比如一个服务会hold起数秒，即使执行了quit命令，还是会等结果处理完毕后关闭nginx。<br>stop则马上停止。</p>
-<h2 id="配置文件错误，reload是否会影响线上？"><a href="#配置文件错误，reload是否会影响线上？" class="headerlink" title="配置文件错误，reload是否会影响线上？"></a>配置文件错误，reload是否会影响线上？</h2><p>不会，如果configure错误，nginx将roll back回老的配置文件，直到配置正确才会真正reload起效。</p>
-<h2 id="除了stop等，怎么停止nginx服务？"><a href="#除了stop等，怎么停止nginx服务？" class="headerlink" title="除了stop等，怎么停止nginx服务？"></a>除了stop等，怎么停止nginx服务？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ps -ax | grep nginx</span><br><span class="line">26318 ?        Ss     0:00 nginx: master process nginx</span><br><span class="line">26351 ?        S      0:00 nginx: worker process</span><br><span class="line">26357 pts/3    R+     0:00 grep --color=auto nginx</span><br><span class="line"># 需要停止master进程</span><br><span class="line">kill -s QUIT 26318</span><br></pre></td></tr></table></figure>
-<h2 id="了解更多nginx控制命令"><a href="#了解更多nginx控制命令" class="headerlink" title="了解更多nginx控制命令"></a><a href="http://nginx.org/en/docs/control.html" target="_blank" rel="noopener">了解更多nginx控制命令</a></h2><h1 id="nginx配置文件的结构"><a href="#nginx配置文件的结构" class="headerlink" title="nginx配置文件的结构"></a>nginx配置文件的结构</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="文件服务"><a href="#文件服务" class="headerlink" title="文件服务"></a>文件服务</h1><p>静态文件管理也是Nginx最大的特色之一（托管图片资源，静态HTML文件）</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>比如如下是个存放静态资源的路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/root/mydata/test/www  # 存放html</span><br><span class="line">/root/mydata/test/images # 存放资源</span><br></pre></td></tr></table></figure></p>
-<p><strong>访问静态页面</strong><br>location指定以 <strong>/</strong> 为前缀（prefix），匹配请求地址的URI，匹配到的URI将添加到root指令的地址后。<br>访问：<a href="http://test.eminoda.com:81/test.html" target="_blank" rel="noopener">http://test.eminoda.com:81/test.html</a><br>nginx按照：/root/mydata/test/www/test.html 输出文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root   /root/mydata/test/www;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>访问图片等资源</strong><br>匹配以 <strong>/images/</strong> 开始的资源请求地址，<strong>注意，location / 也是可以匹配到的，但会根据实际路径有优先关系</strong><br>访问：<a href="http://test.eminoda.com:81/images/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/images/yuyu.jpg</a><br>nginx按照：/root/mydata/test/images/yuyu.jpg 输出文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">    root /root/mydata/test;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="root-和-alias的区别？"><a href="#root-和-alias的区别？" class="headerlink" title="root 和 alias的区别？"></a>root 和 alias的区别？</h2><table>
+<h1 id="命令启动，停止，重启-配置"><a href="#命令启动，停止，重启-配置" class="headerlink" title="命令启动，停止，重启 配置"></a>命令启动，停止，重启 配置</h1><p>一旦 nginx 运行起来，通过如下方式 invoking nginx 的控制变更：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nginx -s stop // 停服</span><br><span class="line">nginx -s quit // 优雅的停服</span><br><span class="line">nginx -s reload // 重启配置文件</span><br><span class="line">nginx -s reopen // 重新打开log文件</span><br></pre></td></tr></table></figure>
+<h2 id="quit-和-stop-有何区别？"><a href="#quit-和-stop-有何区别？" class="headerlink" title="quit 和 stop 有何区别？"></a>quit 和 stop 有何区别？</h2><p>quit 会等最近一个 request 响应结束后退出进程（graceful shutdown）。<br>比如一个服务会 hold 起数秒，即使执行了 quit 命令，还是会等结果处理完毕后关闭 nginx。<br>stop 则马上停止。</p>
+<h2 id="配置文件错误，reload-是否会影响线上？"><a href="#配置文件错误，reload-是否会影响线上？" class="headerlink" title="配置文件错误，reload 是否会影响线上？"></a>配置文件错误，reload 是否会影响线上？</h2><p>不会，如果 configure 错误，nginx 将 roll back 回老的配置文件，直到配置正确才会真正 reload 起效。</p>
+<h2 id="除了-stop-等，怎么停止-nginx-服务？"><a href="#除了-stop-等，怎么停止-nginx-服务？" class="headerlink" title="除了 stop 等，怎么停止 nginx 服务？"></a>除了 stop 等，怎么停止 nginx 服务？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ps -ax | grep nginx</span><br><span class="line">26318 ?        Ss     0:00 nginx: master process nginx</span><br><span class="line">26351 ?        S      0:00 nginx: worker process</span><br><span class="line">26357 pts/3    R+     0:00 grep --color=auto nginx</span><br><span class="line"># 需要停止master进程</span><br><span class="line">kill -s QUIT 26318</span><br></pre></td></tr></table></figure>
+<h2 id="了解更多-nginx-控制命令"><a href="#了解更多-nginx-控制命令" class="headerlink" title="了解更多 nginx 控制命令"></a><a href="http://nginx.org/en/docs/control.html" target="_blank" rel="noopener">了解更多 nginx 控制命令</a></h2><h1 id="nginx-配置文件的结构"><a href="#nginx-配置文件的结构" class="headerlink" title="nginx 配置文件的结构"></a>nginx 配置文件的结构</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="文件服务"><a href="#文件服务" class="headerlink" title="文件服务"></a>文件服务</h1><p>静态文件管理也是 Nginx 最大的特色之一（托管图片资源，静态 HTML 文件）</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>比如如下是个存放静态资源的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/root/mydata/test/www  # 存放html</span><br><span class="line">/root/mydata/test/images # 存放资源</span><br></pre></td></tr></table></figure>
+<p><strong>访问静态页面</strong><br>location 指定以 <strong>/</strong> 为前缀（prefix），匹配请求地址的 URI，匹配到的 URI 将添加到 root 指令的地址后。<br>访问：<a href="http://test.eminoda.com:81/test.html" target="_blank" rel="noopener">http://test.eminoda.com:81/test.html</a><br>nginx 按照：/root/mydata/test/www/test.html 输出文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root   /root/mydata/test/www;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>访问图片等资源</strong><br>匹配以 <strong>/images/</strong> 开始的资源请求地址，<strong>注意，location / 也是可以匹配到的，但会根据实际路径有优先关系</strong><br>访问：<a href="http://test.eminoda.com:81/images/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/images/yuyu.jpg</a><br>nginx 按照：/root/mydata/test/images/yuyu.jpg 输出文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">    root /root/mydata/test;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="root-和-alias-的区别？"><a href="#root-和-alias-的区别？" class="headerlink" title="root 和 alias 的区别？"></a>root 和 alias 的区别？</h2><table>
 <thead>
 <tr>
 <th>指令</th>
@@ -402,13 +406,18 @@
 </tr>
 </tbody>
 </table>
-<p>访问：<a href="http://test.eminoda.com:81/versionChange/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/versionChange/yuyu.jpg</a><br>nginx按照：/root/mydata/test/images/yuyu.jpg 输出文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 模拟一种常见，因为某些需求，更改了资源路径，但不能影响原有资源的输出访问</span><br><span class="line">location /versionChange/ &#123;</span><br><span class="line">    alias /root/mydata/test/images/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>注意：斜杠问题</strong>，结合上例，比较有何不同<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location /versionChange/ &#123;</span><br><span class="line">    alias /root/mydata/test/images; #error /root/mydata/test/imagesyuyu.jpg</span><br><span class="line">&#125;</span><br><span class="line">location /versionChange &#123;</span><br><span class="line">    alias /root/mydata/test/images; #ok</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="怎么权衡root和alias的使用？"><a href="#怎么权衡root和alias的使用？" class="headerlink" title="怎么权衡root和alias的使用？"></a>怎么权衡root和alias的使用？</h2><p>如果location匹配路径和指令的value最后部分相同时，建议使用root。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">    alias /data/w3/images/;</span><br><span class="line">&#125;</span><br><span class="line"># better</span><br><span class="line">location /images/ &#123;</span><br><span class="line">    root /data/w3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="alias-和-正则匹配问题？"><a href="#alias-和-正则匹配问题？" class="headerlink" title="alias 和 正则匹配问题？"></a>alias 和 正则匹配问题？</h2><p>如果location 包含regex expression，就会匹配正则捕获内容，在alias中替换<strong>（而非替换整个location路径）</strong>。<br>访问：<a href="http://test.eminoda.com:81/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/yuyu.jpg</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/(.+\.(?:gif|jpg|png))$ &#123;</span><br><span class="line">    alias /root/mydata/test/images/$1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问：<a href="http://test.eminoda.com:81/foo/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/foo/yuyu.jpg</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/foo/(.+\.(?:gif|jpg|png))$ &#123;</span><br><span class="line">    alias /root/mydata/test/images/$1; #error /root/mydata/test/images/foo/yuyu.jpg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="设置简单的代理Proxy服务"><a href="#设置简单的代理Proxy服务" class="headerlink" title="设置简单的代理Proxy服务"></a><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">设置简单的代理Proxy服务</a></h1><p>使用nginx代理，可能是解决我们日常开发，服务调用的最大原因</p>
-<p>在了解proxy之前，先看下location路径匹配</p>
+<p>访问：<a href="http://test.eminoda.com:81/versionChange/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/versionChange/yuyu.jpg</a><br>nginx 按照：/root/mydata/test/images/yuyu.jpg 输出文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 模拟一种常见，因为某些需求，更改了资源路径，但不能影响原有资源的输出访问</span><br><span class="line">location /versionChange/ &#123;</span><br><span class="line">    alias /root/mydata/test/images/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：斜杠问题</strong>，结合上例，比较有何不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location /versionChange/ &#123;</span><br><span class="line">    alias /root/mydata/test/images; #error /root/mydata/test/imagesyuyu.jpg</span><br><span class="line">&#125;</span><br><span class="line">location /versionChange &#123;</span><br><span class="line">    alias /root/mydata/test/images; #ok</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="怎么权衡-root-和-alias-的使用？"><a href="#怎么权衡-root-和-alias-的使用？" class="headerlink" title="怎么权衡 root 和 alias 的使用？"></a>怎么权衡 root 和 alias 的使用？</h2><p>如果 location 匹配路径和指令的 value 最后部分相同时，建议使用 root。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">    alias /data/w3/images/;</span><br><span class="line">&#125;</span><br><span class="line"># better</span><br><span class="line">location /images/ &#123;</span><br><span class="line">    root /data/w3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="alias-和-正则匹配问题？"><a href="#alias-和-正则匹配问题？" class="headerlink" title="alias 和 正则匹配问题？"></a>alias 和 正则匹配问题？</h2><p>如果 location 包含 regex expression，就会匹配正则捕获内容，在 alias 中替换<strong>（而非替换整个 location 路径）</strong>。<br>访问：<a href="http://test.eminoda.com:81/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/yuyu.jpg</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/(.+\.(?:gif|jpg|png))$ &#123;</span><br><span class="line">    alias /root/mydata/test/images/$1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问：<a href="http://test.eminoda.com:81/foo/yuyu.jpg" target="_blank" rel="noopener">http://test.eminoda.com:81/foo/yuyu.jpg</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/foo/(.+\.(?:gif|jpg|png))$ &#123;</span><br><span class="line">    alias /root/mydata/test/images/$1; #error /root/mydata/test/images/foo/yuyu.jpg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="设置简单的代理-Proxy-服务"><a href="#设置简单的代理-Proxy-服务" class="headerlink" title="设置简单的代理 Proxy 服务"></a><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" target="_blank" rel="noopener">设置简单的代理 Proxy 服务</a></h1><p>使用 nginx 代理，可能是解决我们日常开发，服务调用的最大原因</p>
+<p>在了解 proxy 之前，先看下 location 路径匹配</p>
 <h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><table>
 <thead>
 <tr>
@@ -425,16 +434,17 @@
 </tr>
 </tbody>
 </table>
-<p>location依赖request的URI。按优先级排序。<br>=: 绝对匹配，exact match<br>~*：正则（忽略大小写），case-insensitive matching<br>~：正则，case-sensitive matching<br>^~：不能和uri定义的配置重复，prefix match<br>uri：路径URI匹配，uri match</p>
-<p><strong>举个经典的范例</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">    [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">    [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location /documents/ &#123;</span><br><span class="line">    [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">    [ configuration D ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">    [ configuration E ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>location 依赖 request 的 URI。按优先级排序。<br>=: 绝对匹配，exact match<br>~*：正则（忽略大小写），case-insensitive matching<br>~：正则，case-sensitive matching<br>^~：不能和 uri 定义的配置重复，prefix match<br>uri：路径 URI 匹配，uri match</p>
+<p><strong>举个经典的范例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">    [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">    [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location /documents/ &#123;</span><br><span class="line">    [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">    [ configuration D ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">    [ configuration E ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>首先命中绝对匹配</li>
-<li>如果有符合regex规则，则进入正则匹配。</li>
-<li>剩下根据uri匹配</li>
+<li>如果有符合 regex 规则，则进入正则匹配。</li>
+<li>剩下根据 uri 匹配</li>
 </ul>
-<p><strong>normalized URI 标准化URI</strong></p>
+<p><strong>normalized URI 标准化 URI</strong></p>
 <ul>
-<li>decode参数</li>
+<li>decode 参数</li>
 <li>解析相对路径</li>
 <li>解析斜杠（merge_slashes）</li>
 </ul>
@@ -461,7 +471,7 @@
 </tr>
 </tbody>
 </table>
-<p>打开 merge_slashes 配置，将允许 //foo之类多斜杠的路径匹配</p>
+<p>打开 merge_slashes 配置，将允许 //foo 之类多斜杠的路径匹配</p>
 <h2 id="proxy-pass"><a href="#proxy-pass" class="headerlink" title="proxy_pass"></a>proxy_pass</h2><table>
 <thead>
 <tr>
@@ -476,24 +486,30 @@
 </tr>
 </tbody>
 </table>
-<p><strong>proxy_pass定义了URI的区别</strong></p>
+<p><strong>proxy_pass 定义了 URI 的区别</strong></p>
 <p><a href="http://127.0.0.1:9000/users" target="_blank" rel="noopener">http://127.0.0.1:9000/users</a> 提供服务</p>
-<p><strong>specified without a URI</strong>（忽略URI）<br>访问：<a href="http://test.eminoda.com:81/users" target="_blank" rel="noopener">http://test.eminoda.com:81/users</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /users &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>request URI在location匹配后，原样传送给server</p>
-<p><strong>specified with a URI</strong> （指定URI）<br>访问：<a href="http://test.eminoda.com:81/withinURI/users" target="_blank" rel="noopener">http://test.eminoda.com:81/withinURI/users</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /withinURI/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果proxy_pass is specified with a URI，当request URI在location命中，URI将替换被location匹配中的request URI的part（注意location 需要后面维护个/）</p>
+<p><strong>specified without a URI</strong>（忽略 URI）<br>访问：<a href="http://test.eminoda.com:81/users" target="_blank" rel="noopener">http://test.eminoda.com:81/users</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /users &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>request URI 在 location 匹配后，原样传送给 server</p>
+<p><strong>specified with a URI</strong> （指定 URI）<br>访问：<a href="http://test.eminoda.com:81/withinURI/users" target="_blank" rel="noopener">http://test.eminoda.com:81/withinURI/users</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /withinURI/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 proxy_pass is specified with a URI，当 request URI 在 location 命中，URI 将替换被 location 匹配中的 request URI 的 part（注意 location 需要后面维护个/）</p>
 <blockquote>
 <p>If the proxy_pass directive is specified with a URI, then when a request is passed to the server, the part of a normalized request URI matching the location is replaced by a URI specified in the directive</p>
 </blockquote>
-<p><strong>注意：location 需要后面维护个/</strong><br>访问：<a href="http://test.eminoda.com:81/withinURIusers" target="_blank" rel="noopener">http://test.eminoda.com:81/withinURIusers</a> 注意这里故意没有写 <strong>/</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /withinURI &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>修改配置：注意location的/</strong><br>访问：<a href="http://test.eminoda.com:81/users" target="_blank" rel="noopener">http://test.eminoda.com:81/users</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /users/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：location 需要后面维护个/</strong><br>访问：<a href="http://test.eminoda.com:81/withinURIusers" target="_blank" rel="noopener">http://test.eminoda.com:81/withinURIusers</a> 注意这里故意没有写 <strong>/</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /withinURI &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>修改配置：注意 location 的/</strong><br>访问：<a href="http://test.eminoda.com:81/users" target="_blank" rel="noopener">http://test.eminoda.com:81/users</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /users/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>注意：</strong>浏览器 <a href="http://test.eminoda.com:81/users" target="_blank" rel="noopener">http://test.eminoda.com:81/users</a> 会自动变成 <a href="http://test.eminoda.com:81/users/。原以为浏览器会默认添加，但是错了。" target="_blank" rel="noopener">http://test.eminoda.com:81/users/。原以为浏览器会默认添加，但是错了。</a></p>
-<p>浏览器分别输入/users，当location /users，浏览器不会默认添加/，而 location /users/ 则会自动添加。感觉像是location告诉浏览器你给我变的样子<br>查阅location文档：<br>如果location规则尾部包含斜杠（location /users/），在响应时会发送301永久重定向，地址后面自动加上斜杠（这就是为何浏览器会有斜杠的原因）</p>
+<p>浏览器分别输入/users，当 location /users，浏览器不会默认添加/，而 location /users/ 则会自动添加。感觉像是 location 告诉浏览器你给我变的样子<br>查阅 location 文档：<br>如果 location 规则尾部包含斜杠（location /users/），在响应时会发送 301 永久重定向，地址后面自动加上斜杠（这就是为何浏览器会有斜杠的原因）</p>
 <blockquote>
 <p>If a location is defined by a prefix string that ends with the slash character, and requests are processed by one of proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, memcached_pass, or grpc_pass, then the special processing is performed. In response to a request with URI equal to this string, but without the trailing slash, a permanent redirect with the code 301 will be returned to the requested URI with the slash appended.</p>
 </blockquote>
-<h3 id="proxy-pass有些其他规则，request-URI不确定被替换更改"><a href="#proxy-pass有些其他规则，request-URI不确定被替换更改" class="headerlink" title="proxy_pass有些其他规则，request URI不确定被替换更改"></a>proxy_pass有些其他规则，request URI不确定被替换更改</h3><p><strong>location定义正则，同时proxy_pass不能定义URI</strong><br><strong>location定义中有rewrite break，后跟proxy_pass</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    rewrite    /name/([^/]+) /users?name=$1 break;</span><br><span class="line">    proxy_pass http://127.0.0.1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>proxy_pass使用变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1$request_uri;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="proxy-pass-有些其他规则，request-URI-不确定被替换更改"><a href="#proxy-pass-有些其他规则，request-URI-不确定被替换更改" class="headerlink" title="proxy_pass 有些其他规则，request URI 不确定被替换更改"></a>proxy_pass 有些其他规则，request URI 不确定被替换更改</h3><p><strong>location 定义正则，同时 proxy_pass 不能定义 URI</strong><br><strong>location 定义中有 rewrite break，后跟 proxy_pass</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    rewrite    /name/([^/]+) /users?name=$1 break;</span><br><span class="line">    proxy_pass http://127.0.0.1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>proxy_pass 使用变量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /name/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1$request_uri;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="rewrite"><a href="#rewrite" class="headerlink" title="rewrite"></a>rewrite</h2><table>
 <thead>
 <tr>
@@ -508,23 +524,25 @@
 </tr>
 </tbody>
 </table>
-<p>rewrite regex replacement [flag];<br>如果正则匹配到request URI，URI则会和replacement替换</p>
+<p>rewrite regex replacement [flag];<br>如果正则匹配到 request URI，URI 则会和 replacement 替换</p>
 <h3 id="last"><a href="#last" class="headerlink" title="last"></a>last</h3><blockquote>
 <p>stops processing the current set of ngx_http_rewrite_module directives and starts a search for a new location matching the changed URI;</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test1 &#123;</span><br><span class="line">    rewrite ^/rewrite /last last; #跳出本location，到新的location查找/last</span><br><span class="line">    return 404; #并不会输出</span><br><span class="line">&#125;</span><br><span class="line">location /last &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location，rewrite命中，发起/last请求，在location中继续寻找</p>
-<p><strong>修改配置：location做如下修改</strong><br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location不会命中，rewrite则不会匹配到<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1/" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1/</a></strong>，可以命中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test1/ &#123;</span><br><span class="line">    rewrite ^/rewrite /last last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>和本例无关，只是平时书写location，要增强路径/的判断。请求地址包含/，则在location的规则上写上/，不然就不要添加</p>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location，rewrite 命中，发起/last 请求，在 location 中继续寻找</p>
+<p><strong>修改配置：location 做如下修改</strong><br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1</a></strong>，location 不会命中，rewrite 则不会匹配到<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test1/" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test1/</a></strong>，可以命中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test1/ &#123;</span><br><span class="line">    rewrite ^/rewrite /last last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和本例无关，只是平时书写 location，要增强路径/的判断。请求地址包含/，则在 location 的规则上写上/，不然就不要添加</p>
 <h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><blockquote>
 <p>stops processing the current set of ngx_http_rewrite_module directives as with the break directive</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test2 &#123;</span><br><span class="line">    rewrite ^/rewrite/test2/foo /break break;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br><span class="line"># 不会执行</span><br><span class="line">location /break &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:3001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location命中，rewrite未匹配，之后请求proxy_pass<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location中rewrite命中，发起/break，由于之后是proxy_pass，则实际访问 <strong><a href="http://127.0.0.1:3001/break" target="_blank" rel="noopener">http://127.0.0.1:3001/break</a></strong><br><strong>和last不同，rewrite匹配后，不会重新寻找location</strong></p>
-<p>修改配置：结合上例，主要体现 <strong>ngx_http_rewrite_module这个点</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test2 &#123;</span><br><span class="line">    rewrite ^/rewrite/test2/foo /break break;</span><br><span class="line">    return 500;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location匹配，rewrite未匹配，直接访问return 返回500<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location中rewrite命中，发起/break，注意<strong>break会停止ngx_http_rewrite_module模块的指令</strong>，则不会像上例一样，或者last寻找新的location。会在本地寻找 ooxx/break 资源，无则返回404；</p>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location 命中，rewrite 未匹配，之后请求 proxy_pass<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location 中 rewrite 命中，发起/break，由于之后是 proxy_pass，则实际访问 <strong><a href="http://127.0.0.1:3001/break" target="_blank" rel="noopener">http://127.0.0.1:3001/break</a></strong><br><strong>和 last 不同，rewrite 匹配后，不会重新寻找 location</strong></p>
+<p>修改配置：结合上例，主要体现 <strong>ngx_http_rewrite_module 这个点</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location /rewrite/test2 &#123;</span><br><span class="line">    rewrite ^/rewrite/test2/foo /break break;</span><br><span class="line">    return 500;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2</a></strong>，location 匹配，rewrite 未匹配，直接访问 return 返回 500<br>访问 <strong><a href="http://test.eminoda.com:81/rewrite/test2/foo" target="_blank" rel="noopener">http://test.eminoda.com:81/rewrite/test2/foo</a></strong>，location 中 rewrite 命中，发起/break，注意<strong>break 会停止 ngx_http_rewrite_module 模块的指令</strong>，则不会像上例一样，或者 last 寻找新的 location。会在本地寻找 ooxx/break 资源，无则返回 404；</p>
 <h3 id="redirect"><a href="#redirect" class="headerlink" title="redirect"></a>redirect</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rewrite ^/redirect1 / redirect ;</span><br><span class="line">rewrite ^/redirect2 http://test.eminoda.com:81 redirect ;</span><br></pre></td></tr></table></figure>
-<p>返回302 code，如果不以协议“http://”, “https://”, or “$scheme”开头的匹配，则替换</p>
+<p>返回 302 code，如果不以协议“http://”, “https://”, or “\$scheme”开头的匹配，则替换</p>
 <h3 id="permanent"><a href="#permanent" class="headerlink" title="permanent"></a>permanent</h3><blockquote>
 <p>returns a permanent redirect with the 301 code.</p>
 </blockquote>
@@ -549,13 +567,14 @@
 </ul>
 <p>再次强调</p>
 <ul>
-<li>location根据request URI来匹配</li>
-<li>以上这些 directives 在location中将顺序执行</li>
-<li>如果请求被rewrite多次，次数至多10次 </li>
+<li>location 根据 request URI 来匹配</li>
+<li>以上这些 directives 在 location 中将顺序执行</li>
+<li>如果请求被 rewrite 多次，次数至多 10 次</li>
 </ul>
 <h2 id="break-1"><a href="#break-1" class="headerlink" title="break"></a>break</h2><p>停止 <strong>ngx_http_rewrite_module</strong> 语句</p>
-<p>如果在 location 中，则会继续执行之后语句。上面rewrite的break已经说明过。</p>
-<h2 id="if-条件判断"><a href="#if-条件判断" class="headerlink" title="if 条件判断"></a><a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html#if" target="_blank" rel="noopener">if 条件判断</a></h2><p>比较变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if ($test = 1)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">if ($test !=1 )&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果在 location 中，则会继续执行之后语句。上面 rewrite 的 break 已经说明过。</p>
+<h2 id="if-条件判断"><a href="#if-条件判断" class="headerlink" title="if 条件判断"></a><a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html#if" target="_blank" rel="noopener">if 条件判断</a></h2><p>比较变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if ($test = 1)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">if ($test !=1 )&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>正则匹配</p>
 <ul>
 <li>~ 匹配大小写；~* 忽略大小写</li>
@@ -566,8 +585,10 @@
 <li>文件、目录、超链（file, directory, or symbolic link existence）：-e !-e</li>
 <li>可执行文件（executable file）：-x !-x</li>
 </ul>
-<p><a href="http://test.eminoda.com:82/user" target="_blank" rel="noopener">http://test.eminoda.com:82/user</a><br><a href="http://test.eminoda.com:82/userrr" target="_blank" rel="noopener">http://test.eminoda.com:82/userrr</a><br><a href="http://test.eminoda.com:82/id/123" target="_blank" rel="noopener">http://test.eminoda.com:82/id/123</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">set $test 0;</span><br><span class="line">if ( $request_uri !~ \/admin)&#123;</span><br><span class="line">    set $test 1;</span><br><span class="line">&#125;</span><br><span class="line">if ( $request_uri ~ &apos;(\/use)r&#123;2,3&#125;$&apos;)&#123;</span><br><span class="line">    set $test 2;</span><br><span class="line">&#125;</span><br><span class="line">if ( $request_uri ~* \/id\/[1-9]+)&#123;</span><br><span class="line">    set $test 3;</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/$test;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /1 404 4.039 ms - 1215</span><br><span class="line">GET /2 404 4.609 ms - 1215</span><br><span class="line">GET /3 404 4.540 ms - 1215</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://test.eminoda.com:82/user" target="_blank" rel="noopener">http://test.eminoda.com:82/user</a><br><a href="http://test.eminoda.com:82/userrr" target="_blank" rel="noopener">http://test.eminoda.com:82/userrr</a><br><a href="http://test.eminoda.com:82/id/123" target="_blank" rel="noopener">http://test.eminoda.com:82/id/123</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">set $test 0;</span><br><span class="line">if ( $request_uri !~ \/admin)&#123;</span><br><span class="line">    set $test 1;</span><br><span class="line">&#125;</span><br><span class="line">if ( $request_uri ~ &apos;(\/use)r&#123;2,3&#125;$&apos;)&#123;</span><br><span class="line">    set $test 2;</span><br><span class="line">&#125;</span><br><span class="line">if ( $request_uri ~* \/id\/[1-9]+)&#123;</span><br><span class="line">    set $test 3;</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:9000/$test;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /1 404 4.039 ms - 1215</span><br><span class="line">GET /2 404 4.609 ms - 1215</span><br><span class="line">GET /3 404 4.540 ms - 1215</span><br></pre></td></tr></table></figure>
 <h2 id="return"><a href="#return" class="headerlink" title="return"></a>return</h2><ul>
 <li>return http_status</li>
 <li>return http_status URL</li>
@@ -623,8 +644,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/14/mongo-backup/" rel="prev" title="mongo数据库的备份迁移">
-                mongo数据库的备份迁移 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/14/mongo-backup/" rel="prev" title="mongo 数据库的备份迁移">
+                mongo 数据库的备份迁移 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -704,7 +725,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -715,7 +736,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -726,7 +747,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -759,7 +780,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令启动，停止，重启-配置"><span class="nav-number">1.</span> <span class="nav-text">命令启动，停止，重启 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#quit-和-stop有何区别？"><span class="nav-number">1.1.</span> <span class="nav-text">quit 和 stop有何区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件错误，reload是否会影响线上？"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件错误，reload是否会影响线上？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除了stop等，怎么停止nginx服务？"><span class="nav-number">1.3.</span> <span class="nav-text">除了stop等，怎么停止nginx服务？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解更多nginx控制命令"><span class="nav-number">1.4.</span> <span class="nav-text">了解更多nginx控制命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx配置文件的结构"><span class="nav-number">2.</span> <span class="nav-text">nginx配置文件的结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件服务"><span class="nav-number">3.</span> <span class="nav-text">文件服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">3.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-和-alias的区别？"><span class="nav-number">3.2.</span> <span class="nav-text">root 和 alias的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么权衡root和alias的使用？"><span class="nav-number">3.3.</span> <span class="nav-text">怎么权衡root和alias的使用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alias-和-正则匹配问题？"><span class="nav-number">3.4.</span> <span class="nav-text">alias 和 正则匹配问题？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置简单的代理Proxy服务"><span class="nav-number">4.</span> <span class="nav-text">设置简单的代理Proxy服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#location"><span class="nav-number">4.1.</span> <span class="nav-text">location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-pass"><span class="nav-number">4.2.</span> <span class="nav-text">proxy_pass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy-pass有些其他规则，request-URI不确定被替换更改"><span class="nav-number">4.2.1.</span> <span class="nav-text">proxy_pass有些其他规则，request URI不确定被替换更改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rewrite"><span class="nav-number">4.3.</span> <span class="nav-text">rewrite</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#last"><span class="nav-number">4.3.1.</span> <span class="nav-text">last</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#break"><span class="nav-number">4.3.2.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redirect"><span class="nav-number">4.3.3.</span> <span class="nav-text">redirect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permanent"><span class="nav-number">4.3.4.</span> <span class="nav-text">permanent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx-http-rewrite-module"><span class="nav-number">4.3.5.</span> <span class="nav-text">ngx_http_rewrite_module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ngx-http-rewrite-module-1"><span class="nav-number">5.</span> <span class="nav-text">ngx_http_rewrite_module</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#break-1"><span class="nav-number">5.1.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-条件判断"><span class="nav-number">5.2.</span> <span class="nav-text">if 条件判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return"><span class="nav-number">5.3.</span> <span class="nav-text">return</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令启动，停止，重启-配置"><span class="nav-number">1.</span> <span class="nav-text">命令启动，停止，重启 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#quit-和-stop-有何区别？"><span class="nav-number">1.1.</span> <span class="nav-text">quit 和 stop 有何区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件错误，reload-是否会影响线上？"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件错误，reload 是否会影响线上？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除了-stop-等，怎么停止-nginx-服务？"><span class="nav-number">1.3.</span> <span class="nav-text">除了 stop 等，怎么停止 nginx 服务？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解更多-nginx-控制命令"><span class="nav-number">1.4.</span> <span class="nav-text">了解更多 nginx 控制命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-配置文件的结构"><span class="nav-number">2.</span> <span class="nav-text">nginx 配置文件的结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件服务"><span class="nav-number">3.</span> <span class="nav-text">文件服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">3.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-和-alias-的区别？"><span class="nav-number">3.2.</span> <span class="nav-text">root 和 alias 的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么权衡-root-和-alias-的使用？"><span class="nav-number">3.3.</span> <span class="nav-text">怎么权衡 root 和 alias 的使用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alias-和-正则匹配问题？"><span class="nav-number">3.4.</span> <span class="nav-text">alias 和 正则匹配问题？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置简单的代理-Proxy-服务"><span class="nav-number">4.</span> <span class="nav-text">设置简单的代理 Proxy 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#location"><span class="nav-number">4.1.</span> <span class="nav-text">location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-pass"><span class="nav-number">4.2.</span> <span class="nav-text">proxy_pass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy-pass-有些其他规则，request-URI-不确定被替换更改"><span class="nav-number">4.2.1.</span> <span class="nav-text">proxy_pass 有些其他规则，request URI 不确定被替换更改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rewrite"><span class="nav-number">4.3.</span> <span class="nav-text">rewrite</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#last"><span class="nav-number">4.3.1.</span> <span class="nav-text">last</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#break"><span class="nav-number">4.3.2.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redirect"><span class="nav-number">4.3.3.</span> <span class="nav-text">redirect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permanent"><span class="nav-number">4.3.4.</span> <span class="nav-text">permanent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx-http-rewrite-module"><span class="nav-number">4.3.5.</span> <span class="nav-text">ngx_http_rewrite_module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ngx-http-rewrite-module-1"><span class="nav-number">5.</span> <span class="nav-text">ngx_http_rewrite_module</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#break-1"><span class="nav-number">5.1.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-条件判断"><span class="nav-number">5.2.</span> <span class="nav-text">if 条件判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return"><span class="nav-number">5.3.</span> <span class="nav-text">return</span></a></li></ol></li></ol></div>
             
 
           </div>
