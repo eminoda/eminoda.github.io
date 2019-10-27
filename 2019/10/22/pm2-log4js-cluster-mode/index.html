@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node,pm2,log4js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="log4js 算是“出镜率”很高的日志记录工具了，适用于大多数的日志需求（日志分级、按时间分割文件、按不同分类记录等…）。 但在 多线程 状态下，结果却不符合预期，比如：日志不输出、记录也不完整。 社区解决方案很详细，这里做个总结。 普通的 log4js 配置（单线程）1234567891011121314151617181920212223242526// config.jsmodule.exp">
+<meta name="keywords" content="node,pm2,log4js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="log4js 在 pm2 cluster 下的配置">
+<meta property="og:url" content="http://yoursite.com/2019/10/22/pm2-log4js-cluster-mode/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="log4js 算是“出镜率”很高的日志记录工具了，适用于大多数的日志需求（日志分级、按时间分割文件、按不同分类记录等…）。 但在 多线程 状态下，结果却不符合预期，比如：日志不输出、记录也不完整。 社区解决方案很详细，这里做个总结。 普通的 log4js 配置（单线程）1234567891011121314151617181920212223242526// config.jsmodule.exp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-26T15:53:48.573Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="log4js 在 pm2 cluster 下的配置">
+<meta name="twitter:description" content="log4js 算是“出镜率”很高的日志记录工具了，适用于大多数的日志需求（日志分级、按时间分割文件、按不同分类记录等…）。 但在 多线程 状态下，结果却不符合预期，比如：日志不输出、记录也不完整。 社区解决方案很详细，这里做个总结。 普通的 log4js 配置（单线程）1234567891011121314151617181920212223242526// config.jsmodule.exp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/22/pm2-log4js-cluster-mode/">
+
+
+
+
+
+  <title>log4js 在 pm2 cluster 下的配置 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/22/pm2-log4js-cluster-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">log4js 在 pm2 cluster 下的配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-22T14:05:03+08:00">
+                2019-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>log4js 算是“出镜率”很高的日志记录工具了，适用于大多数的日志需求（日志分级、按时间分割文件、按不同分类记录等…）。</p>
+<p>但在 <strong>多线程</strong> 状态下，结果却不符合预期，比如：日志不输出、记录也不完整。</p>
+<p>社区解决方案很详细，这里做个总结。</p>
+<h2 id="普通的-log4js-配置（单线程）"><a href="#普通的-log4js-配置（单线程）" class="headerlink" title="普通的 log4js 配置（单线程）"></a>普通的 log4js 配置（单线程）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  appenders: &#123;</span><br><span class="line">    out: &#123;</span><br><span class="line">      type: <span class="string">"console"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    access: &#123;</span><br><span class="line">      type: <span class="string">"dateFile"</span>, <span class="comment">// 日期类型</span></span><br><span class="line">      filename: <span class="string">"log/node/buss"</span>, <span class="comment">// 日志输出路径，及命名</span></span><br><span class="line">      pattern: <span class="string">"yyyy-MM-dd.log"</span>, <span class="comment">// 日志命名的时间戳</span></span><br><span class="line">      alwaysIncludePattern: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    error: &#123;</span><br><span class="line">      type: <span class="string">"dateFile"</span>,</span><br><span class="line">      filename: <span class="string">"log/node/error"</span>,</span><br><span class="line">      pattern: <span class="string">"yyyy-MM-dd.log"</span>,</span><br><span class="line">      alwaysIncludePattern: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  categories: &#123;</span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">      appenders: [<span class="string">"access"</span>, <span class="string">"out"</span>, <span class="string">"error"</span>],</span><br><span class="line">      level: <span class="string">"debug"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> log4js = <span class="built_in">require</span>(<span class="string">"log4js"</span>);</span><br><span class="line">log4js.configure(<span class="built_in">require</span>(<span class="string">"./config.js"</span>));</span><br><span class="line"><span class="keyword">const</span> logger = log4js.getLogger(<span class="string">"foo"</span>);</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">"say somthing"</span>);</span><br></pre></td></tr></table></figure>
+<p>一切都符合预期</p>
+<h2 id="当遇到-PM2-时（cluster）"><a href="#当遇到-PM2-时（cluster）" class="headerlink" title="当遇到 PM2 时（cluster）"></a>当遇到 PM2 时（cluster）</h2><p>为充分利用 cpu ，给应用开启多核能力，最方便莫过于使用 pm2 模块。具体使用不做赘述，<a href="http://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/" target="_blank" rel="noopener">简单使用，官网的文档足够了</a></p>
+<p>但开启多 cluster 后，log4js 日志却没有输出，不然也不会有那么多人苦恼了。</p>
+<h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>直接贴出“可用”配置</p>
+<p><strong>修改 log4js 配置</strong></p>
+<p>回到官网，<a href="https://log4js-node.github.io/log4js-node/api.html#configuration-object" target="_blank" rel="noopener">看下有什么特殊配置，点击查看</a>，不过还得抱怨一下，log4js 的文档真的很“蛋疼”。</p>
+<p>log4js.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * pm2 (boolean) (optional)</span></span><br><span class="line"><span class="comment">   * - set this to true if you’re running your app using pm2,</span></span><br><span class="line"><span class="comment">   * otherwise logs will not work (you’ll also need to install pm2-intercom as pm2 module: pm2 install pm2-intercom)</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  pm2: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * pm2InstanceVar (string) (optional, defaults to ‘NODE_APP_INSTANCE’)</span></span><br><span class="line"><span class="comment">   * - set this if you’re using pm2 and have changed the default name of the NODE_APP_INSTANCE variable.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  pm2InstanceVar: <span class="string">"isMaster"</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * disableClustering (boolean) (optional)</span></span><br><span class="line"><span class="comment">   * - set this to true if you liked the way log4js used to just ignore clustered environments,</span></span><br><span class="line"><span class="comment">   * or you’re having trouble with PM2 logging. Each worker process will do its own logging. Be careful with this if you’re logging to files, weirdness can occur.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">// disableClustering: true,</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 原有配置，这里不再列举</span></span><br><span class="line">  appenders: &#123;&#125;</span><br><span class="line">  categories: &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>pm2.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"apps"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"logger-test"</span>,</span><br><span class="line">      <span class="attr">"script"</span>: <span class="string">"http.js"</span>,</span><br><span class="line">      <span class="attr">"ignoreWatch"</span>: [<span class="string">"node_modules"</span>],</span><br><span class="line">      <span class="attr">"instances"</span>: <span class="string">"4"</span>,</span><br><span class="line">      <span class="attr">"watch"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"error_file"</span>: <span class="string">"log/pm2/error.log"</span>,</span><br><span class="line">      <span class="attr">"out_file"</span>: <span class="string">"log/pm2/out.log"</span>,</span><br><span class="line">      <span class="attr">"pid_file"</span>: <span class="string">"log/pm2/pid.log"</span>,</span><br><span class="line">      <span class="attr">"merge_logs"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"instance_var"</span>: <span class="string">"isMaster"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改配置说明"><a href="#修改配置说明" class="headerlink" title="修改配置说明"></a>修改配置说明</h3><p>pm2.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"instance_var": "NODE_APP_INSTANCE"</span><br></pre></td></tr></table></figure>
+<p>设置 instance_var 实例变量，在交给 pm2 运行后，会自动赋值给 process.env.NODE_APP_INSTANCE 。详细说明可以看下 <a href="http://pm2.keymetrics.io/docs/usage/environment/#specific-environment-variables" target="_blank" rel="noopener">官网说明</a></p>
+<p>log4js.conf.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  pm2: <span class="literal">true</span>,</span><br><span class="line">  pm2InstanceVar: <span class="string">"NODE_APP_INSTANCE"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先结合 pm2 的 instance_var 配置，看下 log4js 的 pm2InstanceVar ，这两者必须设置的值相同。因为有关 isPM2Master 的逻辑判断：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isPM2Master = <span class="function"><span class="params">()</span> =&gt;</span> pm2 &amp;&amp; process.env[pm2InstanceVar] === <span class="string">"0"</span>;</span><br></pre></td></tr></table></figure>
+<p>再来具体看下 log4js 相关代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node_modules\log4js\lib\clustering.js</span></span><br><span class="line"><span class="keyword">if</span> (!disabled) &#123;</span><br><span class="line">  configuration.addListener(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    (&#123;</span><br><span class="line">      pm2,</span><br><span class="line">      disableClustering: disabled,</span><br><span class="line">      pm2InstanceVar = <span class="string">"NODE_APP_INSTANCE"</span></span><br><span class="line">    &#125; = config);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// just in case configure is called after shutdown</span></span><br><span class="line">    <span class="keyword">if</span> (pm2) &#123;</span><br><span class="line">      process.removeListener(<span class="string">"message"</span>, receiver);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cluster &amp;&amp; cluster.removeListener) &#123;</span><br><span class="line">      cluster.removeListener(<span class="string">"message"</span>, receiver);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (disabled || config.disableClustering) &#123;</span><br><span class="line">      debug(<span class="string">"Not listening for cluster messages, because clustering disabled."</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isPM2Master()) &#123;</span><br><span class="line">      <span class="comment">// PM2 cluster support</span></span><br><span class="line">      <span class="comment">// PM2 runs everything as workers - install pm2-intercom for this to work.</span></span><br><span class="line">      <span class="comment">// we only want one of the app instances to write logs</span></span><br><span class="line">      debug(<span class="string">"listening for PM2 broadcast messages"</span>);</span><br><span class="line">      process.on(<span class="string">"message"</span>, receiver);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cluster.isMaster) &#123;</span><br><span class="line">      debug(<span class="string">"listening for cluster messages"</span>);</span><br><span class="line">      cluster.on(<span class="string">"message"</span>, receiver);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      debug(<span class="string">"not listening for messages, because we are not a master process"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据新增参数，预先移除原有的事件监听方式，当 isPM2Master 判断为 pm2 为主进程时，pm2-intercom 作为新的消息收发“中转站”。</p>
+<p>这就是为何配置了 log4js 的配置，但 <strong>没有安装 pm2-intercom</strong> ，就会发生日志不输出的情况。</p>
+<p>当然如果你图方便，在出现一些“未知错误”，可以尝试在 log4js 添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disableClustering: <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>它会使上面所说的方式失效，每个线程将会单独向目标日志文件输出内容，表明似乎问题可以解决，但是在高频访问下会出现日志缺失的情况。毕竟日志文件被多个进程写入放操作着。</p>
+<h2 id="有效的日志管理"><a href="#有效的日志管理" class="headerlink" title="有效的日志管理"></a>有效的日志管理</h2><p>对于一个线上的项目，可能需要一些其他手段来对日志做维护管理。既然现在说 pm2 ，就要看下其日志插件：<strong>pm2-logrotate</strong></p>
+<p>来看下具体配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pm2 get pm2-logrotate</span><br><span class="line">== pm2-logrotate ==</span><br><span class="line">┌────────────────┬─────────────────────┐</span><br><span class="line">│ key            │ value               │</span><br><span class="line">├────────────────┼─────────────────────┤</span><br><span class="line">│ max_size       │ 10M                 │</span><br><span class="line">│ retain         │ 10                  │</span><br><span class="line">│ compress       │ false               │</span><br><span class="line">│ dateFormat     │ YYYY-MM-DD_HH-mm-ss │</span><br><span class="line">│ workerInterval │ 30                  │</span><br><span class="line">│ rotateInterval │ 0 0 * * *           │</span><br><span class="line">│ rotateModule   │ true                │</span><br><span class="line">└────────────────┴─────────────────────┘</span><br></pre></td></tr></table></figure>
+<h3 id="定时轮询"><a href="#定时轮询" class="headerlink" title="定时轮询"></a>定时轮询</h3><p><strong>rotateInterval</strong> 和 <strong>workerInterval</strong> 都有定时的作用。</p>
+<p>前者通过编写 cron 表达式，约定每隔多少时间 <strong>强制</strong> 检查日志的状态。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 每日零点</span></span><br><span class="line">rotateInterval: 0 0 * * *</span><br><span class="line"><span class="meta">#</span><span class="bash"> 每分钟</span></span><br><span class="line">rotateInterval: */1 * * * *</span><br></pre></td></tr></table></figure>
+<p>后者 workerInterval 是约定固定秒数来查询日志状况。（默认 30 秒）</p>
+<h3 id="日志分割条件"><a href="#日志分割条件" class="headerlink" title="日志分割条件"></a>日志分割条件</h3><p><strong>max_size</strong> 和 <strong>retain</strong> 分别来约束日志的大小，和文件个数</p>
+<p>每次 <strong>定时轮询</strong> 触发后，会对文件大小，数量进行检查。超过约定的值，则会重新创建新文件。</p>
+<h3 id="实际运用"><a href="#实际运用" class="headerlink" title="实际运用"></a>实际运用</h3><p>假设单日日志产出为 10G ，按照 rotateInterval 每天零点进行切割日志，虽然有章法，但如果要从 10G 大小的日志文件中排查问题，这似乎有些困难。</p>
+<p>我们可以设置 max_size 为 100M ，这样 10G 总大小的文件，将在一天中被切成 100 个。</p>
+<p>甚至如果每天的访问量有迹可循，比如上午 9-12 点会出现高峰，其他时间相对低频。可以进一步优化 workerInterval 和 rotateInterval cron 表达式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pm2 set pm2-logrotate:workerInterval 3600 #每小时轮训检查</span><br><span class="line">pm2 set pm2-logrotate:rotateInterval 0/30 0,9,10,11,12 * * * #每天 0 点，以及 9~12 点每半小时触发</span><br></pre></td></tr></table></figure>
+<p>这样在高访问时间段，可以跟有效的分割日志。（美中不足的是如果符合日志分割条件，00:00 和 00:30 时，会出现两份日志，强迫症表示不太适应）</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p>我只是知识点的“加工者”， 更多内容请查阅原文链接 :thought_balloon: ， 同时感谢原作者的付出：</p>
+</blockquote>
+<ul>
+<li><a href="https://my.oschina.net/xuyang950520/blog/2934086" target="_blank" rel="noopener">记 nodejs 在 pm2 下使用 log4js cluster 模式的日志打印丢失问题</a></li>
+<li><a href="https://juejin.im/post/5b7d0e20f265da43231f00d4" target="_blank" rel="noopener">再说打日志你不会，pm2 + log4js，你值得拥有</a></li>
+<li><a href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/" target="_blank" rel="noopener">PM2 cluster + log4js？并不理想的组合</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+            <a href="/tags/pm2/" rel="tag"># pm2</a>
+          
+            <a href="/tags/log4js/" rel="tag"># log4js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/14/ssr-vue/" rel="next" title="vue ssr 实践">
+                <i class="fa fa-chevron-left"></i> vue ssr 实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/28/git-branch-merge-strategy/" rel="prev" title="git 分支合并策略">
+                git 分支合并策略 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通的-log4js-配置（单线程）"><span class="nav-number">1.</span> <span class="nav-text">普通的 log4js 配置（单线程）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当遇到-PM2-时（cluster）"><span class="nav-number">2.</span> <span class="nav-text">当遇到 PM2 时（cluster）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置修改"><span class="nav-number">2.1.</span> <span class="nav-text">配置修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置说明"><span class="nav-number">2.2.</span> <span class="nav-text">修改配置说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有效的日志管理"><span class="nav-number">3.</span> <span class="nav-text">有效的日志管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时轮询"><span class="nav-number">3.1.</span> <span class="nav-text">定时轮询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志分割条件"><span class="nav-number">3.2.</span> <span class="nav-text">日志分割条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际运用"><span class="nav-number">3.3.</span> <span class="nav-text">实际运用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ssr,vue,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="为了更好的 SEO 排名 和 性能优化 等要求，往往需要 服务端渲染 的支持。我的公司项目都是基于 vue 的单页面应用（那时候太年轻），那怎么实现服务端渲染呢？ 社区早已有了解决方案，只是我还没有用过罢了，借这个机会快速的看下这块的实践，做些技术储备。 vue-ssr api 的介绍有关 vue ssr 的实现都是依靠 vue-server-renderer 模块提供的功能，可以看如下 Demo">
+<meta name="keywords" content="ssr,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue ssr 实践">
+<meta property="og:url" content="http://yoursite.com/2019/10/14/ssr-vue/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="为了更好的 SEO 排名 和 性能优化 等要求，往往需要 服务端渲染 的支持。我的公司项目都是基于 vue 的单页面应用（那时候太年轻），那怎么实现服务端渲染呢？ 社区早已有了解决方案，只是我还没有用过罢了，借这个机会快速的看下这块的实践，做些技术储备。 vue-ssr api 的介绍有关 vue ssr 的实现都是依靠 vue-server-renderer 模块提供的功能，可以看如下 Demo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://gitee.com/eminoda/ssr-learn/raw/vue-ssr-api/doc/templateRender.png">
+<meta property="og:image" content="https://gitee.com/eminoda/ssr-learn/raw/vue-ssr-api/doc/vue-ssr.gif">
+<meta property="og:updated_time" content="2019-10-26T15:53:48.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue ssr 实践">
+<meta name="twitter:description" content="为了更好的 SEO 排名 和 性能优化 等要求，往往需要 服务端渲染 的支持。我的公司项目都是基于 vue 的单页面应用（那时候太年轻），那怎么实现服务端渲染呢？ 社区早已有了解决方案，只是我还没有用过罢了，借这个机会快速的看下这块的实践，做些技术储备。 vue-ssr api 的介绍有关 vue ssr 的实现都是依靠 vue-server-renderer 模块提供的功能，可以看如下 Demo">
+<meta name="twitter:image" content="https://gitee.com/eminoda/ssr-learn/raw/vue-ssr-api/doc/templateRender.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/14/ssr-vue/">
+
+
+
+
+
+  <title>vue ssr 实践 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/14/ssr-vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue ssr 实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-14T18:56:47+08:00">
+                2019-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了更好的 <strong>SEO 排名</strong> 和 <strong>性能优化</strong> 等要求，往往需要 <strong>服务端渲染</strong> 的支持。我的公司项目都是基于 vue 的单页面应用（那时候太年轻），那怎么实现服务端渲染呢？</p>
+<p>社区早已有了解决方案，只是我还没有用过罢了，借这个机会快速的看下这块的实践，做些技术储备。</p>
+<h2 id="vue-ssr-api-的介绍"><a href="#vue-ssr-api-的介绍" class="headerlink" title="vue-ssr api 的介绍"></a>vue-ssr api 的介绍</h2><p>有关 vue ssr 的实现都是依靠 <strong>vue-server-renderer</strong> 模块提供的功能，可以看如下 Demo：</p>
+<blockquote>
+<p><a href="https://gitee.com/eminoda/ssr-learn/tree/vue-ssr-api" target="_blank" rel="noopener">点击访问：https://gitee.com/eminoda/ssr-learn/tree/vue-ssr-api</a></p>
+</blockquote>
+<p>下面会对 <strong>简单的渲染</strong> 和 <strong>结合 bundle&amp;manifest 文件做的渲染</strong> 做说明。</p>
+<p>当然你可以看 <a href="https://ssr.vuejs.org/zh/#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93-ssr-%EF%BC%9F" target="_blank" rel="noopener">Vue SSR 官方文档说明</a>，真的是非常详细。</p>
+<h3 id="简单渲染"><a href="#简单渲染" class="headerlink" title="简单渲染"></a>简单渲染</h3><p>这是个非常简单的例子，主要在没有其他代码的干扰下更可能示范 vue ssr 的本质。只需要 vue + htmlTemplate 就能搞定。</p>
+<h4 id="createRenderer"><a href="#createRenderer" class="headerlink" title="createRenderer"></a>createRenderer</h4><p>创建一个（模板）渲染器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; createRenderer &#125; = <span class="built_in">require</span>(<span class="string">"vue-server-renderer"</span>);</span><br><span class="line"><span class="keyword">let</span> renderer = createRenderer(&#123;</span><br><span class="line">  template: templateFile</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这个 templateFile 是字符串，而不是 require 的引用。这也好理解，毕竟服务端渲染的本质就是响应返回字符串。</p>
+<h4 id="创建一个-Vue-实例"><a href="#创建一个-Vue-实例" class="headerlink" title="创建一个 Vue 实例"></a>创建一个 Vue 实例</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    msg: data.msg</span><br><span class="line">  &#125;,</span><br><span class="line">  template: <span class="string">`&lt;div&gt;数据绑定：&#123;&#123; msg &#125;&#125;&lt;/div&gt;`</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="renderToString"><a href="#renderToString" class="headerlink" title="renderToString"></a>renderToString</h4><p>通过渲染器 renderer ，调用 <strong>renderToString</strong> ，把 vue 实例注入进去，得到字符串。</p>
+<p>当然还可以通过 content 设置一些信息，比如 SEO 的 TDK。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> context = &#123;</span><br><span class="line">  title: <span class="string">"SSR-templateRender"</span></span><br><span class="line">&#125;;</span><br><span class="line">renderer.renderToString(app, content, (err, html) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    reject(err);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    resolve(html);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>最后你就能访问 url 看到页面内容（注意这并不是客户端 js mount 上去的）</p>
+<p><img src="https://gitee.com/eminoda/ssr-learn/raw/vue-ssr-api/doc/templateRender.png" alt="模板渲染"></p>
+<h3 id="JsonBundle-Manifest"><a href="#JsonBundle-Manifest" class="headerlink" title="JsonBundle + Manifest"></a>JsonBundle + Manifest</h3><p>当然真实的项目还更复杂些：</p>
+<ul>
+<li>Html 引用的资源需要“动态”的挂到标签上</li>
+<li>服务端 router 每次解析不同地址，还需要“配合” vue router ，做对应的模板渲染</li>
+<li>甚至还需要保持 vuex 的状态；异步请求的处理</li>
+</ul>
+<p>详细的项目配置，<a href="#相关-api">你可以在上面的 Demo 中看到</a> 看到，下面只是说核心部分。</p>
+<h4 id="webpack-build"><a href="#webpack-build" class="headerlink" title="webpack build"></a>webpack build</h4><p>首先我们需要通过 webpack 不同的入口文件 entry 来构建 <strong>客户端的 manifest 文件</strong> 和 <strong>服务端的 server.bundle 文件</strong>。</p>
+<p>这里就涉及 webpack 的两个 plugin：<strong>vue-server-renderer/client-plugin</strong>、<strong>vue-server-renderer/server-plugin</strong> ，分别生成 manifest 和 bundle：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.client.config</span></span><br><span class="line">plugins: [<span class="keyword">new</span> VueSSRClientPlugin()];</span><br><span class="line"></span><br><span class="line"><span class="comment">// webpack.server.config</span></span><br><span class="line">plugins: [<span class="keyword">new</span> VueSSRServerPlugin()];</span><br></pre></td></tr></table></figure>
+<p>构建成功就会在 output 目录下生成：vue-ssr-client-manifest.json、vue-ssr-server-bundle.json 。</p>
+<p>通过 manifest ，vue 就知道如何往模板上挂在资源文件；同时每次渲染时，vue 也能依靠 bundle 知道取那部分 js 逻辑。</p>
+<h4 id="修改服务端路由逻辑"><a href="#修改服务端路由逻辑" class="headerlink" title="修改服务端路由逻辑"></a>修改服务端路由逻辑</h4><p>拦截服务端所有的请求，交给 getResponseDataByBundleRender 处理，context 内包含当前请求的 url ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">"*"</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> ssr = <span class="keyword">new</span> SSRService(&#123;&#125;);</span><br><span class="line">  <span class="keyword">let</span> context = &#123;</span><br><span class="line">    title: <span class="string">"SSR-jsonBundleRender"</span>,</span><br><span class="line">    url: ctx.url</span><br><span class="line">  &#125;;</span><br><span class="line">  ctx.body = <span class="keyword">await</span> ssr.getResponseDataByBundleRender(context, &#123;&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>getResponseDataByBundleRender 是一个封装的方法，和上面的简单渲染实现一样，只是额外需要 bundle、manifest 文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">getResponseDataByBundleRender(content) &#123;</span><br><span class="line">  <span class="keyword">let</span> renderer = createBundleRenderer(serverBundle, &#123;</span><br><span class="line">    runInNewContext: <span class="literal">false</span>, <span class="comment">// 推荐</span></span><br><span class="line">    template: template,</span><br><span class="line">    clientManifest: clientManifest</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    renderer.renderToString(content, (err, html) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(html);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="客户端和服务端功能的衔接"><a href="#客户端和服务端功能的衔接" class="headerlink" title="客户端和服务端功能的衔接"></a>客户端和服务端功能的衔接</h4><p>那客户端的请求地址怎么和 vue 的路由模式搭上关系？这就要回到上面的 webpack 配置不同的入口文件：</p>
+<p>独立创建一个创建 vue 实例的文件，用于对不同端的 entry 入口文件解耦：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\app.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123; router, store, <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> h(App) &#125;);</span><br><span class="line">  <span class="comment">//   额外导出 router ，供 ssr 使用</span></span><br><span class="line">  <span class="keyword">return</span> &#123; app, router, store &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>server.entry.js</strong> 会将 store 注入到 window.__INITIAL_STATE__ 中，并且会根据请求地址，切换 vue 当前路由地址：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, router, store &#125; = createApp();</span><br><span class="line"></span><br><span class="line">    router.push(context.url);</span><br><span class="line"></span><br><span class="line">    router.onReady(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> matchedComponents = router.getMatchedComponents();</span><br><span class="line">      <span class="keyword">if</span> (!matchedComponents.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"访问页面不存在"</span>));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">Promise</span>.all(</span><br><span class="line">        matchedComponents.map(<span class="function"><span class="params">Component</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (Component.asyncData) &#123;</span><br><span class="line">            <span class="keyword">return</span> Component.asyncData(&#123;</span><br><span class="line">              store,</span><br><span class="line">              route: router.currentRoute</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      )</span><br><span class="line">        .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。</span></span><br><span class="line">          context.state = store.state;</span><br><span class="line">          resolve(app);</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(reject);</span><br><span class="line">    &#125;, reject);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>client.entry.js</strong> 会加入如下逻辑，使客户端能将 window.__INITIAL_STATE__ 替换成 vue store :</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\entry-client.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; app, store &#125; = createApp();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.__INITIAL_STATE__) &#123;</span><br><span class="line">  store.replaceState(<span class="built_in">window</span>.__INITIAL_STATE__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样 vue 的状态机制就得以还原。</p>
+<p>之后你就能看到这样的效果：</p>
+<p><img src="https://gitee.com/eminoda/ssr-learn/raw/vue-ssr-api/doc/vue-ssr.gif" alt="vue-ssr"></p>
+<h2 id="koa-vue-ssr-的开发模式"><a href="#koa-vue-ssr-的开发模式" class="headerlink" title="koa + vue-ssr 的开发模式"></a>koa + vue-ssr 的开发模式</h2><p>在实际开发中，上面这些还远远不够。因为 manifest 和 bundle 的更新都需要重新加载到服务中；为了开发体验还需要 <a href="/2019/10/12/weback-middleware-in-hmr-development/">HMR 的开发方式</a>。</p>
+<p>Vue 的作者 尤大大 给我们了个例子 <a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="noopener">vue-hackernews-2.0</a>，参考它，就能很大程度解决上面的问题。</p>
+<p>同样对其中的重点做个说明，备注：服务端用的 koa ：</p>
+<h3 id="一个延迟启动"><a href="#一个延迟启动" class="headerlink" title="一个延迟启动"></a>一个延迟启动</h3><p>因为要把 webpack 构建包含到服务中，就要在服务启动前完成构建工作。</p>
+<p>提供一个 ready 完成这项工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ready(app).then(<span class="function"><span class="params">renderer</span> =&gt;</span> &#123;</span><br><span class="line">  app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// vue render</span></span><br><span class="line">  &#125;);</span><br><span class="line">  app.listen(<span class="number">3000</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"server is started on 3000 port "</span>, <span class="string">"http://127.0.0.1:3000"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在 ready 中完成 vue ssr 需要的 bundle.json 和 manifest.json 构建：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ready(app, cb) &#123;</span><br><span class="line">    <span class="comment">// 获取 webpack compiler 编译实例</span></span><br><span class="line">    <span class="keyword">const</span> clientCompiler = webpack(clientConfig);</span><br><span class="line"></span><br><span class="line">    clientCompiler.plugin(<span class="string">'done'</span>, stats =&gt; &#123;</span><br><span class="line">      stats = stats.toJson();</span><br><span class="line">      stats.errors.forEach(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(err));</span><br><span class="line">      stats.warnings.forEach(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.warn(err));</span><br><span class="line">      <span class="keyword">if</span> (stats.errors.length) <span class="keyword">return</span>;</span><br><span class="line">      clientManifest = <span class="built_in">JSON</span>.parse(readFile(webpackDevMiddlewareWrap.fileSystem, <span class="string">'vue-ssr-client-manifest.json'</span>));</span><br><span class="line">      update();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> serverCompiler = webpack(serverConfig);</span><br><span class="line">    <span class="keyword">const</span> mfs = <span class="keyword">new</span> MFS();</span><br><span class="line">    serverCompiler.outputFileSystem = mfs;</span><br><span class="line">    serverCompiler.watch(&#123;&#125;, (err, stats) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">      stats = stats.toJson();</span><br><span class="line">      <span class="keyword">if</span> (stats.errors.length) <span class="keyword">return</span>;</span><br><span class="line">      bundle = <span class="built_in">JSON</span>.parse(readFile(mfs, <span class="string">'vue-ssr-server-bundle.json'</span>));</span><br><span class="line">      update();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> readyPromise;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>拿到 clientManifest 和 bundle 再交给 update() 获取渲染解析器，就回归到 vue ssr api 那部分的运用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> update = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> createBundleRenderer(bundle, &#123;</span><br><span class="line">    runInNewContext: <span class="literal">false</span>,</span><br><span class="line">    template,</span><br><span class="line">    clientManifest</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>准备做完后，就根据 request 地址生成对应的 html 字符串。这些都是在服务启动前搞定了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">ready(app).then(<span class="function"><span class="params">renderer</span> =&gt;</span> &#123;</span><br><span class="line">  app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> context = &#123;</span><br><span class="line">      title: <span class="string">'vue ssr by koa server'</span>, <span class="comment">// default title</span></span><br><span class="line">      url: ctx.request.url</span><br><span class="line">    &#125;;</span><br><span class="line">    ctx.body = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      renderer.renderToString(context, (err, html) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">return</span> handleError(err);</span><br><span class="line">        &#125;</span><br><span class="line">        resolve(html);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 启动服务</span></span><br><span class="line">  app.listen(<span class="number">3000</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server is started on 3000 port '</span>, <span class="string">'http://127.0.0.1:3000'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="开启-HMR"><a href="#开启-HMR" class="headerlink" title="开启 HMR"></a>开启 HMR</h3><p><a href="/2019/10/12/weback-middleware-in-hmr-development/">我们已经知道了 HMR 的原理</a></p>
+<p>首先模拟 webpack-dev-server （内存）静态文件服务，这样每次来次客户端的请求都会被 devMiddleware 拦截，根据请求响应对应的资源文件，包括热更新资源：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> webpackDevMiddlewareWrap = webpackDevMiddleware(clientCompiler, &#123;</span><br><span class="line">  publicPath: clientConfig.output.publicPath,</span><br><span class="line">  noInfo: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册中间件，webpack-dev-middleware</span></span><br><span class="line">app.use(devMiddleware(webpackDevMiddlewareWrap));</span><br></pre></td></tr></table></figure>
+<p>再是创建通过 clientHotMiddleware 创建 socket 连接，时刻向服务端推送信息，告知本地代码更新状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(clientHotMiddleware(clientCompiler, &#123; <span class="attr">heartbeat</span>: <span class="number">5000</span> &#125;));</span><br></pre></td></tr></table></figure>
+<p>这样一个 koa + vue 的 ssr 开发架构就初步成型。</p>
+<h2 id="nuxt"><a href="#nuxt" class="headerlink" title="nuxt"></a>nuxt</h2><blockquote>
+<p>2016 年 10 月 25 日，zeit.co 背后的团队对外发布了 Next.js，一个 React 的服务端渲染应用框架。几小时后，与 Next.js 异曲同工，一个基于 Vue.js 的服务端渲染应用框架应运而生，我们称之为：Nuxt.js。</p>
+</blockquote>
+<p>主流 vue ssr 框架了，github 高 star 为使用它提供了足够的保障。</p>
+<p>但我展示不打算使用它，因为上面的开发方式以及满足我的基本需求，过多的框架封装会让我迷失技术的原有“味道”，等有时间时再来填这里的坑。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p>我只是知识点的“加工者”， 更多内容请查阅原文链接 :thought_balloon: ， 同时感谢原作者的付出：</p>
+</blockquote>
+<ul>
+<li><a href="https://ssr.vuejs.org/zh/#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93-ssr-%EF%BC%9F" target="_blank" rel="noopener">Vue SSR 官方文档说明</a></li>
+<li><a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="noopener">vue-hackernews-2.0</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>前端攻城狮的日常，【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>好好学习，天天向上!</div>
+    <div>欢迎留言，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ssr/" rel="tag"># ssr</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/12/weback-middleware-in-hmr-development/" rel="next" title="开发中如何接入 HRM 到服务端">
+                <i class="fa fa-chevron-left"></i> 开发中如何接入 HRM 到服务端
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/22/pm2-log4js-cluster-mode/" rel="prev" title="log4js 在 pm2 cluster 下的配置">
+                log4js 在 pm2 cluster 下的配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-ssr-api-的介绍"><span class="nav-number">1.</span> <span class="nav-text">vue-ssr api 的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单渲染"><span class="nav-number">1.1.</span> <span class="nav-text">简单渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#createRenderer"><span class="nav-number">1.1.1.</span> <span class="nav-text">createRenderer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个-Vue-实例"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建一个 Vue 实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#renderToString"><span class="nav-number">1.1.3.</span> <span class="nav-text">renderToString</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JsonBundle-Manifest"><span class="nav-number">1.2.</span> <span class="nav-text">JsonBundle + Manifest</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-build"><span class="nav-number">1.2.1.</span> <span class="nav-text">webpack build</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改服务端路由逻辑"><span class="nav-number">1.2.2.</span> <span class="nav-text">修改服务端路由逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端和服务端功能的衔接"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端和服务端功能的衔接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-vue-ssr-的开发模式"><span class="nav-number">2.</span> <span class="nav-text">koa + vue-ssr 的开发模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个延迟启动"><span class="nav-number">2.1.</span> <span class="nav-text">一个延迟启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启-HMR"><span class="nav-number">2.2.</span> <span class="nav-text">开启 HMR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nuxt"><span class="nav-number">3.</span> <span class="nav-text">nuxt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
