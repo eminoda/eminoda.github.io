@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言通过 Observer 和 Dep 对象的学习，我们大致已经对 vue 内部是如何定义数据动态响应方式的， Dep 内部和 Watcher 对象互相交织着，形成动态响应机制。 现在就开始看 Watcher 对象，看其中是怎么个设计方式。 Watcher 对象对象创建既然 Watcher 是个对象，那肯定有 new 的地方，但似乎我们现在都没有看到这样 new Watcher() 的操作。 其实">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 源码学习-数据动态响应：监听者 Watcher">
+<meta property="og:url" content="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="前言通过 Observer 和 Dep 对象的学习，我们大致已经对 vue 内部是如何定义数据动态响应方式的， Dep 内部和 Watcher 对象互相交织着，形成动态响应机制。 现在就开始看 Watcher 对象，看其中是怎么个设计方式。 Watcher 对象对象创建既然 Watcher 是个对象，那肯定有 new 的地方，但似乎我们现在都没有看到这样 new Watcher() 的操作。 其实">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/getter.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/get.png">
+<meta property="og:updated_time" content="2019-12-15T08:48:32.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 源码学习-数据动态响应：监听者 Watcher">
+<meta name="twitter:description" content="前言通过 Observer 和 Dep 对象的学习，我们大致已经对 vue 内部是如何定义数据动态响应方式的， Dep 内部和 Watcher 对象互相交织着，形成动态响应机制。 现在就开始看 Watcher 对象，看其中是怎么个设计方式。 Watcher 对象对象创建既然 Watcher 是个对象，那肯定有 new 的地方，但似乎我们现在都没有看到这样 new Watcher() 的操作。 其实">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/getter.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/">
+
+
+
+
+
+  <title>vue 源码学习-数据动态响应：监听者 Watcher | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-topic">
+          <a href="/topic" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            话题
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/15/vue-learn-reactive-watcher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue 源码学习-数据动态响应：监听者 Watcher</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-15T16:45:41+08:00">
+                2019-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>通过 <strong>Observer</strong> 和 <strong>Dep</strong> 对象的学习，我们大致已经对 vue 内部是如何定义数据动态响应方式的， <strong>Dep</strong> 内部和 <strong>Watcher</strong> 对象互相交织着，形成动态响应机制。</p>
+<p>现在就开始看 <strong>Watcher</strong> 对象，看其中是怎么个设计方式。</p>
+<h1 id="Watcher-对象"><a href="#Watcher-对象" class="headerlink" title="Watcher 对象"></a>Watcher 对象</h1><h2 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h2><p>既然 <strong>Watcher</strong> 是个对象，那肯定有 <strong>new</strong> 的地方，但似乎我们现在都没有看到这样 <strong>new Watcher()</strong> 的操作。</p>
+<p>其实 <strong>vue</strong> 完成所有的初始化动作后，就会定义 <strong>mount</strong> 函数，内部完成渲染相关的工作，这里不做展开，到渲染函数篇在细看。</p>
+<p>如下就是一个 Watcher 对象的创建操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountComponent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  callHook(vm, <span class="string">"beforeMount"</span>);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">let</span> updateComponent = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    vm._update(vm._render(), hydrating);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">new</span> Watcher(</span><br><span class="line">    vm,</span><br><span class="line">    updateComponent,</span><br><span class="line">    noop,</span><br><span class="line">    &#123;</span><br><span class="line">      before() &#123;</span><br><span class="line">        <span class="keyword">if</span> (vm._isMounted &amp;&amp; !vm._isDestroyed) &#123;</span><br><span class="line">          callHook(vm, <span class="string">"beforeUpdate"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="literal">true</span> <span class="comment">/* isRenderWatcher */</span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然 <strong>Vue.prototype.\$watch</strong> 内部也创建该对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$watch = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">const</span> watcher = <span class="keyword">new</span> Watcher(vm, expOrFn, cb, options);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们也知道 <strong>computed</strong> 和 <strong>watch</strong> 选项属性使用上也大致相同，所以 <strong>computed</strong> 内部也是用 <strong>Watcher</strong> 创建的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initComputed</span>(<span class="params">vm: Component, computed: Object</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> watchers = (vm._computedWatchers = <span class="built_in">Object</span>.create(<span class="literal">null</span>));</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> computed) &#123;</span><br><span class="line">    watchers[key] = <span class="keyword">new</span> Watcher(vm, getter || noop, noop, computedWatcherOptions);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="代码主体"><a href="#代码主体" class="headerlink" title="代码主体"></a>代码主体</h2><p>大致知道了 <strong>Watcher</strong> 对象的创建，我们来看其代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\core\observer\watcher.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(vm: Component, expOrFn: string | Function, cb: Function, options?: ?Object, isRenderWatcher?: boolean) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.lazy ? <span class="literal">undefined</span> : <span class="keyword">this</span>.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  addDep(dep: Dep) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  cleanupDeps() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  update() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  run() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  evaluate() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  depend() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  teardown() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="属性初始化"><a href="#属性初始化" class="headerlink" title="属性初始化"></a>属性初始化</h2><p>如果我们以 <strong>\$mount</strong> 中的 <strong>Watcher</strong> 作为切入点，那么 <strong>Watcher</strong> 对象的创建后，其构造函数收到的值将是这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="comment">// (this,function,function,&#123;before:function&#125;,true)</span></span><br><span class="line">  <span class="keyword">constructor</span>(vm, expOrFn, cb, options, isRenderWatcher) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化基础属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// options</span></span><br><span class="line"><span class="keyword">if</span> (options) &#123;</span><br><span class="line">  <span class="keyword">this</span>.deep = !!options.deep; <span class="comment">// false</span></span><br><span class="line">  <span class="keyword">this</span>.user = !!options.user; <span class="comment">// false</span></span><br><span class="line">  <span class="keyword">this</span>.lazy = !!options.lazy; <span class="comment">// false</span></span><br><span class="line">  <span class="keyword">this</span>.sync = !!options.sync; <span class="comment">// false</span></span><br><span class="line">  <span class="keyword">this</span>.before = options.before; <span class="comment">// false</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.deep = <span class="keyword">this</span>.user = <span class="keyword">this</span>.lazy = <span class="keyword">this</span>.sync = <span class="literal">false</span>; <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.cb = cb;</span><br><span class="line"><span class="keyword">this</span>.id = ++uid; <span class="comment">// uid for batching</span></span><br><span class="line"><span class="keyword">this</span>.active = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">this</span>.dirty = <span class="keyword">this</span>.lazy; <span class="comment">// for lazy watchers // false</span></span><br></pre></td></tr></table></figure>
+<p>除了 <strong>this.active</strong> 为 <strong>true</strong> ，其他用于判断的属性都为 <strong>false</strong> 。（再次强调下，这里是以 <strong>\$mount</strong> 中的 <strong>new Watcher</strong> 的参数为切入点）</p>
+<p>初始化依赖对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.deps = [];</span><br><span class="line"><span class="keyword">this</span>.newDeps = [];</span><br><span class="line"><span class="keyword">this</span>.depIds = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"><span class="keyword">this</span>.newDepIds = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br></pre></td></tr></table></figure>
+<p>看这些属性的名字，基本能猜出：这些属性将是 <strong>Watcher</strong> 和 <strong>Dep</strong> 进行交互通讯的桥梁。</p>
+<p>解析 <strong>expOrFn</strong> ，得到 <strong>getter</strong> 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> expOrFn === <span class="string">"function"</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.getter = expOrFn;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.getter = parsePath(expOrFn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后根据 <strong>this.lazy</strong> (false) ，运行 <strong>get</strong> 方法，得到 <strong>this.value</strong> ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.value = <span class="keyword">this</span>.lazy ? <span class="literal">undefined</span> : <span class="keyword">this</span>.get();</span><br></pre></td></tr></table></figure>
+<p>下面我们从构造函数 <strong>get</strong> 方法开始，看数据响应机制是如何实现的。</p>
+<h1 id="get-预取值"><a href="#get-预取值" class="headerlink" title="get 预取值"></a>get 预取值</h1><p><strong>get</strong> 方法代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> () &#123;</span><br><span class="line">    pushTarget(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">let</span> value</span><br><span class="line">    <span class="keyword">const</span> vm = <span class="keyword">this</span>.vm</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      value = <span class="keyword">this</span>.getter.call(vm, vm)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.deep) &#123;</span><br><span class="line">        traverse(value)</span><br><span class="line">      &#125;</span><br><span class="line">      popTarget()</span><br><span class="line">      <span class="keyword">this</span>.cleanupDeps()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进栈"><a href="#进栈" class="headerlink" title="进栈"></a>进栈</h2><p>当 <strong>Watcher</strong> 对象初始化后，就会触发 <strong>get</strong> 方法，第一步就调用 <strong>pushTarget</strong> ，我们来看下内部原理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\core\observer\dep.js</span></span><br><span class="line">Dep.target = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> targetStack = [];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pushTarget</span>(<span class="params">target: ?Watcher</span>) </span>&#123;</span><br><span class="line">  targetStack.push(target);</span><br><span class="line">  Dep.target = target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>vue</strong> 声明时，就定义好了 <strong>Dep.target</strong> 属性，当调用 <strong>Watcher</strong> 调用 后，将 <strong>Watcher</strong> 实例引用 <strong>this</strong> 赋值给 <strong>Dep.target</strong> ，同时也放入监听堆栈队列 <strong>targetStack</strong> 。</p>
+<h2 id="执行-getter"><a href="#执行-getter" class="headerlink" title="执行 getter"></a>执行 getter</h2><p>定义完 <strong>Dep.target</strong> 后，马上执行 <strong>this.getter</strong> 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = <span class="keyword">this</span>.getter.call(vm, vm);</span><br></pre></td></tr></table></figure>
+<p>而这个方法就是前面提到的 <strong>updateComponent</strong> ，我打了个 <strong>debugger</strong> 来说明这问题：</p>
+<img src="/2019/12/15/vue-learn-reactive-watcher/getter.png">
+<p><strong>call</strong> 执行完后，并不会跳到最后的出栈方法 <strong>popTarget</strong> ，而是转到了我们前面 <strong>definedReactive</strong> 中定义的 <strong>getter</strong> 方法：</p>
+<img src="/2019/12/15/vue-learn-reactive-watcher/get.png">
+<p>因为我们的模板可能这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样就涉及到观察对象上属性的<strong>取值</strong>操作，所以触发了 <strong>getter</strong> 。</p>
+<p>中间触发的依赖关系待会儿再说。</p>
+<h2 id="出栈"><a href="#出栈" class="headerlink" title="出栈"></a>出栈</h2><p>获取到 value 后，则执行 <strong>popTarget</strong> 出栈：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">popTarget</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  targetStack.pop();</span><br><span class="line">  Dep.target = targetStack[targetStack.length - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="刷新队列"><a href="#刷新队列" class="headerlink" title="刷新队列"></a>刷新队列</h2><p>调用 <strong>cleanupDeps</strong> 方法，来更新 dep 相关的属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cleanupDeps () &#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="keyword">this</span>.deps.length</span><br><span class="line">    <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">      <span class="keyword">const</span> dep = <span class="keyword">this</span>.deps[i]</span><br><span class="line">      <span class="keyword">if</span> (!<span class="keyword">this</span>.newDepIds.has(dep.id)) &#123;</span><br><span class="line">        dep.removeSub(<span class="keyword">this</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 1 处理 id依赖集合</span></span><br><span class="line">    <span class="keyword">let</span> tmp = <span class="keyword">this</span>.depIds</span><br><span class="line">    <span class="keyword">this</span>.depIds = <span class="keyword">this</span>.newDepIds</span><br><span class="line">    <span class="keyword">this</span>.newDepIds = tmp</span><br><span class="line">    <span class="keyword">this</span>.newDepIds.clear()</span><br><span class="line">    <span class="comment">// 2 处理 依赖队列</span></span><br><span class="line">    tmp = <span class="keyword">this</span>.deps</span><br><span class="line">    <span class="keyword">this</span>.deps = <span class="keyword">this</span>.newDeps</span><br><span class="line">    <span class="keyword">this</span>.newDeps = tmp</span><br><span class="line">    <span class="keyword">this</span>.newDeps.length = <span class="number">0</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>this.deps</strong> 是个数组，它是哪里有数据塞入的？就是在 <strong>cleanupDeps</strong> 方法中。</p>
+<p>上面 <strong>1</strong> 和 <strong>2</strong> 分别是对 <strong>id 依赖集合</strong> 和 <strong>依赖队列</strong> 做置换顺序：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> tmp = <span class="keyword">this</span>.depIds; <span class="comment">// 历史 id依赖集合</span></span><br><span class="line"><span class="keyword">this</span>.depIds = <span class="keyword">this</span>.newDepIds; <span class="comment">// depIds 得到：由 addDep 方法添加的 id依赖集合</span></span><br><span class="line"><span class="keyword">this</span>.newDepIds = tmp;</span><br></pre></td></tr></table></figure>
+<p>这样 <strong>depIds</strong> 得到最新的 <strong>id 依赖集合</strong> ， <strong>newDepIds</strong> 最后被清空。</p>
+<p>下一步对 <strong>deps</strong> 也是一样的处理，将最新的 <strong>newDeps</strong> 赋值给 <strong>deps</strong> ，然后清空 <strong>newDeps</strong> ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tmp = <span class="keyword">this</span>.deps;</span><br><span class="line"><span class="keyword">this</span>.deps = <span class="keyword">this</span>.newDeps;</span><br><span class="line"><span class="keyword">this</span>.newDeps = tmp;</span><br><span class="line"><span class="keyword">this</span>.newDeps.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="依赖-Dep-和监听-Watcher-的关系"><a href="#依赖-Dep-和监听-Watcher-的关系" class="headerlink" title="依赖 Dep 和监听 Watcher 的关系"></a>依赖 Dep 和监听 Watcher 的关系</h1><p>我认为这是 <strong>真正的数据动态响应机制</strong>。</p>
+<p>前面提到的的 <strong>Observer</strong> 只是对我们的对象数据进行观察； <strong>definedReative</strong> 只是提供了响应“动力”，或者是触发点。</p>
+<p>而当数据真正响应后，其内部通过有 <strong>Dep</strong> 对象提供的 <strong>depend、notify</strong> 方法和 <strong>Watcher</strong> 之间的交互才是真正的机制。</p>
+<h2 id="添加依赖-addDep"><a href="#添加依赖-addDep" class="headerlink" title="添加依赖 addDep"></a>添加依赖 addDep</h2><p>我们知道当被观察对象的属性被调用了，则触发了 <strong>definedReative</strong> 中的 <strong>getter</strong> 方法。</p>
+<p>内部调用了 <strong>dep.depend()</strong> 方法，最终执行到了 <strong>Watcher</strong> 的 <strong>addDep</strong> ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// defineReactive getter</span></span><br><span class="line">dep.depend();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Dep</span></span><br><span class="line">depend () &#123;</span><br><span class="line">	Dep.target.addDep(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Watcher</span></span><br><span class="line">addDep (dep: Dep) &#123;</span><br><span class="line">	<span class="keyword">const</span> id = dep.id</span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">this</span>.newDepIds.has(id)) &#123;</span><br><span class="line">		<span class="keyword">this</span>.newDepIds.add(id)</span><br><span class="line">		<span class="keyword">this</span>.newDeps.push(dep)</span><br><span class="line">		<span class="keyword">if</span> (!<span class="keyword">this</span>.depIds.has(id)) &#123;</span><br><span class="line">			dep.addSub(<span class="keyword">this</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来细看中间是什么逻辑：</p>
+<p>程序开始执行时，<strong>this.newDeps = []</strong> 和 <strong>this.newDeps，this.depIds</strong> 为空集合，然后调用 <strong>dep</strong> 实例的 <strong>addSub</strong> 方法 ，往 <strong>dep.subs</strong> 订阅队列添加 <strong>Watcher</strong> 对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Dep</span></span><br><span class="line">addSub (sub: Watcher) &#123;</span><br><span class="line">	<span class="keyword">this</span>.subs.push(sub)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="依赖通知-notify"><a href="#依赖通知-notify" class="headerlink" title="依赖通知 notify"></a>依赖通知 notify</h2><p>当我们更新数据时，就触发了 <strong>definedReative</strong> 中的 <strong>setter</strong> 方法，调用了 <strong>dep.notify()</strong> 。</p>
+<p><strong>notify</strong> 内部调用了 <strong>Watcher</strong> 对象 <strong>update</strong> 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dep.notify()</span><br><span class="line"></span><br><span class="line">notify () &#123;</span><br><span class="line">	subs[i].update()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">update () &#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.lazy) &#123;</span><br><span class="line">		<span class="keyword">this</span>.dirty = <span class="literal">true</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.sync) &#123;</span><br><span class="line">		<span class="keyword">this</span>.run()</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		queueWatcher(<span class="keyword">this</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <strong>update</strong> 方法内部，根据同步属性 <strong>sync</strong> 判断是执行 <strong>run</strong> 还是 <strong>queueWatcher</strong> 。</p>
+<p>当然目前不管那么复杂的条件，就先看 <strong>run</strong> 方法，因为 <strong>queueWatcher</strong> 最终还是要执行它的。</p>
+<h2 id="依赖执行-run"><a href="#依赖执行-run" class="headerlink" title="依赖执行 run"></a>依赖执行 run</h2><p>这是 run 的主体代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">run () &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.active) &#123;</span><br><span class="line">      <span class="keyword">const</span> value = <span class="keyword">this</span>.get()</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        value !== <span class="keyword">this</span>.value ||</span><br><span class="line">        isObject(value) ||</span><br><span class="line">        <span class="keyword">this</span>.deep</span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="comment">// set new value</span></span><br><span class="line">        <span class="keyword">const</span> oldValue = <span class="keyword">this</span>.value</span><br><span class="line">        <span class="keyword">this</span>.value = value</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, value, oldValue)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>能看到内部又去执行了 <strong>预期值 get</strong> 方法。并且最后把新老 <strong>value</strong> 交给 <strong>cb</strong> 方法，这也就是我们在调用 <strong>watch api</strong> 时，有数据更新前后的值的原因。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>基于这三篇我们对 <strong>Observer</strong> 、 <strong>Dep</strong> 、 <strong>Watcher</strong> 这三个核心对象和数据动态响应机制起到的作用就有个大致的概念基础了。</p>
+<p>其中为什么 <strong>vue</strong> 要那么设计、以及在 <strong>initState</strong> 方法中其他选项属性的定义解析我们后面继续学习。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
+    <div>欢迎留言，评论交流，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/15/vue-learn-reactive-dep/" rel="next" title="vue 源码学习-数据动态响应：依赖 Dep">
+                <i class="fa fa-chevron-left"></i> vue 源码学习-数据动态响应：依赖 Dep
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/17/regex-practice/" rel="prev" title="从简到难，示例几则 vue 中的正则表达式">
+                从简到难，示例几则 vue 中的正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Watcher-对象"><span class="nav-number">2.</span> <span class="nav-text">Watcher 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象创建"><span class="nav-number">2.1.</span> <span class="nav-text">对象创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码主体"><span class="nav-number">2.2.</span> <span class="nav-text">代码主体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性初始化"><span class="nav-number">2.3.</span> <span class="nav-text">属性初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#get-预取值"><span class="nav-number">3.</span> <span class="nav-text">get 预取值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进栈"><span class="nav-number">3.1.</span> <span class="nav-text">进栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行-getter"><span class="nav-number">3.2.</span> <span class="nav-text">执行 getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出栈"><span class="nav-number">3.3.</span> <span class="nav-text">出栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷新队列"><span class="nav-number">3.4.</span> <span class="nav-text">刷新队列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#依赖-Dep-和监听-Watcher-的关系"><span class="nav-number">4.</span> <span class="nav-text">依赖 Dep 和监听 Watcher 的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加依赖-addDep"><span class="nav-number">4.1.</span> <span class="nav-text">添加依赖 addDep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖通知-notify"><span class="nav-number">4.2.</span> <span class="nav-text">依赖通知 notify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖执行-run"><span class="nav-number">4.3.</span> <span class="nav-text">依赖执行 run</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

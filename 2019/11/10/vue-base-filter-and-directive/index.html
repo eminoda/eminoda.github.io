@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言《vue 基础》系列是再次回炉 vue 记的笔记，除了官网那部分知识点外，还会加入自己的一些理解。（里面会有部分和官网相同的文案，有经验的同学择感兴趣的阅读） 说下 vue 里过滤器 filter 和指令 directvie 相关用法。 filter 过滤器过滤器 filter 没什么好说，如果你以前玩过 angular.js ，那么就不会太陌生。通过 filter 能对模板上写的数据进行二次">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 基础-过滤器 filter 和指令 directive 示例">
+<meta property="og:url" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="前言《vue 基础》系列是再次回炉 vue 记的笔记，除了官网那部分知识点外，还会加入自己的一些理解。（里面会有部分和官网相同的文案，有经验的同学择感兴趣的阅读） 说下 vue 里过滤器 filter 和指令 directvie 相关用法。 filter 过滤器过滤器 filter 没什么好说，如果你以前玩过 angular.js ，那么就不会太陌生。通过 filter 能对模板上写的数据进行二次">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/filter-value-html.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/filter-params-html.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-hook-order.gif">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-hook-order.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-hook-order2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-insert.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-update.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-update2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-componentupdate.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/directive-componentupdate-result.png">
+<meta property="og:updated_time" content="2019-11-10T17:04:20.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 基础-过滤器 filter 和指令 directive 示例">
+<meta name="twitter:description" content="前言《vue 基础》系列是再次回炉 vue 记的笔记，除了官网那部分知识点外，还会加入自己的一些理解。（里面会有部分和官网相同的文案，有经验的同学择感兴趣的阅读） 说下 vue 里过滤器 filter 和指令 directvie 相关用法。 filter 过滤器过滤器 filter 没什么好说，如果你以前玩过 angular.js ，那么就不会太陌生。通过 filter 能对模板上写的数据进行二次">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/filter-value-html.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/">
+
+
+
+
+
+  <title>vue 基础-过滤器 filter 和指令 directive 示例 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-topic">
+          <a href="/topic" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            话题
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/vue-base-filter-and-directive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue 基础-过滤器 filter 和指令 directive 示例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T23:57:41+08:00">
+                2019-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>《vue 基础》系列是再次回炉 vue 记的笔记，除了官网那部分知识点外，还会加入自己的一些理解。（里面会有部分和官网相同的文案，有经验的同学择感兴趣的阅读）</p>
+<p>说下 vue 里过滤器 <strong>filter</strong> 和指令 <strong>directvie</strong> 相关用法。</p>
+<h1 id="filter-过滤器"><a href="#filter-过滤器" class="headerlink" title="filter 过滤器"></a>filter 过滤器</h1><p>过滤器 <strong>filter</strong> 没什么好说，如果你以前玩过 angular.js ，那么就不会太陌生。通过 <strong>filter</strong> 能对模板上写的数据进行二次加工。</p>
+<p>我们不用通过计算属性 computed，或者某个地方对数据进行新的赋值等操作，在模板上简单的通过 xxx | filter 编写即可。</p>
+<p>通过几个例子来说明用法：</p>
+<h2 id="filter-字典文案"><a href="#filter-字典文案" class="headerlink" title="filter 字典文案"></a>filter 字典文案</h2><p>将通过接口获取到的 value （ number 类型），在前端转换成对应的文案。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(<span class="string">"drawStatus"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> types = [<span class="string">"处理中"</span>, <span class="string">"已完成"</span>, <span class="string">"已驳回"</span>, <span class="string">"待放款"</span>, <span class="string">"放款中"</span>, <span class="string">"已撤销"</span>];</span><br><span class="line">  <span class="keyword">return</span> types[value] || <span class="string">"其他"</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<img src="/2019/11/10/vue-base-filter-and-directive/filter-value-html.png">
+<h2 id="filter-时间格式"><a href="#filter-时间格式" class="headerlink" title="filter 时间格式"></a>filter 时间格式</h2><p>一般，后端返回时间存储格式和前端展示会有差异，封装 <strong>moment</strong> 工具库，以过滤器 filter 形式来简化这种格式化操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">return</span> value ? moment(value).format(format || <span class="string">"YYYY-MM-DD HH:mm:ss"</span>) : <span class="string">""</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<img src="/2019/11/10/vue-base-filter-and-directive/filter-params-html.png">
+<p>注意：这个 timeFormat 过滤器示范了如何传递第二个参数。</p>
+<h1 id="directive-指令"><a href="#directive-指令" class="headerlink" title="directive 指令"></a>directive 指令</h1><p>vue 里的指令都默认以 <strong>v-</strong> 开头，像：v-for 、v-if、v-model … 等等。我们也可以自定义指令，根据需要作出不同的功能指令属性，简化 vue 逻辑代码。</p>
+<p>还是先列举几个例子，再开始介绍：</p>
+<h2 id="directive-点击图片自动加载"><a href="#directive-点击图片自动加载" class="headerlink" title="directive 点击图片自动加载"></a>directive 点击图片自动加载</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 刷新图片</span></span><br><span class="line"><span class="comment"> * &lt;img alt="" v-reload-img="'/verifyCode.api'" src="/verifyCode.api"&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Vue.directive(<span class="string">"reload-img"</span>, &#123;</span><br><span class="line">  bind: <span class="function"><span class="keyword">function</span>(<span class="params">el, binding</span>) </span>&#123;</span><br><span class="line">    el.src = binding.value ? binding.value : <span class="string">"/verifyCode.api"</span>;</span><br><span class="line">    el.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">      el.src = el.src + <span class="string">"?t="</span> + <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="directive-根据数据切换不同样式"><a href="#directive-根据数据切换不同样式" class="headerlink" title="directive 根据数据切换不同样式"></a>directive 根据数据切换不同样式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 正负红绿样式</span></span><br><span class="line"><span class="comment"> * &lt;span v-red-green="value"&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Vue.directive(<span class="string">"red-green"</span>, &#123;</span><br><span class="line">  componentUpdated: <span class="function"><span class="keyword">function</span>(<span class="params">el, binding</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// console.log('&lt;update&gt;' + binding.value);</span></span><br><span class="line">    <span class="keyword">let</span> setClass = (el.className + <span class="string">" "</span>).replace(<span class="regexp">/color-red|color-green/g</span>, <span class="string">""</span>);</span><br><span class="line">    <span class="keyword">if</span> (binding.value &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">      setClass = setClass + <span class="string">"color-red"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      setClass = setClass + <span class="string">"color-green"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    el.className = setClass;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="directive-模拟路由指令实现跳转"><a href="#directive-模拟路由指令实现跳转" class="headerlink" title="directive 模拟路由指令实现跳转"></a>directive 模拟路由指令实现跳转</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 页面跳转</span></span><br><span class="line"><span class="comment"> * &lt;li v-go="'/active/center'"&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Vue.directive(<span class="string">"go"</span>, &#123;</span><br><span class="line">  bind: <span class="function"><span class="keyword">function</span>(<span class="params">el, binding, vnode</span>) </span>&#123;</span><br><span class="line">    el.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      vnode.context.$router.push(binding.value);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="钩子函数介绍"><a href="#钩子函数介绍" class="headerlink" title="钩子函数介绍"></a>钩子函数介绍</h2><p>在开始举例前，看下自定义指令里的钩子函数：</p>
+<ul>
+<li>bind<br>只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。</li>
+<li>inserted<br>被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。</li>
+<li>update<br>所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。需要通过前后值得比较来确定不必要的更新。</li>
+<li>componentUpdated<br>指令所在组件的 VNode <strong>及其子 VNode</strong> 全部更新后调用。</li>
+</ul>
+<h2 id="钩子函数触发顺序"><a href="#钩子函数触发顺序" class="headerlink" title="钩子函数触发顺序"></a>钩子函数触发顺序</h2><p>我录制了一个 gif ，分三个阶段来触发钩子函数，希望大家能对钩子函数有个感性认识：</p>
+<ul>
+<li>组件 A 首次加载</li>
+<li>切换组件 B</li>
+<li>再次切换至 A 组件</li>
+</ul>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-hook-order.gif" title="钩子函数执行顺序">
+<p>能看到指令的 <strong>bind</strong> 、 <strong>inserted</strong> 是在生命周期 <strong>mounted</strong> 之前进行执行的；同时 <strong>unbind</strong> 在组件销毁时触发。</p>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-hook-order.png" title="钩子函数执行顺序">
+<p>那 <strong>update</strong> 、 <strong>componentUpdated</strong> 呢？</p>
+<p>他们在数据更新时被触发调用，并且是在生命周期 <strong>beforeUpdate</strong> 和 <strong>updated</strong> 之间完成。</p>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-hook-order2.png" title="钩子函数执行顺序">
+<h2 id="钩子函数参数"><a href="#钩子函数参数" class="headerlink" title="钩子函数参数"></a>钩子函数参数</h2><ul>
+<li>el：指令所绑定的元素，可进行 dom 操作。</li>
+<li>binding：Object：<ul>
+<li>name：指令名，不包括 v- 前缀。</li>
+<li>value：指令的绑定值，例如：v-my-directive=”1 + 1” 中，绑定值为 2。</li>
+<li>oldValue：指令绑定的前一个值，<strong>仅在 update 和 componentUpdated 钩子中可用</strong></li>
+<li>expression：字符串形式的指令表达式。例如 v-my-directive=”1 + 1” 中，表达式为 “1 + 1”。</li>
+<li>arg：传给指令的参数，可选。例如 v-my-directive:foo 中，参数为 “foo”。</li>
+<li>modifiers：一个包含修饰符的对象。例如：v-my-directive.foo.bar 中，修饰符对象为 { foo: true, bar: true }。</li>
+</ul>
+</li>
+<li>vnode：Vue 编译生成的虚拟节点。</li>
+<li>oldVnode：上一个虚拟节点，<strong>仅在 update 和 componentUpdated 钩子中可用</strong></li>
+</ul>
+<h1 id="指令钩子-inserted-没被插入的原因"><a href="#指令钩子-inserted-没被插入的原因" class="headerlink" title="指令钩子 inserted 没被插入的原因"></a>指令钩子 inserted 没被插入的原因</h1><p>比如我们指令所属标签的子标签内含操作 dom 的指令或者逻辑，比如 v-if</p>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-insert.png">
+<p>如果我们的 v-if 为 false ，然后你会发现，虽然 insert 被触发了，但页面实际上没有子标签内容的插入，可能你需要避免这方面的 bug 产生。</p>
+<h1 id="指令钩子-update-更新的正确判断"><a href="#指令钩子-update-更新的正确判断" class="headerlink" title="指令钩子 update 更新的正确判断"></a>指令钩子 update 更新的正确判断</h1><p>当我们绑定在指令上的数据发生更新时（数据 从 1 更新为 2），会触发 update 钩子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">update: <span class="function"><span class="keyword">function</span>(<span class="params">el, binding, vnode, oldVnode</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'[directive parent]'</span>, <span class="string">`update`</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'&lt;update&gt;'</span>, <span class="string">'bind-value'</span>, binding.value); <span class="comment">// 2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'&lt;update&gt;'</span>, <span class="string">'bind-oldValue'</span>, binding.oldValue); <span class="comment">// 1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时 binding.value 就更新了。</p>
+<p>但注意，下图中的红框内容，虽然当前 vnode 更新了相关元素，但其子 VNode 却没有变化。</p>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-update.png">
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-update2.png">
+<p>所以当你使用 VNode 做一些更新判断是，就需要根据不同的场景来选择更新模板的契机，以免不必要的无用判断。</p>
+<h1 id="指令钩子-componentUpdated-的错误理解"><a href="#指令钩子-componentUpdated-的错误理解" class="headerlink" title="指令钩子 componentUpdated 的错误理解"></a>指令钩子 componentUpdated 的错误理解</h1><p>这个 hook 让我真不好理解，不过你可以看下别人怎么理解的：</p>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/50634762/hook-componentupdated-of-vue-directive-not-triggered" target="_blank" rel="noopener">https://stackoverflow.com/questions/50634762/hook-componentupdated-of-vue-directive-not-triggered</a></p>
+</blockquote>
+<p>你要注意到，在官方文档上这个 <strong>及其子 VNode</strong> 是加粗的，这是个“与”判断。首先不能因为只修改了子模板的 VNode 就认为会触发 <strong>componentUpdated</strong> 。</p>
+<p>其次你该理解 <strong>所在组件的</strong> 的真正含义，因为 <strong>componentUpdated</strong> 是说所在组件和子 VNode 被触发，那么如下举例：为什么我在 <strong>componentUpdated</strong> 中取到的两个 ClassName 后的 num 后缀不一样呢？（num 应该同时更新的）：</p>
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-componentupdate.png">
+<img src="/2019/11/10/vue-base-filter-and-directive/directive-componentupdate-result.png">
+<p>解释：虽然 <strong>v-my-directive</strong> 指令是写在父模板中，但是写在 <strong>mt-badge</strong> 组件内。当 num 更新，触发 <strong>lifecycle</strong> 中的 <strong>udpate</strong> ，然后接连触发 <strong>update</strong> 和 <strong>componentUpdated</strong> 钩子，但是这个 <strong>mt-badge</strong> 却还没有被触发它的 <strong>lifecycle</strong> 的 <strong>update</strong> （如果每个组件的 update 没有顺序，那还怎么管理数据流），它是在指令 <strong>v-my-directive</strong> 的 componentUpdated 结束后才更新。</p>
+<p>所以指令触发 <strong>componentUpdated</strong> 时， <strong>v-my-directive</strong> 所在组件 VNode 更新了，但子组件的 VNode 还保持原样。</p>
+<p>你可以试下，如果把 <strong>mt-badge</strong> 换成一个普通标签，那取到的 ClassName 就一致了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文列举了过滤器和指令的几种场景运用，给出了 5 个简单的 Demo 示例。同时对指令的 inserted、update 、componentUpdated 做了重点说明。</p>
+<p>原本以为 filter 和 directive 篇幅不会过长，但在说指令中几个钩子时扩展了下。希望各位在开发中遇到问题时能有个更好的判断，如果有帮助就分享给更多的开发者。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
+    <div>欢迎留言，评论交流，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/08/vue-base-extend/" rel="next" title="vue 基础- extends 实现代码复用">
+                <i class="fa fa-chevron-left"></i> vue 基础- extends 实现代码复用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/10/vue-base-lifecycle/" rel="prev" title="vue 基础-生命周期 lifecycle">
+                vue 基础-生命周期 lifecycle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#filter-过滤器"><span class="nav-number">2.</span> <span class="nav-text">filter 过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#filter-字典文案"><span class="nav-number">2.1.</span> <span class="nav-text">filter 字典文案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter-时间格式"><span class="nav-number">2.2.</span> <span class="nav-text">filter 时间格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#directive-指令"><span class="nav-number">3.</span> <span class="nav-text">directive 指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#directive-点击图片自动加载"><span class="nav-number">3.1.</span> <span class="nav-text">directive 点击图片自动加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#directive-根据数据切换不同样式"><span class="nav-number">3.2.</span> <span class="nav-text">directive 根据数据切换不同样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#directive-模拟路由指令实现跳转"><span class="nav-number">3.3.</span> <span class="nav-text">directive 模拟路由指令实现跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钩子函数介绍"><span class="nav-number">3.4.</span> <span class="nav-text">钩子函数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钩子函数触发顺序"><span class="nav-number">3.5.</span> <span class="nav-text">钩子函数触发顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钩子函数参数"><span class="nav-number">3.6.</span> <span class="nav-text">钩子函数参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令钩子-inserted-没被插入的原因"><span class="nav-number">4.</span> <span class="nav-text">指令钩子 inserted 没被插入的原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令钩子-update-更新的正确判断"><span class="nav-number">5.</span> <span class="nav-text">指令钩子 update 更新的正确判断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令钩子-componentUpdated-的错误理解"><span class="nav-number">6.</span> <span class="nav-text">指令钩子 componentUpdated 的错误理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
