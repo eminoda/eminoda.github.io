@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 渐变 -->
+    <style>
+      .border-linear {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        border: 20px solid;
+        border-image: linear-gradient(to right, red, green) 30 30;
+      }
+    </style>
+    <div>
+      <div class="border-linear">
+        边框颜色渐变
+      </div>
+    </div>
+
+    <style>
+      .bg-linear {
+        margin-top: 100px;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        background-image: linear-gradient(yellow, green);
+      }
+      .bg-linear2 {
+        margin-top: 100px;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        background-color: linear-gradient(yellow, green);
+      }
+    </style>
+    <div class="bg-linear">
+      背景色渐变
+    </div>
+    <div class="bg-linear2">
+      背景色渐变
+    </div>
+
+    <style>
+      .font-linear3 {
+        margin-top: 100px;
+        background-image: linear-gradient(yellow, green);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+    </style>
+    <div class="font-linear3">
+      123
+    </div>
+  </body>
+</html>
