@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言我们平时“搬砖”只关注业务代码，页面脚本现在都由 webpack 帮我们自动组装，可能会忽略页面 script 的一些细节。 下面列了有关 script 标签的几个小问题，可以来自测下：  script 标签放在 header 和 body 的区别？ script 中的 defer、async 属性有什么作用？ 多脚本加载时间不同，会影响其执行顺序么？ document.ready 和 win">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="标签 script 加载机制">
+<meta property="og:url" content="http://yoursite.com/2020/05/23/js-script-loading/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="前言我们平时“搬砖”只关注业务代码，页面脚本现在都由 webpack 帮我们自动组装，可能会忽略页面 script 的一些细节。 下面列了有关 script 标签的几个小问题，可以来自测下：  script 标签放在 header 和 body 的区别？ script 中的 defer、async 属性有什么作用？ 多脚本加载时间不同，会影响其执行顺序么？ document.ready 和 win">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/header.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/body.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/loaded.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/async.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/ready.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/image.gif">
+<meta property="og:image" content="http://yoursite.com/2020/05/23/js-script-loading/ready-async.png">
+<meta property="og:updated_time" content="2020-05-23T07:18:27.832Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="标签 script 加载机制">
+<meta name="twitter:description" content="前言我们平时“搬砖”只关注业务代码，页面脚本现在都由 webpack 帮我们自动组装，可能会忽略页面 script 的一些细节。 下面列了有关 script 标签的几个小问题，可以来自测下：  script 标签放在 header 和 body 的区别？ script 中的 defer、async 属性有什么作用？ 多脚本加载时间不同，会影响其执行顺序么？ document.ready 和 win">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/23/js-script-loading/header.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/23/js-script-loading/">
+
+
+
+
+
+  <title>标签 script 加载机制 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-topic">
+          <a href="/topic" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+            
+            话题
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/23/js-script-loading/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">标签 script 加载机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-23T15:18:27+08:00">
+                2020-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们平时“搬砖”只关注业务代码，页面脚本现在都由 webpack 帮我们自动组装，可能会忽略页面 script 的一些细节。</p>
+<p>下面列了有关 script 标签的几个小问题，可以来自测下：</p>
+<ul>
+<li>script 标签放在 header 和 body 的区别？</li>
+<li>script 中的 defer、async 属性有什么作用？</li>
+<li>多脚本加载时间不同，会影响其执行顺序么？</li>
+<li>document.ready 和 window.load 在 script 加载中的作用？</li>
+<li>什么是动态脚本加载？</li>
+</ul>
+<p>不太明白没有关系，必须承认我做了那么多年也对这块朦朦胧胧（没有具体实践过），下面会从简单的 demo 帮大家捋清这些概念。</p>
+<p><strong>demo 说明</strong></p>
+<p>利用 koa 起一个简单的 server 服务，通过 koa-static 实现资源文件的加载。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> lazyLoadScript(ctx.path);</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">static</span>(path.join(__dirname, <span class="string">'public'</span>))(ctx, next);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 setTimeout 简单实现一个延迟加载功能的方法，用来模拟 js 脚本加载很慢的场景：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lazyLoadScript</span>(<span class="params">path, time = <span class="number">3000</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// js 文件将被特意延迟 3 秒</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/\/js\/test\d+\.js/</span>.test(path)) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`拦截 <span class="subst">$&#123;path&#125;</span>，<span class="subst">$&#123;time&#125;</span> 秒后返回`</span>);</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">`响应 <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">          resolve(<span class="literal">true</span>);</span><br><span class="line">        &#125;, time);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(<span class="literal">true</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      reject(err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单的 html：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面会改动 html 和延迟加载的逻辑，来说明相关的概念，现在开始吧。</p>
+<h2 id="脚本在页面的位置"><a href="#脚本在页面的位置" class="headerlink" title="脚本在页面的位置"></a>脚本在页面的位置</h2><p>script 通常被放在 header 或者 body 标签中，但位置的不同对于页面的加载效果也不一样。</p>
+<h3 id="放在-header-中"><a href="#放在-header-中" class="headerlink" title="放在 header 中"></a>放在 header 中</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;script 加载机制&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script src='/</span>js/test1.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test2.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test3.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="/2020/05/23/js-script-loading/header.gif" title="效果图">
+<p>你能看到 html <strong>第一时间被加载进来</strong>，但页面 body 内容迟迟没有渲染出来。因为在等待 header 标签中 script 脚本的加载，3 秒后，整个页面渲染完成。</p>
+<h3 id="放在-body-底部"><a href="#放在-body-底部" class="headerlink" title="放在 body 底部"></a>放在 body 底部</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;h2&gt;script 加载机制&lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script src='/</span>js/test1.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test2.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test3.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="/2020/05/23/js-script-loading/body.gif" title="效果图">
+<p>这次 html 内容第一时间渲染完成，随后等待 js 的加载。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>脚本会阻塞页面的渲染</strong>，所以推荐将其放在 body 底部，因为当解析到 script 标签时，通常页面的大部分内容都已经渲染完成，让用户马上能看到一个非空白页面。</p>
+<p>另外你能看到多个脚本之间都是异步向服务器请求，他们之间不互相依赖，最终只等待 3 秒，而非 3+3+3 秒。</p>
+<h2 id="脚本延迟时间不同会影响执行顺序吗？"><a href="#脚本延迟时间不同会影响执行顺序吗？" class="headerlink" title="脚本延迟时间不同会影响执行顺序吗？"></a>脚本延迟时间不同会影响执行顺序吗？</h2><p>一般我们都是按如下方式编写 script 脚本顺序的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test2.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test3.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>每个脚本输出一个简单逻辑：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test1.js</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'test1'</span>);</span><br></pre></td></tr></table></figure>
+<p>如果资源请求没有问题，通常脚本的执行顺序都符合预期，能看控制台看到对应的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">test3</span><br></pre></td></tr></table></figure>
+<p>为了模拟复杂的网络环境，假定每个请求都有所延迟（<strong>最先请求最晚响应</strong>），他们的执行执行顺序是否受影响？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setTime</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (path == <span class="string">'/js/test1.js'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span> * <span class="number">000</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (path == <span class="string">'/js/test2.js'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * <span class="number">1000</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> * <span class="number">1000</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="comment">// await lazyLoadScript(ctx.path);</span></span><br><span class="line">  <span class="keyword">await</span> lazyLoadScript(ctx.path, setTime(ctx.path));</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">static</span>(path.join(__dirname, <span class="string">'public'</span>))(ctx, next);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>和之前的结果一致。多个脚本异步加载，虽然脚本间响应时间不同，但最终执行顺序和请求顺序一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 3 秒后</span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">test3</span><br></pre></td></tr></table></figure>
+<p>同时也应证了上面提到的，多个脚本之间不互相阻塞。</p>
+<img src="/2020/05/23/js-script-loading/loaded.gif" title="效果图">
+<h2 id="defer-和-async"><a href="#defer-和-async" class="headerlink" title="defer 和 async"></a>defer 和 async</h2><p>这两个要放在一起讨论，因为都有延迟作用。</p>
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h3><p>最开始提到了 script 的放置位置（header 和 body），defer 属性就可以解决这样的问题。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">"/js/test1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">"/js/test2.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">"/js/test3.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>标记 defer 的脚本标签，即使写在 header 位置，也不会阻塞页面的加载。但先于 document 加载完之前。</p>
+<p>同时，这些脚本执行顺序依旧和他们书写的一致，不受延迟时间不同的影响。</p>
+<h3 id="async"><a href="#async" class="headerlink" title="async"></a>async</h3><p>async 和 defer 类似，但有如下两点不同：</p>
+<ul>
+<li>先加载完的脚本，先执行</li>
+<li>document 全部加载完后，才执行 async 标记的脚本</li>
+</ul>
+<p>我们前面已经知道了：脚本之间不受延迟时间的影响，执行顺序和他们请求顺序一致。</p>
+<p>如果我们在 test1.js 定义了一个全局变量，即使此脚本会延迟响应很久，但在之后 test3.js 运行时依旧能取到值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 延迟 3 秒</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'test1'</span>);</span><br><span class="line"><span class="keyword">var</span> globalNum = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 延迟 1 秒</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'test3'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(globalNum);</span><br></pre></td></tr></table></figure>
+<p>不过，放在 async 标记的脚本中，执行顺序就不同了：</p>
+<img src="/2020/05/23/js-script-loading/async.gif" title="效果图">
+<p>能看到，最先响应回来的脚本先执行，此时 test1.js 定义的全局变量还没有声明，就会报错。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>defer 和 async 主要功能类似，都是为了不阻塞页面内容的渲染。</p>
+<p>但在使用 async 属性时，需要特别注意。因为他会脱离脚本之间约定好的顺序，<strong>建议在和业务代码不相干的脚本中使用，避免发生脚本之间互相依赖的问题</strong>。</p>
+<h2 id="document-ready-和-window-onload"><a href="#document-ready-和-window-onload" class="headerlink" title="document.ready 和 window.onload"></a>document.ready 和 window.onload</h2><p>document.ready 是 jQuery 里实现的方法，内部其实是对 document 的 DOMContentLoaded 事件做监听。这里就以 document.ready 来示意。</p>
+<p>下面，测试他们之间的执行顺序（script 至于 body 底部）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'window ready'</span>);</span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'document  ready'</span>);</span></span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test2.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/js/test3.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>脚本加载和 document.ready 与 window.onload 的顺序如下：</p>
+<img src="/2020/05/23/js-script-loading/ready.png" title="顺序">
+<p>先加载脚本，脚本全部执行后，触发 document 的 DOMContentLoaded 事件，最后执行 window.onload。</p>
+<h3 id="那-document-ready-和-window-onload-有什么区别？"><a href="#那-document-ready-和-window-onload-有什么区别？" class="headerlink" title="那 document.ready 和 window.onload 有什么区别？"></a>那 document.ready 和 window.onload 有什么区别？</h3><p>首先顺序上，window.onload 晚于 document.ready；另外，如果页面有异步资源（图片），window.onload 会等待图片资源响应完后再触发。</p>
+<img src="/2020/05/23/js-script-loading/image.gif" title="顺序">
+<p>能看到 image 图片加载完后，window.onload 才被调用。</p>
+<h3 id="使用-async-时的不同"><a href="#使用-async-时的不同" class="headerlink" title="使用 async 时的不同"></a>使用 async 时的不同</h3><p>使用 defer 不会对他们之间的执行顺序造成影响，脚本执行先于 document.ready 执行。</p>
+<p>而 async 却会对原先的执行过程有 <strong>大改变</strong>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">'window ready'</span>);</span></span><br><span class="line">  &#125;;</span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">'document  ready'</span>);</span></span><br><span class="line">  &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/test1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/test2.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"/js/test3.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<img src="/2020/05/23/js-script-loading/ready-async.png" title="顺序">
+<p>document.ready 不再等待脚本的加载完成，页面渲染完后则会被触发。async 标识的脚本延迟加载，加载完后立马执行。</p>
+<h2 id="动态加载脚本"><a href="#动态加载脚本" class="headerlink" title="动态加载脚本"></a>动态加载脚本</h2><p>直接看代码（摘自《高性能 Javascript》）:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> newScript = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span></span><br><span class="line"><span class="javascript">  newScript.type = <span class="string">'text/javascript'</span>;</span></span><br><span class="line"><span class="javascript">  newScript.src = <span class="string">'/js/test1.js'</span>;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(newScript);</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 脚本加载完毕</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">if</span> (newScript.readyState) &#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// IE</span></span></span><br><span class="line"><span class="javascript">    newScript.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (newScript.readyState == <span class="string">'loaded'</span> || newScript.readyState == <span class="string">'complete'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="javascript">  &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">    newScript.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当页面加载时，只是解析 script 标签内的代码。当 document 全部准备完毕后，将发送请求加载资源。</p>
+<p>这样将不影响页面内容的渲染，同时上面代码将动态加载的脚本添加到 head 标签中，能够不受 body 内出现错误的影响。</p>
+<p>事实上，应该发现百度统计代码，或者其他平台的一些脚本都是通过这种形式动态将脚本注入到我们页面中的。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>之前面试时我也遇到过有面试官提过此类问题，那时我回答的很简单。</p>
+<p>但通过这样正儿八经的实践后，觉得了解其中的道理对提升网页性能有非常大的帮助。希望同样对大家有所帮助，如果不对之处，请评论指出，谢谢。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
+    <div>欢迎留言，评论交流，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/21/gradient/" rel="next" title="css 颜色渐变">
+                <i class="fa fa-chevron-left"></i> css 颜色渐变
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/03/html-render/" rel="prev" title="浏览器的渲染">
+                浏览器的渲染 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本在页面的位置"><span class="nav-number">2.</span> <span class="nav-text">脚本在页面的位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#放在-header-中"><span class="nav-number">2.1.</span> <span class="nav-text">放在 header 中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#放在-body-底部"><span class="nav-number">2.2.</span> <span class="nav-text">放在 body 底部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本延迟时间不同会影响执行顺序吗？"><span class="nav-number">3.</span> <span class="nav-text">脚本延迟时间不同会影响执行顺序吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defer-和-async"><span class="nav-number">4.</span> <span class="nav-text">defer 和 async</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#defer"><span class="nav-number">4.1.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async"><span class="nav-number">4.2.</span> <span class="nav-text">async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">4.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#document-ready-和-window-onload"><span class="nav-number">5.</span> <span class="nav-text">document.ready 和 window.onload</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#那-document-ready-和-window-onload-有什么区别？"><span class="nav-number">5.1.</span> <span class="nav-text">那 document.ready 和 window.onload 有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-async-时的不同"><span class="nav-number">5.2.</span> <span class="nav-text">使用 async 时的不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态加载脚本"><span class="nav-number">6.</span> <span class="nav-text">动态加载脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">7.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
