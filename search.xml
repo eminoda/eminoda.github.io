@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>如何实现 WebSocket 反向代理？</title>
+      <link href="2021/03/15/web-socket-proxy/"/>
+      <url>2021/03/15/web-socket-proxy/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote><p>为什么要代理 WebSocket？</p></blockquote><p>是这样的，因为我们有个基于 <strong>electron</strong> 的桌面应用，他在本地提供 <strong>http</strong> 和 <strong>websocket</strong> 两个服务，客户端（浏览器）可以使用这些服务来完成一些核心业务需要。</p><p>问题是，目前该应用只支持 <strong>windows</strong> 平台，虽然生产环境对环境有所要求，但部分开发却是 <strong>mac</strong> 电脑，无法安装该客户端，总不能要求开发者安装个虚拟机，或者尽快开发个 <strong>mac</strong> 版，无论硬件还是软件，搭建开发环境的成本都太高。</p><p>于是设想在一台 <strong>windows</strong> 电脑上共享桌面应用服务，在测试环境做请求代理，以便持有 <strong>mac</strong> 或者安装应用有问题的同学进行无障碍快速接入。</p><p>这篇就讲下如何配置 <strong>webpack</strong> 和 <strong>nginx</strong> 来完成这样的“小工程”。</p><h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p>下图主要示意了如下几个方面：</p><ul><li>桌面服务被安装在可用的 windows 机器上</li><li>开发环境通过配置 <strong>webpack</strong> 进行请求转发</li><li>对于 <strong>mac</strong> 平台及不适配的情况，统一通过 <strong>nginx</strong> 进行请求转发</li></ul><img src="/2021/03/15/web-socket-proxy/环境架构图.png" title="跨平台 socket 代理策略"><h2 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h2><p>项目基于 <strong>vue-cli</strong>，首先需要对 <strong>vue.config.js</strong> 中 <strong>webpack</strong> 的代理部分进行修改。</p><p>先设置 <strong>VUE_APP_PROXY_URL</strong>，定义目标转发环境的（IP）地址，再添加 <strong>VUE_APP_PROXY_PLATFORM</strong> 决定是否开启转发功能。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> env.local</span></span><br><span class="line">VUE_APP_PROXY_PLATFORM = mac</span><br><span class="line">VUE_APP_PROXY_URL = 192.168.1.x:81</span><br></pre></td></tr></table></figure><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"><span class="keyword">var</span> proxy = &#123;</span><br><span class="line">  <span class="comment">// 后端服务</span></span><br><span class="line">  [<span class="string">'/api'</span>]: &#123;</span><br><span class="line">    target: process.env.VUE_PROXY_API,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (VUE_APP_PROXY_PLATFORM == <span class="string">'mac'</span>) &#123;</span><br><span class="line">  proxy = <span class="built_in">Object</span>.assign(proxy, &#123;</span><br><span class="line">    <span class="comment">// 桌面应用 http 服务</span></span><br><span class="line">    [<span class="string">'/app-api'</span>]: &#123;</span><br><span class="line">      target: <span class="string">'http://'</span> + process.env.VUE_APP_PROXY_URL,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 桌面应用 websocket 服务</span></span><br><span class="line">    [<span class="string">'/app-ws'</span>]: &#123;</span><br><span class="line">      target: <span class="string">'ws://'</span> + process.env.VUE_APP_PROXY_URL,</span><br><span class="line">      ws: <span class="literal">true</span>, <span class="comment">//开启 websocket 支持</span></span><br><span class="line">      pathRewrite: &#123;</span><br><span class="line">        <span class="string">'^/app-ws'</span>: <span class="string">'/'</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">    port: port,</span><br><span class="line">    open: <span class="literal">true</span>,</span><br><span class="line">    proxy: proxy,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>接下来只要在业务代码中，添加对应 <strong>/app**</strong> 前缀来匹配代理规则即可。</p><h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p><strong>nginx</strong> 端配置简单，只需要对协议进行升级即可：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen  81;</span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> http 代理</span></span><br><span class="line">  location /app-api/ &#123;</span><br><span class="line">    proxy_pass http://192.168.1.y:18455/;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> websocket 代理</span></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://192.168.1.y:18455/;</span><br><span class="line">    proxy_http_version 1.1;</span><br><span class="line">    proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">    proxy_set_header Connection "Upgrade";</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>本文主要记录我在遇到这个问题时，实施的解决方案，但不具备通用性。不过也希望为有遇到类似场景问题的同学提供一个方向的解决思路。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发 </category>
+          
+          <category> 前端开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> webpack </tag>
+            
+            <tag> nginx </tag>
+            
+            <tag> websocket </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>windows 和 linux 平台上安装 nginx</title>
       <link href="2021/03/12/nginx-install/"/>
       <url>2021/03/12/nginx-install/</url>
@@ -2385,9 +2416,9 @@
             
             <tag> http </tag>
             
-            <tag> restful </tag>
-            
             <tag> graphQL </tag>
+            
+            <tag> restful </tag>
             
         </tags>
       
