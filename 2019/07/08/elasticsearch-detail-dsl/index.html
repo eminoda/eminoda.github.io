@@ -531,13 +531,15 @@
 <div id="gitalk-container"></div>
 
 <script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
 	var tags = []
 </script>
 
 	
 	<script>tags.push('elk')</script>
 	
-
 
 
 
@@ -549,6 +551,7 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
+	  id: 'elasticsearch-detail-dsl',
 	  title: 'elasticsearch 查询语言 Query DSL',
 	  labels: tags
 	})

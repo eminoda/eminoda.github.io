@@ -514,6 +514,9 @@
 <div id="gitalk-container"></div>
 
 <script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
 	var tags = []
 </script>
 
@@ -525,7 +528,6 @@
 
 
 
-
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -534,6 +536,7 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
+	  id: 'jenkins-gitlab-hook',
 	  title: 'jenkins 配置 gitlab hook',
 	  labels: tags
 	})
