@@ -253,16 +253,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-gittalk">
-          <a href="/gittalk" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
-            
-            gittalk
-          </a>
-        </li>
-      
 
       
         <li class="menu-item menu-item-search">
@@ -596,6 +586,29 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  title: 'vue 基础-组件',
+	})
+
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     
