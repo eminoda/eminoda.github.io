@@ -536,6 +536,19 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('webpack')</script>
+	
+	<script>tags.push('hmr')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -545,8 +558,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: '探索 webpack-dev-server 的 HMR',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

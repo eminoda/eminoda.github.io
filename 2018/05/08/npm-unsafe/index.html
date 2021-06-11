@@ -493,6 +493,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('node')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -502,8 +513,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'npm 模块别乱下载，说不好就出事了',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

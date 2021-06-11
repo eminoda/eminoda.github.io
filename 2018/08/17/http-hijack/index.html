@@ -474,6 +474,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('http')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -483,8 +494,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'http 运营商劫持',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

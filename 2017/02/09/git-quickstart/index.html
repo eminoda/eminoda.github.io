@@ -564,6 +564,17 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('git')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -573,8 +584,8 @@ _ git：快照流<img src="/2017/02/09/git-quickstart/4.png" title="git">
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'git 快速入门',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

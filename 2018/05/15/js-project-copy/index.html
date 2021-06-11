@@ -536,6 +536,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('quality')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -545,8 +556,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'js 重复代码块检查',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

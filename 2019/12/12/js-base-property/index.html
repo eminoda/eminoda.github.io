@@ -501,6 +501,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('js')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -510,8 +521,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'js 基础：对象属性 property 相关 api 示例',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

@@ -645,6 +645,19 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('js')</script>
+	
+	<script>tags.push('regexp')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -654,8 +667,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: '从简到难，示例几则 vue 中的正则表达式',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

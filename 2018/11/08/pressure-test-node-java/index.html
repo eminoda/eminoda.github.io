@@ -549,6 +549,19 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('测试')</script>
+	
+	<script>tags.push('ab')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -558,8 +571,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'node 和 java 性能对比',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

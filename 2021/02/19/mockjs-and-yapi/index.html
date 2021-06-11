@@ -599,6 +599,19 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('yapi')</script>
+	
+	<script>tags.push('Mock.js')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -608,8 +621,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'YApi 接口管理服务及 Mock.js',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

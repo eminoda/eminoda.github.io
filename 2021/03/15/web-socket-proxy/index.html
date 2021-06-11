@@ -463,6 +463,21 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('webpack')</script>
+	
+	<script>tags.push('nginx')</script>
+	
+	<script>tags.push('websocket')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -472,8 +487,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: '如何实现 WebSocket 反向代理？',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

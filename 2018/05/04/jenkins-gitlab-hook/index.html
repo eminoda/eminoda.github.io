@@ -513,6 +513,19 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('jenkins')</script>
+	
+	<script>tags.push('gitlab')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -522,8 +535,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'jenkins 配置 gitlab hook',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

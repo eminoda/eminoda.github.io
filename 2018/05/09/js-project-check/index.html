@@ -574,6 +574,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('eslint')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -583,8 +594,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: 'JS 工程化之代码 QA 校验',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

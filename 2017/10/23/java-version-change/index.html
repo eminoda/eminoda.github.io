@@ -448,6 +448,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('java')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -457,8 +468,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: '同一环境配置多个 java 版本',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 

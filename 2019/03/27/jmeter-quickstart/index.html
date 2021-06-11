@@ -590,6 +590,17 @@
 
 <div id="gitalk-container"></div>
 
+<script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('jmeter')</script>
+	
+
+
+
+
 <script type="text/javascript">
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
@@ -599,8 +610,8 @@
 	  admin: ['eminoda'],
 	  perPage: 20,
 	  title: '初涉 JMeter',
+	  labels: tags
 	})
-
 	gitalk.render('gitalk-container')
 </script>
 
