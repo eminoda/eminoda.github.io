@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -256,6 +256,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -463,7 +473,7 @@
 <h2 id="把“多变”变成“稳定”可配置"><a href="#把“多变”变成“稳定”可配置" class="headerlink" title="把“多变”变成“稳定”可配置"></a>把“多变”变成“稳定”可配置</h2><p>由于我们前端团队对样式这块没有太多的重视，导致很多类似的页面，由于不同的人员开发，在 css 上命名风格不同，维护起来相当麻烦。</p>
 <p>比如，要求改一个页面 header 部分的底色，就存在多个页面底色相关的 className 命名不一致，要修改多处。</p>
 <p>通过预编译 sass 可以完成这样的要求：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 公共库</span></span><br><span class="line"><span class="variable">$blue-100</span>: <span class="number">#7782e7</span>; <span class="comment">// 浅蓝</span></span><br><span class="line"><span class="variable">$blue-200</span>: <span class="number">#39418b</span>; <span class="comment">// 蓝色</span></span><br><span class="line"><span class="variable">$blue-300</span>: <span class="number">#202340</span>; <span class="comment">// 深蓝</span></span><br><span class="line"></span><br><span class="line">@<span class="keyword">mixin</span> header(<span class="variable">$bg-color</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="variable">$bg-color</span>;</span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">99</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 业务代码</span></span><br><span class="line"><span class="selector-class">.header-wrapper</span> &#123;</span><br><span class="line">    @<span class="keyword">include</span> header(<span class="variable">$blue-100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 公共库</span></span><br><span class="line"><span class="variable">$blue-100</span>: <span class="number">#7782e7</span>; <span class="comment">// 浅蓝</span></span><br><span class="line"><span class="variable">$blue-200</span>: <span class="number">#39418b</span>; <span class="comment">// 蓝色</span></span><br><span class="line"><span class="variable">$blue-300</span>: <span class="number">#202340</span>; <span class="comment">// 深蓝</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@mixin</span> header(<span class="variable">$bg-color</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="variable">$bg-color</span>;</span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">99</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 业务代码</span></span><br><span class="line"><span class="selector-class">.header-wrapper</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> header(<span class="variable">$blue-100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这些虽然在不同项目内容不同，但页面骨架布局却是类似的，我们可以沉淀成一份公共的样式库，这样以后有类似改动就可以大幅劳动力。</p>
 <p>总之对于平时“头大”的修改，要尽可能优化，让开发的时间付出不要浪费在这些鸡毛蒜皮的事上。</p>
 <p>更为重要的是，例如项目的 api 接口地址、端口、页面上的客服电话、某些特殊信息文案都需要配置化，也避免修改造成的线上事故。</p>
@@ -547,6 +557,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('架构')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2019/11/01/my-frontend-best-practice-and-habit/',md5('/2019/11/01/my-frontend-best-practice-and-habit/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2019/11/01/my-frontend-best-practice-and-habit/'),
+	  title: '前端“自我修养”',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

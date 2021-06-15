@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -258,6 +258,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -438,7 +448,7 @@
 <p>使用 setTimeout 简单实现一个延迟加载功能的方法，用来模拟 js 脚本加载很慢的场景：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lazyLoadScript</span>(<span class="params">path, time = <span class="number">3000</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// js 文件将被特意延迟 3 秒</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/\/js\/test\d+\.js/</span>.test(path)) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`拦截 <span class="subst">$&#123;path&#125;</span>，<span class="subst">$&#123;time&#125;</span> 秒后返回`</span>);</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">`响应 <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">          resolve(<span class="literal">true</span>);</span><br><span class="line">        &#125;, time);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resolve(<span class="literal">true</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      reject(err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单的 html：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>script 加载机制<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>下面会改动 html 和延迟加载的逻辑，来说明相关的概念，现在开始吧。</p>
 <h2 id="脚本在页面的位置"><a href="#脚本在页面的位置" class="headerlink" title="脚本在页面的位置"></a>脚本在页面的位置</h2><p>script 通常被放在 header 或者 body 标签中，但位置的不同对于页面的加载效果也不一样。</p>
 <h3 id="放在-header-中"><a href="#放在-header-中" class="headerlink" title="放在 header 中"></a>放在 header 中</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;script 加载机制&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script src='/</span>js/test1.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test2.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;script src='</span>/js/test3.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br></pre></td></tr></table></figure>
@@ -495,7 +505,7 @@
 <img src="/2020/05/23/js-script-loading/ready-async.png" title="顺序">
 <p>document.ready 不再等待脚本的加载完成，页面渲染完后则会被触发。async 标识的脚本延迟加载，加载完后立马执行。</p>
 <h2 id="动态加载脚本"><a href="#动态加载脚本" class="headerlink" title="动态加载脚本"></a>动态加载脚本</h2><p>直接看代码（摘自《高性能 Javascript》）:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> newScript = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span></span><br><span class="line"><span class="javascript">  newScript.type = <span class="string">'text/javascript'</span>;</span></span><br><span class="line"><span class="javascript">  newScript.src = <span class="string">'/js/test1.js'</span>;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(newScript);</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 脚本加载完毕</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">if</span> (newScript.readyState) &#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// IE</span></span></span><br><span class="line"><span class="javascript">    newScript.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (newScript.readyState == <span class="string">'loaded'</span> || newScript.readyState == <span class="string">'complete'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="javascript">  &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">    newScript.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> newScript = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span></span><br><span class="line"><span class="javascript">  newScript.type = <span class="string">'text/javascript'</span>;</span></span><br><span class="line"><span class="javascript">  newScript.src = <span class="string">'/js/test1.js'</span>;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(newScript);</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 脚本加载完毕</span></span></span><br><span class="line">  if (newScript.readyState) &#123;</span><br><span class="line"><span class="javascript">    <span class="comment">// IE</span></span></span><br><span class="line"><span class="javascript">    newScript.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (newScript.readyState == <span class="string">'loaded'</span> || newScript.readyState == <span class="string">'complete'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="javascript">  &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">    newScript.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'loaded'</span>, newScript.src);</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当页面加载时，只是解析 script 标签内的代码。当 document 全部准备完毕后，将发送请求加载资源。</p>
 <p>这样将不影响页面内容的渲染，同时上面代码将动态加载的脚本添加到 head 标签中，能够不受 body 内出现错误的影响。</p>
 <p>事实上，应该发现百度统计代码，或者其他平台的一些脚本都是通过这种形式动态将脚本注入到我们页面中的。</p>
@@ -516,6 +526,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('js')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2020/05/23/js-script-loading/',md5('/2020/05/23/js-script-loading/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2020/05/23/js-script-loading/'),
+	  title: '标签 script 加载机制',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

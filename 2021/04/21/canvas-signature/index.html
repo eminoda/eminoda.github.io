@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -260,6 +260,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -457,7 +467,7 @@
 <img src="/2021/04/21/canvas-signature/rotate-device.png" title="旋转中心">
 <p>这个偏移量起始先对未旋转前的页面计算旋转中心点（已重置过宽高），假设坐标原点在左上角，那么坐标值为：(320,180)</p>
 <p>当旋转 90° 后，坐标值更换为：(180，320)，需要对 320-180=140 进行偏移重置。那么 css 样式更新为：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#app</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">360px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">640px</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(90deg);</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">140px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">140px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#app</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">360px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">640px</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">90deg</span>);</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">140px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">140px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后旋转后的页面将恢复正常：</p>
 <img src="/2021/04/21/canvas-signature/rotate-fix.png" title="偏移重置后">
 <h2 id="画布错位"><a href="#画布错位" class="headerlink" title="画布错位"></a>画布错位</h2><p>当绘制签名时，会发现画布显示异常，绘制位置和实际笔迹出现的位置不同（被旋转 90°），而且画布也非旋转后的大小。</p>
@@ -491,6 +501,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('canvas')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2021/04/21/canvas-signature/',md5('/2021/04/21/canvas-signature/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2021/04/21/canvas-signature/'),
+	  title: '如何用 cavans 实现签名手写板',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

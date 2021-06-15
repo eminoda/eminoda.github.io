@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -250,6 +250,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -433,7 +443,7 @@
 <p>也可使用<strong>chkconfig</strong>来维护修改。<a href="https://blog.csdn.net/lanyang123456/article/details/54695567" target="_blank" rel="noopener">查看更多</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查询</span></span><br><span class="line">[root@localhost etc]# chkconfig --list</span><br><span class="line">NetworkManager 	0:off	1:off	2:off	3:off	4:off	5:off	6:off</span><br><span class="line">abrt-ccpp      	0:off	1:off	2:off	3:off	4:off	5:off	6:off</span><br><span class="line">abrtd          	0:off	1:off	2:off	3:off	4:off	5:off	6:off</span><br><span class="line">acpid          	0:off	1:off	2:off	3:off	4:off	5:off	6:off</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p><strong>正题：编写/etc/rc.d/rc.local</strong><br>把上面的各种服务 sh 维护到此文件中，当重启后，系统自动执行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> This script will be executed *after* all the other init scripts.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You can put your own initialization stuff <span class="keyword">in</span> here <span class="keyword">if</span> you don<span class="string">'t</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> want to <span class="keyword">do</span> the full Sys V style init stuff.</span></span><br><span class="line"></span><br><span class="line">touch /var/lock/subsys/local</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Tomcats</span></span><br><span class="line">/mydata/bashShells/startTomcats.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Nginx</span></span><br><span class="line">/usr/sbin/nginx</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Node Projects</span></span><br><span class="line">/mydata/bashShells/startNodeProjs.sh</span><br><span class="line">mount -o username=Administrator,password=Cn654321Ty //192.168.1.90/yunwei /mnt/yunwei</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> This script will be executed *after* all the other init scripts.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> You can put your own initialization stuff <span class="keyword">in</span> here <span class="keyword">if</span> you don<span class="string">'t</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> want to <span class="keyword">do</span> the full Sys V style init stuff.</span></span><br><span class="line"></span><br><span class="line">touch /var/lock/subsys/local</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Tomcats</span></span><br><span class="line">/mydata/bashShells/startTomcats.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Nginx</span></span><br><span class="line">/usr/sbin/nginx</span><br><span class="line"><span class="meta">#</span><span class="bash">Start Node Projects</span></span><br><span class="line">/mydata/bashShells/startNodeProjs.sh</span><br><span class="line">mount -o username=Administrator,password=Cn654321Ty //192.168.1.90/yunwei /mnt/yunwei</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -449,6 +459,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('linux')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2018/07/11/linux-restart-process/',md5('/2018/07/11/linux-restart-process/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2018/07/11/linux-restart-process/'),
+	  title: 'linux 开机自启动服务',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

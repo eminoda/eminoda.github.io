@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -254,6 +254,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -447,7 +457,7 @@
 <p>答案是有的。</p>
 <h4 id="jsdoc"><a href="#jsdoc" class="headerlink" title="jsdoc"></a>jsdoc</h4><p>在开始之前，先介绍前端 <strong>注释解析生成文档的工具 —— jsdoc</strong>，我觉得说下很有必要</p>
 <p>按照 jsdoc 的规范，描述一个方法将通过如下形式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @function GET /</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @description 首页</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param ctx &#123;Number&#125; ctx</span></span><br><span class="line"><span class="comment"> * @param ctx.username &#123;String&#125; 用户名</span></span><br><span class="line"><span class="comment"> * @param ctx.password &#123;Number&#125; 密码</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @returns &#123;Html&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@function </span>GET /</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description </span>首页</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>ctx &#123;Number&#125; ctx</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>ctx.username &#123;String&#125; 用户名</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>ctx.password &#123;Number&#125; 密码</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns <span class="type">&#123;Html&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>这样的注释有什么用？</p>
 <ul>
 <li>更规范的注释结构</li>
@@ -456,7 +466,7 @@
 <img src="/2019/08/06/swagger-use-in-frontend/jsdoc.png" title="jsdoc 部分文档">
 <h4 id="swagger-jsdoc"><a href="#swagger-jsdoc" class="headerlink" title="swagger-jsdoc"></a>swagger-jsdoc</h4><p>参照 jsdoc ，很容易找到社区有类似的插件 swagger-jsdoc，作用就不在解释了，可以直接输出 Swagger 可识别的 json 规则。</p>
 <p>使用 @swagger 作为注释解析的专用标题，注释以 yaml 维护</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @swagger</span></span><br><span class="line"><span class="comment"> * /user:</span></span><br><span class="line"><span class="comment"> *   get:</span></span><br><span class="line"><span class="comment"> *     description: 用户信息</span></span><br><span class="line"><span class="comment"> *     tags:</span></span><br><span class="line"><span class="comment"> *      - Users</span></span><br><span class="line"><span class="comment"> *     parameters:</span></span><br><span class="line"><span class="comment"> *      - name: username</span></span><br><span class="line"><span class="comment"> *        in: query</span></span><br><span class="line"><span class="comment"> *        description: 用户名</span></span><br><span class="line"><span class="comment"> *        required: true</span></span><br><span class="line"><span class="comment"> *        type: string</span></span><br><span class="line"><span class="comment"> *        default: '18702141422'</span></span><br><span class="line"><span class="comment"> *     responses:</span></span><br><span class="line"><span class="comment"> *       200:</span></span><br><span class="line"><span class="comment"> *         description: users</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">router.get(<span class="string">'/user'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  ctx.body = &#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * /user:</span></span><br><span class="line"><span class="comment"> *   get:</span></span><br><span class="line"><span class="comment"> *     description: 用户信息</span></span><br><span class="line"><span class="comment"> *     tags:</span></span><br><span class="line"><span class="comment"> *      - Users</span></span><br><span class="line"><span class="comment"> *     parameters:</span></span><br><span class="line"><span class="comment"> *      - name: username</span></span><br><span class="line"><span class="comment"> *        in: query</span></span><br><span class="line"><span class="comment"> *        description: 用户名</span></span><br><span class="line"><span class="comment"> *        required: true</span></span><br><span class="line"><span class="comment"> *        type: string</span></span><br><span class="line"><span class="comment"> *        default: '18702141422'</span></span><br><span class="line"><span class="comment"> *     responses:</span></span><br><span class="line"><span class="comment"> *       200:</span></span><br><span class="line"><span class="comment"> *         description: users</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">router.get(<span class="string">'/user'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  ctx.body = &#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>声明一个 Swagger 定义文件 swaggerOptions.js</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  info: &#123;</span><br><span class="line">    <span class="comment">// API informations (required)</span></span><br><span class="line">    title: <span class="string">'Hello World'</span>, <span class="comment">// Title (required)</span></span><br><span class="line">    version: <span class="string">'1.0.0'</span>, <span class="comment">// Version (required)</span></span><br><span class="line">    description: <span class="string">'A sample API'</span> <span class="comment">// Description (optional)</span></span><br><span class="line">  &#125;,</span><br><span class="line">  schemes: [<span class="string">'http'</span>],</span><br><span class="line">  consumes: [<span class="string">'application/x-www-form-urlencoded'</span>],</span><br><span class="line">  produces: [<span class="string">'application/json'</span>],</span><br><span class="line">  apis: [<span class="string">'./routes/global.js'</span>, <span class="string">'./routes/users.js'</span>],</span><br><span class="line">  basePath: <span class="string">'/api'</span> <span class="comment">// Base path (optional)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>运行命令，输出 swagger.json （后续使用）</p>
@@ -507,6 +517,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('eslint')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2019/08/06/swagger-use-in-frontend/',md5('/2019/08/06/swagger-use-in-frontend/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2019/08/06/swagger-use-in-frontend/'),
+	  title: 'Swagger 在前端的使用',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

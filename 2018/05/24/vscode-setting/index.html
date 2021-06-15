@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -253,6 +253,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -420,7 +430,7 @@
         <h1 id="在哪里对-vscode-进行设置"><a href="#在哪里对-vscode-进行设置" class="headerlink" title="在哪里对 vscode 进行设置"></a>在哪里对 vscode 进行设置</h1><img src="/2018/05/24/vscode-setting/where.png">
 <img src="/2018/05/24/vscode-setting/where2.png">
 <h1 id="一些个人配置，供参考"><a href="#一些个人配置，供参考" class="headerlink" title="一些个人配置，供参考"></a>一些个人配置，供参考</h1><p>主要配置，在系统默认的配置中描述很详细（都有中文介绍）<br><a href="https://code.visualstudio.com/docs/getstarted/settings" target="_blank" rel="noopener">官网-设置介绍</a></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "git.path": "D:\\git\\Git\\cmd\\git.exe", //git地址，然后可以在控制台使用git shell</span><br><span class="line">  "terminal.integrated.shell.windows": "C:\\WINDOWS\\Sysnative\\cmd.exe", //选择终端模式，cmd or prower shell</span><br><span class="line">  "window.zoomLevel": 0, // 窗口大小</span><br><span class="line">  "editor.detectIndentation": false,</span><br><span class="line">  "editor.formatOnSave": true, //保存后自动格式化</span><br><span class="line">  "eslint.autoFixOnSave": true, //格式化后 自动修复</span><br><span class="line">  "extensions.ignoreRecommendations": false, //忽略插件推荐</span><br><span class="line">  "fileheader.Author": "shixinghao", // 插件vscode-fileheader，具体设置</span><br><span class="line">  "fileheader.LastModifiedBy": "shixinghao", // 插件vscode-fileheader，具体设置</span><br><span class="line">  "vetur.format.defaultFormatter.js": "vscode-typescript", //插件vetur，默认格式化风格</span><br><span class="line">  "vetur.format.defaultFormatter.html": "js-beautify-html", //插件vetur，默认格式化风格</span><br><span class="line">  "javascript.format.insertSpaceBeforeFunctionParenthesis": true, // 针对eslint规则，对js特殊配置</span><br><span class="line">  "typescript.format.insertSpaceBeforeFunctionParenthesis": true, // 针对eslint规则，对js特殊配置</span><br><span class="line">  "workbench.colorTheme": "Visual Studio Dark" //ide style</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"git.path"</span>: <span class="string">"D:\\git\\Git\\cmd\\git.exe"</span>, <span class="comment">//git地址，然后可以在控制台使用git shell</span></span><br><span class="line">  <span class="attr">"terminal.integrated.shell.windows"</span>: <span class="string">"C:\\WINDOWS\\Sysnative\\cmd.exe"</span>, <span class="comment">//选择终端模式，cmd or prower shell</span></span><br><span class="line">  <span class="attr">"window.zoomLevel"</span>: <span class="number">0</span>, <span class="comment">// 窗口大小</span></span><br><span class="line">  <span class="attr">"editor.detectIndentation"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"editor.formatOnSave"</span>: <span class="literal">true</span>, <span class="comment">//保存后自动格式化</span></span><br><span class="line">  <span class="attr">"eslint.autoFixOnSave"</span>: <span class="literal">true</span>, <span class="comment">//格式化后 自动修复</span></span><br><span class="line">  <span class="attr">"extensions.ignoreRecommendations"</span>: <span class="literal">false</span>, <span class="comment">//忽略插件推荐</span></span><br><span class="line">  <span class="attr">"fileheader.Author"</span>: <span class="string">"shixinghao"</span>, <span class="comment">// 插件vscode-fileheader，具体设置</span></span><br><span class="line">  <span class="attr">"fileheader.LastModifiedBy"</span>: <span class="string">"shixinghao"</span>, <span class="comment">// 插件vscode-fileheader，具体设置</span></span><br><span class="line">  <span class="attr">"vetur.format.defaultFormatter.js"</span>: <span class="string">"vscode-typescript"</span>, <span class="comment">//插件vetur，默认格式化风格</span></span><br><span class="line">  <span class="attr">"vetur.format.defaultFormatter.html"</span>: <span class="string">"js-beautify-html"</span>, <span class="comment">//插件vetur，默认格式化风格</span></span><br><span class="line">  <span class="attr">"javascript.format.insertSpaceBeforeFunctionParenthesis"</span>: <span class="literal">true</span>, <span class="comment">// 针对eslint规则，对js特殊配置</span></span><br><span class="line">  <span class="attr">"typescript.format.insertSpaceBeforeFunctionParenthesis"</span>: <span class="literal">true</span>, <span class="comment">// 针对eslint规则，对js特殊配置</span></span><br><span class="line">  <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Visual Studio Dark"</span> <span class="comment">//ide style</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -436,6 +446,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('vscode')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2018/05/24/vscode-setting/',md5('/2018/05/24/vscode-setting/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2018/05/24/vscode-setting/'),
+	  title: 'vscode 设置配置',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     

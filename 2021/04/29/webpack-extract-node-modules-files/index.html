@@ -6,7 +6,7 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2021/04/29/webpack-extract-node-modules-files/copy-old.png">
 <meta property="og:image" content="http://yoursite.com/2021/04/29/webpack-extract-node-modules-files/copy-new.png">
-<meta property="og:updated_time" content="2021-04-28T17:55:38.733Z">
+<meta property="og:updated_time" content="2021-04-28T18:01:40.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小技巧，如何使用 webpack 降低前端资源文件维护成本">
 <meta name="twitter:description" content="前言前端现在开发某个常见功能，直接会在 npm 找到合适的包，这些包存在于 node_modules 目录下。 如何减少包体积，用下 CDN 加速，或者这个模块只有 script 标签导入方式时，直接从 node_modules 拷贝文件到项目 public 资源目录中是常见的懒操作，久而久之，那个目录文件会非常多，尤其当这个项目成为“历史项目”后，那堆文件会变得让后人难以维护。 下面将介绍 2">
@@ -250,6 +250,16 @@
               <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
             
             话题
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            留言板
           </a>
         </li>
       
@@ -460,6 +470,48 @@
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
+
+      </div>
+    
+    
+      <div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+
+<script>
+	// https://node-swig.github.io/swig-templates/docs/tags/
+	// https://github.com/gitalk/gitalk/issues/102
+	// https://hexo.io/zh-cn/docs/variables.html#%E9%A1%B5%E9%9D%A2%E5%8F%98%E9%87%8F
+	var tags = []
+</script>
+
+	
+	<script>tags.push('webpack')</script>
+	
+
+
+
+<script type="text/javascript">
+	console.log('/2021/04/29/webpack-extract-node-modules-files/',md5('/2021/04/29/webpack-extract-node-modules-files/'))
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: md5('/2021/04/29/webpack-extract-node-modules-files/'),
+	  title: '小技巧，如何使用 webpack 降低前端资源文件维护成本',
+	  // labels: tags,
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
+	})
+	gitalk.render('gitalk-container')
+</script>
 
       </div>
     
