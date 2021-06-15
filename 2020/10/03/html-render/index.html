@@ -574,6 +574,9 @@
 
 <div id="gitalk-container"></div>
 
+
+<script src="/lib/md5/md5.min.js"></script>
+
 <script>
 	// https://node-swig.github.io/swig-templates/docs/tags/
 	// https://github.com/gitalk/gitalk/issues/102
@@ -584,6 +587,7 @@
 
 
 <script type="text/javascript">
+	console.log('/2020/10/03/html-render/',md5('/2020/10/03/html-render/'))
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
 	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
@@ -591,9 +595,9 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
-	  id: 'html-render',
+	  id: md5('/2020/10/03/html-render/'),
 	  title: '浏览器的渲染',
-	  labels: tags,
+	  // labels: tags,
 	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
 	})
 	gitalk.render('gitalk-container')

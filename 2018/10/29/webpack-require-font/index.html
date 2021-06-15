@@ -485,6 +485,9 @@
 
 <div id="gitalk-container"></div>
 
+
+<script src="/lib/md5/md5.min.js"></script>
+
 <script>
 	// https://node-swig.github.io/swig-templates/docs/tags/
 	// https://github.com/gitalk/gitalk/issues/102
@@ -499,6 +502,7 @@
 
 
 <script type="text/javascript">
+	console.log('/2018/10/29/webpack-require-font/',md5('/2018/10/29/webpack-require-font/'))
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
 	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
@@ -506,9 +510,9 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
-	  id: 'webpack-require-font',
+	  id: md5('/2018/10/29/webpack-require-font/'),
 	  title: 'webpack 中使用 sass-loader 如何正确加载 font 字体',
-	  labels: tags,
+	  // labels: tags,
 	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
 	})
 	gitalk.render('gitalk-container')

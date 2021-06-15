@@ -494,6 +494,9 @@
 
 <div id="gitalk-container"></div>
 
+
+<script src="/lib/md5/md5.min.js"></script>
+
 <script>
 	// https://node-swig.github.io/swig-templates/docs/tags/
 	// https://github.com/gitalk/gitalk/issues/102
@@ -508,6 +511,7 @@
 
 
 <script type="text/javascript">
+	console.log('/2018/10/19/nginx-product-practice/',md5('/2018/10/19/nginx-product-practice/'))
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
 	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
@@ -515,9 +519,9 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
-	  id: 'nginx-product-practice',
+	  id: md5('/2018/10/19/nginx-product-practice/'),
 	  title: 'nginx 线上那些实用的最佳实践',
-	  labels: tags,
+	  // labels: tags,
 	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
 	})
 	gitalk.render('gitalk-container')

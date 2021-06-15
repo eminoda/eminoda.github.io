@@ -508,6 +508,9 @@ npm run build:production //线上环境打包
 
 <div id="gitalk-container"></div>
 
+
+<script src="/lib/md5/md5.min.js"></script>
+
 <script>
 	// https://node-swig.github.io/swig-templates/docs/tags/
 	// https://github.com/gitalk/gitalk/issues/102
@@ -522,6 +525,7 @@ npm run build:production //线上环境打包
 
 
 <script type="text/javascript">
+	console.log('/2018/05/02/webpack-best-practice/',md5('/2018/05/02/webpack-best-practice/'))
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
 	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
@@ -529,9 +533,9 @@ npm run build:production //线上环境打包
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
-	  id: 'webpack-best-practice',
+	  id: md5('/2018/05/02/webpack-best-practice/'),
 	  title: 'webpack 最佳实践',
-	  labels: tags,
+	  // labels: tags,
 	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
 	})
 	gitalk.render('gitalk-container')
