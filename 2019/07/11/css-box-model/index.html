@@ -506,6 +506,7 @@
 
 
 <script src="/lib/md5/md5.min.js"></script>
+<script src="/lib/jquery/index.js?v=2.1.3"></script>
 
 <script>
 	// https://node-swig.github.io/swig-templates/docs/tags/
@@ -521,7 +522,7 @@
 
 
 <script type="text/javascript">
-	console.log('/2019/07/11/css-box-model/',md5('/2019/07/11/css-box-model/'))
+	var id = md5('/2019/07/11/css-box-model/')
 	var gitalk = new Gitalk({
 	  clientID: 'f5e934819613a06d3a38',//'f5e934819613a06d3a38',
 	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',//'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
@@ -529,12 +530,35 @@
 	  owner: 'eminoda',
 	  admin: ['eminoda'],
 	  perPage: 20,
-	  id: md5('/2019/07/11/css-box-model/'),
+	  id: id,
 	  title: 'css 盒子模型',
 	  // labels: tags,
 	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊'
 	})
 	gitalk.render('gitalk-container')
+</script>
+
+<style>
+	#issues_url{
+		text-align: center;
+    	font-size: 16px;
+	}
+	#issues_url a{
+		color:#6190e8;
+	}
+</style>
+<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113">安全风险</a>，也可访问
+</div>
+
+<script>
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1623818200667').then(data=>{
+	if(data && data.length>0){
+		var issuesUrl = data[0].html_url
+		const $a = document.createElement('a')
+		$($a).attr('href',issuesUrl).attr('alt',issuesUrl).attr('target','blank').text('👉issues链接 ')
+		$('#issues_url').append($a).append('进行留言📝')
+	}
+})
 </script>
 
       </div>
