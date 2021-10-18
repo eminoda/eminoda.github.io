@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/chalk.png">
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/enhance-error.png">
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/inquirer.gif">
-<meta property="og:updated_time" content="2021-10-18T05:49:20.363Z">
+<meta property="og:updated_time" content="2021-10-18T06:46:58.113Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打造属于自己的一款命令行 cli 脚手架工具">
 <meta name="twitter:description" content="前言如果你想了解命令行脚手架，这篇讲带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
@@ -486,7 +486,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template</span><br><span class="line">  |- express</span><br><span class="line">    |- bin</span><br><span class="line">        | www.ejs</span><br><span class="line">    |- routes</span><br><span class="line">        | health.js.ejs</span><br><span class="line">    | app.js.ejs</span><br><span class="line">    | package.json.ejs</span><br></pre></td></tr></table></figure>
 <p>注意：上面的文件都已 <strong>ejs</strong> 作为后缀。具体原因是：模板变量会根据 <strong>answers</strong> 变量，动态注入自定义值。</p>
 <p><strong>ejs</strong> 文件模板会张这个样子：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> app.js.ejs</span></span><br><span class="line">&lt;% if (express.middlewares.includes('json')) &#123; -%&gt;</span><br><span class="line">app.use(express.json())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br><span class="line">&lt;% if (express.middlewares.includes('urlencoded')) &#123; -%&gt;</span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> app.js.ejs</span><br><span class="line">&lt;% if (express.middlewares.includes('json')) &#123; -%&gt;</span><br><span class="line">app.use(express.json())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br><span class="line">&lt;% if (express.middlewares.includes('urlencoded')) &#123; -%&gt;</span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br></pre></td></tr></table></figure>
 <p>为什么选择 <strong>ejs</strong>？</p>
 <p>是抄 <strong>express-generate</strong> 这个库的，当然也可以根据自己喜好选择模板引擎。这种模板方式让我做这种脚手架变得很方便，只要把历史项目 demo 复制进来，改一通后缀即可。</p>
 <h2 id="通过-fs-读模板到指定路径"><a href="#通过-fs-读模板到指定路径" class="headerlink" title="通过 fs 读模板到指定路径"></a>通过 fs 读模板到指定路径</h2><p>将模板内的文件通过 <strong>fs-extra</strong> 写到指令执行的当前路径下（文件具体操作这里就不详述了）</p>
@@ -561,7 +561,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634536203913').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634543809361').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
