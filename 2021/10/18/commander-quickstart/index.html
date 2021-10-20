@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="前言如果你想了解命令行脚手架，这篇讲带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
+<meta name="description" content="前言如果你想了解命令行脚手架，这篇将带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
 <meta name="keywords" content="commander">
 <meta property="og:type" content="article">
 <meta property="og:title" content="打造属于自己的一款命令行 cli 脚手架工具">
 <meta property="og:url" content="http://yoursite.com/2021/10/18/commander-quickstart/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="前言如果你想了解命令行脚手架，这篇讲带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
+<meta property="og:description" content="前言如果你想了解命令行脚手架，这篇将带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/chalk.png">
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/enhance-error.png">
 <meta property="og:image" content="http://yoursite.com/2021/10/18/commander-quickstart/inquirer.gif">
-<meta property="og:updated_time" content="2021-10-18T06:46:58.113Z">
+<meta property="og:updated_time" content="2021-10-19T01:31:37.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打造属于自己的一款命令行 cli 脚手架工具">
-<meta name="twitter:description" content="前言如果你想了解命令行脚手架，这篇讲带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
+<meta name="twitter:description" content="前言如果你想了解命令行脚手架，这篇将带你入个门了解 commander 和 inquirer 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。 commander首先需要知道 commander 这个 npm 库，它帮我们封装了 解析命令行 的能力。我们之后要做的脚手架都是基于 commander 的。 先了解几个简单的使用方式显示帮助&amp;amp;版本信息12345const pro">
 <meta name="twitter:image" content="http://yoursite.com/2021/10/18/commander-quickstart/chalk.png">
 
 
@@ -428,7 +428,7 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如果你想了解命令行脚手架，这篇讲带你入个门了解 <strong>commander</strong> 和 <strong>inquirer</strong> 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如果你想了解命令行脚手架，这篇将带你入个门了解 <strong>commander</strong> 和 <strong>inquirer</strong> 库的使用。然后通过一个 Demo 示例来示范如何创作一个脚手架。</p>
 <h1 id="commander"><a href="#commander" class="headerlink" title="commander"></a>commander</h1><p>首先需要知道 <strong>commander</strong> 这个 <strong>npm</strong> 库，它帮我们封装了 <strong>解析命令行</strong> 的能力。我们之后要做的脚手架都是基于 <strong>commander</strong> 的。</p>
 <h2 id="先了解几个简单的使用方式"><a href="#先了解几个简单的使用方式" class="headerlink" title="先了解几个简单的使用方式"></a>先了解几个简单的使用方式</h2><h3 id="显示帮助-amp-版本信息"><a href="#显示帮助-amp-版本信息" class="headerlink" title="显示帮助&amp;版本信息"></a>显示帮助&amp;版本信息</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</span><br><span class="line"><span class="comment">// 定义程序名称，版本</span></span><br><span class="line">program.name(cliName).version(pkg.version);</span><br><span class="line"><span class="comment">// 解析命令行</span></span><br><span class="line">program.parse(process.argv);</span><br></pre></td></tr></table></figure>
 <p>执行 <strong>node ./bin/fl-cli –help</strong> ，将看到如下效果：</p>
@@ -454,7 +454,7 @@
 <p>我们可以添加 <strong>allowUnknownOption()</strong> 方法，防止 <strong>非预期</strong> 参数影响命令的执行：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">program</span><br><span class="line">  .command(<span class="string">'create'</span>)</span><br><span class="line">  .description(<span class="string">'创建应用'</span>)</span><br><span class="line">  .option(<span class="string">'-f,--force &lt;path&gt;'</span>, <span class="string">'是否强制创建'</span>)</span><br><span class="line">  .allowUnknownOption()</span><br><span class="line">  .action(<span class="function">(<span class="params">options, command</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(options);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\project\frontend-learn-cli&gt;node ./bin/fl-cli create -abc</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="进阶技巧"><a href="#进阶技巧" class="headerlink" title="进阶技巧"></a>进阶技巧</h2><p>如上，我们就能进行开发简单的命令行工具了。但离 <strong>人性化</strong> 的命令行工具还有点举例，下面提供几种技巧：</p>
+<h2 id="进阶技巧"><a href="#进阶技巧" class="headerlink" title="进阶技巧"></a>进阶技巧</h2><p>如上，我们就能进行开发简单的命令行工具了。但离 <strong>人性化</strong> 的命令行工具还有点距离，下面提供几种技巧：</p>
 <h3 id="控制台输出语句的颜色"><a href="#控制台输出语句的颜色" class="headerlink" title="控制台输出语句的颜色"></a>控制台输出语句的颜色</h3><p>有个仓库叫 <strong>chalk</strong> ，让我们可以自定义 <strong>console.log</strong> 输出的颜色。这对于命令行有非常好的可视化效果。</p>
 <p>我们对 –help 命令做个封装，在 help 信息末尾添加蓝色的帮助命令语句：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>);</span><br><span class="line">exports.outputHelp = <span class="function">(<span class="params">cliName</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`  Run <span class="subst">$&#123;chalk.cyan(<span class="string">`<span class="subst">$&#123;cliName&#125;</span> &lt;command&gt; --help`</span>)&#125;</span> for detailed usage of given command.`</span>);</span><br><span class="line">  <span class="built_in">console</span>.log();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -486,7 +486,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template</span><br><span class="line">  |- express</span><br><span class="line">    |- bin</span><br><span class="line">        | www.ejs</span><br><span class="line">    |- routes</span><br><span class="line">        | health.js.ejs</span><br><span class="line">    | app.js.ejs</span><br><span class="line">    | package.json.ejs</span><br></pre></td></tr></table></figure>
 <p>注意：上面的文件都已 <strong>ejs</strong> 作为后缀。具体原因是：模板变量会根据 <strong>answers</strong> 变量，动态注入自定义值。</p>
 <p><strong>ejs</strong> 文件模板会张这个样子：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> app.js.ejs</span><br><span class="line">&lt;% if (express.middlewares.includes('json')) &#123; -%&gt;</span><br><span class="line">app.use(express.json())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br><span class="line">&lt;% if (express.middlewares.includes('urlencoded')) &#123; -%&gt;</span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> app.js.ejs</span></span><br><span class="line">&lt;% if (express.middlewares.includes('json')) &#123; -%&gt;</span><br><span class="line">app.use(express.json())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br><span class="line">&lt;% if (express.middlewares.includes('urlencoded')) &#123; -%&gt;</span><br><span class="line">app.use(express.urlencoded())</span><br><span class="line">&lt;% &#125; -%&gt;</span><br></pre></td></tr></table></figure>
 <p>为什么选择 <strong>ejs</strong>？</p>
 <p>是抄 <strong>express-generate</strong> 这个库的，当然也可以根据自己喜好选择模板引擎。这种模板方式让我做这种脚手架变得很方便，只要把历史项目 demo 复制进来，改一通后缀即可。</p>
 <h2 id="通过-fs-读模板到指定路径"><a href="#通过-fs-读模板到指定路径" class="headerlink" title="通过 fs 读模板到指定路径"></a>通过 fs 读模板到指定路径</h2><p>将模板内的文件通过 <strong>fs-extra</strong> 写到指令执行的当前路径下（文件具体操作这里就不详述了）</p>
@@ -561,7 +561,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634543809361').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634710990027').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -604,6 +604,10 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/10/20/cors-and-options/" rel="prev" title="你知道为何跨域中会发送 options 请求？">
+                你知道为何跨域中会发送 options 请求？ <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -682,7 +686,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -704,7 +708,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
