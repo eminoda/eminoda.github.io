@@ -509,8 +509,8 @@
 <p>一顿无脑安装，在 <strong>安装目录下</strong>（jmeter\apache-jmeter-5.1.1\bin） 找到 <strong>jmeter.bat</strong> 点击运行</p>
 <h1 id="举一个例子"><a href="#举一个例子" class="headerlink" title="举一个例子"></a>举一个例子</h1><p>模拟一个 Http 测试计划，来介绍 JMeter 的配置</p>
 <h2 id="创建一个新任务"><a href="#创建一个新任务" class="headerlink" title="创建一个新任务"></a>创建一个新任务</h2><p>所有 TestPlan 都是需要线程作为用户来运作，首先需要新建 Thread Group</p>
-<img src="/2019/03/27/jmeter-quickstart/ThreadGroup-1.png" title="新建 TreadGroup">
-<img src="/2019/03/27/jmeter-quickstart/ThreadGroup-2.png" title="主界面">
+<img src="/2019/03/27/jmeter-quickstart/ThreadGroup-1.png" class="" title="新建 TreadGroup">
+<img src="/2019/03/27/jmeter-quickstart/ThreadGroup-2.png" class="" title="主界面">
 <p><strong>主要参数</strong></p>
 <table>
 <thead>
@@ -543,7 +543,7 @@
 <li>Loop Count = 1</li>
 </ul>
 <p>将准备 10 个线程，每 2 秒（Ramp-Up Period/Number of Threads）后创建新线程运行 plan，总共循环 1 次</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[26/Mar/2019:13:18:23 +0800]</span><br><span class="line">[26/Mar/2019:13:18:25 +0800]</span><br><span class="line">[26/Mar/2019:13:18:27 +0800]</span><br><span class="line">[26/Mar/2019:13:18:29 +0800]</span><br><span class="line">[26/Mar/2019:13:18:31 +0800]</span><br><span class="line">[26/Mar/2019:13:18:33 +0800]</span><br><span class="line">[26/Mar/2019:13:18:35 +0800]</span><br><span class="line">[26/Mar/2019:13:18:37 +0800]</span><br><span class="line">[26/Mar/2019:13:18:39 +0800]</span><br><span class="line">[26/Mar/2019:13:18:41 +0800]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:23 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:25 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:27 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:29 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:31 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:33 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:35 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:37 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:39 +0800]</span><br><span class="line">[26&#x2F;Mar&#x2F;2019:13:18:41 +0800]</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>每秒发送一个请求持续 1 分钟</p>
 <ul>
@@ -553,34 +553,34 @@
 </ul>
 </li>
 </ol>
-<h2 id="创建一个-Http-用例"><a href="#创建一个-Http-用例" class="headerlink" title="创建一个 Http 用例"></a>创建一个 Http 用例</h2><p>注意是在 TreadGroup 这栏，右键创建<br><img src="/2019/03/27/jmeter-quickstart/HttpRequest-1.png"></p>
-<img src="/2019/03/27/jmeter-quickstart/HttpRequest-2.png" title="主界面">
+<h2 id="创建一个-Http-用例"><a href="#创建一个-Http-用例" class="headerlink" title="创建一个 Http 用例"></a>创建一个 Http 用例</h2><p>注意是在 TreadGroup 这栏，右键创建<br><img src="/2019/03/27/jmeter-quickstart/HttpRequest-1.png" class=""></p>
+<img src="/2019/03/27/jmeter-quickstart/HttpRequest-2.png" class="" title="主界面">
 <p>这里可以设置 Http 请求所有的内容：协议、方法、地址、端口、参数。按照具体要求设置。</p>
 <p><strong>值得一提</strong> 的是在 Advanced tab 选项中，可以设置：<strong>Retrieve All Embedded Resources</strong></p>
-<img src="/2019/03/27/jmeter-quickstart/HttpRequest-3.png" title="异步资源">
+<img src="/2019/03/27/jmeter-quickstart/HttpRequest-3.png" class="" title="异步资源">
 <p>一般情况下测试一个页面，测试工具只是拿到页面的 document 内容，不会对页面中异步资源（js、css、images）做二次请求（包括 ab），如果勾选了上面这个选项，就会请求所有异步资源。</p>
 <h2 id="Http-公用配置"><a href="#Http-公用配置" class="headerlink" title="Http 公用配置"></a>Http 公用配置</h2><p>Jmeter 也提供了很多自定义的配置，方便公用</p>
 <p>这里举个维护 Http 请求头的例子：</p>
-<img src="/2019/03/27/jmeter-quickstart/Config-1.png" title="Http-Header">
-<img src="/2019/03/27/jmeter-quickstart/Config-Http.png" title="Http-Agent">
+<img src="/2019/03/27/jmeter-quickstart/Config-1.png" class="" title="Http-Header">
+<img src="/2019/03/27/jmeter-quickstart/Config-Http.png" class="" title="Http-Agent">
 <h2 id="添加监听"><a href="#添加监听" class="headerlink" title="添加监听"></a>添加监听</h2><p>运行完，你也不知道发生什么。通常还需要设置一个监听，这样所有的用例结果就会提现出来</p>
-<img src="/2019/03/27/jmeter-quickstart/Listener.png">
-<img src="/2019/03/27/jmeter-quickstart/Listener-Result.png">
+<img src="/2019/03/27/jmeter-quickstart/Listener.png" class="">
+<img src="/2019/03/27/jmeter-quickstart/Listener-Result.png" class="">
 <p>这图正好有两条记录，分别测试 Retrieve All Embedded Resources 选项的区别，能看到响应时间差的不是一点半点。</p>
 <h1 id="Jmeter-报告"><a href="#Jmeter-报告" class="headerlink" title="Jmeter 报告"></a>Jmeter 报告</h1><p>需要一个图形化统计来量化这些测试结果数据</p>
 <p>具体 api 解释：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">To run Apache JMeter in NON_GUI mode and generate a report at end :</span><br><span class="line">Open a command prompt (or Unix shell) and type:</span><br><span class="line"></span><br><span class="line">jmeter.bat(Windows)/jmeter.sh(Linux) -n -t test-file [-p property-file] [-l results-file] [-j log-file] -e -o [Path to output folder]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">To run Apache JMeter in NON_GUI mode and generate a report at end :</span><br><span class="line">Open a command prompt (or Unix shell) and type:</span><br><span class="line"></span><br><span class="line">jmeter.bat(Windows)&#x2F;jmeter.sh(Linux) -n -t test-file [-p property-file] [-l results-file] [-j log-file] -e -o [Path to output folder]</span><br></pre></td></tr></table></figure>
 <p>参考脚本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter\apache-jmeter-5.1.1\bin&gt;jmeter -n -t ./jm/indexPlan.jmx -l ./jm/result/log -e -o ./jm/output</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter\apache-jmeter-5.1.1\bin&gt;jmeter -n -t .&#x2F;jm&#x2F;indexPlan.jmx -l .&#x2F;jm&#x2F;result&#x2F;log -e -o .&#x2F;jm&#x2F;output</span><br></pre></td></tr></table></figure>
 <p><strong>可能出现的问题</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: Could not open&#x2F;create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.</span><br></pre></td></tr></table></figure>
 <p>登录注册表：regedit，修改/新添加：计算机\HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Prefs</p>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>上面都是些简单操作，更多的需要专业的测试人员来接入。这里补充一点其他基础内容：</p>
 <h2 id="一个页面总用时时间消耗在哪些方面？"><a href="#一个页面总用时时间消耗在哪些方面？" class="headerlink" title="一个页面总用时时间消耗在哪些方面？"></a>一个页面总用时时间消耗在哪些方面？</h2><p>首先，在服务器端，某页面请求 nginx 日志如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[26/Mar/2019:10:34:51 +0800] Mozilla/5.0 ... Chrome/49.0.2623.221 1.0 GET / HTTP/1.1 200 24612 0.042 -</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[26&#x2F;Mar&#x2F;2019:10:34:51 +0800] Mozilla&#x2F;5.0 ... Chrome&#x2F;49.0.2623.221 1.0 GET &#x2F; HTTP&#x2F;1.1 200 24612 0.042 -</span><br></pre></td></tr></table></figure>
 <p>最后位 0.042 代表耗时 42ms</p>
 <p>而然，在浏览器端却耗时 93ms，相差一半。放张图，聪明的你一看就明白我想说什么了：</p>
-<img src="/2019/03/27/jmeter-quickstart/request.png">
+<img src="/2019/03/27/jmeter-quickstart/request.png" class="">
 <table>
 <thead>
 <tr>
@@ -627,13 +627,13 @@
 <h2 id="阿里云-PTS"><a href="#阿里云-PTS" class="headerlink" title="阿里云 PTS"></a>阿里云 PTS</h2><blockquote>
 <p>性能测试（Performance Testing Service，简称 PTS）是具备强大的分布式压测能力的 SaaS 压测平台，可模拟海量用户的真实业务场景，全方位验证业务站点的性能、容量和稳定性。</p>
 </blockquote>
-<p>下面是 200 并发，对首页做的测试：<br><img src="/2019/03/27/jmeter-quickstart/pts.png" title="pts"><br><img src="/2019/03/27/jmeter-quickstart/pts2.png" title="pst-time"></p>
+<p>下面是 200 并发，对首页做的测试：<br><img src="/2019/03/27/jmeter-quickstart/pts.png" class="" title="pts"><br><img src="/2019/03/27/jmeter-quickstart/pts2.png" class="" title="pst-time"></p>
 <ul>
 <li>TPS:188.33 （事务/秒）</li>
 <li>请求总数：11577 （个）</li>
 </ul>
 <p>对比 ab，结果差不多</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@iZbp15avj2fzy1tjdlwce7Z ~]# ab -n 11500 -c 200 http://www.niu100.com</span><br><span class="line"></span><br><span class="line">Document Path:          /</span><br><span class="line">Document Length:        35695 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      200</span><br><span class="line">Time taken for tests:   60.122 seconds</span><br><span class="line">Complete requests:      11500</span><br><span class="line">Failed requests:        1179</span><br><span class="line">   (Connect: 0, Receive: 0, Length: 1179, Exceptions: 0)</span><br><span class="line">Write errors:           0</span><br><span class="line">Total transferred:      406280852 bytes</span><br><span class="line">HTML transferred:       404440852 bytes</span><br><span class="line">Requests per second:    191.28 [#/sec] (mean)</span><br><span class="line">Time per request:       1045.606 [ms] (mean)</span><br><span class="line">Time per request:       5.228 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          6599.19 [Kbytes/sec] received</span><br><span class="line"></span><br><span class="line">Connection Times (ms)</span><br><span class="line">              min  mean[+/-sd] median   max</span><br><span class="line">Connect:        1    1   0.3      1      13</span><br><span class="line">Processing:    28 1020 949.6    740    4324</span><br><span class="line">Waiting:       26 1019 949.6    738    4323</span><br><span class="line">Total:         29 1021 949.6    742    4325</span><br><span class="line"></span><br><span class="line">Percentage of the requests served within a certain time (ms)</span><br><span class="line">  50%    742</span><br><span class="line">  66%   1124</span><br><span class="line">  75%   1457</span><br><span class="line">  80%   1651</span><br><span class="line">  90%   3035</span><br><span class="line">  95%   3117</span><br><span class="line">  98%   3208</span><br><span class="line">  99%   3481</span><br><span class="line"> 100%   4325 (longest request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@iZbp15avj2fzy1tjdlwce7Z ~]# ab -n 11500 -c 200 http:&#x2F;&#x2F;www.niu100.com</span><br><span class="line"></span><br><span class="line">Document Path:          &#x2F;</span><br><span class="line">Document Length:        35695 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      200</span><br><span class="line">Time taken for tests:   60.122 seconds</span><br><span class="line">Complete requests:      11500</span><br><span class="line">Failed requests:        1179</span><br><span class="line">   (Connect: 0, Receive: 0, Length: 1179, Exceptions: 0)</span><br><span class="line">Write errors:           0</span><br><span class="line">Total transferred:      406280852 bytes</span><br><span class="line">HTML transferred:       404440852 bytes</span><br><span class="line">Requests per second:    191.28 [#&#x2F;sec] (mean)</span><br><span class="line">Time per request:       1045.606 [ms] (mean)</span><br><span class="line">Time per request:       5.228 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          6599.19 [Kbytes&#x2F;sec] received</span><br><span class="line"></span><br><span class="line">Connection Times (ms)</span><br><span class="line">              min  mean[+&#x2F;-sd] median   max</span><br><span class="line">Connect:        1    1   0.3      1      13</span><br><span class="line">Processing:    28 1020 949.6    740    4324</span><br><span class="line">Waiting:       26 1019 949.6    738    4323</span><br><span class="line">Total:         29 1021 949.6    742    4325</span><br><span class="line"></span><br><span class="line">Percentage of the requests served within a certain time (ms)</span><br><span class="line">  50%    742</span><br><span class="line">  66%   1124</span><br><span class="line">  75%   1457</span><br><span class="line">  80%   1651</span><br><span class="line">  90%   3035</span><br><span class="line">  95%   3117</span><br><span class="line">  98%   3208</span><br><span class="line">  99%   3481</span><br><span class="line"> 100%   4325 (longest request)</span><br></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/qq_20881087/article/details/56682525" target="_blank" rel="noopener">timing 含义解释</a><br><a href="http://www.jsjtt.com/java/javaceshi/124.html" target="_blank" rel="noopener">jmeter 压力测试 设置一秒发送一次请求，一秒两次请求</a></p>
 
       
@@ -702,7 +702,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056212').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520225').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -829,7 +829,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -851,7 +851,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -497,18 +497,18 @@
 <p>这是一个普通的 vue 组件，通过 mixins 混入一些初始化定义。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mixins1 <span class="keyword">from</span> <span class="string">"../../mixins/preper"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">"Home"</span>,</span><br><span class="line">  components,</span><br><span class="line">  mixins: [mixins1],</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      banner: &#123;</span><br><span class="line">        height: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      msg: <span class="number">1</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    buttonClick() &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"child method click"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"child created"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>看下实际效果：</p>
-<img src="/2019/11/18/vue-base-mixins/mixins.png">
+<img src="/2019/11/18/vue-base-mixins/mixins.png" class="">
 <p>正如官网所说，mixins 上如果定义一些生命周期的钩子函数，默认执行顺序将会合并按照 mixins 先，当前 vue 实例后的顺序执行。</p>
 <p>同时如果有相同的属性，比如 methods 中某个方法命名一致，将会被覆盖。这也是我们要的继承复用效果。</p>
 <h2 id="多个-mixins"><a href="#多个-mixins" class="headerlink" title="多个 mixins"></a>多个 mixins</h2><p>那如果有多个 mixins 会是什么效果？</p>
 <p>我再定义了个差不多的 mixins2 ，来看下实际的输出情况：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mixins: [mixins1, mixins2],</span><br></pre></td></tr></table></figure>
 <p>两个混入对象的钩子方法均得到了调用，并且顺序按照 mixins 的数组顺序执行。</p>
-<img src="/2019/11/18/vue-base-mixins/mixins2.png">
+<img src="/2019/11/18/vue-base-mixins/mixins2.png" class="">
 <h1 id="和-extends-的区别"><a href="#和-extends-的区别" class="headerlink" title="和 extends 的区别"></a>和 extends 的区别</h1><p>其实代码效果和 extends 一样，目的都能实现代码继承。区别不同的是 mixins 是接受一个数组形式的对象，换句话说子类能继承多个父类的定义。而 extends 只能继承一个，也就是单继承和多继承的区别。</p>
 <p>不过需要注意的是：extends 和 mixins 的顺序不是那么随意，<strong>extends 优先于 mixins</strong> 。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mixins: [mixins1, mixins2],</span><br><span class="line">extends: extend,</span><br></pre></td></tr></table></figure>
-<img src="/2019/11/18/vue-base-mixins/mixins3.png">
+<img src="/2019/11/18/vue-base-mixins/mixins3.png" class="">
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>介绍了 mixins 的使用，也通过和 extends 的结合使用来说明这两者的细微不同，这样在代码上使用继承来达到某些代码功能复用时能有个正确的选择判断。</p>
 
       
@@ -577,7 +577,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055012').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519040').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -704,7 +704,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -726,7 +726,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -488,12 +488,12 @@
 
       
         <p>有没有和我遇到类似的经历？</p>
-<p>用 Node 作为服务端写 server，然后前端页面因为代理，特定的构建任务等原因又要用 gulp or webpack 起个 server。然后造成这样的情况，每次开始<strong>搬砖前</strong>，需要起两个命令窗口。<br><img src="/2018/02/12/npm-run-all/example.png"></p>
+<p>用 Node 作为服务端写 server，然后前端页面因为代理，特定的构建任务等原因又要用 gulp or webpack 起个 server。然后造成这样的情况，每次开始<strong>搬砖前</strong>，需要起两个命令窗口。<br><img src="/2018/02/12/npm-run-all/example.png" class=""></p>
 <p>如果你也是这样，不防试试这个 npm 模块，<strong>好处就是一个 ide 对应一个命令窗口，一定程度提升开发效率</strong></p>
 <h2 id="npm-run-all"><a href="#npm-run-all" class="headerlink" title="npm-run-all"></a><a href="https://www.npmjs.com/package/npm-run-all" target="_blank" rel="noopener">npm-run-all</a></h2><blockquote>
 <p>A CLI tool to run multiple npm-scripts in parallel or sequential.</p>
 </blockquote>
-<p><strong>github 评价也不差</strong><br><img src="/2018/02/12/npm-run-all/github.png"></p>
+<p><strong>github 评价也不差</strong><br><img src="/2018/02/12/npm-run-all/github.png" class=""></p>
 <p><strong>如何使用</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install npm-run-all --save-dev</span><br></pre></td></tr></table></figure>
 <p><strong>具体命令配置</strong><br><a href="https://github.com/mysticatea/npm-run-all/blob/HEAD/docs/npm-run-all.md" target="_blank" rel="noopener">请查阅 npm-run-all</a></p>
@@ -503,7 +503,7 @@
 <li>run-p 并行启动</li>
 </ul>
 <h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>package.json</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;start&quot;: &quot;run-p node-server build-server&quot;,</span><br><span class="line">  &quot;build-server&quot;: &quot;cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js&quot;,</span><br><span class="line">  &quot;node-server&quot;: &quot;cross-env NODE_ENV=development nodemon --delay 1000ms -e js,html bin/www.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;start&quot;: &quot;run-p node-server build-server&quot;,</span><br><span class="line">  &quot;build-server&quot;: &quot;cross-env NODE_ENV&#x3D;development webpack-dev-server --inline --progress --config build&#x2F;webpack.dev.conf.js&quot;,</span><br><span class="line">  &quot;node-server&quot;: &quot;cross-env NODE_ENV&#x3D;development nodemon --delay 1000ms -e js,html bin&#x2F;www.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>node-server</strong><br>定义 node 服务，使用 nodemon 监控 Node 代码变化</p>
 <p><strong>build-server</strong><br>定义 webpack 服务，实时构建前端代码代码</p>
 <p><strong>start</strong><br>使用 npm-run-all 使得以上两个 script 在一个 cmd 窗口中并行执行，虽然以上两个具有 watch 效果，但同一窗口依旧有效。</p>
@@ -575,7 +575,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057882').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400522009').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -702,7 +702,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -724,7 +724,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

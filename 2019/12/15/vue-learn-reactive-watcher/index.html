@@ -521,9 +521,9 @@
 <h2 id="执行-getter"><a href="#执行-getter" class="headerlink" title="执行 getter"></a>执行 getter</h2><p>定义完 <strong>Dep.target</strong> 后，马上执行 <strong>this.getter</strong> 方法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = <span class="keyword">this</span>.getter.call(vm, vm);</span><br></pre></td></tr></table></figure>
 <p>而这个方法就是前面提到的 <strong>updateComponent</strong> ，我打了个 <strong>debugger</strong> 来说明这问题：</p>
-<img src="/2019/12/15/vue-learn-reactive-watcher/getter.png">
+<img src="/2019/12/15/vue-learn-reactive-watcher/getter.png" class="">
 <p><strong>call</strong> 执行完后，并不会跳到最后的出栈方法 <strong>popTarget</strong> ，而是转到了我们前面 <strong>definedReactive</strong> 中定义的 <strong>getter</strong> 方法：</p>
-<img src="/2019/12/15/vue-learn-reactive-watcher/get.png">
+<img src="/2019/12/15/vue-learn-reactive-watcher/get.png" class="">
 <p>因为我们的模板可能这样：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样就涉及到观察对象上属性的<strong>取值</strong>操作，所以触发了 <strong>getter</strong> 。</p>
@@ -625,7 +625,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054546').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518575').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -752,7 +752,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -774,7 +774,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -502,7 +502,7 @@
 <h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><h3 id="lazy"><a href="#lazy" class="headerlink" title=".lazy"></a>.lazy</h3><p>input 事件（实时触发）变成了 change 事件，只有当光标改变了状态才会触发值得更新。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model.lazy</span>=<span class="string">"msg"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
-<img src="/2019/11/06/vue-base-form/lazy.gif">
+<img src="/2019/11/06/vue-base-form/lazy.gif" class="">
 <h3 id="trim"><a href="#trim" class="headerlink" title=".trim"></a>.trim</h3><p>将自动过滤输入字符串的首位空格</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model.trim</span>=<span class="string">"msg"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="number"><a href="#number" class="headerlink" title=".number"></a>.number</h3><p>如果想自动将用户的输入值转为数值类型，先知道一点 html input 内输入的值都是字符串，即使你设置了 type=”number” 返回的也是字符串。</p>
@@ -577,7 +577,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055311').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519359').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -704,7 +704,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -726,7 +726,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

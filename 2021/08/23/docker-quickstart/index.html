@@ -502,26 +502,26 @@
 <p>为了让这次的 docker 学习更贴近真实的生产环境，装个虚拟机是非常有必要的，当然也可以阿里云申请个 ecs（按时计费，也就几块，学完就回收）</p>
 <p>搜索引擎直接搜：wmware download，进入 wmware 官网下载免费版的虚拟机 <a href="https://www.vmware.com/products/vsphere-hypervisor.html" target="_blank" rel="noopener">vSphere Hypervisor</a>，当然我选择了 <a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html" target="_blank" rel="noopener">VMware Workstation Pro</a>，它有一个月的试用时间。</p>
 <p>因为是 windows 平台，点击 exe 文件后，直接安装，启动后首页如下：</p>
-<img src="/2021/08/23/docker-quickstart/vwmare-home.png" title="vwmare首页">
+<img src="/2021/08/23/docker-quickstart/vwmare-home.png" class="" title="vwmare首页">
 <p>由于这只是个虚拟机，对应的系统镜像需要自己下载，而 Linux 是个开源的操作系统，我这里选择了 CentOS（对应下载了 <a href="http://isoredirect.centos.org/centos/8/isos/x86_64/" target="_blank" rel="noopener">x86_64 的 ios</a>），在 CentOS 下载页面里有一堆镜像地址，你可以随便选择一个：</p>
-<img src="/2021/08/23/docker-quickstart/centos-ios-download.png" title="选择ios镜像">
+<img src="/2021/08/23/docker-quickstart/centos-ios-download.png" class="" title="选择ios镜像">
 <p>然后回到 vmware 新建个虚拟机，选择前面下载好的 ios 镜像：</p>
-<img src="/2021/08/23/docker-quickstart/centos-ios-choose.png" title="安装CentOS-IOS">
+<img src="/2021/08/23/docker-quickstart/centos-ios-choose.png" class="" title="安装CentOS-IOS">
 <p>之后没特别的，一直下一步即可，中间稍稍关注下用户名和密码配置：</p>
-<img src="/2021/08/23/docker-quickstart/wmware-config.png" title="配置">
+<img src="/2021/08/23/docker-quickstart/wmware-config.png" class="" title="配置">
 <h1 id="安装-docker-环境"><a href="#安装-docker-环境" class="headerlink" title="安装 docker 环境"></a>安装 docker 环境</h1><ol>
 <li><p>切换用户到 root</p>
 <p>之后的操作将建立在系统权限下，所以实现将用户切换至 root，避免导致一些“不顺利”的情况发生。</p>
-<img src="/2021/08/23/docker-quickstart/docker-1.png">
+<img src="/2021/08/23/docker-quickstart/docker-1.png" class="">
 </li>
 <li><p>设置 docker 仓库地址</p>
-<img src="/2021/08/23/docker-quickstart/docker-2.png">
+<img src="/2021/08/23/docker-quickstart/docker-2.png" class="">
 </li>
 <li><p>安装 docker</p>
-<img src="/2021/08/23/docker-quickstart/docker-3.png">
+<img src="/2021/08/23/docker-quickstart/docker-3.png" class="">
 </li>
 <li><p>将 docker 添加到系统服务中</p>
-<img src="/2021/08/23/docker-quickstart/docker-4.png">
+<img src="/2021/08/23/docker-quickstart/docker-4.png" class="">
 </li>
 </ol>
 <h1 id="开始第一个镜像"><a href="#开始第一个镜像" class="headerlink" title="开始第一个镜像"></a>开始第一个镜像</h1><ol>
@@ -549,10 +549,10 @@
 <p>启动 getting-started 镜像，对外暴露 3000 端口，并映射为此 node 服务 3000 端口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -dp 3000:3000 getting-started</span><br></pre></td></tr></table></figure>
 <p>最后能看到这个 node 服务运行后的效果：</p>
-<img src="/2021/08/23/docker-quickstart/docker-5.png">
+<img src="/2021/08/23/docker-quickstart/docker-5.png" class="">
 </li>
 <li><p>镜像的操作</p>
-<img src="/2021/08/23/docker-quickstart/docker-6.png">
+<img src="/2021/08/23/docker-quickstart/docker-6.png" class="">
 <p>查看所运行的镜像进程状态</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 <p>从上表中找到需要操作的镜像 ID，停止镜像</p>
@@ -565,7 +565,7 @@
 <p>docker 就提供了 hub 平台，我们可以把镜像扔到上面，下面就简单的操作下：</p>
 <ol>
 <li><p>首先你要在 dockerhub 注册一个账号，并登录上去</p>
-<img src="/2021/08/23/docker-quickstart/docker-7.png">
+<img src="/2021/08/23/docker-quickstart/docker-7.png" class="">
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login -u eminoda</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>然后在将构建好的镜像推送上去</p>
@@ -642,7 +642,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053735').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517783').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -769,7 +769,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -791,7 +791,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -504,43 +504,43 @@
 <p>我们已经用了 github 的 web hook 完成了和 jenkins hook 的对接。还需要了解的同学请看下<a href="/2018/04/27/jenkins-auto-deploy/">jenkins 自动部署（github）</a><br>当然对于公司不想开源 source，肯定内部需要搭建自己的版本管理平台，比如 gitlab。这里讲解下配置过程，可能会解决你遇到的问题。</p>
 <h2 id="选择版本"><a href="#选择版本" class="headerlink" title="选择版本"></a>选择版本</h2><p>下面给出我们的环境，尽可能保持一致以免发生不可描述的问题。</p>
 <ul>
-<li>gitlab v10.7.2<br>如果还是 8.x.x 的，赶紧联系运维大佬升级，不然旧版本发送的地址是 v3，而我们需要的是 v4<img src="/2018/05/04/jenkins-gitlab-hook/version.png"></li>
+<li>gitlab v10.7.2<br>如果还是 8.x.x 的，赶紧联系运维大佬升级，不然旧版本发送的地址是 v3，而我们需要的是 v4<img src="/2018/05/04/jenkins-gitlab-hook/version.png" class=""></li>
 <li>jenkins v2.110</li>
 <li>jenkins plugins：Gitlab Authentication plugin v1.4</li>
 </ul>
 <h2 id="配置-gitlab"><a href="#配置-gitlab" class="headerlink" title="配置 gitlab"></a>配置 gitlab</h2><ol>
 <li><p>开启权限，不然你可能会遇到如下错误</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-1.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-1.png" class="">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Requests to the local network are not allowed</span><br></pre></td></tr></table></figure>
-<img src="/2018/05/04/jenkins-gitlab-hook/error-1.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/error-1.png" class="">
 <p>备注下，如果是默认安装 gitlab，其日志输出在如下位置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/gitlab/gitlab-rails/production.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f &#x2F;var&#x2F;log&#x2F;gitlab&#x2F;gitlab-rails&#x2F;production.log</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>生成 token，他这个比较 6，还有有效期</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-2.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-2.png" class="">
 </li>
 <li><p>在对应项目中，配置 jenkins hook 和 token，以及触发条件</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-3.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-3.png" class="">
 </li>
 <li><p>测试一下</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-4.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-4.png" class="">
 <p>会出现如下错误，是 jenkins 的 gitlab 插件没有配置好。<a href="https://github.com/jenkinsci/gitlab-plugin/issues/375" target="_blank" rel="noopener">原因:https://github.com/jenkinsci/gitlab-plugin/issues/375</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">executed successfully but returned HTTP 403</span><br></pre></td></tr></table></figure>
-<img src="/2018/05/04/jenkins-gitlab-hook/error-2.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/error-2.png" class="">
 </li>
 </ol>
 <h2 id="配置-jenkins"><a href="#配置-jenkins" class="headerlink" title="配置 jenkins"></a>配置 jenkins</h2><ol>
 <li><p>token Credentials 配置</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-1.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-1.png" class="">
 </li>
 <li><p>插件检测，一定要 Success<br>注意这里的配置，解决 executed successfully but returned HTTP 403</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-2.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-2.png" class="">
 </li>
 <li><p>在 job 中配置触发器<br>注意：这里有 jenkins 的 hook，供 gitlab 使用</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-3.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-3.png" class="">
 </li>
 </ol>
-<h2 id="放个结果"><a href="#放个结果" class="headerlink" title="放个结果"></a>放个结果</h2><p>能看到新的构建#5<br><img src="/2018/05/04/jenkins-gitlab-hook/result.gif"></p>
+<h2 id="放个结果"><a href="#放个结果" class="headerlink" title="放个结果"></a>放个结果</h2><p>能看到新的构建#5<br><img src="/2018/05/04/jenkins-gitlab-hook/result.gif" class=""></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>| <a href="https://docs.gitlab.com/ee/integration/jenkins.html" target="_blank" rel="noopener">https://docs.gitlab.com/ee/integration/jenkins.html</a></p>
 <h2 id="还有个其他方式"><a href="#还有个其他方式" class="headerlink" title="还有个其他方式"></a>还有个其他方式</h2><p>撇一嘴，如果因为某些原因公司的 gitlab 版本比较低，像我们公司是 8.8.5（运维说无法无缝升级到 10，所以就凉凉了），那是无法使用上面这种方式。<br>但你可以使用如下这个方式。</p>
 <ol>
@@ -549,14 +549,14 @@
 <li><p>配置 gitlab<br>URL 配置：<br><a href="https://github.com/jenkinsci/gitlab-hook-plugin#notify-commit-hook" target="_blank" rel="noopener">官网写的很清楚，点击查看</a></p>
 </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://your-jenkins-server/gitlab/notify_commit</span><br></pre></td></tr></table></figure>
-<p>TOKEN 配置：<br><img src="/2018/05/04/jenkins-gitlab-hook/gitlab-old.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;your-jenkins-server&#x2F;gitlab&#x2F;notify_commit</span><br></pre></td></tr></table></figure>
+<p>TOKEN 配置：<br><img src="/2018/05/04/jenkins-gitlab-hook/gitlab-old.png" class=""></p>
 <ol start="3">
 <li><p>配置 gitlab webhook</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-old-setting.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/gitlab-old-setting.png" class="">
 </li>
 <li><p>设置 jenkins<br>勾选 poll scm（Source Control Management）。注意红框内容，如果没有制定时间计划，那将根据 gitlab hook 自动构建。<br>备注：构建跟着 jenkins 设置的 branch 走的，并非所有 branch 会执行。</p>
-<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-scm.png">
+<img src="/2018/05/04/jenkins-gitlab-hook/jenkins-scm.png" class="">
 </li>
 </ol>
 
@@ -628,7 +628,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057726').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521767').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -757,7 +757,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -779,7 +779,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -494,7 +494,7 @@
 <p>很早很早以前，使用饿了吗 的 mint-ui 移动框架时，就发现分页加载 loadmore 组件在部分浏览器中不能正常工作（上拉无法加载下一页）。说来惭愧，以前原以为是部分老机器的低版本浏览器问题，全当忽略了，只是简单写了一篇 <a href="https://eminoda.github.io/2018/09/04/vue-mintui-page/" target="_blank" rel="noopener">vue minuti 分页实现</a>，粗略带过了浏览器兼容性的一些问题。</p>
 <p>近期又有高频类似的问题出现，甚至 chrome 也是，这就需要紧急解决了。借这个机会再次翻看 loadmore 组件，探究其中真相。</p>
 <h2 id="兼容问题"><a href="#兼容问题" class="headerlink" title="兼容问题"></a>兼容问题</h2><h3 id="滚动条"><a href="#滚动条" class="headerlink" title="滚动条"></a>滚动条</h3><p>这是第一个兼容问题，可以从这个 <a href="https://github.com/ElemeFE/mint-ui/commit/e7e6f0b1acc766e009dfa670e8a2adc091dc2a68" target="_blank" rel="noopener">PR</a> 上明白问题的原因。</p>
-<img src="/2019/10/29/vue-mintui-pagination-scroll/scrollTop.png" title="scrollTop">
+<img src="/2019/10/29/vue-mintui-pagination-scroll/scrollTop.png" class="" title="scrollTop">
 <p>原因就是不同浏览器厂商，对 scrollTop 的识别是不同的。</p>
 <p>我们先搞清楚 scrollTop 是什么意思？</p>
 <p>当页面内容过长，浏览器就会提供滚动条来存放这部分溢出页面。 scrollTop 就是该元素到窗口可见内容顶部那么个距离（如果没有发生垂直滚动，值就为 0 ）</p>
@@ -586,15 +586,15 @@
 <ol>
 <li><p>页面初次加载</p>
 <p>注意该属性的取值 document.documentElement.clientHeight = 727 （mint-ui 中可视区域的判断），原本如果浏览器不做优化，那什么问题都没有。</p>
-<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-init.png" title="未拖动时状态">
+<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-init.png" class="" title="未拖动时状态">
 </li>
 <li><p>当开始上拉后</p>
 <p>浏览器头部搜索框开始隐藏，同时 window.innerHeight 开始随着拖动变化，document.documentElement.clientHeight 却一直为初始值。</p>
-<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-header.png" title="状态栏变化">
+<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-header.png" class="" title="状态栏变化">
 </li>
 <li><p>上拉至顶部后</p>
 <p>搜索框消失，document.documentElement.clientHeight 依旧没有变化，但 window.innerHeight 却为最大的屏幕可视高度</p>
-<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-end.png">
+<img src="/2019/10/29/vue-mintui-pagination-scroll/screen-end.png" class="">
 </li>
 </ol>
 <p>这样就解释了为何 uc 浏览器不行的原因，需要对原有逻辑做这样的调整：</p>
@@ -670,7 +670,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055499').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519553').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -799,7 +799,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -821,7 +821,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -497,12 +497,12 @@
 <p>最后会按顺序输出：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo;</span><br><span class="line">bar;</span><br><span class="line">baz;</span><br></pre></td></tr></table></figure>
 <p>栈图如下：</p>
-<img src="/2019/11/25/js-event-loop/callstack.png" title="摘自：flaviocopes">
+<img src="/2019/11/25/js-event-loop/callstack.png" class="" title="摘自：flaviocopes">
 <p>整个程序，按照<strong>先进后出的队列</strong>（LIFO queue）进行栈的操作。foo 优先被调用塞进栈内，随后对内部的 bar 进行入栈，执行后再出栈，baz 类似 ，内部方法全部执行结束后 foo 出栈，清空该栈。</p>
 <p>整个顺序和我们预期的一样，那如果涉及 setTimout 的话，整个过程会怎么样呢？</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bar = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"bar"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> baz = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"baz"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"foo"</span>);</span><br><span class="line">  <span class="comment">// 只是将 bar 定义在 setTimout 中</span></span><br><span class="line">  setTimeout(bar, <span class="number">0</span>);</span><br><span class="line">  baz();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
 <p>栈图如下：</p>
-<img src="/2019/11/25/js-event-loop/callstack-event.png" title="摘自：flaviocopes">
+<img src="/2019/11/25/js-event-loop/callstack-event.png" class="" title="摘自：flaviocopes">
 <p>注意上图中 setTimout 的那部分，虽然在 foo 进栈后，setTimout 紧接着进栈，但随后并没有 pending 住等待它的执行结束。就像它只是进来注册下，然后马上 baz 跟了进来。当 baz 和最外层的 foo 执行结束后，setTimout 中的 bar 才出现在栈中，开始 bar 的执行操作。</p>
 <p>那 setTimout 注册后，被藏到哪里去了？内部的方法又是怎么被再次出现？</p>
 <p>这个就涉及 js 的 Event Loop 机制。</p>
@@ -606,7 +606,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054855').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518917').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -733,7 +733,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -755,7 +755,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -503,19 +503,19 @@
 <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>简单举几个例子</p>
 <h2 id="使用在-lifecycle-生命周期上"><a href="#使用在-lifecycle-生命周期上" class="headerlink" title="使用在 lifecycle 生命周期上"></a>使用在 lifecycle 生命周期上</h2><p>有一些需求（例如，控制 mint-ui loadmore 组件的高度），当元素挂载到 dom 节点后，需要控制页面某些区域的固定高度。</p>
 <p>以前我们是这样做的，所有需要控制高度的页面都有这段类似的代码。</p>
-<img src="/2019/11/08/vue-base-extend/life-js.png">
-<img src="/2019/11/08/vue-base-extend/life-html.png">
+<img src="/2019/11/08/vue-base-extend/life-js.png" class="">
+<img src="/2019/11/08/vue-base-extend/life-html.png" class="">
 <p><strong>那当使用了 extends 后，就可以简化成：</strong></p>
 <p>使用 extends 调用封装方法 heightControl ，哪个 vue 模块要用就添加这行代码就行了 ：</p>
-<img src="/2019/11/08/vue-base-extend/life-extends-1.png">
+<img src="/2019/11/08/vue-base-extend/life-extends-1.png" class="">
 <p>heightControl 就是原来的 mounted 中全部的定义：</p>
-<img src="/2019/11/08/vue-base-extend/life-extends-2.png">
+<img src="/2019/11/08/vue-base-extend/life-extends-2.png" class="">
 <h2 id="简化-methods-方法"><a href="#简化-methods-方法" class="headerlink" title="简化 methods 方法"></a>简化 methods 方法</h2><p>再举一个例子，我们会有注册、忘记密码有获取短信的功能，他们在接口一样，参数类似。那么就会在两个页面上有相似度 99% 的模板化代码（boilerplate code）。</p>
-<img src="/2019/11/08/vue-base-extend/code-diff.png">
+<img src="/2019/11/08/vue-base-extend/code-diff.png" class="">
 <p><strong>那当使用了 extends 后，就可以简化成：</strong></p>
-<img src="/2019/11/08/vue-base-extend/methods-extends-1.png">
+<img src="/2019/11/08/vue-base-extend/methods-extends-1.png" class="">
 <p>重写 methods 属性，将公用获取短信的方法列出，实现一个较为公用化的发送短信功能：</p>
-<img src="/2019/11/08/vue-base-extend/methods-extends-2.png">
+<img src="/2019/11/08/vue-base-extend/methods-extends-2.png" class="">
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过这两个例子，说了下 extends 简单的场景运用，例子虽少，但的确是我平时优化后觉得很有用的实践。相信通过该属性能让代码的复用性更高，减轻以后的工作量。</p>
 <p>如果你能 get 到其中的点，并觉得此文有帮助，就分享给其他同学吧。</p>
 
@@ -585,7 +585,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055136').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519191').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -712,7 +712,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -734,7 +734,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

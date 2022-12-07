@@ -501,7 +501,7 @@
 <li>开发环境通过配置 <strong>webpack</strong> 进行请求转发</li>
 <li>对于 <strong>mac</strong> 平台及不适配的情况，统一通过 <strong>nginx</strong> 进行请求转发</li>
 </ul>
-<img src="/2021/03/15/web-socket-proxy/环境架构图.png" title="跨平台 socket 代理策略">
+<img src="/2021/03/15/web-socket-proxy/%E7%8E%AF%E5%A2%83%E6%9E%B6%E6%9E%84%E5%9B%BE.png" class="" title="跨平台 socket 代理策略">
 <h2 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h2><p>项目基于 <strong>vue-cli</strong>，首先需要对 <strong>vue.config.js</strong> 中 <strong>webpack</strong> 的代理部分进行修改。</p>
 <p>先设置 <strong>VUE_APP_PROXY_URL</strong>，定义目标转发环境的（IP）地址，再添加 <strong>VUE_APP_PROXY_PLATFORM</strong> 决定是否开启转发功能。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> env.local</span></span><br><span class="line">VUE_APP_PROXY_PLATFORM = mac</span><br><span class="line">VUE_APP_PROXY_URL = 192.168.1.x:81</span><br></pre></td></tr></table></figure>
@@ -581,7 +581,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054038').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518080').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -712,7 +712,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -734,7 +734,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

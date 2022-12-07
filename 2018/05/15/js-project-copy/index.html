@@ -490,7 +490,7 @@
       
 
       
-        <img src="/2018/05/15/js-project-copy/dry.jpg">
+        <img src="/2018/05/15/js-project-copy/dry.jpg" class="">
 <p>项目复杂了，人员沟通不通畅，开发进度赶时间，不可避免的会造成代码的重复。为了实现一个相似功能，可能会<strong>ctrl+c，ctrl+v</strong>然后修改个参数，草草交差。给后期增加更大的维护成本。</p>
 <p>其实这违反了<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="noopener"><strong>DRY</strong>原则（Don’t repeat yourself）</a>，说起来好像很高大上，其实它就是软件设计中一种最佳实践的开发模式。通过抽象、消除重复数据，避免数据冗余。</p>
 <p>那我们怎么检测平时工程项目中的重复代码呢？下面介绍几个工具：</p>
@@ -499,10 +499,10 @@
 <p>The tool accepts a list of paths to parse and prints any found matches. Any directories among the paths are walked recursively, and only .js and .jsx files are analyzed</p>
 </blockquote>
 <p>快速使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g jsinspect</span><br><span class="line">jsinspect -t 50 ./server/src/js</span><br></pre></td></tr></table></figure>
-<p>效果：<br><img src="/2018/05/15/js-project-copy/example-1.png" title="检测出类似代码块"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g jsinspect</span><br><span class="line">jsinspect -t 50 .&#x2F;server&#x2F;src&#x2F;js</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/2018/05/15/js-project-copy/example-1.png" class="" title="检测出类似代码块"></p>
 <p>当然你还可以在 project root 下新建.jsinspectrc，配置更多参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;threshold&quot;:     30,// 指定规则命中的节点数量</span><br><span class="line">  &quot;identifiers&quot;:   true,// variables, methods, properties, etc</span><br><span class="line">  &quot;literals&quot;:      true,// strings, numbers, etc.</span><br><span class="line">  &quot;color&quot;:         true,</span><br><span class="line">  &quot;minInstances&quot;:  2,// 最小匹配数量</span><br><span class="line">  &quot;ignore&quot;:        &quot;test|spec|node_modules&quot;,</span><br><span class="line">  &quot;reporter&quot;:      &quot;default&quot;,// 报告格式，还有pmd、json</span><br><span class="line">  &quot;truncate&quot;:      10// 截取行数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;threshold&quot;:     30,&#x2F;&#x2F; 指定规则命中的节点数量</span><br><span class="line">  &quot;identifiers&quot;:   true,&#x2F;&#x2F; variables, methods, properties, etc</span><br><span class="line">  &quot;literals&quot;:      true,&#x2F;&#x2F; strings, numbers, etc.</span><br><span class="line">  &quot;color&quot;:         true,</span><br><span class="line">  &quot;minInstances&quot;:  2,&#x2F;&#x2F; 最小匹配数量</span><br><span class="line">  &quot;ignore&quot;:        &quot;test|spec|node_modules&quot;,</span><br><span class="line">  &quot;reporter&quot;:      &quot;default&quot;,&#x2F;&#x2F; 报告格式，还有pmd、json</span><br><span class="line">  &quot;truncate&quot;:      10&#x2F;&#x2F; 截取行数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="jscpd"><a href="#jscpd" class="headerlink" title="jscpd"></a><a href="https://github.com/kucherenko/jscpd" target="_blank" rel="noopener">jscpd</a></h2><p>Copy/paste detector for programming source code.</p>
 <p>和 jsinspect 不同：</p>
 <ol>
@@ -566,10 +566,10 @@
 </tbody>
 </table>
 <p>快速使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install jscpd -g</span><br><span class="line">jscpd --languages vue --path ./src</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install jscpd -g</span><br><span class="line">jscpd --languages vue --path .&#x2F;src</span><br></pre></td></tr></table></figure>
 <p>同样，也可以定义配置文件<strong>.cpd.yaml</strong>，简化命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">path: &quot;./src&quot; //校验路径</span><br><span class="line">output: &quot;../jscpd-report.xml&quot; //report文件</span><br><span class="line">languages:</span><br><span class="line">  - vue</span><br><span class="line">blame: false //是否显示详细信息，会列出git等信息</span><br><span class="line">verbose: false //是否输出具体信息</span><br><span class="line">files:</span><br><span class="line">  - &quot;./**/*.vue&quot; //需要加载的文件</span><br><span class="line">exclude:</span><br><span class="line">  - &quot;./pages/Test.vue&quot; //ignore路径</span><br><span class="line">reporter: xml</span><br><span class="line">languages-exts:</span><br><span class="line">  javascript:</span><br><span class="line">    - es</span><br><span class="line">    - es5</span><br><span class="line">    - es6</span><br><span class="line">    - es7</span><br></pre></td></tr></table></figure>
-<p>效果：<br><img src="/2018/05/15/js-project-copy/example-2.png" title="检测出类似代码块，这里关掉了verbose"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">path: &quot;.&#x2F;src&quot; &#x2F;&#x2F;校验路径</span><br><span class="line">output: &quot;..&#x2F;jscpd-report.xml&quot; &#x2F;&#x2F;report文件</span><br><span class="line">languages:</span><br><span class="line">  - vue</span><br><span class="line">blame: false &#x2F;&#x2F;是否显示详细信息，会列出git等信息</span><br><span class="line">verbose: false &#x2F;&#x2F;是否输出具体信息</span><br><span class="line">files:</span><br><span class="line">  - &quot;.&#x2F;**&#x2F;*.vue&quot; &#x2F;&#x2F;需要加载的文件</span><br><span class="line">exclude:</span><br><span class="line">  - &quot;.&#x2F;pages&#x2F;Test.vue&quot; &#x2F;&#x2F;ignore路径</span><br><span class="line">reporter: xml</span><br><span class="line">languages-exts:</span><br><span class="line">  javascript:</span><br><span class="line">    - es</span><br><span class="line">    - es5</span><br><span class="line">    - es6</span><br><span class="line">    - es7</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/2018/05/15/js-project-copy/example-2.png" class="" title="检测出类似代码块，这里关掉了verbose"></p>
 <h2 id="PMD"><a href="#PMD" class="headerlink" title="PMD"></a><a href="https://pmd.github.io/pmd-6.3.0/index.html" target="_blank" rel="noopener">PMD</a></h2><blockquote>
 <p>an extensible cross-language static code analyzer. It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. Additionally it includes CPD, the copy-paste-detector. CPD finds duplicated code.</p>
 </blockquote>
@@ -580,7 +580,7 @@
 <li>不支持 vue 等语言（可能是我玩不来）</li>
 <li>上面两个插件基本可以解决目前遇到的问题</li>
 </ol>
-<p>效果：<br><img src="/2018/05/15/js-project-copy/example-3.png" title="下载解压pmd，点击图上bat"><br><img src="/2018/05/15/js-project-copy/example-4.png" title="图形化界面"></p>
+<p>效果：<br><img src="/2018/05/15/js-project-copy/example-3.png" class="" title="下载解压pmd，点击图上bat"><br><img src="/2018/05/15/js-project-copy/example-4.png" class="" title="图形化界面"></p>
 
       
     </div>
@@ -648,7 +648,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057508').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521643').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -775,7 +775,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -797,7 +797,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

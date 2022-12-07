@@ -605,10 +605,10 @@
 <h1 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h1><p>我们已经知道通过 <strong>is</strong> 特性，可以动态切换组件模板：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">component</span> <span class="attr">v-bind:is</span>=<span class="string">"currentTabComponent"</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>每次切换时，替换的组件都是重新渲染的 vue 组件实例，可以从生命周期的触发看到：</p>
-<img src="/2019/11/06/vue-base-component/keeplive.gif">
-<p>我们可以通过 <keep-alive> 来缓存替换的组件标签，另外所有切换的组件只需要设置一个名字即可：</keep-alive></p>
+<img src="/2019/11/06/vue-base-component/keeplive.gif" class="">
+<p>我们可以通过 <keep-alive> 来缓存替换的组件标签，另外所有切换的组件只需要设置一个名字即可：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">keep-alive</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">component</span> <span class="attr">v-bind:is</span>=<span class="string">"currentTabComponent"</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<img src="/2019/11/06/vue-base-component/keeplive2.gif">
+<img src="/2019/11/06/vue-base-component/keeplive2.gif" class="">
 <h1 id="异步组件"><a href="#异步组件" class="headerlink" title="异步组件"></a>异步组件</h1><p>目的为了缩小整个应用的大小，将一些组件按需加载，提升总体体验。</p>
 <p>看下 component-b 组件的异步加载示范：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般组件注册</span></span><br><span class="line">Vue.component(<span class="string">"component-a"</span>, ComponentA);</span><br><span class="line"><span class="comment">// 异步组件注册</span></span><br><span class="line">Vue.component(<span class="string">"component-b"</span>, () =&gt; <span class="keyword">import</span>(<span class="string">"./component/ComponentB"</span>));</span><br></pre></td></tr></table></figure>
@@ -708,7 +708,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055265').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519288').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -835,7 +835,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -857,7 +857,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

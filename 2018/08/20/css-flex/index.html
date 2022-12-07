@@ -506,9 +506,9 @@
       
         <p>传统布局通过 position，float，display 来实现各种排版，但如果要更“简便”，“高效”的实现某些布局，可能 flex 是个好选择。<br>flex 弹性布局，我没怎么用过，也这是写这篇的文章的主要目的，重在熟悉它。虽然我们的 PC 端依旧在<strong>各种无脑数据</strong>暗示下还要兼容 IE8，但还是要对未来有信息。</p>
 <h2 id="flex-简介"><a href="#flex-简介" class="headerlink" title="flex 简介"></a>flex 简介</h2><p>Flexbox Layout 是 W3C 前几年推出的一种布局方式，其意更高效的实现页面布局，在未知布局的高宽等因素下弹性的适应页面。</p>
-<img src="/2018/08/20/css-flex/caniuse.png" title="兼容性">
+<img src="/2018/08/20/css-flex/caniuse.png" class="" title="兼容性">
 <p><a href="https://caniuse.com/#feat=flexbox" target="_blank" rel="noopener">如上图，兼容性</a>在国内可能不太友好，你懂的。</p>
-<p>flex 不是一个简单的属性参数，定义 flex 的元素相当于一个容器，可称为 flex container，内部子项称为 flex items。<br>一个标准有规则的布局通常有排列方向，通过 flex-flow direction 定义，下图主要介绍 flex 的主要核心：<br><img src="/2018/08/20/css-flex/flexbox.png"></p>
+<p>flex 不是一个简单的属性参数，定义 flex 的元素相当于一个容器，可称为 flex container，内部子项称为 flex items。<br>一个标准有规则的布局通常有排列方向，通过 flex-flow direction 定义，下图主要介绍 flex 的主要核心：<br><img src="/2018/08/20/css-flex/flexbox.png" class=""></p>
 <ul>
 <li>main axis：主轴，串起 flexbox 内部 item 元素。当然不一定是水平，根据 flex-direction 改变。</li>
 <li>main-start/end：flexbox 容器内 item 所在的位置</li>
@@ -519,21 +519,21 @@
 </ul>
 <h2 id="flex-container"><a href="#flex-container" class="headerlink" title="flex container"></a>flex container</h2><p>可在 flex 父容器定义的属性</p>
 <h3 id="display"><a href="#display" class="headerlink" title="display"></a>display</h3><p>当定义 flex 时，及时 block 元素也将按照弹性布局的那种 direction 来呈现。</p>
-<img src="/2018/08/20/css-flex/display.png" title="定义flex的区别">
+<img src="/2018/08/20/css-flex/display.png" class="" title="定义flex的区别">
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"line"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex-container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-item"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.flex-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h3><p>定义 items 在 main-axis 或者 cross-axis 的排列方向</p>
-<img src="/2018/08/20/css-flex/flex-direction.png" title="flex-direction">
+<img src="/2018/08/20/css-flex/flex-direction.png" class="" title="flex-direction">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-direction: row | row-reverse | column | column-reverse;</span><br></pre></td></tr></table></figure>
-<img src="/2018/08/20/css-flex/flex-direction2.png">
+<img src="/2018/08/20/css-flex/flex-direction2.png" class="">
 <h3 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h3><p>当 items 的宽度超过 container 的宽度，将选择是否换行显示</p>
-<img src="/2018/08/20/css-flex/flex-wrap.png" title="flex-wrap">
+<img src="/2018/08/20/css-flex/flex-wrap.png" class="" title="flex-wrap">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-wrap: nowrap | wrap | wrap-reverse;</span><br></pre></td></tr></table></figure>
 <p><strong>注意，如果定义 nowrap，即使 item 有 width，也会被 container 做自适应，也就是 item 定义的 width 无效</strong></p>
-<img src="/2018/08/20/css-flex/flex-wrap2.png">
+<img src="/2018/08/20/css-flex/flex-wrap2.png" class="">
 <h3 id="flex-flow-flex-direction-flex-wrap"><a href="#flex-flow-flex-direction-flex-wrap" class="headerlink" title="flex-flow(flex-direction+flex-wrap)"></a>flex-flow(flex-direction+flex-wrap)</h3><p>简写语法糖，就像 border，backgound 一样。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flex-flow: &lt;‘flex-direction’&gt; || &lt;‘flex-wrap’&gt;</span><br><span class="line">flex-flow: row | row-reverse | column | column-reverse || nowrap | wrap | wrap-reverse</span><br></pre></td></tr></table></figure>
-<h3 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h3><p>内容（水平）排版间隔<br><img src="/2018/08/20/css-flex/justify-content.png" title="justify-content"></p>
+<h3 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h3><p>内容（水平）排版间隔<br><img src="/2018/08/20/css-flex/justify-content.png" class="" title="justify-content"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>flex-start: 默认，从左开始排版</li>
@@ -543,8 +543,8 @@
 <li>space-around：每个 item 左右距离平均分配，首末 item 距离边缘是 items 之前距离的一半</li>
 <li>space-evenly：main axis 的 main-start 到 item，item 到 end 中间的间距一致。<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/justify-content" target="_blank" rel="noopener">兼容不太友好</a></li>
 </ul>
-<img src="/2018/08/20/css-flex/justify-content2.png">
-<h3 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h3><p>（纵向）对齐方式<br><img src="/2018/08/20/css-flex/align-items.png" title="align-items"></p>
+<img src="/2018/08/20/css-flex/justify-content2.png" class="">
+<h3 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h3><p>（纵向）对齐方式<br><img src="/2018/08/20/css-flex/align-items.png" class="" title="align-items"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">align-items: flex-start | flex-end | center | baseline | stretch;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>flex-start：cross-start 开始排列</li>
@@ -553,8 +553,8 @@
 <li>baseline：按照基准线</li>
 <li>stretch：垂直平铺</li>
 </ul>
-<img src="/2018/08/20/css-flex/align-items2.png">
-<h3 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h3><p>大致相对于 justify-content<br><img src="/2018/08/20/css-flex/align-content.png" title="align-content"></p>
+<img src="/2018/08/20/css-flex/align-items2.png" class="">
+<h3 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h3><p>大致相对于 justify-content<br><img src="/2018/08/20/css-flex/align-content.png" class="" title="align-content"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>flex-start: cross-start 开始排列</li>
@@ -562,27 +562,27 @@
 <li>center：上下内容均等，items 中间无缝隙</li>
 <li>space-between：上下紧贴，中间 items 均分高度</li>
 <li>space-around：每个 item 上下距离平均分配，首末 item 距离边缘是 items 之前距离的一半</li>
-<li>stretch：高度平铺沾满<img src="/2018/08/20/css-flex/align-content2.png">
+<li>stretch：高度平铺沾满<img src="/2018/08/20/css-flex/align-content2.png" class="">
 </li>
 </ul>
 <h2 id="flex-item"><a href="#flex-item" class="headerlink" title="flex item"></a>flex item</h2><p>针对 flex 子元素项</p>
 <h3 id="order"><a href="#order" class="headerlink" title="order"></a>order</h3><p>指定 item 的顺序自定义</p>
-<img src="/2018/08/20/css-flex/order.png" title="order">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">order: &lt;integer&gt;; /* default is 0 */</span><br></pre></td></tr></table></figure>
+<img src="/2018/08/20/css-flex/order.png" class="" title="order">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">order: &lt;integer&gt;; &#x2F;* default is 0 *&#x2F;</span><br></pre></td></tr></table></figure>
 <h3 id="flex-grow"><a href="#flex-grow" class="headerlink" title="flex-grow"></a>flex-grow</h3><p>定义 item 和其他 item 的倍数关系</p>
-<img src="/2018/08/20/css-flex/flex-grow.png" title="flex-grow">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-grow: &lt;number&gt;; /* default 0 */</span><br></pre></td></tr></table></figure>
+<img src="/2018/08/20/css-flex/flex-grow.png" class="" title="flex-grow">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-grow: &lt;number&gt;; &#x2F;* default 0 *&#x2F;</span><br></pre></td></tr></table></figure>
 <h3 id="flex-shrink"><a href="#flex-shrink" class="headerlink" title="flex-shrink"></a>flex-shrink</h3><p>flex-grow 的反义词，收缩</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-shrink: &lt;number&gt;; /* default 1 */</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-shrink: &lt;number&gt;; &#x2F;* default 1 *&#x2F;</span><br></pre></td></tr></table></figure>
 <h3 id="flex-basis"><a href="#flex-basis" class="headerlink" title="flex-basis"></a>flex-basis</h3><p>特殊指定 item 的 size，可以（半分比、rem、px 等形式）。auto 将根据 main-size 分配</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-basis: &lt;length&gt; | auto; /* default auto */</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-basis: &lt;length&gt; | auto; &#x2F;* default auto *&#x2F;</span><br></pre></td></tr></table></figure>
 <h3 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h3><p>语法糖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex: none | [ &lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt; ]//Default is 0 1 auto</span><br></pre></td></tr></table></figure>
-<h3 id="align-self"><a href="#align-self" class="headerlink" title="align-self"></a>align-self</h3><p>和 align-items 相同，只是针对单个 item<br><img src="/2018/08/20/css-flex/align-self.png" title="align-self"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]&#x2F;&#x2F;Default is 0 1 auto</span><br></pre></td></tr></table></figure>
+<h3 id="align-self"><a href="#align-self" class="headerlink" title="align-self"></a>align-self</h3><p>和 align-items 相同，只是针对单个 item<br><img src="/2018/08/20/css-flex/align-self.png" class="" title="align-self"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br></pre></td></tr></table></figure>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><img src="/2018/08/20/css-flex/example1.png">
-<h3 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h3><img src="/2018/08/20/css-flex/example2.png">
-<h3 id="三段式布局"><a href="#三段式布局" class="headerlink" title="三段式布局"></a>三段式布局</h3><img src="/2018/08/20/css-flex/example3.png">
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><img src="/2018/08/20/css-flex/example1.png" class="">
+<h3 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h3><img src="/2018/08/20/css-flex/example2.png" class="">
+<h3 id="三段式布局"><a href="#三段式布局" class="headerlink" title="三段式布局"></a>三段式布局</h3><img src="/2018/08/20/css-flex/example3.png" class="">
 <h2 id="适配问题"><a href="#适配问题" class="headerlink" title="适配问题"></a>适配问题</h2><p>需要添加浏览器前缀，当然如果你使用预编译 css 工具，基本可以自动生成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">display: -webkit-box;</span><br><span class="line">display: -moz-box;</span><br><span class="line">display: -ms-flexbox;</span><br><span class="line">display: -webkit-flex;</span><br><span class="line">display: flex;</span><br><span class="line"></span><br><span class="line">-webkit-box-flex: $values;</span><br><span class="line">-moz-box-flex:  $values;</span><br><span class="line">-webkit-flex:  $values;</span><br><span class="line">-ms-flex:  $values;</span><br><span class="line">flex:  $values;</span><br><span class="line"></span><br><span class="line">-webkit-box-ordinal-group: $val;</span><br><span class="line">-moz-box-ordinal-group: $val;</span><br><span class="line">-ms-flex-order: $val;</span><br><span class="line">-webkit-order: $val;</span><br><span class="line">order: $val;</span><br></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank" rel="noopener">Flex css tricks</a><br><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool" target="_blank" rel="noopener">Flex 布局教程–阮一峰</a>)<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex" target="_blank" rel="noopener">Flex–mozilla</a></p>
@@ -653,7 +653,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057018').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520966').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -780,7 +780,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -802,7 +802,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

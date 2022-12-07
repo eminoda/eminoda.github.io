@@ -496,16 +496,16 @@
 
       
         <h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><p>切换分支的时候，A 分支新建的文件居然被 B 分支历史文件夹同步了。</p>
-<h1 id="重现步骤"><a href="#重现步骤" class="headerlink" title="重现步骤"></a>重现步骤</h1><img src="/2018/01/24/git-branch/1.png" title="1.master 目录结构">
-<img src="/2018/01/24/git-branch/2.png" title="2.分别创建test1，test2">
-<img src="/2018/01/24/git-branch/3-1.png" title="3.test1上，剪切src目录文件到dist中">
-<img src="/2018/01/24/git-branch/3-2.png" title="4.提交">
-<img src="/2018/01/24/git-branch/4-1.png" title="5.test2上，修改src下文件">
-<img src="/2018/01/24/git-branch/4-2.png" title="6.提交">
-<img src="/2018/01/24/git-branch/5-1.png" title="7.切换到test1，merge test2的修改">
-<p><strong>神奇的一 B：test2 中 src 的修改，居然到了 test1 的 dist 中提现出来</strong><br><img src="/2018/01/24/git-branch/5-2.png" title="8.神奇的一B"></p>
-<h1 id="大致原因"><a href="#大致原因" class="headerlink" title="大致原因"></a>大致原因</h1><img src="/2018/01/24/git-branch/6.png" title="流程">
-<p>官方介绍：<a href="https://git-scm.com/book/zh/v2/Git-分支-分支的新建与合并" target="_blank" rel="noopener">git branch 介绍</a><br>如图所示，C3&amp;C4 是由 C2 开始，并且根据不同的需求做修改。当 test1 和 test2 合并的时候，test2 并不是 test1 的父级，所以会出现<strong>‘recursive’ strategy</strong>策略的处理。<br>这个策略，将 C3，C4 作为两个副本快照，和他们公共的父节点 C2 做策略合并（three way merge）。<br>值得注意的是，C3 上做剪切动作时，git status 是<strong>rename</strong>，估计是这个原因 merge 后，会把 c4 的修改同步到 dist 的文件中。<br><img src="/2018/01/24/git-branch/7.png" title="rename"></p>
+<h1 id="重现步骤"><a href="#重现步骤" class="headerlink" title="重现步骤"></a>重现步骤</h1><img src="/2018/01/24/git-branch/1.png" class="" title="1.master 目录结构">
+<img src="/2018/01/24/git-branch/2.png" class="" title="2.分别创建test1，test2">
+<img src="/2018/01/24/git-branch/3-1.png" class="" title="3.test1上，剪切src目录文件到dist中">
+<img src="/2018/01/24/git-branch/3-2.png" class="" title="4.提交">
+<img src="/2018/01/24/git-branch/4-1.png" class="" title="5.test2上，修改src下文件">
+<img src="/2018/01/24/git-branch/4-2.png" class="" title="6.提交">
+<img src="/2018/01/24/git-branch/5-1.png" class="" title="7.切换到test1，merge test2的修改">
+<p><strong>神奇的一 B：test2 中 src 的修改，居然到了 test1 的 dist 中提现出来</strong><br><img src="/2018/01/24/git-branch/5-2.png" class="" title="8.神奇的一B"></p>
+<h1 id="大致原因"><a href="#大致原因" class="headerlink" title="大致原因"></a>大致原因</h1><img src="/2018/01/24/git-branch/6.png" class="" title="流程">
+<p>官方介绍：<a href="https://git-scm.com/book/zh/v2/Git-分支-分支的新建与合并" target="_blank" rel="noopener">git branch 介绍</a><br>如图所示，C3&amp;C4 是由 C2 开始，并且根据不同的需求做修改。当 test1 和 test2 合并的时候，test2 并不是 test1 的父级，所以会出现<strong>‘recursive’ strategy</strong>策略的处理。<br>这个策略，将 C3，C4 作为两个副本快照，和他们公共的父节点 C2 做策略合并（three way merge）。<br>值得注意的是，C3 上做剪切动作时，git status 是<strong>rename</strong>，估计是这个原因 merge 后，会把 c4 的修改同步到 dist 的文件中。<br><img src="/2018/01/24/git-branch/7.png" class="" title="rename"></p>
 
       
     </div>
@@ -573,7 +573,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400058659').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521912').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -700,7 +700,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -722,7 +722,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

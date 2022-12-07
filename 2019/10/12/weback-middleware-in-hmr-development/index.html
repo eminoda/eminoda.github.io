@@ -492,13 +492,13 @@
 
       
         <h2 id="谈下开发"><a href="#谈下开发" class="headerlink" title="谈下开发"></a>谈下开发</h2><p>webpack 的 HMR 都用过，但简单入门的都是依靠 webpack-dev-server ，如果你是个全栈开发，必然会有个 node 服务，那一个粗暴的项目模式将是这样：</p>
-<img src="/2019/10/12/weback-middleware-in-hmr-development/development-mode.png" title="粗暴的开发模式">
+<img src="/2019/10/12/weback-middleware-in-hmr-development/development-mode.png" class="" title="粗暴的开发模式">
 <p>这样就存在两个 Http 服务（webpack-dev-server 自带的 express 服务、和 node 服务）</p>
 <p>当然你项目稍稍“复杂些”，涉及服务端渲染，那上面这个模式就会变得难以理解。</p>
 <p>很不幸，我们的项目就是这样，未经推敲的构建方式，随着多页面的增多变得异常慢。抛开 webpack 优化，就连热更新都丢掉了。</p>
 <p>想要精简，最快的就是去掉一个服务（本身就有些累赘），去除后 <strong>怎么实现 HMR （脱离了 webpack-dev-server）？</strong></p>
 <p>先看下如下开发模式：</p>
-<img src="/2019/10/12/weback-middleware-in-hmr-development/development-mode2.png" title="精简的开发模式">
+<img src="/2019/10/12/weback-middleware-in-hmr-development/development-mode2.png" class="" title="精简的开发模式">
 <p>下面会对其中替代 webpack-dev-server 模块的 webpack-dev-middleware 和 webpack-hot-middleware 做说明：</p>
 <p>当然你可以跳过如下说明，直接看我已经写的一个 Demo：</p>
 <blockquote>
@@ -630,7 +630,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055670').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519744').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -759,7 +759,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -781,7 +781,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

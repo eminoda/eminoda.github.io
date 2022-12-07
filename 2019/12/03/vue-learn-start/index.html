@@ -534,7 +534,7 @@
 <p>先具体看下 <strong>initMixin</strong> ，因为它和一开始的函数声明关系最密切，定义了原型 <strong>_init</strong> 方法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\core\instance\init.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">initMixin</span>(<span class="params">Vue</span>) </span>&#123;</span><br><span class="line">  Vue.prototype._init = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    initLifecycle(vm);</span><br><span class="line">    initEvents(vm);</span><br><span class="line">    initRender(vm);</span><br><span class="line">    callHook(vm, <span class="string">"beforeCreate"</span>);</span><br><span class="line">    initInjections(vm); <span class="comment">// resolve injections before data/props</span></span><br><span class="line">    initState(vm);</span><br><span class="line">    initProvide(vm); <span class="comment">// resolve provide after data/props</span></span><br><span class="line">    callHook(vm, <span class="string">"created"</span>);</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (vm.$options.el) &#123;</span><br><span class="line">      vm.$mount(vm.$options.el);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>里面定义了一系列 vue 相关的初始化工作，结合 vue 的 <strong>生命周期图谱</strong>，会让容易理解这些初始化方法和 beforeCreate，created 两个生命周期钩子的意义。</p>
-<img src="/2019/12/03/vue-learn-start/lifecycle-init.png" title="生命周期图谱">
+<img src="/2019/12/03/vue-learn-start/lifecycle-init.png" class="" title="生命周期图谱">
 <p>紧接着之后的声明，在 <strong>initGlobalAPI</strong> 方法中知道 Vue 定义了哪些 <strong>全局 API</strong> 的？</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\core\index.js</span></span><br><span class="line">initGlobalAPI(Vue);</span><br></pre></td></tr></table></figure>
 <p>包括 Vue.config、Vue.set、Vue.delete、Vue.nextTick、Vue.observable、Vue.mixin、Vue.use、Vue.extend 等，这些你都能在官网的 <a href="https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80-API" target="_blank" rel="noopener">全局 API</a> 找到对应的说明。</p>
@@ -544,9 +544,9 @@
 <p>第二处是“完整版”打包入口文件这里，再次定义了 <strong>\$mount</strong> 方法，集成了 render 等函数，其内部调用上面的 <strong>\$mount</strong> 方法。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\platforms\web\entry-runtime-with-compiler.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mount = Vue.prototype.$mount;</span><br><span class="line">Vue.prototype.$mount = <span class="function"><span class="keyword">function</span>(<span class="params">el?: string | Element, hydrating?: boolean</span>): <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> mount.call(<span class="keyword">this</span>, el, hydrating);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>\$mount 在 _init() 方法中被调用，就这样我们能看到模板被挂载到页面上，其中的逻辑在 <strong>生命周期图谱</strong> 上也展示的很清楚：</p>
-<img src="/2019/12/03/vue-learn-start/lifecycle-mount.png" title="生命周期图谱">
+<img src="/2019/12/03/vue-learn-start/lifecycle-mount.png" class="" title="生命周期图谱">
 <p>之后，会根据数据的更新机制来完成页面的数据动态响应：</p>
-<img src="/2019/12/03/vue-learn-start/lifecycle-react.png" title="生命周期图谱">
+<img src="/2019/12/03/vue-learn-start/lifecycle-react.png" class="" title="生命周期图谱">
 <p>当然以上的过程都简单带过了，详细原理见后续文章。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>做了 vue 代码学习的准备工作。</p>
 <p>并结合 vue 整个生命周期过程，讲了一个简单的 vue 从声明到创建中间的所经历过程，大致对其中过程有个初步的概念。</p>
@@ -617,7 +617,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054787').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518850').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -744,7 +744,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -766,7 +766,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

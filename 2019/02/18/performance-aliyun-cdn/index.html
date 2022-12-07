@@ -506,18 +506,18 @@
 <li><strong>加速域名</strong> 支持泛解析。（这是给 <strong>使用方</strong> 的域名）</li>
 <li>缓存资源类型 这里选择小文件，诸如：js、css 等</li>
 <li><p>来源 目前选择域名来源，自定义不同的二级域名</p>
-<img src="/2019/02/18/performance-aliyun-cdn/setting-cdn.png" title="示例">
+<img src="/2019/02/18/performance-aliyun-cdn/setting-cdn.png" class="" title="示例">
 </li>
 </ul>
 <ol start="2">
 <li><p>记录 CNAME 设置完后，稍等片刻就会出现 CNAME，之后域名解析需要使用</p>
-<img src="/2019/02/18/performance-aliyun-cdn/setting-cdn-result.png" title="示例">
+<img src="/2019/02/18/performance-aliyun-cdn/setting-cdn-result.png" class="" title="示例">
 </li>
 <li><p><strong>域名解析</strong> 配置修改新增一条 CNAME 类型的记录</p>
-<img src="/2019/02/18/performance-aliyun-cdn/setting-domain.png" title="示例"> <img src="/2019/02/18/performance-aliyun-cdn/setting-domain-result.png" title="示例">
+<img src="/2019/02/18/performance-aliyun-cdn/setting-domain.png" class="" title="示例"> <img src="/2019/02/18/performance-aliyun-cdn/setting-domain-result.png" class="" title="示例">
 </li>
 </ol>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>验证 CDN 是否配置正确：确认 cdn 域名是否解析到 CNAME 上。 <img src="/2019/02/18/performance-aliyun-cdn/ok.png" title="示例"></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>验证 CDN 是否配置正确：确认 cdn 域名是否解析到 CNAME 上。 <img src="/2019/02/18/performance-aliyun-cdn/ok.png" class="" title="示例"></p>
 <p>实际效果：</p>
 <p>比如之前有个资源地址：<a href="http://image.shidouhua.cn/cdn1.png" target="_blank" rel="noopener">http://image.shidouhua.cn/cdn1.png</a></p>
 <p>当来自客户端的请求获取服务器资源时：</p>
@@ -526,7 +526,7 @@
 <p>如果配置都 ok ，客户端不会从服务器获取资源，而是从 CDN 节点拿数据，从而 <strong>降低服务器负载，加速网站</strong></p>
 <h2 id="更新-CDN-缓存"><a href="#更新-CDN-缓存" class="headerlink" title="更新 CDN 缓存"></a>更新 CDN 缓存</h2><p>因为缓存，所以就算原服务器更新的资源，客户端也不会及时生效，这就需要在资源变动时主动通知 CND 节点更新新资源。</p>
 <p>手动方式：</p>
-<img src="/2019/02/18/performance-aliyun-cdn/fresh.png" title="示例">
+<img src="/2019/02/18/performance-aliyun-cdn/fresh.png" class="" title="示例">
 <p>缺点：对于大量资源通过这种方式很难控制</p>
 <p>接口方式： <a href="https://help.aliyun.com/document_detail/27200.html?spm=a2c4g.11186623.6.809.24182c7dfXR2eu" target="_blank" rel="noopener">RefreshObjectCaches 等</a></p>
 <p>优点：可定制化</p>
@@ -598,7 +598,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056270').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520289').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -725,7 +725,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -747,7 +747,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

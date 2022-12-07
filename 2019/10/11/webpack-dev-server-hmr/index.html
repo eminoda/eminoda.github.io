@@ -531,7 +531,7 @@
 <h4 id="socket-建立后的准备"><a href="#socket-建立后的准备" class="headerlink" title="socket 建立后的准备"></a>socket 建立后的准备</h4><p>socket 服务创建连接后，随着 webpack 的构建，会同步向客户端发送 webpack 的构建进度信息</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.socketServer.onConnection(<span class="function">(<span class="params">connection, headers</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.sockWrite([connection], <span class="string">'hot'</span>);</span><br><span class="line">  <span class="keyword">this</span>.sockWrite([connection], <span class="string">'liveReload'</span>, <span class="keyword">this</span>.options.liveReload);</span><br><span class="line">  <span class="keyword">this</span>.sockWrite([connection], <span class="string">'progress'</span>, <span class="keyword">this</span>.progress);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>客户端就会接收到这些信息，并打印输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[HMR] Waiting for update signal from WDS...</span><br><span class="line">client:48 [WDS] Hot Module Replacement enabled.</span><br><span class="line">client:52 [WDS] Live Reloading enabled.</span><br><span class="line">[WDS] 0% - compiling.</span><br><span class="line">[WDS] 10% - building (0/0 modules).</span><br><span class="line">...</span><br><span class="line">[WDS] 100% - Compilation completed.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[HMR] Waiting for update signal from WDS...</span><br><span class="line">client:48 [WDS] Hot Module Replacement enabled.</span><br><span class="line">client:52 [WDS] Live Reloading enabled.</span><br><span class="line">[WDS] 0% - compiling.</span><br><span class="line">[WDS] 10% - building (0&#x2F;0 modules).</span><br><span class="line">...</span><br><span class="line">[WDS] 100% - Compilation completed.</span><br></pre></td></tr></table></figure>
 <h4 id="监听文件修改"><a href="#监听文件修改" class="headerlink" title="监听文件修改"></a>监听文件修改</h4><p>webpack-dev-server 会监听本地文件的修改保存，每当 webpack 编译完成后就发送 socket ，通知客户端重载更新代码，触发 <strong>reloadApp</strong> 。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node_modules\webpack-dev-server\lib\Server.js</span></span><br><span class="line">done.tap(<span class="string">"webpack-dev-server"</span>, stats =&gt; &#123;</span><br><span class="line">  <span class="keyword">this</span>._sendStats(<span class="keyword">this</span>.sockets, <span class="keyword">this</span>.getStats(stats));</span><br><span class="line">  <span class="keyword">this</span>._stats = stats;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.sockWrite(sockets, <span class="string">"hash"</span>, stats.hash); <span class="comment">// 关键依据</span></span><br><span class="line"><span class="keyword">this</span>.sockWrite(sockets, <span class="string">"ok"</span>);</span><br></pre></td></tr></table></figure>
@@ -559,10 +559,10 @@
 <p>最后交给 <strong>HotModuleReplacementPlugin</strong> 中的 <strong>source</strong> 输出到客户端代码中，这样就能在 html 看到新增的代码：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> <span class="attr">src</span>=<span class="string">"app.a924ad7db1acc3cd4b8e.hot-update.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>在 Network 中看到这样的请求：</p>
-<img src="/2019/10/11/webpack-dev-server-hmr/hrm-fetch.png">
+<img src="/2019/10/11/webpack-dev-server-hmr/hrm-fetch.png" class="">
 <p>同时完毕后，控制台会有如下打印：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[WDS] App hot update...</span><br><span class="line">// hot update code</span><br><span class="line">Accepting the updated printMe module!</span><br><span class="line">[HMR] Updated modules:</span><br><span class="line">[HMR]  - ./src/print.js</span><br><span class="line">[HMR] App is up to date.</span><br></pre></td></tr></table></figure>
-<h2 id="全览整个-HMR-过程（图）"><a href="#全览整个-HMR-过程（图）" class="headerlink" title="全览整个 HMR 过程（图）"></a>全览整个 HMR 过程（图）</h2><img src="/2019/10/11/webpack-dev-server-hmr/wds-hrm.png" title="整个 HMR 过程">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[WDS] App hot update...</span><br><span class="line">&#x2F;&#x2F; hot update code</span><br><span class="line">Accepting the updated printMe module!</span><br><span class="line">[HMR] Updated modules:</span><br><span class="line">[HMR]  - .&#x2F;src&#x2F;print.js</span><br><span class="line">[HMR] App is up to date.</span><br></pre></td></tr></table></figure>
+<h2 id="全览整个-HMR-过程（图）"><a href="#全览整个-HMR-过程（图）" class="headerlink" title="全览整个 HMR 过程（图）"></a>全览整个 HMR 过程（图）</h2><img src="/2019/10/11/webpack-dev-server-hmr/wds-hrm.png" class="" title="整个 HMR 过程">
 <ol>
 <li>设置 hot ，开启 HMR 功能（会对 webpack 的构建配置做修改，添加 entry 和 plugin）</li>
 <li>webpack 监听、构建本地代码</li>
@@ -651,7 +651,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055713').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519674').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -687,8 +687,8 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/07/vue-esm-vs-commonjs/" rel="next" title="ES Module 和 CommonJS 的区别">
-                <i class="fa fa-chevron-left"></i> ES Module 和 CommonJS 的区别
+              <a href="/2019/09/09/how-terrible-in-memory-leak/" rel="next" title="令人“头大”的 Nodejs 内存泄露">
+                <i class="fa fa-chevron-left"></i> 令人“头大”的 Nodejs 内存泄露
               </a>
             
           </div>
@@ -780,7 +780,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -802,7 +802,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -511,7 +511,7 @@
 <blockquote>
 <p>对象代表了 performance 时间列表中的单个 metric 数据. 每一个 performance entry 都可以在应用运行过程中通过手动构建 mark 或者 measure (例如调用 mark() 方法) 生成. 此外, Performance entries 在资源加载的时候， 也会被动生成（例如图片、 script、 css 等资源加载）</p>
 </blockquote>
-<img src="/2019/06/08/window-performance/result.png" title="getEntries">
+<img src="/2019/06/08/window-performance/result.png" class="" title="getEntries">
 <p>以上结果较多， 可以用这两个 api 进行筛选输出（name or entryType）：</p>
 <ul>
 <li>performance.getEntriesByName(name, type);</li>
@@ -531,7 +531,7 @@
 </code></pre></li>
 </ul>
 <p>通过这些属性， 类似上面 measure 的 demo， 就能知道浏览器在执行 dom， 请求响应， 加载等异步处理项目上的损耗。</p>
-<img src="/2019/06/08/window-performance/timing.png" title="timing">
+<img src="/2019/06/08/window-performance/timing.png" class="" title="timing">
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
 <p>我只是知识点的“加工者”， 更多内容请查阅原文链接 :thought_balloon: ， 同时感谢原作者的付出：</p>
 </blockquote>
@@ -607,7 +607,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056054').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520028').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -734,7 +734,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -756,7 +756,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

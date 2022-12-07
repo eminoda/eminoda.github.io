@@ -505,7 +505,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个 hello-world 项目</span></span><br><span class="line">swagger project create hello-world</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Swagger 文档编辑模式</span></span><br><span class="line">swagger project edit</span><br></pre></td></tr></table></figure>
 <p>一切 ok，你将看到一个 Swagger 基础的编辑页面</p>
-<img src="/2019/08/06/swagger-use-in-frontend/swagger-edit.png" title="edit-page">
+<img src="/2019/08/06/swagger-use-in-frontend/swagger-edit.png" class="" title="edit-page">
 <p>如果“使用方”不在意这样的编辑模式，完全可以把这个服务放到测试环境，供团队使用。</p>
 <p>当然还有些问题：</p>
 <ul>
@@ -523,20 +523,20 @@
 <li>更规范的注释结构</li>
 <li>通过命名，会自动输出文档（egg 的文档就是这样输出的）</li>
 </ul>
-<img src="/2019/08/06/swagger-use-in-frontend/jsdoc.png" title="jsdoc 部分文档">
+<img src="/2019/08/06/swagger-use-in-frontend/jsdoc.png" class="" title="jsdoc 部分文档">
 <h4 id="swagger-jsdoc"><a href="#swagger-jsdoc" class="headerlink" title="swagger-jsdoc"></a>swagger-jsdoc</h4><p>参照 jsdoc ，很容易找到社区有类似的插件 swagger-jsdoc，作用就不在解释了，可以直接输出 Swagger 可识别的 json 规则。</p>
 <p>使用 @swagger 作为注释解析的专用标题，注释以 yaml 维护</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * /user:</span></span><br><span class="line"><span class="comment"> *   get:</span></span><br><span class="line"><span class="comment"> *     description: 用户信息</span></span><br><span class="line"><span class="comment"> *     tags:</span></span><br><span class="line"><span class="comment"> *      - Users</span></span><br><span class="line"><span class="comment"> *     parameters:</span></span><br><span class="line"><span class="comment"> *      - name: username</span></span><br><span class="line"><span class="comment"> *        in: query</span></span><br><span class="line"><span class="comment"> *        description: 用户名</span></span><br><span class="line"><span class="comment"> *        required: true</span></span><br><span class="line"><span class="comment"> *        type: string</span></span><br><span class="line"><span class="comment"> *        default: '18702141422'</span></span><br><span class="line"><span class="comment"> *     responses:</span></span><br><span class="line"><span class="comment"> *       200:</span></span><br><span class="line"><span class="comment"> *         description: users</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">router.get(<span class="string">'/user'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  ctx.body = &#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>声明一个 Swagger 定义文件 swaggerOptions.js</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  info: &#123;</span><br><span class="line">    <span class="comment">// API informations (required)</span></span><br><span class="line">    title: <span class="string">'Hello World'</span>, <span class="comment">// Title (required)</span></span><br><span class="line">    version: <span class="string">'1.0.0'</span>, <span class="comment">// Version (required)</span></span><br><span class="line">    description: <span class="string">'A sample API'</span> <span class="comment">// Description (optional)</span></span><br><span class="line">  &#125;,</span><br><span class="line">  schemes: [<span class="string">'http'</span>],</span><br><span class="line">  consumes: [<span class="string">'application/x-www-form-urlencoded'</span>],</span><br><span class="line">  produces: [<span class="string">'application/json'</span>],</span><br><span class="line">  apis: [<span class="string">'./routes/global.js'</span>, <span class="string">'./routes/users.js'</span>],</span><br><span class="line">  basePath: <span class="string">'/api'</span> <span class="comment">// Base path (optional)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>运行命令，输出 swagger.json （后续使用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swagger-jsdoc -d ./swaggerOptions.js</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swagger-jsdoc -d .&#x2F;swaggerOptions.js</span><br></pre></td></tr></table></figure>
 <h4 id="swagger-ui"><a href="#swagger-ui" class="headerlink" title="swagger-ui"></a>swagger-ui</h4><p>swagger-api 社区也提供了一个 Swagger 风格的 ui 模块 —— swagger-ui</p>
 <p>你可以结合自己项目的情况，选择 swagger-ui 细致化构建。但我这里直接使用 swagger-ui-dist 直接使用。</p>
 <p>既然你是个有经验的开发者，相信对 express 不陌生，swagger-ui-dist 提供了页面所需要的 ui 组件，作为外部资源挂在到 express 公共目录上：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> pathToSwaggerUi = <span class="built_in">require</span>(<span class="string">'swagger-ui-dist'</span>).absolutePath();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(pathToSwaggerUi));</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
 <p>还记得前面的 swagger.json 吗？swagger-ui 需要这样一个 json 数据包，来显示文档数据。（我把它放到测试机上，并用 Nginx 提供了服务地址）</p>
-<img src="/2019/08/06/swagger-use-in-frontend/swagger-ui.jpg" title="swagger-ui">
+<img src="/2019/08/06/swagger-use-in-frontend/swagger-ui.jpg" class="" title="swagger-ui">
 <h4 id="雏形"><a href="#雏形" class="headerlink" title="雏形"></a>雏形</h4><p>通过这几步，一套初步的前端 Swagger 方案应该能看到了：</p>
 <ol>
 <li>维护 yaml 格式的 swagger 注释，描述 api 信息</li>
@@ -629,7 +629,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055784').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519774').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -756,7 +756,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -778,7 +778,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

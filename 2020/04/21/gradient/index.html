@@ -494,15 +494,15 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">border: 20px solid linear-gradient(red, green); //error</span><br></pre></td></tr></table></figure>
 <p>上篇讲过 <a href="./2020-04-21-border-image">《css border-image 属性》</a>，所以如果有了这块的了解，那 border 的渐变将非常容易。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: 20<span class="selector-tag">px</span> <span class="selector-tag">solid</span>;</span><br><span class="line"><span class="selector-tag">border-image</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">to</span> <span class="selector-tag">right</span>, <span class="selector-tag">red</span>, <span class="selector-tag">green</span>) 30 30;</span><br></pre></td></tr></table></figure>
-<img src="/2020/04/21/gradient/border.png">
+<img src="/2020/04/21/gradient/border.png" class="">
 <h1 id="背景色渐变"><a href="#背景色渐变" class="headerlink" title="背景色渐变"></a>背景色渐变</h1><p>背景色要使用渐变色可以直接在 background 上定义，或者在 background-image 上定义。但不能再 background-color 使用。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-image</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">yellow</span>, <span class="selector-tag">green</span>);</span><br><span class="line"><span class="comment">/* or */</span></span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">yellow</span>, <span class="selector-tag">green</span>);</span><br><span class="line"><span class="comment">/* error */</span></span><br><span class="line"><span class="selector-tag">background-color</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">yellow</span>, <span class="selector-tag">green</span>);</span><br></pre></td></tr></table></figure>
-<img src="/2020/04/21/gradient/background.png">
+<img src="/2020/04/21/gradient/background.png" class="">
 <h1 id="字体渐变"><a href="#字体渐变" class="headerlink" title="字体渐变"></a>字体渐变</h1><p>字体渐变会有很大不同，首先我们需要设置一个背景色，然后将字体颜色设置为 <strong>透明</strong>，这样背景色将为做文字颜色。</p>
 <p>另外，还需要设置 background-clip 属性，这个属性将控制背景色延伸到哪个位置。</p>
 <p>比如为 text，背景色将全用于字体（注意此值只属于 webkit）。其他还有：border-box、padding-box、content-box 等取值。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-image</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">yellow</span>, <span class="selector-tag">green</span>);</span><br><span class="line"><span class="selector-tag">-webkit-background-clip</span>: <span class="selector-tag">text</span>;</span><br><span class="line"><span class="selector-tag">color</span>: <span class="selector-tag">transparent</span>;</span><br></pre></td></tr></table></figure>
-<img src="/2020/04/21/gradient/font.png">
+<img src="/2020/04/21/gradient/font.png" class="">
 
       
     </div>
@@ -570,7 +570,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054314').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518348').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -697,7 +697,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -719,7 +719,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

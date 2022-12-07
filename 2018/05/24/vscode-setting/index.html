@@ -487,8 +487,8 @@
       
 
       
-        <h1 id="在哪里对-vscode-进行设置"><a href="#在哪里对-vscode-进行设置" class="headerlink" title="在哪里对 vscode 进行设置"></a>在哪里对 vscode 进行设置</h1><img src="/2018/05/24/vscode-setting/where.png">
-<img src="/2018/05/24/vscode-setting/where2.png">
+        <h1 id="在哪里对-vscode-进行设置"><a href="#在哪里对-vscode-进行设置" class="headerlink" title="在哪里对 vscode 进行设置"></a>在哪里对 vscode 进行设置</h1><img src="/2018/05/24/vscode-setting/where.png" class="">
+<img src="/2018/05/24/vscode-setting/where2.png" class="">
 <h1 id="一些个人配置，供参考"><a href="#一些个人配置，供参考" class="headerlink" title="一些个人配置，供参考"></a>一些个人配置，供参考</h1><p>主要配置，在系统默认的配置中描述很详细（都有中文介绍）<br><a href="https://code.visualstudio.com/docs/getstarted/settings" target="_blank" rel="noopener">官网-设置介绍</a></p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"git.path"</span>: <span class="string">"D:\\git\\Git\\cmd\\git.exe"</span>, <span class="comment">//git地址，然后可以在控制台使用git shell</span></span><br><span class="line">  <span class="attr">"terminal.integrated.shell.windows"</span>: <span class="string">"C:\\WINDOWS\\Sysnative\\cmd.exe"</span>, <span class="comment">//选择终端模式，cmd or prower shell</span></span><br><span class="line">  <span class="attr">"window.zoomLevel"</span>: <span class="number">0</span>, <span class="comment">// 窗口大小</span></span><br><span class="line">  <span class="attr">"editor.detectIndentation"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"editor.formatOnSave"</span>: <span class="literal">true</span>, <span class="comment">//保存后自动格式化</span></span><br><span class="line">  <span class="attr">"eslint.autoFixOnSave"</span>: <span class="literal">true</span>, <span class="comment">//格式化后 自动修复</span></span><br><span class="line">  <span class="attr">"extensions.ignoreRecommendations"</span>: <span class="literal">false</span>, <span class="comment">//忽略插件推荐</span></span><br><span class="line">  <span class="attr">"fileheader.Author"</span>: <span class="string">"shixinghao"</span>, <span class="comment">// 插件vscode-fileheader，具体设置</span></span><br><span class="line">  <span class="attr">"fileheader.LastModifiedBy"</span>: <span class="string">"shixinghao"</span>, <span class="comment">// 插件vscode-fileheader，具体设置</span></span><br><span class="line">  <span class="attr">"vetur.format.defaultFormatter.js"</span>: <span class="string">"vscode-typescript"</span>, <span class="comment">//插件vetur，默认格式化风格</span></span><br><span class="line">  <span class="attr">"vetur.format.defaultFormatter.html"</span>: <span class="string">"js-beautify-html"</span>, <span class="comment">//插件vetur，默认格式化风格</span></span><br><span class="line">  <span class="attr">"javascript.format.insertSpaceBeforeFunctionParenthesis"</span>: <span class="literal">true</span>, <span class="comment">// 针对eslint规则，对js特殊配置</span></span><br><span class="line">  <span class="attr">"typescript.format.insertSpaceBeforeFunctionParenthesis"</span>: <span class="literal">true</span>, <span class="comment">// 针对eslint规则，对js特殊配置</span></span><br><span class="line">  <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Visual Studio Dark"</span> <span class="comment">//ide style</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -558,7 +558,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057391').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521425').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -685,7 +685,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -707,7 +707,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

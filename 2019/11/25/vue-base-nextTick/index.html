@@ -495,11 +495,11 @@
 <p>在开发时，是不是遇到过这样的场景，响应数据明明已经更新，但无法通过 dom 获取到。最后使用 nextTick 方法“包裹”后就能拿到。如果你不太清楚其中的原因，这篇或许能解开你的疑惑。</p>
 <h1 id="先来看个例子"><a href="#先来看个例子" class="headerlink" title="先来看个例子"></a>先来看个例子</h1><p>这个例子很简单，主要来测试 nextTick 的作用。</p>
 <p>定义了一个异步数据获取的方法 asyncDataFetch ，你可以把它当成一个接口请求，在执行 updateMsg 后，调用该方法，并最后通过 \$refs 的方式来获取页面上的文本。</p>
-<img src="/2019/11/25/vue-base-nextTick/demo-html.png" title="页面模板">
-<img src="/2019/11/25/vue-base-nextTick/demo-methods.png" title="方法定义">
+<img src="/2019/11/25/vue-base-nextTick/demo-html.png" class="" title="页面模板">
+<img src="/2019/11/25/vue-base-nextTick/demo-methods.png" class="" title="方法定义">
 <p>虽然我们已经把接口返回的数据赋值给 this.asyncData ,但实际却没有在 \$refs 中获取到 （html-2）。</p>
 <p>从调试 console 中看到，其在 nextTick 方法中（html-3）被成功获取。</p>
-<img src="/2019/11/25/vue-base-nextTick/demo.png" title="浏览器输出">
+<img src="/2019/11/25/vue-base-nextTick/demo.png" class="" title="浏览器输出">
 <h1 id="异步更新队列"><a href="#异步更新队列" class="headerlink" title="异步更新队列"></a>异步更新队列</h1><blockquote>
 <p>为什么例子中，明明把数据赋值给响应对象，但 html-2 中却没有更新呢？</p>
 </blockquote>
@@ -509,14 +509,14 @@
 <p>在这个异步队列中，vue 会根据不同的“异步” api 的支持情况来选择以最佳的方式执行 tick 。这些 api 包括：Promise、MutationObserver、setImmdiate、setTimeout。如果你了解浏览器的事件循环机制，将会对理解这个异步队列容易许多。</p>
 <h1 id="nextTick"><a href="#nextTick" class="headerlink" title="nextTick"></a>nextTick</h1><p>好，知道 vue 中数据的更新时异步这一个概念后，那么为什么在 nextTick 执行相关代码能达到预期效果就基本知道大概了。</p>
 <p>如下是一段 nextTick 相关源码片段，你可以在 vue\src\core\util\next-tick.js 找到：</p>
-<img src="/2019/11/25/vue-base-nextTick/nextTick.png" title="源码">
+<img src="/2019/11/25/vue-base-nextTick/nextTick.png" class="" title="源码">
 <p>它会有什么作用呢？</p>
 <p>一旦调用了 nextTick ，就会把我们定义的 callback 函数方法推到 callbacks 这样一个全局变量中，这个 callbacks 就是 <strong>异步更新队列</strong>。</p>
 <p>然后会执行 timerFunc 一个异步 tick 方式封装。</p>
 <p>如果当前客户端不支持 Promise、MutationObserver 等 api 方法时，将采用 setTimeout 后备方式：</p>
-<img src="/2019/11/25/vue-base-nextTick/callbacks-execute.png" title="setTimeout 方式">
+<img src="/2019/11/25/vue-base-nextTick/callbacks-execute.png" class="" title="setTimeout 方式">
 <p>当 vue 开始执行更新相关操作时，通过 flushCallbacks 方法来“清空”这个队列，内部执行每个队列元素：</p>
-<img src="/2019/11/25/vue-base-nextTick/callbacks.png" title="源码">
+<img src="/2019/11/25/vue-base-nextTick/callbacks.png" class="" title="源码">
 <p>由于操作 dom 的成本非常高， vue 在数据 watch 层做了很多优化来处理整个过程的计算操作。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>说了为何使用 nextTick 能解决开发中一些“奇怪”的问题，并抛出 vue 的异步事件队列这个概念来解释这个原因。</p>
 
@@ -586,7 +586,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054887').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518947').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -713,7 +713,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -735,7 +735,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

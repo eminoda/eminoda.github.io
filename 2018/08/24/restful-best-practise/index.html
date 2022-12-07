@@ -524,9 +524,9 @@
 <li>接口以资源定义，不要按照功能语义功能</li>
 </ul>
 <p>切记不要使用如下方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/getUsers</span><br><span class="line">/addUsers</span><br><span class="line">/user</span><br><span class="line">/frozenUsers</span><br><span class="line">/activeUser</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;getUsers</span><br><span class="line">&#x2F;addUsers</span><br><span class="line">&#x2F;user</span><br><span class="line">&#x2F;frozenUsers</span><br><span class="line">&#x2F;activeUser</span><br></pre></td></tr></table></figure>
 <h2 id="请求参数定义"><a href="#请求参数定义" class="headerlink" title="请求参数定义"></a>请求参数定义</h2><p>比如维护 get api 或者添加 query params 方式来改变用户状态。应该使用 post、put 等来修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/users/:id/frozen</span><br><span class="line">/users/:id?frozen=1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;users&#x2F;:id&#x2F;frozen</span><br><span class="line">&#x2F;users&#x2F;:id?frozen&#x3D;1</span><br></pre></td></tr></table></figure>
 <h2 id="不同的错误处理"><a href="#不同的错误处理" class="headerlink" title="不同的错误处理"></a>不同的错误处理</h2><p>提供针对不同情况的 response code 和描述错误的信息</p>
 <h2 id="返回状态码限制"><a href="#返回状态码限制" class="headerlink" title="返回状态码限制"></a>返回状态码限制</h2><p>同一接口在不同的 method 下，不同错误处理，返回的状态码不同。</p>
 <ul>
@@ -537,8 +537,8 @@
 <li>403 Forbidden</li>
 <li>500 Internal Server Error</li>
 </ul>
-<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.example.com/v1/users</span><br></pre></td></tr></table></figure>
-<h2 id="HATEOAS-驱动"><a href="#HATEOAS-驱动" class="headerlink" title="HATEOAS 驱动"></a>HATEOAS 驱动</h2><p>HATEOAS(hypermedia as the engine of application state)<br>整个 rest 构建的服务，以超文本作为应用状态来驱动。客户端对资源的获取渐进式的方式按需获取。<br><img src="/2018/08/24/restful-best-practise/HATEOAS.png" title="HATEOAS"></p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;api.example.com&#x2F;v1&#x2F;users</span><br></pre></td></tr></table></figure>
+<h2 id="HATEOAS-驱动"><a href="#HATEOAS-驱动" class="headerlink" title="HATEOAS 驱动"></a>HATEOAS 驱动</h2><p>HATEOAS(hypermedia as the engine of application state)<br>整个 rest 构建的服务，以超文本作为应用状态来驱动。客户端对资源的获取渐进式的方式按需获取。<br><img src="/2018/08/24/restful-best-practise/HATEOAS.png" class="" title="HATEOAS"></p>
 <ul>
 <li>第一个层次（Level 0）的 Web 服务只是使用 HTTP 作为传输方式，实际上只是远程方法调用（RPC）的一种具体形式。SOAP 和 XML-RPC 都属于此类。</li>
 <li>第二个层次（Level 1）的 Web 服务引入了资源的概念。每个资源有对应的标识符和表达。</li>
@@ -547,7 +547,7 @@
 </ul>
 <p>定义了 4 个 level，不过我们大多停留在 0,1 级，说白了就是不规范的 rest</p>
 <p>如：获取学校</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/api/schools</span><br><span class="line">&#123;</span><br><span class="line">    students:&#123;</span><br><span class="line">        url:&apos;/api/students&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    teachers:&#123;</span><br><span class="line">        url:&apos;/api/teachers&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;api&#x2F;schools</span><br><span class="line">&#123;</span><br><span class="line">    students:&#123;</span><br><span class="line">        url:&#39;&#x2F;api&#x2F;students&#39;</span><br><span class="line">    &#125;,</span><br><span class="line">    teachers:&#123;</span><br><span class="line">        url:&#39;&#x2F;api&#x2F;teachers&#39;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p><a href="https://github.com/waylau/rest-in-action" target="_blank" rel="noopener">rest action</a></p>
 
       
@@ -618,7 +618,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056948').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521156').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -747,7 +747,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -769,7 +769,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

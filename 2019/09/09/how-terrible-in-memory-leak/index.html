@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="性能优化,">
+  <meta name="keywords" content="性能优化," />
 
 
 
@@ -80,23 +80,22 @@
 
 
 <meta name="description" content="线上环境居然遇到了内存泄露，经过 3 天的摸索，算是解决了：  更换 pm2 版本，由 v3.5.1 降为 v3.4.1  对于这个结论还是不太满意，算是歪打正着。不过还是记录下这几天积累的经验，说不定对正在看此文的你会有帮助。 前言（鼓励）有幸，我这次有充足的时间去排查，没有其他事情干扰。但线上出现内存泄漏，解决起来比业务代码 bug 更难解决，那种头皮发麻的难受。原因如下：  项目代码复杂。排">
-<meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="令人“头大”的 Nodejs 内存泄露">
 <meta property="og:url" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/index.html">
 <meta property="og:site_name" content="NextInnovation">
 <meta property="og:description" content="线上环境居然遇到了内存泄露，经过 3 天的摸索，算是解决了：  更换 pm2 版本，由 v3.5.1 降为 v3.4.1  对于这个结论还是不太满意，算是歪打正着。不过还是记录下这几天积累的经验，说不定对正在看此文的你会有帮助。 前言（鼓励）有幸，我这次有充足的时间去排查，没有其他事情干扰。但线上出现内存泄漏，解决起来比业务代码 bug 更难解决，那种头皮发麻的难受。原因如下：  项目代码复杂。排">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/scope-ref.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/devtools.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/pm2-timewrap.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/pm2-httpMetrics.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/pm2-io.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/pm2-memory-leak.png">
-<meta property="og:updated_time" content="2020-11-23T00:59:35.451Z">
+<meta property="article:published_time" content="2019-09-09T10:21:29.000Z">
+<meta property="article:modified_time" content="2022-12-07T08:04:34.628Z">
+<meta property="article:author" content="Eminoda">
+<meta property="article:tag" content="性能优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="令人“头大”的 Nodejs 内存泄露">
-<meta name="twitter:description" content="线上环境居然遇到了内存泄露，经过 3 天的摸索，算是解决了：  更换 pm2 版本，由 v3.5.1 降为 v3.4.1  对于这个结论还是不太满意，算是歪打正着。不过还是记录下这几天积累的经验，说不定对正在看此文的你会有帮助。 前言（鼓励）有幸，我这次有充足的时间去排查，没有其他事情干扰。但线上出现内存泄漏，解决起来比业务代码 bug 更难解决，那种头皮发麻的难受。原因如下：  项目代码复杂。排">
 <meta name="twitter:image" content="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/scope-ref.png">
 
 
@@ -124,10 +123,69 @@
     }
   };
 </script>
+<script>
+  var PIXEL_RATIO = (function () {
+    var c = document.createElement("canvas"),
+    ctx = c.getContext("2d"),
+    dpr = window.devicePixelRatio || 1,
+    bsr = ctx['webkitBackingStorePixelRatio'] ||
+      ctx['mozBackingStorePixelRatio'] ||
+      ctx['msBackingStorePixelRatio'] ||
+      ctx['oBackingStorePixelRatio'] ||
+      ctx['backingStorePixelRatio'] || 1;
+    return dpr / bsr;
+  })();
+  var ratio = PIXEL_RATIO;
+  var width = 700;
+  var height = 360;
+  function drawCanvas(post){
+      // https://ant.design/docs/spec/colors-cn
+      var $canvas = document.getElementById(post.title);
+      $canvas.width = width*ratio
+      $canvas.height = height*ratio
+      $canvas.style.width = width + 'px';
+      $canvas.style.height = height + 'px';
+      var ctx = $canvas.getContext('2d')
+      var title = post.post_img.title || post.title;
+      var subTitle = post.post_img.sub_title;
+      // 背景色
+      ctx.fillStyle = post.post_img.bg_color||"#333";
+      ctx.fillRect(0, 0, width*ratio, height*ratio);
+      // 字体
+      ctx.textAlign = 'center'
+      ctx.font = '40px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+      ctx.fillStyle = post.post_img.title_color||"#fff";
+        $canvas.style.letterSpacing = '1px'
+      if(subTitle){
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+        ctx.font = '24px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+        ctx.fillStyle = post.post_img.sub_color||"#fff";
+        ctx.fillText(subTitle, width/2*ratio, 180*ratio+20);
+      }else{
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      (function($dom){
+        $dom.onclick = function(){
+          // 点击下载
+          var dlLink = document.createElement('a');
+          dlLink.download = post.title
+          dlLink.href = $dom.toDataURL("image/png");;
+          dlLink.dataset.downloadurl = ["image/png", dlLink.download, dlLink.href].join(':');
+
+          document.body.appendChild(dlLink);
+          dlLink.click();
+          document.body.removeChild(dlLink);
+        }
+      })($canvas)
+  }
+
+</script>
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/09/how-terrible-in-memory-leak/"/>
 
 
 
@@ -153,7 +211,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -171,7 +229,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">NextInnovation</span>
         <span class="logo-line-after"><i></i></span>
@@ -199,9 +257,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -209,9 +267,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -219,9 +277,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -229,9 +287,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -239,9 +297,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -249,9 +307,9 @@
       
         
         <li class="menu-item menu-item-topic">
-          <a href="/topic" rel="section">
+          <a href="/topic%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
             
             话题
           </a>
@@ -259,9 +317,9 @@
       
         
         <li class="menu-item menu-item-gittalk">
-          <a href="/gittalk/" rel="section">
+          <a href="/gittalk/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
             留言板
           </a>
@@ -274,7 +332,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -295,7 +353,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -335,7 +395,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -371,7 +431,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -383,7 +443,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -394,7 +454,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -455,11 +515,11 @@
 <p>执行没多久，就从 20M 飚到 几百 M。究其原因，还是因为闭包引用没有及时被销毁。</p>
 <p>具体原因如下：</p>
 <p>虽然 <strong>unused</strong> 没有被调用，但是其中包含 <strong>originalThing</strong> 并指向 <strong>theThing</strong> <strong>，theThing</strong> 在定义时有个 <strong>someMethod</strong> 方法，其就是个闭包（可以访问到 <strong>originalThing</strong>） ，该闭包在 <strong>unused</strong> 中由于引用了 <strong>originalThing</strong> 一直没有被释放。</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/scope-ref.png" title="层层嵌套的引用">
+<img src="/2019/09/09/how-terrible-in-memory-leak/scope-ref.png" class="" title="层层嵌套的引用">
 <h2 id="对内存进行“检查”"><a href="#对内存进行“检查”" class="headerlink" title="对内存进行“检查”"></a>对内存进行“检查”</h2><p>如果你对这块有查询过相关资料， <strong>heapdump</strong> 这模块应该频繁出现，这里说下如何使用它来监控项目的内存情况。当然还有 <strong>memwatch</strong> …</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install heapdump -S</span><br></pre></td></tr></table></figure>
 <p>如果你足够幸运，肯定会出现如下问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: #error This version of node/NAN/v8 requires a C++11 compiler</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: #error This version of node&#x2F;NAN&#x2F;v8 requires a C++11 compiler</span><br></pre></td></tr></table></figure>
 <p>原版本过低，需要更新 linux 系统的 gcc 等相关库。</p>
 <p>参考如下安装说明：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 repo 仓库</span></span><br><span class="line">wget http://people.centos.org/tru/devtools-2/devtools-2.repo</span><br><span class="line">mv devtools-2.repo /etc/yum.repos.d</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装新库</span></span><br><span class="line">yum install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 备份原库</span></span><br><span class="line">mv /usr/bin/gcc /usr/bin/gcc-4.4.7</span><br><span class="line">mv /usr/bin/g++ /usr/bin/g++-4.4.7</span><br><span class="line">mv /usr/bin/c++ /usr/bin/c++-4.4.7</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建快捷方式，将新库链到需要目录</span></span><br><span class="line">ln -s /opt/rh/devtoolset-2/root/usr/bin/gcc /usr/bin/gcc</span><br><span class="line">ln -s /opt/rh/devtoolset-2/root/usr/bin/c++ /usr/bin/c++</span><br><span class="line">ln -s /opt/rh/devtoolset-2/root/usr/bin/g++ /usr/bin/g++</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 检查版本，确定生效</span></span><br><span class="line">gcc --version</span><br></pre></td></tr></table></figure>
@@ -477,7 +537,7 @@
 <p>添加个快照路由，在按照需要抓取内存此刻使用情况:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.all(<span class="string">"/snapshot"</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  heapdump.writeSnapshot(<span class="string">"./dump-"</span> + <span class="built_in">Date</span>.now() + <span class="string">".heapsnapshot"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>导入到 chrome 的 profile 面板中，对比前后两个文件的变化，定位问题</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/devtools.png" title="profile">
+<img src="/2019/09/09/how-terrible-in-memory-leak/devtools.png" class="" title="profile">
 <p>一切顺利就能很快定位到问题代码。但实际要更困难，更摸不着头脑。</p>
 <h2 id="猜测的可能点"><a href="#猜测的可能点" class="headerlink" title="猜测的可能点"></a>猜测的可能点</h2><p>如果按照上述的“检查”操作还是没有定位到问题点，可能这段会对你有所帮助。</p>
 <p>首先要知道自己着手的项目的用途，所用技术，它对你排查问题更有指向意义。</p>
@@ -559,17 +619,17 @@
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>这两天从线上情况上看，修改 pm2 版本后，内存泄漏得到控制。下面由此结论反推验证步骤：</p>
 <ol>
 <li><p>使用 devtools ，发现一天的内存差异，TIMERWRAP 指标突增：</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-timewrap.png" title="profile">
+<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-timewrap.png" class="" title="profile">
 <p>TIMERWRAP 是 Node 里 Timer 相关定义，猜测是否有定时器在有规律的无限刷新占用性能。</p>
 </li>
 <li><p>继续查看，发现 pm2 有些“格格不入”</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-httpMetrics.png" title="profile">
+<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-httpMetrics.png" class="" title="profile">
 <p>metrics 心跳检测，是否有 setTimeout 之类的代码？</p>
 </li>
 <li><p>查看资料，发现相关 issus 中说代码有 leak</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-io.jpg" title="@pm2/io">
+<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-io.jpg" class="" title="@pm2&#x2F;io">
 <p>查看线上项目相关代码，的确有这段问题代码：</p>
-<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-memory-leak.png" title="@pm2/io">
+<img src="/2019/09/09/how-terrible-in-memory-leak/pm2-memory-leak.png" class="" title="@pm2&#x2F;io">
 <p>对于为何这段 if/else 会造成内存泄漏，有空再研究下。估计类似 dom 的 event 绑定没有解除所致。</p>
 </li>
 </ol>
@@ -603,7 +663,7 @@
       <div>
         <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
     <div>【长按关注】看看↓↓↓?</div>
-    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
@@ -655,11 +715,11 @@
 		color:#6190e8;
 	}
 </style>
-<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113">安全风险</a>，也可访问
+<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113" target="_blank" rel="noopener">安全风险</a>，也可访问
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634710992374').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519928').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -680,7 +740,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
       
         <div class="post-tags">
           
-            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"># 性能优化</a>
           
         </div>
       
@@ -771,7 +831,9 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
             
               <p class="site-author-name" itemprop="name">Eminoda</p>
               <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
@@ -782,9 +844,9 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -806,7 +868,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -859,7 +921,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

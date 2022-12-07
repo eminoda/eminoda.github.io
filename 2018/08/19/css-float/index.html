@@ -502,47 +502,47 @@
 <p><a href="https://css-tricks.com/all-about-floats/" target="_blank" rel="noopener">原文链接</a></p>
 </blockquote>
 <h2 id="什么是-Float"><a href="#什么是-Float" class="headerlink" title="什么是 Float"></a>什么是 Float</h2><p>Float 是 CSS 用于定位的属性。为了彻底明白它意图和来源，可以参考印刷设计。在印刷布局中，通常图片会有被包裹在文本里的需求。这通常称之为“图文混排（字体环绕）”，如下图：</p>
-<img src="/2018/08/19/css-float/print-layout.png">
+<img src="/2018/08/19/css-float/print-layout.png" class="">
 <p>在页面布局程序设定中，页面的框子可以控制文本是否遵循字体环绕。忽略字体环绕将使得单词在图片上方流过，就像它甚至不存在一样。这是图片是否是流动于页面一部分的区别。网页设计非常相似。</p>
-<img src="/2018/08/19/css-float/web-text-wrap.png">
+<img src="/2018/08/19/css-float/web-text-wrap.png" class="">
 <p>在网页设计中，页面元素依托 css 的 float 属性，使得图片被排版在文字里。<strong>浮动的元素依旧是网页流式的一部分</strong>。和绝对定位是有区别的。绝对定位的元素脱离页面流式布局，如同排版布局中告诉程序页面去忽略文字。绝对定位的元素不会影响其他元素，无论是否紧挨着接触。</p>
 <p>浮动代码示例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#sidebar &#123;</span><br><span class="line">  float: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通常 float 有四个合法值，left、right 更别是元素方向定位。none(默认值)定义元素不适用 float，inherit 跟随父元素的浮动值。</p>
 <h2 id="Float-使用场景？"><a href="#Float-使用场景？" class="headerlink" title="Float 使用场景？"></a>Float 使用场景？</h2><p>除了之前说的字体环绕图片，float 通常用于 web 页面的布局。</p>
-<img src="/2018/08/19/css-float/web-layout.png">
+<img src="/2018/08/19/css-float/web-layout.png" class="">
 <p>float 在小范围的布局也非常使用。拿页面一个小区域举例：如果我们需要浮动图像，当图片尺寸改变时该区域盒子内的文字将重新渲染自适应。</p>
-<img src="/2018/08/19/css-float/reflow-example-1.png">
+<img src="/2018/08/19/css-float/reflow-example-1.png" class="">
 <p>当然同样的效果 relative 定位和 absolute 定位也可以实现，但是该区域内的文本不会重新渲染并自适应。</p>
-<img src="/2018/08/19/css-float/reflow-example-2.png">
+<img src="/2018/08/19/css-float/reflow-example-2.png" class="">
 <h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>float 的类似元素是 clear。设置了 clear 的元素不会随意移动到浮动元素周边，而是会排在浮动元素之下，图例将更好的说明：</p>
-<img src="/2018/08/19/css-float/unclearedfooter.png">
+<img src="/2018/08/19/css-float/unclearedfooter.png" class="">
 <p>上例，侧边栏定义 right float 并且比内容局域短。页脚则会移动到浮动元素后的空缺位置。为了修复这个问题，定义 clear 使得页脚待到内容和侧边栏之下这个位置。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#footer &#123;</span><br><span class="line">  clear: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/2018/08/19/css-float/clearedfooter.png">
+<img src="/2018/08/19/css-float/clearedfooter.png" class="">
 <p>clear 也有四个值。both 是最为常用，可以清除任意方向的浮动。left,right 用于清除指定方向的浮动。none 默认值，无清除效果。inherit 在 IE 中支持不友好。</p>
-<img src="/2018/08/19/css-float/directionalclearing.png">
+<img src="/2018/08/19/css-float/directionalclearing.png" class="">
 <h2 id="高度塌陷"><a href="#高度塌陷" class="headerlink" title="高度塌陷"></a>高度塌陷</h2><p>使用 float 最容易疑惑的问题是怎么让包裹浮动元素的父元素有效。如果父元素不含其它元素但只有浮动元素，其高度将一定塌陷。如果没有明显的背景色等参照很难发现这个问题。</p>
-<img src="/2018/08/19/css-float/collapse.png">
+<img src="/2018/08/19/css-float/collapse.png" class="">
 <p>塌陷现象有点反人类，如下例子可能更为糟糕：</p>
-<img src="/2018/08/19/css-float/whywecollapse.png">
+<img src="/2018/08/19/css-float/whywecollapse.png" class="">
 <p>block 元素如果已经自适应 float 元素，我们将遇到两个段落之间不自然的空隙，没有什么好方法修复。遇到这样的问题，我们的设计师将崩溃。</p>
 <p>塌陷现象在浏览器布局问题中是极其常见的，需要在容器中的浮动元素之后和容器闭合之前来解决处理此类问题。</p>
 <h2 id="清除浮动的技巧"><a href="#清除浮动的技巧" class="headerlink" title="清除浮动的技巧"></a>清除浮动的技巧</h2><p>如果你处理这类问题当提前知道随后元素是什么，你可以使用 clear:both 来解决问题。这样不需要特殊修改和额外的标签处理。当然万事不会那样顺利，我们需要更多的清除浮动的工具类。</p>
 <h3 id="使用空的-Div-清空元素"><a href="#使用空的-Div-清空元素" class="headerlink" title="使用空的 Div 清空元素"></a>使用空的 Div 清空元素</h3><p>一个空的 div:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;clear: both;&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style&#x3D;&quot;clear: both;&quot;&gt;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
 <p>当然你可以使用其他标签如<br>，但是 div 是最为常见的，浏览器也没有针对它有特殊样式，指定功能，同时我们也不会对其做全局 css 处理。这个方法会被语义“信徒”认为是可笑的，在页面中无任何含义。虽然不能说他们错，但是我们这样做没有对页面造成影响。</p>
 <h3 id="使用-Overflow"><a href="#使用-Overflow" class="headerlink" title="使用 Overflow"></a>使用 Overflow</h3><p>在父元素上定义 overflow 溢出属性。如果将其设置为 auto、hidden，包含浮动的父元素将立竿见影地清除浮动。堪称优雅的方式，不需要添加额外标签。而然如果你发现如果在原有页面基础上又添加一个 div 来运用此方法，将等同于非语义的 div 方式，并且效果不会很好。<strong>记住 overflow 不是专门用来清除浮动的，当心不要隐藏内容或者触发非预期的滚动条</strong>。</p>
 <h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>添加一个 css 伪元素(pseudo selector)，如：:after。相比添加 overflow 在父元素上，你可以添加“.clearfix”来使用这个方法。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">'.'</span>;</span><br><span class="line">  <span class="attribute">visibility</span>: hidden;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这将用一个很小的真实存在的内容区域放在需要解决浮动问题的父元素中。当然这不是全部代码，如果你想兼容一些其他版本的浏览器。</p>
 <h2 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析"></a>场景分析</h2><p>不同场景需要不同的清除浮动的方法，如下（处理不同类型的网格块）：</p>
-<img src="/2018/08/19/css-float/grid-blocks.png">
+<img src="/2018/08/19/css-float/grid-blocks.png" class="">
 <p>为了更好的展示相同的块，我们想要每个颜色相同则重启一行。对于这个需求，当颜色改变时，我们可以使用 overflow、伪类方式。或者在每个颜色相同的组下使用 div 方式，当然不管添加三个充当父类的 div 或者额外添加的三个 div，你自己决定那个更好？</p>
-<img src="/2018/08/19/css-float/grid-blocks-cleared.png">
+<img src="/2018/08/19/css-float/grid-blocks-cleared.png" class="">
 <h2 id="float-问题（浏览器兼容）"><a href="#float-问题（浏览器兼容）" class="headerlink" title="float 问题（浏览器兼容）"></a>float 问题（浏览器兼容）</h2><p>float 总是会因为没考虑周全而显得解决地很鸡肋。这种脆弱性通常来自 ie6 和浮动相关的 bug。全世界都在放弃 ie6 的支持，可能你不关心，但对于关心的人来说会出现很多问题。</p>
 <h3 id="顶掉其他元素"><a href="#顶掉其他元素" class="headerlink" title="顶掉其他元素"></a>顶掉其他元素</h3><p>发生在当一个元素在一个比他更窄的浮动元素内部（图片居多）。绝大多数浏览器将渲染这个图片到浮动元素外，但不会差得很多。ie 将扩展浮动元素包裹其中的图片，这就会影响布局。会把其他元素往下挤掉</p>
-<img src="/2018/08/19/css-float/pushdown2.png">
+<img src="/2018/08/19/css-float/pushdown2.png" class="">
 <p>解决这个问题：你可以使用<strong>overflow:hidden</strong>来解除多余的部分。</p>
 <h3 id="边距扩大"><a href="#边距扩大" class="headerlink" title="边距扩大"></a>边距扩大</h3><p>使用 ie6 另一件事是，如果在 float 同一方向上使用 margin，将使得双倍的 margin。<br>解决这个问题：设置<strong>display:inline</strong>在浮动元素上，它依旧保持 block 元素特性。</p>
 <h3 id="3px-坑"><a href="#3px-坑" class="headerlink" title="3px 坑"></a>3px 坑</h3><p>当文字旁是浮动元素，其间的 3px 将被神奇的抹去。<br>解决这个问题：浮动元素上额外设置长宽。</p>
@@ -616,7 +616,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057051').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521216').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -743,7 +743,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -765,7 +765,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

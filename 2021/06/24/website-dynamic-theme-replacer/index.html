@@ -469,14 +469,14 @@
 </blockquote>
 <p>肯定有。下面就举例 <strong><a href="https://github.com/vueComponent/ant-design-vue-pro" target="_blank" rel="noopener">Ant Design Pro</a></strong> （一款基于 <strong>Vue</strong> 和 <strong>Ant Design</strong> 的中后台前端框架），看下它是基于什么实现的？</p>
 <h1 id="Ant-Design-Pro-到底有什么魔法？"><a href="#Ant-Design-Pro-到底有什么魔法？" class="headerlink" title="Ant Design Pro 到底有什么魔法？"></a>Ant Design Pro 到底有什么魔法？</h1><p>我们通过 <strong>npm run serve</strong> 启动项目，进入主页后，在页面右侧的设置按钮来切换主题色，能看到页面颜色也跟着发生了改变：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/antd-theme-replacer.gif">
+<img src="/2021/06/24/website-dynamic-theme-replacer/antd-theme-replacer.gif" class="">
 <p>试着找些明面上能看到的东西：</p>
 <p>打开调试工具，重新刷新页面，看到浏览器发送了一个 <strong>/css/theme-colors-xxx.css</strong> 的请求，响应内容为一大段样式代码：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/theme-fetch.png">
+<img src="/2021/06/24/website-dynamic-theme-replacer/theme-fetch.png" class="">
 <p>审查页面有关主题颜色的元素，发现利用了 <strong>样式覆盖</strong> 的特性让新颜色起了效果：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/theme-cover.png">
+<img src="/2021/06/24/website-dynamic-theme-replacer/theme-cover.png" class="">
 <p>这些新的样式代码被定义在一个 <strong>style</strong> 标签内：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/theme-style-tag.png">
+<img src="/2021/06/24/website-dynamic-theme-replacer/theme-style-tag.png" class="">
 <p>如此，将覆盖原先 UI 组件的颜色样式，从而将达到主题色切换的目的。不知所以然的你，肯定就会有如下问题：</p>
 <ul>
 <li><strong>css</strong> 样式代码根据什么规则生成的？</li>
@@ -497,9 +497,9 @@
 <p><strong>AssetsExtractor</strong> 内部逻辑过于复杂，代码流程如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AssetsExtractor</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.extractor = <span class="keyword">new</span> Extractor(options);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.extractAssets = <span class="function"><span class="keyword">function</span> (<span class="params">assets</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 遍历 assets 文件对象</span></span><br><span class="line">    <span class="keyword">var</span> srcArray = <span class="keyword">this</span>.extractToArray(assets);</span><br><span class="line">    <span class="keyword">var</span> output = dropDuplicate(srcArray).join(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">return</span> output;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.extractToArray = <span class="function"><span class="keyword">function</span> (<span class="params">assets</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">var</span> cssSrcs = [];</span><br><span class="line">    <span class="built_in">Object</span>.keys(assets).map(<span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">var</span> asset = assets[fn];</span><br><span class="line">      cssSrcs = cssSrcs.concat(that.extractAsset(fn, asset));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cssSrcs;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.extractAsset = <span class="function"><span class="keyword">function</span> (<span class="params">fn, asset</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">var</span> cssSrcs = [];</span><br><span class="line">    <span class="comment">// 2. 解析 js module 中符合 cssReg 的 css 代码</span></span><br><span class="line">    <span class="keyword">var</span> CssCodeReg = Css_Loader_Reg_UGLY;</span><br><span class="line">    src.replace(CssCodeReg, (match, $<span class="number">1</span>) =&gt; &#123;</span><br><span class="line">      cssSrcs = cssSrcs.concat(<span class="keyword">this</span>.extractor.extractColors($<span class="number">1</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cssSrcs;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Extractor</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 3. 通过指针逐个遍历符合条件的内容，重新组装层复合 css 语法的代码，并提取到 ret 数组中</span></span><br><span class="line">  <span class="keyword">this</span>.extractColors = <span class="function"><span class="keyword">function</span> (<span class="params">src</span>) </span>&#123;</span><br><span class="line">    src = src.replace(Reg_Lf_Rem, <span class="string">""</span>);</span><br><span class="line">    <span class="keyword">var</span> ret = [];</span><br><span class="line">    <span class="keyword">var</span> nameStart,</span><br><span class="line">      nameEnd,</span><br><span class="line">      cssEnd = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">      ret.push(selector + <span class="string">"&#123;"</span> + rules.join(<span class="string">";"</span>) + <span class="string">"&#125;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>遍历 <strong>compilation.assets</strong> 下每个资源内容，通过正则 <strong>CssCodeReg</strong> 将符合 <strong>css</strong> 代码的内容抓取出来。这些代码就是图中【绿色】中的内容：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/cssSrc-replace.png">
+<img src="/2021/06/24/website-dynamic-theme-replacer/cssSrc-replace.png" class="">
 <p>再通过 <strong>extractColors</strong> 方法逐行解析，得到一个有关主题色的 <strong>css</strong> 数组：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/cssSrc-ret.png">
+<img src="/2021/06/24/website-dynamic-theme-replacer/cssSrc-ret.png" class="">
 <p>最后将结果输出到 <strong>theme-colors-xxx.css</strong> 中。</p>
 <p>这里就回答其中一个问题：</p>
 <blockquote>
@@ -509,7 +509,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getEntryJs(outputName, assetSource, cssCode) &#123;</span><br><span class="line">  <span class="keyword">var</span> config = &#123;<span class="attr">url</span>: outputName, <span class="attr">colors</span>: <span class="keyword">this</span>.options.matchColors&#125;</span><br><span class="line">  <span class="keyword">var</span> configJs = <span class="string">'\n(typeof window==\'undefined\'?global:window).__theme_COLOR_cfg='</span> + <span class="built_in">JSON</span>.stringify(config) + <span class="string">';\n'</span></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> ConcatSource(assetSource, configJs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="主题样式请求怎么发起？"><a href="#主题样式请求怎么发起？" class="headerlink" title="主题样式请求怎么发起？"></a>主题样式请求怎么发起？</h1><p>我们以页面的主题设置为入口，看下 <strong>SettingDrawer</strong> 组件内部的功能。</p>
 <p>首先该组件提供了这些配置选项：</p>
-<img src="/2021/06/24/website-dynamic-theme-replacer/settingDrawer.png" title="UI展示">
+<img src="/2021/06/24/website-dynamic-theme-replacer/settingDrawer.png" class="" title="UI展示">
 <p>在该项目中，会发现有 <strong>config\themePluginConfig.js</strong> 配置：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config\themePluginConfig.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  theme: [</span><br><span class="line">    &#123;</span><br><span class="line">      key: <span class="string">"#F5222D"</span>,</span><br><span class="line">      fileName: <span class="string">"#F5222D.css"</span>,</span><br><span class="line">      modifyVars: &#123;</span><br><span class="line">        <span class="string">"@primary-color"</span>: <span class="string">"#F5222D"</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      key: <span class="string">"#FA541C"</span>,</span><br><span class="line">      fileName: <span class="string">"#FA541C.css"</span>,</span><br><span class="line">      modifyVars: &#123;</span><br><span class="line">        <span class="string">"@primary-color"</span>: <span class="string">"#FA541C"</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>如果你熟悉 <strong>Ant Design Pro</strong>，那么在 <strong><a href="https://pro.ant.design/docs/dynamic-theme-cn" target="_blank" rel="noopener">动态主题</a></strong> 中也能看到一样的配置，其通过 <strong>umi-plugin-antd-theme</strong> 进行设置。</p>
@@ -603,7 +603,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053904').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517913').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -724,7 +724,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -746,7 +746,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

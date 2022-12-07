@@ -504,10 +504,10 @@
 <p>在新建 MyPromise 对象后，将初始化一个延迟函数 this.lazyFn ，其需要一个 resolve 函数 ，就和原生 Promise 需要 resolve 和 reject 一样；</p>
 <p>调用 then 后，传入 callback 函数，其是在延迟函数执行完，通过 this._resolve 返回的高阶函数后触发执行。</p>
 <h2 id="别人怎么做的"><a href="#别人怎么做的" class="headerlink" title="别人怎么做的"></a>别人怎么做的</h2><h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><p>简单的看下 jq 中 deferred 的 promise.then 的实现：</p>
-<img src="/2019/07/12/js-my-promise/jquery-deferred.png" title="jquery-deferred">
+<img src="/2019/07/12/js-my-promise/jquery-deferred.png" class="" title="jquery-deferred">
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tuples = [</span><br><span class="line">  <span class="comment">// action, add listener, listener list, final state</span></span><br><span class="line">  [<span class="string">'resolve'</span>, <span class="string">'done'</span>, jQuery.Callbacks(<span class="string">'once memory'</span>), <span class="string">'resolved'</span>],</span><br><span class="line">  [<span class="string">'reject'</span>, <span class="string">'fail'</span>, jQuery.Callbacks(<span class="string">'once memory'</span>), <span class="string">'rejected'</span>],</span><br><span class="line">  [<span class="string">'notify'</span>, <span class="string">'progress'</span>, jQuery.Callbacks(<span class="string">'memory'</span>)]</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 <p>tuples 定义了 promise 相关调用的 api ，调用 then 时就会遍历这些 api ，看哪些被用户定义使用；</p>
-<img src="/2019/07/12/js-my-promise/jquery-deferred-ajax.png" title="jquery-deferred-ajax">
+<img src="/2019/07/12/js-my-promise/jquery-deferred-ajax.png" class="" title="jquery-deferred-ajax">
 <p>比如上图的 ajax 调用，会把 jqXHR 推入到 deferred.promise 函数中，在 ajax 请求完毕后，执行对应的 resolve 方法。最后通知到 newDefer 执行对应 callback 。</p>
 <h2 id="promise-polyfill"><a href="#promise-polyfill" class="headerlink" title="promise-polyfill"></a>promise-polyfill</h2><p>相对于 bluebird ，promise-polyfill 是一个轻量级的“腻子”，<a href="https://github.com/taylorhakes/promise-polyfill/blob/master/src/index.js" target="_blank" rel="noopener">点击直接查看源码</a></p>
 <p>借它，看下正儿八经的 promise 如何实现：</p>
@@ -619,7 +619,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055870').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519864').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -746,7 +746,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -768,7 +768,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

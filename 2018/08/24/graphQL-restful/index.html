@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="http,graphQL,restful," />
+  <meta name="keywords" content="http,restful,graphQL," />
 
 
 
@@ -93,8 +93,8 @@
 <meta property="article:modified_time" content="2020-11-23T00:59:35.388Z">
 <meta property="article:author" content="Eminoda">
 <meta property="article:tag" content="http">
-<meta property="article:tag" content="graphQL">
 <meta property="article:tag" content="restful">
+<meta property="article:tag" content="graphQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2018/08/24/graphQL-restful/graph-good1.png">
 
@@ -504,23 +504,23 @@
 </ul>
 <h1 id="GraphQL-和-Restful-那个好？"><a href="#GraphQL-和-Restful-那个好？" class="headerlink" title="GraphQL 和 Restful 那个好？"></a>GraphQL 和 Restful 那个好？</h1><p>GraphQL 基础介绍，可以参考我 Blog 里[GraphQL 入门]</p>
 <p>我会从 2 个<strong>实际场景</strong>来展现 GraphQL 的特点，对比 Restful，尽可能展示出 GraphQL 的<strong>优势</strong></p>
-<h2 id="场景一，数据聚合"><a href="#场景一，数据聚合" class="headerlink" title="场景一，数据聚合"></a>场景一，数据聚合</h2><p>一个简单的 用户主页 展示：<br><img src="/2018/08/24/graphQL-restful/graph-good1.png" title="用户主页"><br>缺点：</p>
+<h2 id="场景一，数据聚合"><a href="#场景一，数据聚合" class="headerlink" title="场景一，数据聚合"></a>场景一，数据聚合</h2><p>一个简单的 用户主页 展示：<br><img src="/2018/08/24/graphQL-restful/graph-good1.png" class="" title="用户主页"><br>缺点：</p>
 <ul>
 <li>为了渲染“个人中心”页面，请求了 3 个接口（这里起码调用了 3 个基础接口）。</li>
 <li>近百个字段，开发时寻找目标字段很困难</li>
 <li>业务条件不同，数据不稳定。</li>
 </ul>
-<p>拿来看看 GraphQL 能带来什么效果：<br><img src="/2018/08/24/graphQL-restful/graph-example1.png" title="维护一个页面的query对象，查询页面实际所需的字段"></p>
+<p>拿来看看 GraphQL 能带来什么效果：<br><img src="/2018/08/24/graphQL-restful/graph-example1.png" class="" title="维护一个页面的query对象，查询页面实际所需的字段"></p>
 <p>好处:</p>
 <ul>
 <li>以页面为单位，前端可自定义数据结构，更好的适应页面渲染</li>
 <li>数据体量急剧到最小化，相信开发，测试效率都大幅提升</li>
 <li>graphQL 专门维护对象 type，与后台一一对应，明确数据格式，相当于 mock debugger</li>
 </ul>
-<h2 id="场景二，数据重构"><a href="#场景二，数据重构" class="headerlink" title="场景二，数据重构"></a>场景二，数据重构</h2><img src="/2018/08/24/graphQL-restful/graph-good2.png" title="一个列表数据需要加工">
+<h2 id="场景二，数据重构"><a href="#场景二，数据重构" class="headerlink" title="场景二，数据重构"></a>场景二，数据重构</h2><img src="/2018/08/24/graphQL-restful/graph-good2.png" class="" title="一个列表数据需要加工">
 <p>如上图，持仓列表的<strong>当前市值占比=A/B 算出</strong>，AB 字段又分别来自不同接口。</p>
 <p>理想情况下：对于一个列表数据，前端肯定倾向于获取一个接口数据后遍历渲染即可，但<strong>事与愿违</strong>，产品的需求、业务问题、后端实现方式，总需要额外的接口请求，数据二次加工，才能达到预期。</p>
-<p>那我们 GraphQL 可以怎么应对？<br><img src="/2018/08/24/graphQL-restful/graph-example2.png" title="请求持仓接口直接包含业务数据"></p>
+<p>那我们 GraphQL 可以怎么应对？<br><img src="/2018/08/24/graphQL-restful/graph-example2.png" class="" title="请求持仓接口直接包含业务数据"></p>
 <p>好处：</p>
 <ul>
 <li>增加开发效率。前端一次请求，完成数据加工。后端多个接口也不用关心</li>
@@ -554,9 +554,9 @@
 	
 	<script>tags.push('http')</script>
 	
-	<script>tags.push('graphQL')</script>
-	
 	<script>tags.push('restful')</script>
+	
+	<script>tags.push('graphQL')</script>
 	
 
 
@@ -598,7 +598,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056920').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520901').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -621,9 +621,9 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
           
             <a href="/tags/http/" rel="tag"># http</a>
           
-            <a href="/tags/graphQL/" rel="tag"># graphQL</a>
-          
             <a href="/tags/restful/" rel="tag"># restful</a>
+          
+            <a href="/tags/graphQL/" rel="tag"># graphQL</a>
           
         </div>
       
@@ -729,7 +729,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -751,7 +751,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

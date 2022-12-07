@@ -496,12 +496,12 @@
 <li>在资源文件夹（dist/public）新建 <strong>libs/js/jquery</strong> 目录</li>
 <li>把 <strong>node_modules</strong> 下的 jquery 相关依赖复制到上述目录中</li>
 </ol>
-<img src="/2021/04/29/webpack-extract-node-modules-files/copy-old.png">
+<img src="/2021/04/29/webpack-extract-node-modules-files/copy-old.png" class="">
 <p>似乎没什么问题，一两个文件影响不了项目可读性，但对于一个老项目来说乱七八糟的 js 依赖，以及完全脱离工程化的构建方式是极具风险的，万一哪天谁删资源跑路，都是隐患。</p>
 <p>我不会告诉你，我在 pdfjs-dist 中引入 cmaps 文件夹提交了多少文件，强迫症表示接受不了。</p>
 <p>对于 <strong>copy-webpack-plugin</strong> 使用也非常简单，毕竟现在 <strong>webpack</strong> 都到 5 了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  <span class="keyword">new</span> CopyPlugin(&#123;</span><br><span class="line">    <span class="comment">// 输出路径默认 output.path 下</span></span><br><span class="line">    patterns: [&#123; <span class="attr">from</span>: <span class="string">'node_modules/jquery/dist'</span>, <span class="attr">to</span>: <span class="string">'js/libs/jquery'</span> &#125;],</span><br><span class="line">  &#125;),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-<img src="/2021/04/29/webpack-extract-node-modules-files/copy-new.png">
+<img src="/2021/04/29/webpack-extract-node-modules-files/copy-new.png" class="">
 <p>这样，项目目录就变得清爽多了，也不用了继续维护相关的资源文件内容了，每次打包构建都交给 <strong>webpack</strong> 帮我们从 <strong>node_modules</strong> 找到资源文件。</p>
 <p>并且，根据需要可以详细设置目标文件的路径，使项目以后可以灵活调整，减少维护成本。</p>
 <p>哦对了，如果你还在用 <strong>webpack4</strong> ，此插件不要使用 7 和 8 两个版本。</p>
@@ -582,7 +582,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053942').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517984').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -709,7 +709,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +731,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

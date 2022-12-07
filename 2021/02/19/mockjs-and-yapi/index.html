@@ -522,7 +522,7 @@
 </blockquote>
 <p>它的 <strong>可视化的接口管理界面</strong>，<strong>集成 Mock 服务</strong>，足够轻松解决上述这些问题。</p>
 <p>Github 上 20k 的 Star 数足以证明它在接口管理领域大家对它的认可。</p>
-<img src="/2021/02/19/mockjs-and-yapi/github.png">
+<img src="/2021/02/19/mockjs-and-yapi/github.png" class="">
 <p>同时，它还有如下出众的特性：</p>
 <ul>
 <li>支持 <strong>权限管理</strong>，<strong>私有化部署</strong>：方便，安全的在公司内部进行搭建，和人员管理</li>
@@ -534,29 +534,29 @@
 <h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>成功安装后，下面展示如何简单的维护一个接口 api：</p>
 <ol>
 <li><p>首先在指定空间下新建一个新项目</p>
-<img src="/2021/02/19/mockjs-and-yapi/1.png">
+<img src="/2021/02/19/mockjs-and-yapi/1.png" class="">
 </li>
 <li><p>为新项目设置统一的接口前缀等基础信息</p>
-<img src="/2021/02/19/mockjs-and-yapi/2.png">
+<img src="/2021/02/19/mockjs-and-yapi/2.png" class="">
 </li>
 <li><p>对不同模块的接口设置不同的文件夹进行分类</p>
-<img src="/2021/02/19/mockjs-and-yapi/3.png">
+<img src="/2021/02/19/mockjs-and-yapi/3.png" class="">
 </li>
 <li><p>创建第一个接口</p>
 <p>定义接口的 <strong>Http 方法</strong> 和 <strong>请求 URL</strong>（还有所属分类，以及接口名称）</p>
-<img src="/2021/02/19/mockjs-and-yapi/4.png">
+<img src="/2021/02/19/mockjs-and-yapi/4.png" class="">
 </li>
 <li><p>编写参数</p>
 <p>按照 Http 协议（主要是 <strong>Content-Type</strong> ），定义后端需要的请求参数和响应参数</p>
-<img src="/2021/02/19/mockjs-and-yapi/5.png">
+<img src="/2021/02/19/mockjs-and-yapi/5.png" class="">
 </li>
 <li><p>运行</p>
 <p>这里的运行是基于 YApi 的 Mock 服务，依靠此服务，能让完全前端独立出来，不在依赖后端服务</p>
-<img src="/2021/02/19/mockjs-and-yapi/6.png">
+<img src="/2021/02/19/mockjs-and-yapi/6.png" class="">
 </li>
 <li><p>预览</p>
 <p>作为文档供所有开发人员阅览</p>
-<img src="/2021/02/19/mockjs-and-yapi/7.png">
+<img src="/2021/02/19/mockjs-and-yapi/7.png" class="">
 </li>
 </ol>
 <h1 id="数据-Mock"><a href="#数据-Mock" class="headerlink" title="数据 Mock"></a>数据 Mock</h1><h2 id="Mock-js"><a href="#Mock-js" class="headerlink" title="Mock.js"></a>Mock.js</h2><p>参考“基本使用”，只是完成了接口文档的阅读，及基础调用。下面来介绍 YApi 的核心功能：<strong>数据 Mock</strong>。</p>
@@ -581,22 +581,22 @@
 <p>上述数据在实际使用毫无意义。我们更期望得到如下数据：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"code"</span>: <span class="number">200</span>,</span><br><span class="line">  <span class="attr">"data"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"是说林"</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">64</span>,</span><br><span class="line">      <span class="attr">"company"</span>: <span class="string">"non dolor magna minim sed"</span>,</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"c970CE5A-B1b4-1faF-c52e-1171Cc6b946A"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"物南来"</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">57</span>,</span><br><span class="line">      <span class="attr">"company"</span>: <span class="string">"enim"</span>,</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"4EC6Ec4b-b88A-d6Df-78A7-2457Af249Fb2"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面示意，<strong>如何使用 mock 占位符对字段进行修饰</strong>：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-basic-1.png">
-<img src="/2021/02/19/mockjs-and-yapi/mock-basic-2.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-basic-1.png" class="">
+<img src="/2021/02/19/mockjs-and-yapi/mock-basic-2.png" class="">
 <p>运行后，将得到 <strong>“看得懂”</strong> 的数据，这样维护的文档对前端和测试人员的体验感将提升很多：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-basic-3.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-basic-3.png" class="">
 <h2 id="高级-Mock"><a href="#高级-Mock" class="headerlink" title="高级 Mock"></a>高级 Mock</h2><h3 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h3><p>比如在 <strong>用户登录场景</strong>，我们希望输入 <strong>A 账户</strong> 可以正常登录，其他账户则登录失败。</p>
 <p>但在开发阶段，后端接口逻辑都没实现，甚至数据库连表都不存在，那前端怎么做？</p>
 <p>这时就可以使用 YApi 的 <strong>高级 Mock 期望</strong> 特性：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-adv-1.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-adv-1.png" class="">
 <p>通过定义 <strong>参数过滤</strong> 来指定可以正常登录的账户信息：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-adv-2.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-adv-2.png" class="">
 <p>在运行界面，当 username/password 为 eminoda/123456 时才返回预期的成功报文：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-adv-3.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-adv-3.png" class="">
 <h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><p>单靠 Mock 内置的占位符，和简单的期望规则无法模拟出实际预期的效果。</p>
 <p>比如，希望在 <strong>“用户列表”</strong> 接口中 company 字段从某个数组集合中挑选某个作为返回结果值。</p>
 <p>这时就需要开发掌握一些 Mock.js 技巧以及 javascript 的语法来完成模拟逻辑（但这些对于经历过 jsp 的后端来说都不是问题，这和前端如今 vue，react 扯不上关系）：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-adv-4.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-adv-4.png" class="">
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mockJson.code = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">params.page = params.page || <span class="number">1</span>;</span><br><span class="line">params.pageSize = params.pageSize || <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> buildData = <span class="function"><span class="keyword">function</span> (<span class="params">size</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> c = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">const</span> list = [];</span><br><span class="line">  <span class="keyword">while</span> (c &lt; size) &#123;</span><br><span class="line">    list.push(&#123;</span><br><span class="line">      name: Random.cword(<span class="number">3</span>),</span><br><span class="line">      age: Random.natural(<span class="number">10</span>, <span class="number">99</span>),</span><br><span class="line">      id: Random.guid(),</span><br><span class="line">      company: Random.pick([<span class="string">'alibaba'</span>, <span class="string">'bytedance'</span>, <span class="string">'tencent'</span>]),</span><br><span class="line">    &#125;);</span><br><span class="line">    c++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> list;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">if</span> (params.page &lt; <span class="number">2</span>) &#123;</span><br><span class="line">  mockJson.data = buildData(<span class="number">10</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  mockJson.data = buildData(<span class="number">5</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行后，将得到如下数据：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"code"</span>: <span class="number">200</span>,</span><br><span class="line">  <span class="attr">"data"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"六查山"</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">30</span>,</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"67d2f1Fe-D276-fBF2-AdBF-b1FEBA28Dee3"</span>,</span><br><span class="line">      <span class="attr">"company"</span>: <span class="string">"bytedance"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"次养打"</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">22</span>,</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"cbfF7e85-3CCB-98c4-5ff0-f4F2ee0D5ED6"</span>,</span><br><span class="line">      <span class="attr">"company"</span>: <span class="string">"tencent"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -607,38 +607,38 @@
 <h2 id="添加用例"><a href="#添加用例" class="headerlink" title="添加用例"></a>添加用例</h2><p>示意简单的用例创建</p>
 <ol>
 <li><p>在测试集合中关联对应接口</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-1.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-1.png" class="">
 </li>
 <li><p>针对“登录接口”，定义一个能登录成功的请求数据</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-2.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-2.png" class="">
 </li>
 <li><p>编写 Test，验证预期结果</p>
 <p>不用担心怎么写，在右侧都有快捷方式（点一下，即可在左侧代码区生成代码）</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-3.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-3.png" class="">
 <p><strong>这样就完成了一个用例的编写。</strong></p>
 </li>
 <li><p>参照上述步骤，再定义一个“登录失败”的用例（用于对比）</p>
 <p>请求参数填写“错误”的值，在 Test 验证错误的预期判断</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-4.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-4.png" class="">
 </li>
 </ol>
 <h2 id="用例-comb"><a href="#用例-comb" class="headerlink" title="用例 comb"></a>用例 comb</h2><p>比如我们有个“删除用户接口”，遵循 Restful 规范，通过 path 作为 id 参数来删除目标用户。</p>
 <p>而实际这个 id 需要从“用户列表接口”返回的用户集合中取一条获得，这时删除接口就要依赖列表接口。</p>
 <p>YAapi 也提供了 <strong>变量参数</strong> 对应这样的场景：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-5.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-5.png" class="">
 <p>通过特定表达式，来获取上个接口的参数：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">.4822.body.data[0].id</span></span><br></pre></td></tr></table></figure>
 <p>而这个 4822 就是测试集合中的 key 值（用户列表）：</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-6.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-6.png" class="">
 <p><a href="https://hellosean1025.github.io/yapi/documents/case.html#%e7%ac%ac%e4%ba%8c%e6%ad%a5%ef%bc%8c%e7%bc%96%e8%be%91%e6%b5%8b%e8%af%95%e7%94%a8%e4%be%8b" target="_blank" rel="noopener">点击了解更多</a></p>
 <h2 id="自动化测试用例"><a href="#自动化测试用例" class="headerlink" title="自动化测试用例"></a>自动化测试用例</h2><p>当完成一批的测试集合用例后，可以批量进行自动化测试，从而看接口服务的目前情况。</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-7.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-7.png" class="">
 <p>如果我们数据 Mock 足够真实，用例 Test 定义的足够完善，基本可以应对每次系统的迭代发布。一旦用例不通过，只会有两种情况：接口逻辑发生变化、用例写错。</p>
 <p>另外，YApi 提供了服务端测试，我们可以获取到用例测试的报告（全量的接口信息，整体响应的时间等维度结果）</p>
-<img src="/2021/02/19/mockjs-and-yapi/mock-test-8.png">
+<img src="/2021/02/19/mockjs-and-yapi/mock-test-8.png" class="">
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>本文只起抛砖引玉作用，示例了小部分的 Mock.js 使用以及 YApi 的实际使用场景，更多的需要开发和相关人员到 YApi 及相关站点阅读更多资料。</p>
 <p>另外，可惜的是 YApi 可能不在进行维护，需要额外更多功能的团队就需要二次开发，或者寻找其他适合的工具。</p>
-<img src="/2021/02/19/mockjs-and-yapi/yapi-author.png">
+<img src="/2021/02/19/mockjs-and-yapi/yapi-author.png" class="">
 <p>当然也感谢这些大佬对社区的贡献。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://hellosean1025.github.io/yapi/" target="_blank" rel="noopener">yapi</a></li>
@@ -714,7 +714,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054102').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518141').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -843,7 +843,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -865,7 +865,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

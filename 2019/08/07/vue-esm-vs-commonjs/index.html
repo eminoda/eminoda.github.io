@@ -535,7 +535,7 @@
 <p>有没有试过 CommonJS 的模块引入方式？</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Vue = <span class="built_in">require</span>(<span class="string">'vue'</span>);</span><br><span class="line"><span class="keyword">const</span> App = <span class="built_in">require</span>(<span class="string">'./App.vue'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// import Vue from 'vue';</span></span><br><span class="line"><span class="comment">// import App from './App.vue';</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123; router, <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> h(App) &#125;).$mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure>
 <p>然后就报错了…，看下控制台 App 对象的信息：</p>
-<img src="/2019/08/07/vue-esm-vs-commonjs/esm.png" title="demo">
+<img src="/2019/08/07/vue-esm-vs-commonjs/esm.png" class="" title="demo">
 <p>注意到 App 导出方式是使用 exports default 方式，所以在 CommonJS 引用时，会多个 default 属性。</p>
 <h2 id="ES-Module-中一个错误"><a href="#ES-Module-中一个错误" class="headerlink" title="ES Module 中一个错误"></a>ES Module 中一个错误</h2><p>比较下面两种 esm export 写法：</p>
 <h3 id="对象字面量导出"><a href="#对象字面量导出" class="headerlink" title="对象字面量导出"></a>对象字面量导出</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: <span class="number">2</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -625,7 +625,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055752').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519712').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -669,8 +669,8 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/11/webpack-dev-server-hmr/" rel="prev" title="探索 webpack-dev-server 的 HMR">
-                探索 webpack-dev-server 的 HMR <i class="fa fa-chevron-right"></i>
+              <a href="/2019/09/09/how-terrible-in-memory-leak/" rel="prev" title="令人“头大”的 Nodejs 内存泄露">
+                令人“头大”的 Nodejs 内存泄露 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -752,7 +752,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -774,7 +774,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

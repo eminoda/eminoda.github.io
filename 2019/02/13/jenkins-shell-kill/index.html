@@ -488,7 +488,7 @@
 
       
         <p>记录个问题，jenkins 成功执行了脚本，但是后台却未见服务进程。</p>
-<h2 id="还原经过"><a href="#还原经过" class="headerlink" title="还原经过"></a>还原经过</h2><p>设置如下：<br><img src="/2019/02/13/jenkins-shell-kill/1.png" title="示例"></p>
+<h2 id="还原经过"><a href="#还原经过" class="headerlink" title="还原经过"></a>还原经过</h2><p>设置如下：<br><img src="/2019/02/13/jenkins-shell-kill/1.png" class="" title="示例"></p>
 <p>jenkins 构建时，shell 基本操作都执行 ok（创建文件夹，目录切换），同时 <strong>xx.sh</strong> 脚本也正常运行，所有输出都打在 jenkins 的控制台上。</p>
 <p>蛋疼的事情来了，进到服务器却没有看到 <strong>xx.sh</strong> 脚本启动的新服务。可是控制台却告诉我服务启动成功的（一个黑人脸）</p>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>也不知道怎么去百度这个问题，好在看到 google 2 篇文章基本知道了原由所在。</p>
@@ -502,7 +502,7 @@
 <p>当然在没有找到这个原因时，我这边通过其他方式解决，如果官方方式没有用的同学可以参考下：</p>
 <p>利用 Send build artifacts over SSH</p>
 <p>在该插件中，维护 Exec command 选项，输入需求的 sh 脚本即可。</p>
-<img src="/2019/02/13/jenkins-shell-kill/2.png" title="示例">
+<img src="/2019/02/13/jenkins-shell-kill/2.png" class="" title="示例">
 
       
     </div>
@@ -570,7 +570,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056299').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520316').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -697,7 +697,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -719,7 +719,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

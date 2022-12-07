@@ -549,7 +549,7 @@
 <p>ES Moudle 就是社区为了统一模块加载方案，用来取代 CommonJS 和 AMD 规范的新方案。</p>
 <p>由于这个方案设计思想就是：尽量使得代码静态化，在编译时期就能确保各个模块间的依赖关系。这就是为何配合 webpack 等现代打包工具的 tree-shaking 特性能让代码体积更小的原因之一。</p>
 <p>举个代码例子说明 CommonJS vs ESM</p>
-<img src="/2019/11/04/vue-base-installation/build-diff.png" title="左：ESM，右：CommonJS">
+<img src="/2019/11/04/vue-base-installation/build-diff.png" class="" title="左：ESM，右：CommonJS">
 <h2 id="运行时-编译器-vs-只包含运行时"><a href="#运行时-编译器-vs-只包含运行时" class="headerlink" title="运行时 + 编译器 vs. 只包含运行时"></a>运行时 + 编译器 vs. 只包含运行时</h2><p>来看下含有编译器的完整版和运行版的区别：</p>
 <p>首先我使用未压缩的完整版 js 大小为 852kb，运行版为 753kb （仅供参考）。</p>
 <p>其次，代码实现区别：</p>
@@ -626,7 +626,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055434').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519488').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -753,7 +753,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -775,7 +775,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

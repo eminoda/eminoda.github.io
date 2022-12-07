@@ -495,7 +495,7 @@
       
 
       
-        <img src="/2018/05/02/webpack-best-practice/start.jpg">
+        <img src="/2018/05/02/webpack-best-practice/start.jpg" class="">
 <p>标题写的有些博人眼球，主要解决一些项目中常见问题</p>
 <h2 id="本文适合那些童靴？"><a href="#本文适合那些童靴？" class="headerlink" title="本文适合那些童靴？"></a>本文适合那些童靴？</h2><ol>
 <li>熟悉 webpack 基本配置，需要进阶学习了解更多 webpack 内容</li>
@@ -516,22 +516,22 @@ npm run build:production //线上环境打包
 <li><a href="https://webpack.js.org/plugins/define-plugin/#usage" target="_blank" rel="noopener">配置 DefinePlugin</a></li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins: [<span class="keyword">new</span> webpack.DefinePlugin(config.systemEnv())];</span><br></pre></td></tr></table></figure>
-<h3 id="公用样式分离出来，sass-变量由模块-js-引用，避免打包重复"><a href="#公用样式分离出来，sass-变量由模块-js-引用，避免打包重复" class="headerlink" title="公用样式分离出来，sass 变量由模块 js 引用，避免打包重复"></a>公用样式分离出来，sass 变量由模块 js 引用，避免打包重复</h3><p>css 出现相同样式覆盖，导致整个 css 文件过大，影响加载速度<br><img src="/2018/05/02/webpack-best-practice/question-1.png"><br>重现：<br>index.js 导入 2 个 css 文件<br><img src="/2018/05/02/webpack-best-practice/answer-1-1.png"><br>index 和 test.scss 都分别引用了 common.scss<br><img src="/2018/05/02/webpack-best-practice/answer-1-2.png"><br>common.scss 引用了_var.scss 变量文件和维护了公共样式<br><img src="/2018/05/02/webpack-best-practice/answer-1-3.png"><br>结果出现了重复 css<br><img src="/2018/05/02/webpack-best-practice/answer-1-4.png"><br>解决：公用 css 独立出来（style.scss），避免模块 js 中重复导入。模块 js 只导 scss 变量入(_var.scss)用于编译<br><img src="/2018/05/02/webpack-best-practice/answer-1-5.png"></p>
-<h3 id="sass-中的资源文件（如-fonts）怎么正确引入"><a href="#sass-中的资源文件（如-fonts）怎么正确引入" class="headerlink" title="sass 中的资源文件（如 fonts）怎么正确引入"></a>sass 中的资源文件（如 fonts）怎么正确引入</h3><p>使用<strong>正确的</strong>相对路径，但构建时找不到资源<br><img src="/2018/05/02/webpack-best-practice/question-2.png"></p>
+<h3 id="公用样式分离出来，sass-变量由模块-js-引用，避免打包重复"><a href="#公用样式分离出来，sass-变量由模块-js-引用，避免打包重复" class="headerlink" title="公用样式分离出来，sass 变量由模块 js 引用，避免打包重复"></a>公用样式分离出来，sass 变量由模块 js 引用，避免打包重复</h3><p>css 出现相同样式覆盖，导致整个 css 文件过大，影响加载速度<br><img src="/2018/05/02/webpack-best-practice/question-1.png" class=""><br>重现：<br>index.js 导入 2 个 css 文件<br><img src="/2018/05/02/webpack-best-practice/answer-1-1.png" class=""><br>index 和 test.scss 都分别引用了 common.scss<br><img src="/2018/05/02/webpack-best-practice/answer-1-2.png" class=""><br>common.scss 引用了_var.scss 变量文件和维护了公共样式<br><img src="/2018/05/02/webpack-best-practice/answer-1-3.png" class=""><br>结果出现了重复 css<br><img src="/2018/05/02/webpack-best-practice/answer-1-4.png" class=""><br>解决：公用 css 独立出来（style.scss），避免模块 js 中重复导入。模块 js 只导 scss 变量入(_var.scss)用于编译<br><img src="/2018/05/02/webpack-best-practice/answer-1-5.png" class=""></p>
+<h3 id="sass-中的资源文件（如-fonts）怎么正确引入"><a href="#sass-中的资源文件（如-fonts）怎么正确引入" class="headerlink" title="sass 中的资源文件（如 fonts）怎么正确引入"></a>sass 中的资源文件（如 fonts）怎么正确引入</h3><p>使用<strong>正确的</strong>相对路径，但构建时找不到资源<br><img src="/2018/05/02/webpack-best-practice/question-2.png" class=""></p>
 <p>错误如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR <span class="keyword">in</span> ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./src/scss/style.scss</span><br><span class="line">Module not found: <span class="built_in">Error</span>: Can<span class="string">'t resolve '</span>../../assets/fonts/iconfont.eot<span class="string">' in '</span>E:\webpack_demo\src\scss<span class="string">'</span></span><br><span class="line"><span class="string">@ ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./src/scss/style.scss 7:92-134 7:177-219</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://github.com/webpack-contrib/sass-loader#problems-with-url" target="_blank" rel="noopener">查询 sass-loader，得到官方的解决方法</a></p>
-<img src="/2018/05/02/webpack-best-practice/answer-2-1.png">
+<img src="/2018/05/02/webpack-best-practice/answer-2-1.png" class="">
 <ol>
 <li>更改相对路径，相对于<strong>模块 js</strong></li>
 <li>或者使用 resolve-url-loader 重写路径，<a href="https://github.com/bholloway/resolve-url-loader#apply-via-webpack-config" target="_blank" rel="noopener">请再查阅 resolve-url-loader 的配置</a></li>
 <li>…</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 采用resolve-url-loader解决方式</span><br><span class="line">&#123;</span><br><span class="line">    test: /\.scss$/,</span><br><span class="line">    use: ExtractTextPlugin.extract(&#123;</span><br><span class="line">        fallback: &quot;style-loader&quot;,</span><br><span class="line">        use: [&#123;</span><br><span class="line">            loader: &quot;css-loader&quot; // translates CSS into CommonJS</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            loader: &quot;resolve-url-loader&quot;</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            loader: &quot;sass-loader?sourceMap&quot; // compiles Sass to CSS</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 采用resolve-url-loader解决方式</span><br><span class="line">&#123;</span><br><span class="line">    test: &#x2F;\.scss$&#x2F;,</span><br><span class="line">    use: ExtractTextPlugin.extract(&#123;</span><br><span class="line">        fallback: &quot;style-loader&quot;,</span><br><span class="line">        use: [&#123;</span><br><span class="line">            loader: &quot;css-loader&quot; &#x2F;&#x2F; translates CSS into CommonJS</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            loader: &quot;resolve-url-loader&quot;</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            loader: &quot;sass-loader?sourceMap&quot; &#x2F;&#x2F; compiles Sass to CSS</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="不要乱升级-npm-模块版本，不然你可能搞不定"><a href="#不要乱升级-npm-模块版本，不然你可能搞不定" class="headerlink" title="不要乱升级 npm 模块版本，不然你可能搞不定"></a>不要乱升级 npm 模块版本，不然你可能搞不定</h3><p>写这篇文章，由于要写 demo，重新安装模块，然后发现原来的写法报错，然后查实是当前模块版本有 bug</p>
 <p>使用 file-loader，css 中引用资源文件路径错误</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># BackSlash反斜杠分隔</span><br><span class="line"><span class="keyword">static</span>\fonts\iconfont<span class="number">.542</span>d8e4.eot    <span class="number">70.9</span> kB          [emitted]</span><br><span class="line"><span class="keyword">static</span>\fonts\iconfont<span class="number">.1</span>dab3e0.woff    <span class="number">41.1</span> kB          [emitted]</span><br><span class="line"><span class="keyword">static</span>\fonts\iconfont<span class="number">.14</span>df282.ttf    <span class="number">70.8</span> kB          [emitted]</span><br><span class="line"># 应该为：</span><br><span class="line"><span class="keyword">static</span>/fonts/iconfont<span class="number">.542</span>d8e4.eot    <span class="number">70.9</span> kB          [emitted]</span><br><span class="line"><span class="keyword">static</span>/fonts/iconfont<span class="number">.1</span>dab3e0.woff    <span class="number">41.1</span> kB          [emitted]</span><br><span class="line"><span class="keyword">static</span>/fonts/iconfont<span class="number">.14</span>df282.ttf    <span class="number">70.8</span> kB          [emitted]</span><br></pre></td></tr></table></figure>
-<p><a href="https://github.com/webpack-contrib/file-loader/commit/26e47ca" target="_blank" rel="noopener">原因：不知道为何 1.1.8 要改动资源文件加载方式，然后 1.1.9 又 fixed</a><br>很不凑巧我用了 1.1.8，也因为这样很庆幸有了这样的实践条目。update version 不要太激进<br><img src="/2018/05/02/webpack-best-practice/answer-3-1.png"></p>
+<p><a href="https://github.com/webpack-contrib/file-loader/commit/26e47ca" target="_blank" rel="noopener">原因：不知道为何 1.1.8 要改动资源文件加载方式，然后 1.1.9 又 fixed</a><br>很不凑巧我用了 1.1.8，也因为这样很庆幸有了这样的实践条目。update version 不要太激进<br><img src="/2018/05/02/webpack-best-practice/answer-3-1.png" class=""></p>
 <h3 id="性能提升-外部资源文件导入"><a href="#性能提升-外部资源文件导入" class="headerlink" title="性能提升-外部资源文件导入"></a>性能提升-外部资源文件导入</h3><p>使用 externals 关联 cdn 文件</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">externals: &#123;</span><br><span class="line">    <span class="string">'vue'</span>: <span class="string">'Vue'</span>,</span><br><span class="line">    <span class="string">'vue-router'</span>: <span class="string">'VueRouter'</span>,</span><br><span class="line">    <span class="string">'vuex'</span>: <span class="string">'Vuex'</span>,</span><br><span class="line">    <span class="string">'rx-lite'</span>: <span class="string">'Rx'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>index.html</p>
@@ -610,7 +610,7 @@ npm run build:production //线上环境打包
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057792').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521824').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -737,7 +737,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -759,7 +759,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

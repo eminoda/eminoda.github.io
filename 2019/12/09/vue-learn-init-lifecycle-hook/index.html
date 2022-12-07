@@ -495,7 +495,7 @@
 <p>并且如果存在继承关系的 vue 实例上定义的钩子方法不会存在覆盖情况，他们会按父先子后的顺序存入数组中：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeHook</span>(<span class="params">parentVal: ?Array&lt;Function&gt;, childVal: ?Function | ?Array&lt;Function&gt;</span>): ?<span class="title">Array</span>&lt;<span class="title">Function</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = childVal ? (parentVal ? parentVal.concat(childVal) : <span class="built_in">Array</span>.isArray(childVal) ? childVal : [childVal]) : parentVal;</span><br><span class="line">  <span class="keyword">return</span> res ? dedupeHooks(res) : res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dedupeHooks</span>(<span class="params">hooks</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; hooks.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (res.indexOf(hooks[i]) === <span class="number">-1</span>) &#123;</span><br><span class="line">      res.push(hooks[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LIFECYCLE_HOOKS.forEach(<span class="function"><span class="params">hook</span> =&gt;</span> &#123;</span><br><span class="line">  strats[hook] = mergeHook;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="钩子函数的包装"><a href="#钩子函数的包装" class="headerlink" title="钩子函数的包装"></a>钩子函数的包装</h2><p>在实际的 vm.\$options[hook] 属性上你能看到最终的效果：</p>
-<img src="/2019/12/09/vue-learn-init-lifecycle-hook/lifecycle-hook.png">
+<img src="/2019/12/09/vue-learn-init-lifecycle-hook/lifecycle-hook.png" class="">
 <p>以下是对 hook 钩子方法的处理，中间包裹了一个错误处理的逻辑：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src\core\instance\lifecycle.js</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callHook</span>(<span class="params">vm: Component, hook: string</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// #7573 disable dep collection when invoking lifecycle hooks</span></span><br><span class="line">  pushTarget();</span><br><span class="line">  <span class="keyword">const</span> handlers = vm.$options[hook];</span><br><span class="line">  <span class="keyword">const</span> info = <span class="string">`<span class="subst">$&#123;hook&#125;</span> hook`</span>;</span><br><span class="line">  <span class="keyword">if</span> (handlers) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, j = handlers.length; i &lt; j; i++) &#123;</span><br><span class="line">      invokeWithErrorHandling(handlers[i], vm, <span class="literal">null</span>, vm, info);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (vm._hasHookEvent) &#123;</span><br><span class="line">    vm.$emit(<span class="string">"hook:"</span> + hook);</span><br><span class="line">  &#125;</span><br><span class="line">  popTarget();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>能看到这个 error 处理中包含 call 执行操作，就这样对应的生命周期钩子得到了执行：</p>
@@ -568,7 +568,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054688').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518753').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -695,7 +695,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -717,7 +717,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

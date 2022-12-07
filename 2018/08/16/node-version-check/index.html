@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="给 2 年前的一台机子做 node 升级（4.4 to 8.11），结果报了如下错。 12345[root@iZ23o1c307rZ ~]# node -vnode: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.10&amp;apos; not found (required by node)node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6">
+<meta name="description" content="给 2 年前的一台机子做 node 升级（4.4 to 8.11），结果报了如下错。 12345[root@iZ23o1c307rZ ~]# node -vnode: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.10&#39; not found (required by node)node: &#x2F;u">
 <meta property="og:type" content="article">
 <meta property="og:title" content="node 版本升级还需谨慎">
 <meta property="og:url" content="http://yoursite.com/2018/08/16/node-version-check/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="给 2 年前的一台机子做 node 升级（4.4 to 8.11），结果报了如下错。 12345[root@iZ23o1c307rZ ~]# node -vnode: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.10&amp;apos; not found (required by node)node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6">
+<meta property="og:description" content="给 2 年前的一台机子做 node 升级（4.4 to 8.11），结果报了如下错。 12345[root@iZ23o1c307rZ ~]# node -vnode: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.10&#39; not found (required by node)node: &#x2F;u">
 <meta property="article:published_time" content="2018-08-16T11:29:46.000Z">
 <meta property="article:modified_time" content="2020-11-23T00:59:35.371Z">
 <meta property="article:author" content="Eminoda">
@@ -485,7 +485,7 @@
 
       
         <p>给 2 年前的一台机子做 node 升级（4.4 to 8.11），结果报了如下错。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ23o1c307rZ ~]# node -v</span><br><span class="line">node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.10&apos; not found (required by node)</span><br><span class="line">node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.11&apos; not found (required by node)</span><br><span class="line">node: /usr/lib64/libstdc++.so.6: version `CXXABI_1.3.3&apos; not found (required by node)</span><br><span class="line">node: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.9&apos; not found (required by node)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ23o1c307rZ ~]# node -v</span><br><span class="line">node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.10&#39; not found (required by node)</span><br><span class="line">node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.11&#39; not found (required by node)</span><br><span class="line">node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;CXXABI_1.3.3&#39; not found (required by node)</span><br><span class="line">node: &#x2F;usr&#x2F;lib64&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.9&#39; not found (required by node)</span><br></pre></td></tr></table></figure>
 <p>原因该 Node 缺少某些依赖库，然后这些库是系统自带（开发根本不涉足这些玩意儿，我不会升级安装这些 lib）</p>
 <p>关键，问运维，也不造，呵呵哒。</p>
 <blockquote>
@@ -500,7 +500,7 @@
 <li><a href="https://gcc.gnu.org/mirrors.html" target="_blank" rel="noopener">下载 gcc source</a></li>
 <li>make gcc</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">get gcc sources</span><br><span class="line">extract into gccsrcdir</span><br><span class="line">mkdir gccbuilddir</span><br><span class="line">cd gccbuilddir</span><br><span class="line">gccsrcdir/configure --prefix=destdir --other-opts...</span><br><span class="line">make</span><br><span class="line">make check</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">get gcc sources</span><br><span class="line">extract into gccsrcdir</span><br><span class="line">mkdir gccbuilddir</span><br><span class="line">cd gccbuilddir</span><br><span class="line">gccsrcdir&#x2F;configure --prefix&#x3D;destdir --other-opts...</span><br><span class="line">make</span><br><span class="line">make check</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 <h2 id="不同-Node-适合哪些-linux-的系统"><a href="#不同-Node-适合哪些-linux-的系统" class="headerlink" title="不同 Node 适合哪些 linux 的系统"></a>不同 Node 适合哪些 linux 的系统</h2><p>翻阅 Node doc，暂时没发现对系统有什么明显的说明，对于这个错误只是系统级别上缺少依赖包，说白了就是系统<strong>太老了</strong></p>
 <p><a href="https://nodejs.org/en/download/package-manager/" target="_blank" rel="noopener">不过还可以参考</a><br><a href="https://github.com/nodesource/distributions" target="_blank" rel="noopener">不过还可以参考 nodesource distributions</a></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/haibosdu/article/details/77094833" target="_blank" rel="noopener">https://blog.csdn.net/haibosdu/article/details/77094833</a><br><a href="https://stackoverflow.com/questions/16605623/where-can-i-get-a-copy-of-the-file-libstdc-so-6-0-15" target="_blank" rel="noopener">`GLIBCXX_3.4.10’ not found</a><br><a href="https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error" target="_blank" rel="noopener">https://askubuntu.com/questions/575505/glibcxx-3-4-20-not-found-how-to-fix-this-error</a></p>
@@ -571,7 +571,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057111').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521029').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -698,7 +698,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -720,7 +720,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

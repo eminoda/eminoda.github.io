@@ -518,7 +518,7 @@
 <p>它会使上面所说的方式失效，每个线程将会单独向目标日志文件输出内容，表明似乎问题可以解决，但是在高频访问下会出现日志缺失的情况。毕竟日志文件被多个进程写入放操作着。</p>
 <h2 id="有效的日志管理"><a href="#有效的日志管理" class="headerlink" title="有效的日志管理"></a>有效的日志管理</h2><p>对于一个线上的项目，可能需要一些其他手段来对日志做维护管理。既然现在说 pm2 ，就要看下其日志插件：<strong>pm2-logrotate</strong></p>
 <p>来看下具体配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pm2 get pm2-logrotate</span><br><span class="line">== pm2-logrotate ==</span><br><span class="line">┌────────────────┬─────────────────────┐</span><br><span class="line">│ key            │ value               │</span><br><span class="line">├────────────────┼─────────────────────┤</span><br><span class="line">│ max_size       │ 10M                 │</span><br><span class="line">│ retain         │ 10                  │</span><br><span class="line">│ compress       │ false               │</span><br><span class="line">│ dateFormat     │ YYYY-MM-DD_HH-mm-ss │</span><br><span class="line">│ workerInterval │ 30                  │</span><br><span class="line">│ rotateInterval │ 0 0 * * *           │</span><br><span class="line">│ rotateModule   │ true                │</span><br><span class="line">└────────────────┴─────────────────────┘</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pm2 get pm2-logrotate</span><br><span class="line">&#x3D;&#x3D; pm2-logrotate &#x3D;&#x3D;</span><br><span class="line">┌────────────────┬─────────────────────┐</span><br><span class="line">│ key            │ value               │</span><br><span class="line">├────────────────┼─────────────────────┤</span><br><span class="line">│ max_size       │ 10M                 │</span><br><span class="line">│ retain         │ 10                  │</span><br><span class="line">│ compress       │ false               │</span><br><span class="line">│ dateFormat     │ YYYY-MM-DD_HH-mm-ss │</span><br><span class="line">│ workerInterval │ 30                  │</span><br><span class="line">│ rotateInterval │ 0 0 * * *           │</span><br><span class="line">│ rotateModule   │ true                │</span><br><span class="line">└────────────────┴─────────────────────┘</span><br></pre></td></tr></table></figure>
 <h3 id="定时轮询"><a href="#定时轮询" class="headerlink" title="定时轮询"></a>定时轮询</h3><p><strong>rotateInterval</strong> 和 <strong>workerInterval</strong> 都有定时的作用。</p>
 <p>前者通过编写 cron 表达式，约定每隔多少时间 <strong>强制</strong> 检查日志的状态。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 每日零点</span></span><br><span class="line">rotateInterval: 0 0 * * *</span><br><span class="line"><span class="meta">#</span><span class="bash"> 每分钟</span></span><br><span class="line">rotateInterval: */1 * * * *</span><br></pre></td></tr></table></figure>
@@ -609,7 +609,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055558').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519607').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -740,7 +740,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -762,7 +762,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

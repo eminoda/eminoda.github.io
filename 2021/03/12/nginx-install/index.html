@@ -495,14 +495,14 @@
 <p>站在我的角度，有学习的必要性。虽然这篇只涉及环境的安装，但总有一天你会站在运维，或者团队管理的角色去解决复杂问题。<strong>总之，技多不压身</strong>。</p>
 <p>说了那么多，下面就开始吧。</p>
 <h1 id="windows-平台"><a href="#windows-平台" class="headerlink" title="windows 平台"></a>windows 平台</h1><h2 id="资源下载"><a href="#资源下载" class="headerlink" title="资源下载"></a>资源下载</h2><p>在 <strong>nginx.org</strong> 的 download 页面，下载对应的 windows exe 执行文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://nginx.org/en/download.html</span><br></pre></td></tr></table></figure>
-<img src="/2021/03/12/nginx-install/windows-download.png" title="下载 windows 包">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;download.html</span><br></pre></td></tr></table></figure>
+<img src="/2021/03/12/nginx-install/windows-download.png" class="" title="下载 windows 包">
 <h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><p>解压对应的下载文件，将会得到如下目录：</p>
-<img src="/2021/03/12/nginx-install/windows-folds.png" title="文件目录">
+<img src="/2021/03/12/nginx-install/windows-folds.png" class="" title="文件目录">
 <h2 id="配置-amp-启动"><a href="#配置-amp-启动" class="headerlink" title="配置&amp;启动"></a>配置&amp;启动</h2><p>因为 <strong>nginx</strong> 已经帮我们写好了配置文件骨架，所以并不需要我们“白手起家”：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> D:\devtool\nginx-1.19.7\conf\nginx.conf</span></span><br><span class="line"><span class="meta">#</span><span class="bash">...</span></span><br><span class="line">http&#123;</span><br><span class="line">    #...</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>直接点击 <strong>nginx.exe</strong> 后，访问：<a href="http://127.0.0.1/" target="_blank" rel="noopener">http://127.0.0.1/</a> 就能看到成功页：</p>
-<img src="/2021/03/12/nginx-install/windows-hello.png" title="成功页">
+<img src="/2021/03/12/nginx-install/windows-hello.png" class="" title="成功页">
 <h2 id="示意一个简单的转发"><a href="#示意一个简单的转发" class="headerlink" title="示意一个简单的转发"></a>示意一个简单的转发</h2><p>比如，本地有个 koa 服务（端口：3000），那怎么通过 <strong>nginx</strong> 来进行反向代理呢？（如果有类似跨域的问题）</p>
 <p>增加解析后端服务的配置：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> conf/includes/koa.conf</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen  82;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:3000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -518,7 +518,7 @@
 <h2 id="nginx-装在哪？"><a href="#nginx-装在哪？" class="headerlink" title="nginx 装在哪？"></a>nginx 装在哪？</h2><p>通过 <strong>whereis</strong> 找到 <strong>nginx</strong> 相关文件夹：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br><span class="line"></span><br><span class="line">nginx: /usr/sbin/nginx /usr/lib64/nginx /etc/nginx /usr/share/nginx /usr/share/man/man8/nginx.8.gz</span><br></pre></td></tr></table></figure>
 <p>然后我们就知道，<strong>nginx</strong> 对应的资源，依赖，及启动文件的路径：</p>
-<img src="/2021/03/12/nginx-install/linux-folds.png" title="成功页">
+<img src="/2021/03/12/nginx-install/linux-folds.png" class="" title="成功页">
 <h2 id="配置-amp-启动-1"><a href="#配置-amp-启动-1" class="headerlink" title="配置&amp;启动"></a>配置&amp;启动</h2><p>同 <strong>windows</strong> ，这里的 <strong>nginx</strong> 也不需要配置，我们只需要直接启用即可。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/nginx/nginx.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> 首次启动</span></span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
 <p>对应如果有配置更改，或者想要重启可以参考如下命令：</p>
@@ -591,7 +591,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054069').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518111').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -718,7 +718,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -740,7 +740,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

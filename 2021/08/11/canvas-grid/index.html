@@ -491,9 +491,9 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>有没有很好奇，类似 <strong>processOn</strong> 这类作图网站中，<strong>网格背景</strong> 是怎么做的呢？</p>
-<img src="/2021/08/11/canvas-grid/processon.png" title="网格背景">
+<img src="/2021/08/11/canvas-grid/processon.png" class="" title="网格背景">
 <p>如果你 F12 看过它的代码，你将发现原来不是通过 <strong>background-image</strong> 之类 <strong>css</strong> 属性做的，而是通过 <strong>canvas</strong> 实现的。</p>
-<img src="/2021/08/11/canvas-grid/processon-2.png" title="网格背景">
+<img src="/2021/08/11/canvas-grid/processon-2.png" class="" title="网格背景">
 <p>这篇主要讲如何通过 <strong>canvas</strong> 来绘制出这样的 <strong>网格背景</strong>，以及中间碰到的一个 <strong>线条模糊的问题</strong>。</p>
 <h1 id="手把手写代码"><a href="#手把手写代码" class="headerlink" title="手把手写代码"></a>手把手写代码</h1><h2 id="1-创建-ctx-对象"><a href="#1-创建-ctx-对象" class="headerlink" title="1. 创建 ctx 对象"></a>1. 创建 ctx 对象</h2><p>这边将新建一个和屏幕尺寸相同的 <strong>canvas</strong> 画布：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvasEl = <span class="built_in">document</span>.createElement(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">const</span> sh = screen.height;</span><br><span class="line"><span class="keyword">const</span> sw = screen.width;</span><br><span class="line">canvasEl.width = sw;</span><br><span class="line">canvasEl.height = sh;</span><br><span class="line"><span class="keyword">const</span> ctx = canvasEl.getContext(<span class="string">"2d"</span>);</span><br></pre></td></tr></table></figure>
@@ -504,15 +504,15 @@
 <p>下面根据横纵两个方向，封装了 <strong>draw</strong> 方法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> draw = <span class="function"><span class="keyword">function</span> (<span class="params">isColumn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> gutter = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">const</span> limit = isColumn ? sh : sw;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (i * gutter + gutter &lt;= limit) &#123;</span><br><span class="line">    i++;</span><br><span class="line">    <span class="keyword">const</span> point = i * gutter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清空子路径列表开始一个新路径</span></span><br><span class="line">    ctx.beginPath();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分割线</span></span><br><span class="line">    ctx.strokeStyle = point % <span class="number">100</span> !== <span class="number">0</span> ? <span class="string">"#f0f0f0"</span> : <span class="string">"#d6e4ff"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将一个新的子路径的起始点移动到(x，y)坐标</span></span><br><span class="line">    <span class="keyword">if</span> (isColumn) &#123;</span><br><span class="line">      ctx.moveTo(<span class="number">0</span>, point);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ctx.moveTo(point, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用直线连接子路径的终点到x，y坐标</span></span><br><span class="line">    <span class="keyword">if</span> (isColumn) &#123;</span><br><span class="line">      ctx.lineTo(sw, point);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ctx.lineTo(point, sh);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 根据当前的画线样式，绘制当前或已经存在的路径的方法</span></span><br><span class="line">    ctx.stroke();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>很顺利你将得到 <strong>canvas</strong> 绘制的网格图形：</p>
-<img src="/2021/08/11/canvas-grid/grid.png" title="网格背景">
+<img src="/2021/08/11/canvas-grid/grid.png" class="" title="网格背景">
 <h1 id="线条模糊"><a href="#线条模糊" class="headerlink" title="线条模糊"></a>线条模糊</h1><p>如果你观察比较细腻，能发现上面的网格图形并不是很清晰，可以仔细观察下面的图：</p>
-<img src="/2021/08/11/canvas-grid/grid-3.png" title="对比">
+<img src="/2021/08/11/canvas-grid/grid-3.png" class="" title="对比">
 <p><strong>为什么会有这样的情况出现呢？</strong></p>
 <p>因为调用 <strong>lineTo</strong> 是从 A 点到 B 点，轨迹是点到点的连线。当绘制 1px 线条时，是以这个轨迹连线为中间线左右各渲染 0.5px 的线条。这会使得一个像素点只渲染了一半，而另一半会用一个比较弱的颜色填充，导致绘制出模糊的线条。</p>
 <p><strong>怎么改？</strong></p>
 <p>只要在 <strong>moveTo</strong> 时，将坐标偏移 0.5px（即将线条轨迹偏移 0.5 位置），然后调用 <strong>lineTo</strong> 时，也将坐标偏移 0.5px。</p>
 <p>这样，最终绘制线条的时候，将在一个完整的像素区域进行渲染了。</p>
-<img src="/2021/08/11/canvas-grid/canvas-0.5.png" title="选自：https://www.jianshu.com/p/c0970eecd843">
+<img src="/2021/08/11/canvas-grid/canvas-0.5.png" class="" title="选自：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;c0970eecd843">
 <p><strong>有没有便捷的方法？</strong></p>
 <p>使用 <strong>translate</strong> 偏移 x 和 y 坐标值，然后绘制后再调用 <strong>setTransform</strong> 重置回来：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctx.translate(<span class="number">0.5</span>, <span class="number">0.5</span>);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">ctx.setTransform(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
@@ -588,7 +588,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053803').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517849').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -715,7 +715,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,7 +737,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

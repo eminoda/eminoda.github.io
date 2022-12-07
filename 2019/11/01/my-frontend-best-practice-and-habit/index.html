@@ -502,7 +502,7 @@
 </li>
 <li><p>社区丰富的插件</p>
 <p> vscode 的扩展功能里，你总能找到和自己技术栈对应的插件，来提升效率。</p>
- <img src="/2019/11/01/my-frontend-best-practice-and-habit/plugins.png" title="插件">
+ <img src="/2019/11/01/my-frontend-best-practice-and-habit/plugins.png" class="" title="插件">
 </li>
 <li><p>便捷的操作</p>
 <p> 一处学习，终身受益。前端所有 IDE 快捷键貌似都差不多，成为一种约定的规则，所以不用为这些学习成本担心。</p>
@@ -514,22 +514,22 @@
 </ol>
 <h2 id="接受新技术"><a href="#接受新技术" class="headerlink" title="接受新技术"></a>接受新技术</h2><p>记得前一两年，Angular 的布道师和 Vue 的作者有一场争夺前端框架谁好谁坏的片段。那时候井底之蛙的我用的是 angular.js，很排除其他技术选型，可结果现在到处都是“真香”的想法。</p>
 <p>无论是 Vue 那容易上手的体验，还是 Angular + TS 有些稍高的学习成本，用过之后都让自己的眼界开阔，当然还有 React 和其他优秀技术。</p>
-<img src="/2019/11/01/my-frontend-best-practice-and-habit/keepLearn.png" title="吃瓜">
+<img src="/2019/11/01/my-frontend-best-practice-and-habit/keepLearn.png" class="" title="吃瓜">
 <p>总之大家不要像上图一样吵得热火朝天，然后在下面一股脑的为“我学不动了”点赞，倒不如自己试一下，没准它将给你打开心的世界。别让前端真成为娱乐圈了。​</p>
 <h1 id="优先选择英文资源"><a href="#优先选择英文资源" class="headerlink" title="优先选择英文资源"></a>优先选择英文资源</h1><p>开发技术多数都源自外国，造成新技术的文档多英文，如果英文底子不好，就会自然觉得学习门槛变高。</p>
 <p>我本身英语也很渣渣，但手持在线翻译，加上只看代码片段基本能猜出文章主要意思，毕竟看的是技术类文档而不是卷子上阅读理解。在中国这个开发环境下更需要 <strong>静心学习</strong> 的心态，该学的总要学。</p>
 <p>我吃过的一个亏，比如 rollup 中文文档没有实时更新，导致一些配置没有体现出来，或者根本就是错的。（不过还是要感谢别人在中文资源付出的努力，毕竟无私的 <strong>开源精神</strong>）</p>
 <p>你能看到如下，两个中英文文档在说明上的差异：</p>
-<img src="/2019/11/01/my-frontend-best-practice-and-habit/better-en.png" title="rollup 英文文档更多的参数说明">
+<img src="/2019/11/01/my-frontend-best-practice-and-habit/better-en.png" class="" title="rollup 英文文档更多的参数说明">
 <h1 id="喜欢“整理”"><a href="#喜欢“整理”" class="headerlink" title="喜欢“整理”"></a>喜欢“整理”</h1><p>可以是项目配置、代码变量，或者建个专门的 workspace 放你的七七八八的项目，甚至收纳好你的电脑桌面。</p>
 <p>相信将 <strong>杂乱不堪</strong> 的东西，变得 <strong>有条有理</strong>，定位文件或者问题将更加 <strong>高效</strong>。</p>
 <p>最重要的是，提取出“规律”性的东西将成为 <strong>未来你改进的方向</strong>（比如重构，或者一些奇思妙想）</p>
 <h2 id="“物理”层面"><a href="#“物理”层面" class="headerlink" title="“物理”层面"></a>“物理”层面</h2><p>举个例子：</p>
 <p>我们有很多类似的项目，命名不统一，路径乱放，导致每次启动服务路径不一致，定位一个项目都要找一会儿。</p>
 <p>如果把它们按照某个约定重命名好，在服务器上好辨识很多：</p>
-<img src="/2019/11/01/my-frontend-best-practice-and-habit/clean-rename.png" title="重新整理后就清爽许多">
+<img src="/2019/11/01/my-frontend-best-practice-and-habit/clean-rename.png" class="" title="重新整理后就清爽许多">
 <p>然后因为测试服务器老是重启，每次进入对应的项目启动服务很繁琐。就通过外置一个 pm2 脚本批量 <strong>无脑</strong> 管理所有项目，也不会有所遗漏。</p>
-<img src="/2019/11/01/my-frontend-best-practice-and-habit/pm2-json.png" title="pm2">
+<img src="/2019/11/01/my-frontend-best-practice-and-habit/pm2-json.png" class="" title="pm2">
 <h2 id="把“多变”变成“稳定”可配置"><a href="#把“多变”变成“稳定”可配置" class="headerlink" title="把“多变”变成“稳定”可配置"></a>把“多变”变成“稳定”可配置</h2><p>由于我们前端团队对样式这块没有太多的重视，导致很多类似的页面，由于不同的人员开发，在 css 上命名风格不同，维护起来相当麻烦。</p>
 <p>比如，要求改一个页面 header 部分的底色，就存在多个页面底色相关的 className 命名不一致，要修改多处。</p>
 <p>通过预编译 sass 可以完成这样的要求：</p>
@@ -669,7 +669,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055464').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519518').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -796,7 +796,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -818,7 +818,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

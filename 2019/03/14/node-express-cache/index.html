@@ -492,7 +492,7 @@
 <blockquote>
 <p>ab 参数：数量 -n 1000，并发 -c 100</p>
 </blockquote>
-<img src="/2019/03/14/node-express-cache/ab1.png">
+<img src="/2019/03/14/node-express-cache/ab1.png" class="">
 <table>
 <thead>
 <tr>
@@ -518,7 +518,7 @@
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>由于首页接口调用繁重，定位问题有些“困难”，一步步看吧：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首页</span></span><br><span class="line">router.get(<span class="string">'/'</span>, interceptor.fn, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Promise</span>.all([</span><br><span class="line">    newsService.findAllChannel(),</span><br><span class="line">    newsService.findByAdspaceId(),</span><br><span class="line">    newsService.findFriendLinks(),</span><br><span class="line">    newsService.findAllChannel(),</span><br><span class="line">    ...</span><br><span class="line">  ]).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    res.render(<span class="string">'page/index.pug'</span>);</span><br><span class="line">  &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="先排除首页内部第三方服务接口的瓶颈"><a href="#先排除首页内部第三方服务接口的瓶颈" class="headerlink" title="先排除首页内部第三方服务接口的瓶颈"></a>先排除首页内部第三方服务接口的瓶颈</h3><p>首页需支持 SEO，做了服务端渲染，并且至少 5 次会调用第三方 api。但这些接口用 ab 比较难制定，用 node 专门写了个测试 api 组合的压测，ab 结果如下：</p>
-<img src="/2019/03/14/node-express-cache/ab3.png">
+<img src="/2019/03/14/node-express-cache/ab3.png" class="">
 <table>
 <thead>
 <tr>
@@ -594,7 +594,7 @@
 <h3 id="最终定位到-node-渲染层"><a href="#最终定位到-node-渲染层" class="headerlink" title="最终定位到 node 渲染层"></a>最终定位到 node 渲染层</h3><p>对比之下，首页就多了 render 页面渲染功能。果断打开 express 模板缓存。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">app.set(<span class="string">'view cache'</span>, <span class="literal">true</span>);</span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'pug'</span>);</span><br></pre></td></tr></table></figure>
 <p><strong>对比之前未打开缓存</strong>，结果如下：</p>
-<img src="/2019/03/14/node-express-cache/ab2.png">
+<img src="/2019/03/14/node-express-cache/ab2.png" class="">
 <table>
 <thead>
 <tr>
@@ -693,7 +693,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056240').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520257').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -820,7 +820,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -842,7 +842,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

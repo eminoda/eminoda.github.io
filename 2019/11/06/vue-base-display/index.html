@@ -496,12 +496,12 @@
 <h3 id="代码片段的显示"><a href="#代码片段的显示" class="headerlink" title="代码片段的显示"></a>代码片段的显示</h3><p>可以使用 template 来对代码片段做统一的显示隐藏，而不是另起一个 div 来做这样的逻辑，会徒增页面标签。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"hello"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-if</span>=<span class="string">"isNum"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-if</span>=<span class="string">"!isNum"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>abc<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>def<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="用-key-管理可复用的元素"><a href="#用-key-管理可复用的元素" class="headerlink" title="用 key 管理可复用的元素"></a>用 key 管理可复用的元素</h3><p>vue 会对模板做复用用于高效渲染，就像这样：</p>
-<img src="/2019/11/06/vue-base-display/key.gif">
+<img src="/2019/11/06/vue-base-display/key.gif" class="">
 <p>由于模板复用，虽然两个不同的业务逻辑，但在切换中 input 的 value 却保留着。这明显不符合正常的需求。</p>
 <p>但可以在 input 后面添加 key 属性，用于标注所属标签的唯一性：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">placeholder</span>=<span class="string">"Enter your username"</span> <span class="attr">key</span>=<span class="string">"username-input"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样每次渲染切换的时候，就会重新渲染模板内容。</p>
-<img src="/2019/11/06/vue-base-display/key2.gif">
+<img src="/2019/11/06/vue-base-display/key2.gif" class="">
 <h2 id="v-show"><a href="#v-show" class="headerlink" title="v-show"></a>v-show</h2><p>和 v-if 效果相同，但元素依旧会保留在 dom 中，只是通过 css 控制了显示隐藏。</p>
 <p>同时，v-if 是惰性的，会根据逻辑条件来判断是否要渲染标签，而 v-show 是一直会渲染标签的。</p>
 <h1 id="列表渲染-v-for"><a href="#列表渲染-v-for" class="headerlink" title="列表渲染 v-for"></a>列表渲染 v-for</h1><h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>通过 v-for 指令，按照 items 数组长度重复渲染模板。</p>
@@ -604,7 +604,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055401').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519390').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -731,7 +731,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -753,7 +753,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

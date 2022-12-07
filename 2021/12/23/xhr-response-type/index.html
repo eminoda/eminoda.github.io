@@ -517,36 +517,36 @@
 <li>ms-stream: （ie 专属）</li>
 </ul>
 <p>我们先看下：浏览器直接访问一个图片地址和 <strong>img</strong> 标签内嵌图片地址，他们返回头信息区别：</p>
-<img src="/2021/12/23/xhr-response-type/responseType-browser.png" title="浏览器直接请求">
-<img src="/2021/12/23/xhr-response-type/responseType-image.png" title="img标签内嵌">
+<img src="/2021/12/23/xhr-response-type/responseType-browser.png" class="" title="浏览器直接请求">
+<img src="/2021/12/23/xhr-response-type/responseType-image.png" class="" title="img标签内嵌">
 <p>这两种方式都依靠浏览器和 <strong>img</strong> 标签的特性约定了 <strong>Accept</strong> 接收内容的类型，并且都展示出了图片。而我们都不能在此之上针对最开始说的业务场景做什么特别处理，那怎么通过 <strong>XHR</strong> 方式来展示图片呢？</p>
 <p>先看下，直接使用 <strong>axios</strong> 默认配置请求图片地址有什么效果（不设置 responseType）：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> imageSrc = <span class="string">"http://127.0.0.1:3000/image/google.png"</span>;</span><br><span class="line"></span><br><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">""</span>, <span class="comment">//text</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"text:"</span>, data);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <p>默认 <strong>responseType</strong> 不定义的话和 <strong>text</strong> 是一个效果，返回的图片内容被转成了字符串，也就是下面看到的乱码：</p>
-<img src="/2021/12/23/xhr-response-type/responseType-text.png" title="xhr直接请求">
+<img src="/2021/12/23/xhr-response-type/responseType-text.png" class="" title="xhr直接请求">
 <p>显而易见，也只有 <strong>responseType</strong> 为 <strong>arraybuffer</strong> 或者 blob 时才能得到二进制的“原始数据”。</p>
 <h2 id="解析二进制数据"><a href="#解析二进制数据" class="headerlink" title="解析二进制数据"></a>解析二进制数据</h2><p>我们选用相对复杂的 <strong>arraybuffer</strong> 进行示例：</p>
 <p>首先将 <strong>responseType</strong> 设置为 <strong>arraybuffer</strong> 进行请求：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"arraybuffer"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> arraybuffer = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"arraybuffer:"</span>, arraybuffer);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <p>响应后，我们将得到 <strong>ArrayBuffer</strong> 对象类型的二进制字节数组：</p>
-<img src="/2021/12/23/xhr-response-type/responseType-arraybuffer.png" title="arraybuffer请求">
+<img src="/2021/12/23/xhr-response-type/responseType-arraybuffer.png" class="" title="arraybuffer请求">
 <p>这个 <strong>ArrayBuffer</strong> 不能直接操作，需要转为 <strong>TypeArray</strong> 类型数组。再通过 <strong>String.fromCharCode</strong> 将字节数据转为 <strong>ASCII 码</strong>（即普通字符串）：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bytes = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(arraybuffer);</span><br><span class="line"><span class="keyword">const</span> str = bytes.reduce(<span class="function">(<span class="params">acc, byte</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> acc + <span class="built_in">String</span>.fromCharCode(byte);</span><br><span class="line">&#125;, <span class="string">""</span>);</span><br></pre></td></tr></table></figure>
 <p>得到普通字符串后，调用 <strong>window.btoa</strong> 方法，即可转为 <strong>base64</strong> 数据：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> base64 = <span class="built_in">window</span>.btoa(str);</span><br><span class="line"><span class="comment">// iVBORw0KGgo.....wAAAAAElFTkSuQmCC</span></span><br><span class="line">showToPage(<span class="string">"data:image/png;base64,"</span> + base64);</span><br></pre></td></tr></table></figure>
 <p>最后，页面 <strong>img</strong> 标签前加上 <strong>base64</strong> 前缀即可展示：</p>
-<img src="/2021/12/23/xhr-response-type/responseType-base64.png" title="base64图片展示">
+<img src="/2021/12/23/xhr-response-type/responseType-base64.png" class="" title="base64图片展示">
 <p><strong>经过三步，我们通过 arraybuffer 方式解析了图片，那有什么简化办法呢？</strong></p>
 <p>肯定是有的：</p>
 <p>如果还是选择 <strong>arraybuffer</strong> 方式，对于支持 <strong>Blob</strong> <strong>对象的浏览器环境来说，ArrayBuffer</strong> 对象可以直接转成 <strong>Blob</strong>，然后通过 <strong>URL.createObjectURL</strong> 直接在内存创建该图片资源的引用地址。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"arraybuffer"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> arraybuffer = response.data;</span><br><span class="line">    <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([arraybuffer], &#123; <span class="attr">type</span>: <span class="string">"image/png"</span> &#125;);</span><br><span class="line">    <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">    showToPage(objectURL);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<img src="/2021/12/23/xhr-response-type/responseType-blob.png" title="blob图片展示">
+<img src="/2021/12/23/xhr-response-type/responseType-blob.png" class="" title="blob图片展示">
 <p>也可以选择 <strong>responseType</strong> 为 <strong>blob</strong> 方式，响应回来的数据直接就是 <strong>blob</strong> 类型，直接生成 <strong>objectURL</strong> 即可：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"blob"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> blob = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"blob:"</span>, blob); <span class="comment">//  Blob &#123;size: 4026, type: 'image/png'&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">    showToPage(objectURL);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="题外话：a-标签的下载"><a href="#题外话：a-标签的下载" class="headerlink" title="题外话：a 标签的下载"></a>题外话：a 标签的下载</h2><p>对于一个图片的资源地址来说，浏览器直接访问是会预览该图片的，而不是出现下载弹框。另外，业务上为了实现追踪文件的下载进度这样的功能，我们借助 <strong>XHR</strong> 的 <strong>progress</strong> 就会很容易。</p>
 <p>不考虑浏览器兼容问题，我们可以通过 <strong>a</strong> 标签的 <strong>download</strong> 来实现，直接上代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成 objectURL 后</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">download</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> a = <span class="built_in">document</span>.createElement(<span class="string">"a"</span>);</span><br><span class="line">  a.href = url;</span><br><span class="line">  a.download = <span class="built_in">Date</span>.now() + <span class="string">".png"</span>;</span><br><span class="line">  a.style.display = <span class="string">"none"</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(a);</span><br><span class="line">  a.click();</span><br><span class="line">  URL.revokeObjectURL(a.href); <span class="comment">// 释放 objectURL</span></span><br><span class="line">  a.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/2021/12/23/xhr-response-type/a-download.png" title="a标签下载">
+<img src="/2021/12/23/xhr-response-type/a-download.png" class="" title="a标签下载">
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p><strong>responseType</strong> 只是一个很简单的属性值，一般来说手头上的框架中都有已有相关功能的封装，而对于繁忙我们来说很容易忽视这些基本特性。</p>
 <p>抛砖引玉，本篇到此也只说了些皮毛，像 arraybuffer 和 blog 的区别，浏览器对于大文件下载兼容性都没有涉及。</p>
 <p>虽然社区都有成熟的插件，但这些都需要在业务中投入时间来实践尝试，毕竟要知其所以然。</p>
@@ -617,7 +617,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053660').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517657').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -740,7 +740,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -762,7 +762,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

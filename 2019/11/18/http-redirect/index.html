@@ -550,12 +550,12 @@
 </table>
 <h2 id="302-和-301-的区别"><a href="#302-和-301-的区别" class="headerlink" title="302 和 301 的区别"></a>302 和 301 的区别</h2><p>上面列了许多 3xx 的状态码，但平时我们最多用的是 301 和 302，这里就详细解释这两个的区别：</p>
 <h3 id="301"><a href="#301" class="headerlink" title="301"></a>301</h3><p>永久重定向。如果 A 地址被 301 到 B 地址后，后续再次请求 A 地址的话，浏览器就会默认首次请求 B 地址，不会再有 A 地址的请求。</p>
-<img src="/2019/11/18/http-redirect/301.png">
+<img src="/2019/11/18/http-redirect/301.png" class="">
 <p>等看到第一次访问 /api/books/111 时，页面被重定向到 /api/books，浏览器发送两次请求。但后续再次请求 /api/books/111 时，直接请求了 /api/books 。</p>
 <p>所以通常该状态码用于网站重构，告知搜索引擎你以后访问我 301 重定向的地址。</p>
 <h3 id="302"><a href="#302" class="headerlink" title="302"></a>302</h3><p>相反，302 就是临时重定向。</p>
 <p>平时我们登陆页面的授权跳转都是基于此状态码。因为客户端访问的页面是临时不可用，满足了某些条件后，可以继续使用。</p>
-<img src="/2019/11/18/http-redirect/302.png">
+<img src="/2019/11/18/http-redirect/302.png" class="">
 <p>对比 301 的请求，能看到两次 /api/books/222 的请求都被“记录在案”。</p>
 <h1 id="koa-中的重定向"><a href="#koa-中的重定向" class="headerlink" title="koa 中的重定向"></a>koa 中的重定向</h1><p>来看下 koa 中 response 的 redirect 的重定向源码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">redirect(url, alt) &#123;</span><br><span class="line">  <span class="comment">// location 设置 location 请求头</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'back'</span> == url) url = <span class="keyword">this</span>.ctx.get(<span class="string">'Referrer'</span>) || alt || <span class="string">'/'</span>;</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'Location'</span>, url);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// status 默认 302 状态码</span></span><br><span class="line">  <span class="keyword">if</span> (!statuses.redirect[<span class="keyword">this</span>.status]) <span class="keyword">this</span>.status = <span class="number">302</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 根据不同访问类型，设置不同 body 的返回内容</span></span><br><span class="line">  <span class="comment">// html</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.ctx.accepts(<span class="string">'html'</span>)) &#123;</span><br><span class="line">    url = <span class="built_in">escape</span>(url);</span><br><span class="line">    <span class="keyword">this</span>.type = <span class="string">'text/html; charset=utf-8'</span>;</span><br><span class="line">    <span class="keyword">this</span>.body = <span class="string">`Redirecting to &lt;a href="<span class="subst">$&#123;url&#125;</span>"&gt;<span class="subst">$&#123;url&#125;</span>&lt;/a&gt;.`</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// text</span></span><br><span class="line">  <span class="keyword">this</span>.type = <span class="string">'text/plain; charset=utf-8'</span>;</span><br><span class="line">  <span class="keyword">this</span>.body = <span class="string">`Redirecting to <span class="subst">$&#123;url&#125;</span>.`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -630,7 +630,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054945').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519002').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -757,7 +757,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -779,7 +779,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

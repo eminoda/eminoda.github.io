@@ -494,10 +494,10 @@
 </li>
 </ol>
 <h2 id="分享图片的-ImgUrl-的请求头包含-WeChat"><a href="#分享图片的-ImgUrl-的请求头包含-WeChat" class="headerlink" title="分享图片的 ImgUrl 的请求头包含 WeChat"></a>分享图片的 ImgUrl 的请求头包含 WeChat</h2><p>可能你的服务器用了 nginx，对不同端做了拦截分流，请别忘了加这个 userAgent</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ( $http_user_agent !~* &quot;(Mobile|Android|iPad|iPhone|iPod|WeChat|BlackBerry|Windows Phone)&quot; ) &#123;</span><br><span class="line">  rewrite ^/ http://www.xxx.com? last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="禁用微信返回"><a href="#禁用微信返回" class="headerlink" title="禁用微信返回"></a>禁用微信返回</h2><img src="/2017/03/15/webcat-problem-collection/inhibit-header.png">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ( $http_user_agent !~* &quot;(Mobile|Android|iPad|iPhone|iPod|WeChat|BlackBerry|Windows Phone)&quot; ) &#123;</span><br><span class="line">  rewrite ^&#x2F; http:&#x2F;&#x2F;www.xxx.com? last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="禁用微信返回"><a href="#禁用微信返回" class="headerlink" title="禁用微信返回"></a>禁用微信返回</h2><img src="/2017/03/15/webcat-problem-collection/inhibit-header.png" class="">
 <p>图上有个返回 button，可以做隐藏</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">history.pushState(null , null , window.location.href),</span><br><span class="line">window.onpopstate = function(e) &#123;</span><br><span class="line">    history.go(1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">history.pushState(null , null , window.location.href),</span><br><span class="line">window.onpopstate &#x3D; function(e) &#123;</span><br><span class="line">    history.go(1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="调用-sdk-中生成的-signature-签名不正确"><a href="#调用-sdk-中生成的-signature-签名不正确" class="headerlink" title="调用 sdk 中生成的 signature 签名不正确"></a>调用 sdk 中生成的 signature 签名不正确</h2><ol>
 <li><a href="https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign" target="_blank" rel="noopener">线上验证工具</a></li>
 <li>参数说明</li>
@@ -529,7 +529,7 @@
 </tbody>
 </table>
 
-<h2 id="SPA-单页面微信分享验证失败"><a href="#SPA-单页面微信分享验证失败" class="headerlink" title="SPA 单页面微信分享验证失败"></a>SPA 单页面微信分享验证失败</h2><p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="noopener">文档中有涉及，但是你懂的</a><br><img src="/2017/03/15/webcat-problem-collection/spa.png"></p>
+<h2 id="SPA-单页面微信分享验证失败"><a href="#SPA-单页面微信分享验证失败" class="headerlink" title="SPA 单页面微信分享验证失败"></a>SPA 单页面微信分享验证失败</h2><p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="noopener">文档中有涉及，但是你懂的</a><br><img src="/2017/03/15/webcat-problem-collection/spa.png" class=""></p>
 <p>原因估计是因为单页面应用基本采用 hash 模式（#），然后微信不认为你浏览器地址发生了变化。然后在跳转页面路由的时候，记录的还是上一个页面的 url，导致<strong>config 接口注入权限验证配置</strong>失败。</p>
 <p>具体解决方法（提供 vue 解决方案）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 提供一个路由拦截</span></span><br><span class="line">routers.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 未记录过</span></span><br><span class="line">    <span class="keyword">if</span> (!store.state.router.beforeUrl) &#123;</span><br><span class="line">        <span class="comment">// 这里处理ios手机访问首页xxx/，router跳转为xxx/#/的问题</span></span><br><span class="line">        store.state.router.beforeUrl = <span class="keyword">from</span> &amp;&amp; <span class="keyword">from</span>.path === <span class="string">'/'</span> ? <span class="built_in">window</span>.location.href.split(<span class="string">'#'</span>)[<span class="number">0</span>] : <span class="built_in">window</span>.location.href;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成signature中url的参数处理</span></span><br><span class="line"><span class="comment">// 安卓可能会识别url变化，所以安卓浏览器直接使用原生地址</span></span><br><span class="line">utilService.getDeviceType() !== <span class="string">'android'</span> ? store.state.router.beforeUrl : <span class="built_in">window</span>.location.href</span><br></pre></td></tr></table></figure>
@@ -602,7 +602,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400058092').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400522127').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -729,7 +729,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -751,7 +751,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -501,21 +501,21 @@
 <p>那我们就逐行分析其中的原由，首先是这两行的简单代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123; <span class="attr">n</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br></pre></td></tr></table></figure>
 <p>变量 a 在堆内存创建了一个对象 { n: 1 }，并指向它。同时变量 b 的引用也指向了 a 创建的那个对象。此时他们的值都为 { n: 1 }。</p>
-<img src="/2021/08/08/fe-interview-object-ref/ref1.png" title="a，b对象的引用">
+<img src="/2021/08/08/fe-interview-object-ref/ref1.png" class="" title="a，b对象的引用">
 <p>最磨人的这行代码来了：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.x = a = &#123; <span class="attr">n</span>: <span class="number">2</span> &#125;;</span><br></pre></td></tr></table></figure>
 <p>首先根据 js 编译器解析代码原则，会先在作用域中依次寻找 a 和 a.x 是否已经声明过。如果没有则会创建对应的变量。（见：你不知道的 Javascript 上卷[p7]）</p>
 <p>因为 a 我们已经创建过了，但 a.x 没有，则会在那个创建对象内部声明 x（其值 undefined）</p>
-<img src="/2021/08/08/fe-interview-object-ref/ref2.png" title="a.x为undefined">
+<img src="/2021/08/08/fe-interview-object-ref/ref2.png" class="" title="a.x为undefined">
 <p><strong>注意一点：此时 a 引用是最开始在堆内存里创建的对象</strong>（这理解很重要，会影响能否读懂这题）</p>
 <p>当代码被 js 引擎执行起来后，会从右往左依次进行赋值运算，即代码的优先级会变成这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.x = (a = &#123; n: 2 &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.x &#x3D; (a &#x3D; &#123; n: 2 &#125;);</span><br></pre></td></tr></table></figure>
 <p>第一次 a = { n: 2 } 进行赋值：</p>
 <p>变量 a 重新在堆内存申请了一个对象地址，其值为 { n: 2 }：</p>
-<img src="/2021/08/08/fe-interview-object-ref/ref3.png" title="a的新指向">
+<img src="/2021/08/08/fe-interview-object-ref/ref3.png" class="" title="a的新指向">
 <p>第二次赋值 a.x = a：</p>
 <p>的确 a.x 的值是为 {n: 2}，但不同的是：这里的 a.x 的 a 是老对象引用（引用并没有被释放掉），a.x 指向了 a 的新地址 {n: 2}：</p>
-<img src="/2021/08/08/fe-interview-object-ref/ref4.png" title="区分a引用">
+<img src="/2021/08/08/fe-interview-object-ref/ref4.png" class="" title="区分a引用">
 <p>所以：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a.x); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// &#123; n: 2 &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// &#123; n: 1, x: &#123; n: 2 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
 <p>a.x 为 undefined：因为 a 新的引用地址（{n: 2}）的对象中没有 x 属性。</p>
@@ -593,7 +593,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053833').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517879').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -720,7 +720,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -742,7 +742,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

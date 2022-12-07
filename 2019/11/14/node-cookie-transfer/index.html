@@ -491,13 +491,13 @@
 <p>相信多数团队和我们一样，node 作为一个中间层连通着客户端和后端服务，处理着各种各样的事情。这篇就简单讲下 node 端如何转存 cookie 。</p>
 <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>先说下问题出现的场景，由于前端本来是接口 api 的使用者，导致很多问题没有遇到过，都是后端服务帮我们处理掉的。</p>
 <p>但当 node 介入整个服务体系后，不可避免的就会碰到类似用户登录“失效”这类问题。可以看下如下这图：</p>
-<img src="/2019/11/14/node-cookie-transfer/miss-cookie.png">
+<img src="/2019/11/14/node-cookie-transfer/miss-cookie.png" class="">
 <p>注意到后一种方式，node 作为中间层充当着接口的传递者，你一定不会忘记处理来自后端的响应信息，但可能会忘记给客户端设置 cookie （如：红框内容），这样就导致一些忽视的问题。</p>
 <h1 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h1><p>好，再来看下 cookie ，这不是 http 协议里的东西，太简单了吧？的确是基础，但有时我们却会轻视这些东西。借这个机会快速过下：</p>
 <h2 id="http-无状态"><a href="#http-无状态" class="headerlink" title="http 无状态"></a>http 无状态</h2><p>我们都知道 http 是无状态的协议，每次请求服务端根本不知道之前客户端有什么情况。就此，就有 Cookie 这样的机制，传递一些信息来帮助客户端和服务端建立起一定的关系，并持久化到浏览器，每次请求都把 cookie 发送给服务端，服务端解析后做逻辑处理。比如：用户登录等。</p>
 <h2 id="cookie-存储受那些影响"><a href="#cookie-存储受那些影响" class="headerlink" title="cookie 存储受那些影响"></a>cookie 存储受那些影响</h2><p>cookie 存储受 domain、path 的影响（端口除外），你不同的域名、访问地址都会影响到 cookie 的存储。你也不能获取不同域的 cookie 信息，这就是前端经常遇见的 <strong>跨域问题</strong> ，这里不做展开，只希望你特别留一下 domain 和 path 两个属性。</p>
 <h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><p>下图，是一个简单的客户端请求和服务端响应流程：</p>
-<img src="/2019/11/14/node-cookie-transfer/cookie-pass.png">
+<img src="/2019/11/14/node-cookie-transfer/cookie-pass.png" class="">
 <p>这里将通过代码来说明如何处理 1、2 两处中间层的交互，来使得最后的 cookie 能顺利给到客户端。</p>
 <blockquote>
 <p>备注：代码基于 koa + axios</p>
@@ -580,7 +580,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055042').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519103').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -707,7 +707,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -729,7 +729,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

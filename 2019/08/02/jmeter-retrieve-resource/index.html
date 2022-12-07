@@ -492,7 +492,7 @@
       
         <p>通过问题形式，逐渐让大家对这内容有个认识：</p>
 <h2 id="如何使用-Jmeter-测试页面上的异步资源？"><a href="#如何使用-Jmeter-测试页面上的异步资源？" class="headerlink" title="如何使用 Jmeter 测试页面上的异步资源？"></a>如何使用 Jmeter 测试页面上的异步资源？</h2><p>如果之前有类似经验，很容易知道下图的含义：</p>
-<img src="/2019/08/02/jmeter-retrieve-resource/jmeter-resource.png">
+<img src="/2019/08/02/jmeter-retrieve-resource/jmeter-resource.png" class="">
 <p>通常我们会压测某个 API 接口的性能情况，但是如果测试前端页面时，却不能反应真实的页面负载情况，因为页面上存在大量的异步资源（图片、js、css）</p>
 <p>勾选 <strong>Retrieve All Embedded Resources</strong> ，Jmeter 将自动为我们从页面上解析这些资源，并向服务端请求。</p>
 <h2 id="加载异步资源后，会对测试有什么不同结果？"><a href="#加载异步资源后，会对测试有什么不同结果？" class="headerlink" title="加载异步资源后，会对测试有什么不同结果？"></a>加载异步资源后，会对测试有什么不同结果？</h2><p>先看下 2 组测试：</p>
@@ -500,14 +500,14 @@
 <li>测试首页。并发 100 次，不含资源</li>
 <li>测试首页。并发 10 次，含资源（大致 26 个异步资源）</li>
 </ul>
-<img src="/2019/08/02/jmeter-retrieve-resource/result-api.jpg" title="不含资源">
-<img src="/2019/08/02/jmeter-retrieve-resource/result-resource.jpg" title="含资源">
+<img src="/2019/08/02/jmeter-retrieve-resource/result-api.jpg" class="" title="不含资源">
+<img src="/2019/08/02/jmeter-retrieve-resource/result-resource.jpg" class="" title="含资源">
 <p>发现测试同一页面在是否勾选加载异步资源上，性能差别很大（即使这里给加载资源这组测试，并发调整为 10 次）</p>
 <h2 id="为什么会变得如此之差？"><a href="#为什么会变得如此之差？" class="headerlink" title="为什么会变得如此之差？"></a>为什么会变得如此之差？</h2><p>这个就涉及该选项 <strong>Retrieve All Embedded Resources</strong>，对资源是 <strong>并发请求</strong> 还是 <strong>队列请求</strong>。</p>
 <p>经过测试：将其中一个异步资源 hold on 10 秒，结果发现后续请求都被 <strong>堵塞</strong>，证明该选项是会使请求挨个发出。</p>
-<img src="/2019/08/02/jmeter-retrieve-resource/result.jpg">
+<img src="/2019/08/02/jmeter-retrieve-resource/result.jpg" class="">
 <h2 id="怎么改成并发请求？"><a href="#怎么改成并发请求？" class="headerlink" title="怎么改成并发请求？"></a>怎么改成并发请求？</h2><p>勾选：<strong>Parallel downloads</strong>，并设置加载数量 Number，就可以改变其方式。</p>
-<img src="/2019/08/02/jmeter-retrieve-resource/result-all.jpg">
+<img src="/2019/08/02/jmeter-retrieve-resource/result-all.jpg" class="">
 <p>发现最慢的接口挪到了最后位，页面上的所有资源没有被异常堵塞。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
 <p>我只是知识点的“加工者”， 更多内容请查阅原文链接 :thought_balloon: ， 同时感谢原作者的付出：</p>
@@ -579,7 +579,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400055815').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519805').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -706,7 +706,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -728,7 +728,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

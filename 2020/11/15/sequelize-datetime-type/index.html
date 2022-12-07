@@ -492,7 +492,7 @@
 <p>格林尼治平均时间（Greenwich Mean Time，GMT）是指位于英国伦敦郊区的皇家格林尼治天文台当地的平太阳时，因为本初子午线被定义为通过那里的经线。</p>
 </blockquote>
 <p>为了形象理解，找了张时区的地理图：</p>
-<img src="/2020/11/15/sequelize-datetime-type/timezone.jpg">
+<img src="/2020/11/15/sequelize-datetime-type/timezone.jpg" class="">
 <p>能看到整个地球被划分为 24 个时区，以本初子午线为分割点（0 时区），以左为西时区，以右为东时区，我国为东 8 区。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">Sun Nov <span class="number">15</span> <span class="number">2020</span> <span class="number">09</span>:<span class="number">00</span>:<span class="number">00</span> GMT+<span class="number">0800</span> (中国标准时间)</span><br></pre></td></tr></table></figure>
 <h2 id="UTC-协调世界时"><a href="#UTC-协调世界时" class="headerlink" title="UTC 协调世界时"></a>UTC 协调世界时</h2><blockquote>
@@ -680,7 +680,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054136').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518206').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -807,7 +807,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -829,7 +829,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -490,7 +490,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文件上传一个基础服务端功能，比如：上传一张用户头像。</p>
 <p>由于我自己 node api 使用的不多，借这个“文件上传”功能，来了解 node 服务端如何接收客户端的文件，然后存储到服务器上，完成整个功能。</p>
 <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p>先看下流程图：</p>
-<img src="/2019/11/15/node-file-upload/upload-order.png">
+<img src="/2019/11/15/node-file-upload/upload-order.png" class="">
 <p>通常会有两种简单的场景：</p>
 <ul>
 <li>客户端上传图片，服务端解析后，保存在当前服务器，回告客户端，整个流程结束。</li>
@@ -510,7 +510,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> FormData = <span class="built_in">require</span>(<span class="string">"form-data"</span>);</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/upload'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">    formData.append(<span class="string">"picFile"</span>, fs.createReadStream(tempUploadDir));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> respData = <span class="keyword">await</span> yourAxios().request(&#123;</span><br><span class="line">        url: ctx.path,</span><br><span class="line">        method: ctx.method,</span><br><span class="line">        data: formData,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            <span class="string">"Content-Type"</span>: <span class="string">`multipart/form-data; boundary=<span class="subst">$&#123;formData._boundary&#125;</span>`</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    ctx.body = respData;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>拿到在中间层存储的文件路径，通过 fs 转成 ReadStream 并构造成一个 formData。再通过 axios 等 http 服务工具发送给后端服务。</p>
 <p>当然整个请求的 header 和 data 需要符合后端的接收标准（下图，举个例子）：</p>
-<img src="/2019/11/15/node-file-upload/http-upload.png">
+<img src="/2019/11/15/node-file-upload/http-upload.png" class="">
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>上述是一个较为完整的文件上传说明，希望对此类有问题的同学能有启发作用。</p>
 
       
@@ -579,7 +579,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054975').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400519075').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -706,7 +706,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -728,7 +728,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

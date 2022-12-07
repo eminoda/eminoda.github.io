@@ -663,27 +663,27 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'id="app" class="foo"&gt;hello&lt;/div&gt;'</span>.match(attribute);</span><br><span class="line"><span class="comment">// ["id="app"", "id", "=", "app", undefined, undefined, index: 0, input: "id="app" class="red" disabled&gt;&lt;/div&gt;", groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="string">"id='app' class='foo'&gt;hello&lt;/div&gt;"</span>.match(attribute);</span><br><span class="line"><span class="comment">// ["id='app'", "id", "=", undefined, "app", undefined, index: 0, input: "id='app' class='red' disabled&gt;&lt;/div&gt;", groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="string">"  disabled&gt;hello&lt;/div&gt;"</span>.match(attribute);</span><br><span class="line"><span class="comment">// ["  disabled", "disabled", undefined, undefined, undefined, undefined, index: 0, input: "disabled&gt;hello&lt;/div&gt;", groups: undefined]</span></span><br></pre></td></tr></table></figure>
 <p>按照顺序，开始分析：</p>
 <p>我先把这个正则简化下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/A(B)(?:C(?(?(D)|(E)|(F))))/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;A(B)(?:C(?(?(D)|(E)|(F))))&#x2F;</span><br></pre></td></tr></table></figure>
 <p>第一部分 <strong>A</strong> ，匹配任何空白字符，并且空白符可出现 or 未出现过：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\s*</span><br></pre></td></tr></table></figure>
 <p>随后跟着一个 <strong>括号捕获</strong> 表达式 <strong>B</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">([^\s&quot;&apos;&lt;&gt;\/=]+)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">([^\s&quot;&#39;&lt;&gt;\&#x2F;&#x3D;]+)</span><br></pre></td></tr></table></figure>
 <p>用 <strong>[]</strong> 中括号包裹，并且里面匹配的内容至少要出现一次。</p>
 <p>注意内部内容的 <strong>^</strong> 并不是说明以其开头，而是 <strong>非 \s”‘&lt;&gt;/=</strong> 这些字符，从而 <strong>取出属性的 key</strong>。</p>
 <p>后面将是个复杂的 <strong>非括号捕获</strong> ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|&apos;([^&apos;]*)&apos;+|([^\s&quot;&apos;=&lt;&gt;`]+)))?</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:\s*(&#x3D;)\s*(?:&quot;([^&quot;]*)&quot;+|&#39;([^&#39;]*)&#39;+|([^\s&quot;&#39;&#x3D;&lt;&gt;&#96;]+)))?</span><br></pre></td></tr></table></figure>
 <p>我们先分析其中三个括号捕获 <strong>DEF</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;([^&quot;]*)&quot;+|&apos;([^&apos;]*)&apos;+|([^\s&quot;&apos;=&lt;&gt;`]+)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;([^&quot;]*)&quot;+|&#39;([^&#39;]*)&#39;+|([^\s&quot;&#39;&#x3D;&lt;&gt;&#96;]+)</span><br></pre></td></tr></table></figure>
 <p>仔细看不难发现，<strong>D</strong> 和 <strong>E</strong> 是针对不同的引号（双引号、单引号）包裹内容来匹配的，并且内部不能出现外部的引号。</p>
 <p><strong>F</strong> 和之前的 <strong>B</strong> 类似，唯独去除了斜杠限制。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:&quot;([^&quot;]*)&quot;+|&apos;([^&apos;]*)&apos;+|([^\s&quot;&apos;=&lt;&gt;`]+))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:&quot;([^&quot;]*)&quot;+|&#39;([^&#39;]*)&#39;+|([^\s&quot;&#39;&#x3D;&lt;&gt;&#96;]+))</span><br></pre></td></tr></table></figure>
 <p>最后针对 <strong>DEF</strong> 的结果，来做非括号匹配。就能 <strong>取出属性的 value</strong></p>
 <p>既然知道了属性的 key、value 取值方式，那么 <strong>C</strong> 的作用也显而易见了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:\s*(=)\s*(?(D)|(E)|(F)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?:\s*(&#x3D;)\s*(?(D)|(E)|(F)))</span><br></pre></td></tr></table></figure>
 <p>用等号 = 作为分隔符，取出整个 <strong>key=value</strong> 的值。</p>
 <p>那么再回头看之前正则对应的输出结果就容易些了。</p>
 <h1 id="正则的封装"><a href="#正则的封装" class="headerlink" title="正则的封装"></a>正则的封装</h1><p>讲个轻松些的，如下是个判断 html 起始标签的正则：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^&lt;((?:[a-zA-Z_][\-\.0-9_a-zA-Za-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*\:)?[a-zA-Z_][\-\.0-9_a-zA-Za-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*)/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;^&lt;((?:[a-zA-Z_][\-\.0-9_a-zA-Za-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*\:)?[a-zA-Z_][\-\.0-9_a-zA-Za-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*)&#x2F;</span><br></pre></td></tr></table></figure>
 <p>能发现整个正则表达式很长，虽然逻辑不复杂，但看起来真的很揪心。</p>
 <p>我们看看 vue 是怎么做的？</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> unicodeRegExp = <span class="regexp">/a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ncname = <span class="string">`[a-zA-Z_][\\-\\.0-9_a-zA-Z<span class="subst">$&#123;unicodeRegExp.source&#125;</span>]*`</span>;</span><br><span class="line"><span class="keyword">const</span> qnameCapture = <span class="string">`((?:<span class="subst">$&#123;ncname&#125;</span>\\:)?<span class="subst">$&#123;ncname&#125;</span>)`</span>;</span><br><span class="line"><span class="keyword">const</span> startTagOpen = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`^&lt;<span class="subst">$&#123;qnameCapture&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
@@ -760,7 +760,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054471').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518538').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -889,7 +889,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -911,7 +911,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -495,7 +495,7 @@
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>近日做个 electron 项目，涉及使用 canvas 模块。然后调用 canvas 时，就报如下错误：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx canvas.node was compiled against a different Node.js version using</span><br><span class="line">NODE_MODULE_VERSION <span class="number">72.</span> This version <span class="keyword">of</span> Node.js requires</span><br><span class="line">NODE_MODULE_VERSION <span class="number">75.</span> Please <span class="keyword">try</span> re-compiling or re-installing</span><br></pre></td></tr></table></figure>
-<img src="/2019/11/22/node-gyp-canvas-electron/different-version.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/different-version.png" class="">
 <p>现代浏览器中 canvas 只是个普通的 api ，我们直接用就行了。但在 node 端，一切就变得不怎么容易了。</p>
 <p>我尝试通过 nvm 更新 node 版本（12.13.1），结果如上图，NODE_MODULE_VERSION 还是比 electron 的低。</p>
 <p>看样子这个问题没那么容易，接下来就开始了“漫长”的环境配置过程，接下来我会对每个阶段的插件安装过程做详细描述。</p>
@@ -506,7 +506,7 @@
 <p>然后我兴冲冲的安装了 <strong>electron-rebuild</strong> ，原以为问题到此结束。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev electron-rebuild</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 每次运行<span class="string">"npm install"</span>后，也运行这条命令</span></span><br><span class="line">./node_modules/.bin/electron-rebuild</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在windows下如果上述命令遇到了问题，尝试这个：</span></span><br><span class="line">.\node_modules\.bin\electron-rebuild.cmd</span><br></pre></td></tr></table></figure>
 <p>结果这只是开始：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/rebuild-failed.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/rebuild-failed.png" class="">
 <h1 id="node-gyp-安装"><a href="#node-gyp-安装" class="headerlink" title="node-gyp 安装"></a>node-gyp 安装</h1><p>错误都是从 <strong>node-gyp</strong> 报出来的，也就是说 canvas 是个原生模块（非 js 语言的第三方插件）。</p>
 <p>自打我第一次用 node.js 起，sass 的安装就差点让我从入门到放弃，就是因为这个“臭名昭著”的 <strong>node-gyp</strong> 。</p>
 <p>以前 sass 的问题可以通过 cnpm 解决，但这次不同，不得不把 <strong>node-gyp</strong> 的环境整一整了。</p>
@@ -514,7 +514,7 @@
 <p>这个就是 <strong>windows-build-tools</strong> ，一个用于 windows 平台的环境构建工具。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --global windows-build-tools</span><br></pre></td></tr></table></figure>
 <p>只要我们把它安装在全局即可，稍作等待，后续它为我们安装好一系列的插件：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/tools.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/tools.png" class="">
 <h2 id="python-字符设置"><a href="#python-字符设置" class="headerlink" title="python 字符设置"></a>python 字符设置</h2><p>虽然 <strong>windows-build-tools</strong> 为我们安装了 <strong>python</strong> ，但为了避免不必要的麻烦，我建议你事先安装好 python2 。</p>
 <p>后续执行 electron-rebuild 还会遇到 <strong>字符编码的错误</strong>，下面我来说下怎么处理（虽然临时学的）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeDecodeError: <span class="string">'ascii'</span> codec can<span class="string">'t decode byte 0xe5 in position 0: ordinal not in range(128)</span></span><br></pre></td></tr></table></figure>
@@ -523,7 +523,7 @@
 <p>找到对应 python 的目录，在 xxx\Python27\Lib\site-packages 下，新建文件 <strong>sitecustomize.py</strong> ，内容如下：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set system default encoding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">reload(sys) <span class="comment"># 可能不需要</span></span><br><span class="line">sys.setdefaultencoding(<span class="string">'gbk'</span>)</span><br></pre></td></tr></table></figure>
 <p>最后你可以通过命令行试下是否生效：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/python-encoding.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/python-encoding.png" class="">
 <h2 id="GTK2"><a href="#GTK2" class="headerlink" title="GTK2"></a>GTK2</h2><p>node-gyp 后续还需要 GTK2 和 libjpeg-turbo 插件的支持，相比前面基本没什么难度，只要“仔细”些。</p>
 <p>node-canvas 只是基于 cairo 的实现，同时为了让 electron-rebuild 能重新编译 canvas ，则需要包含 cairo 的运行时代码，而这些是由 GTK 提供。</p>
 <p>你只要到官方提供的网站下载即可：</p>
@@ -543,7 +543,7 @@
 <li>点击下载的 exe 后，后续操作全局采取默认配置</li>
 </ul>
 <p>当然你直接编译，还是会出错，因为还需要个 libjpeg-turbo ：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/jpeg.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/jpeg.png" class="">
 <h2 id="libjpeg-turbo"><a href="#libjpeg-turbo" class="headerlink" title="libjpeg-turbo"></a>libjpeg-turbo</h2><p>为了能支持 JPEG 格式的文件，还需要 libjpeg-turbo 插件，同样安装也很简单。</p>
 <p><a href="https://sourceforge.net/projects/libjpeg-turbo/files/" target="_blank" rel="noopener">下载地址</a> ：</p>
 <p><a href="https://sourceforge.net/projects/libjpeg-turbo/files/2.0.0/libjpeg-turbo-2.0.0-vc.exe/download" target="_blank" rel="noopener">https://sourceforge.net/projects/libjpeg-turbo/files/2.0.0/libjpeg-turbo-2.0.0-vc.exe/download</a></p>
@@ -553,9 +553,9 @@
 <li>区别 GTK2 插件，不要选择对应的 32 或者 64 位对应的版本，因为后面实际运行中，会出现文件找不到的问题</li>
 </ul>
 <h2 id="重新编译"><a href="#重新编译" class="headerlink" title="重新编译"></a>重新编译</h2><p>一切顺利的话，你将在 C 盘中看到如下两个新目录：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/result.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/result.png" class="">
 <p>最后在执行 electron-rebuild 的重新编译命令：</p>
-<img src="/2019/11/22/node-gyp-canvas-electron/success.png">
+<img src="/2019/11/22/node-gyp-canvas-electron/success.png" class="">
 <p>ok，node-canvas 编译成功，后续调用没有再报错。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇可能阅读下来不足 5 分钟，但实际解决这个问题，我是花了整个下午。个人是非常厌倦解决这类环境问题，但侧面也反应出自己知识面的浅薄，毕竟只会 js 。</p>
 <p>最后希望能帮助到类似问题的同学，如果你克服了这问题，可以点个赞哟。</p>
@@ -636,7 +636,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054916').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518974').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -765,7 +765,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -787,7 +787,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -502,7 +502,7 @@
 
       
         <p>看了<a href="/2018/04/27/jenkins-quickstart/">初识 jenkins</a>,应该对 jenkins 有个入门级的了解。<br>在这篇文章中，将继续进阶学习 jenkins 的<strong>持续</strong>集成，结合 github 完成自动化构建部署。</p>
-<h2 id="来看个传统方式"><a href="#来看个传统方式" class="headerlink" title="来看个传统方式"></a>来看个<strong>传统</strong>方式</h2><img src="/2018/04/27/jenkins-auto-deploy/example-1.gif">
+<h2 id="来看个传统方式"><a href="#来看个传统方式" class="headerlink" title="来看个传统方式"></a>来看个<strong>传统</strong>方式</h2><img src="/2018/04/27/jenkins-auto-deploy/example-1.gif" class="">
 <p>我们要经历哪些步骤？</p>
 <ul>
 <li>打开 IDE，进入项目</li>
@@ -520,23 +520,23 @@
 <li>如果团队支撑多个项目，每天都要给产品、测试看功能迭代，bug 修复，你还能忍受？（懂的人，知道我在说什么。这 TM 发个包都要浪费我的半天）</li>
 <li>你能确保每次发布不出错？每次构建项目不会有 Bug（当然这个测试放在之后文章说）</li>
 </ul>
-<h2 id="持续交付"><a href="#持续交付" class="headerlink" title="持续交付"></a>持续交付</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.jpg">
+<h2 id="持续交付"><a href="#持续交付" class="headerlink" title="持续交付"></a>持续交付</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.jpg" class="">
 <p>简单描述下：<br>项目成员 pull code 到代码仓库<br>然后专门一个 Server 开始构建项目（build-&gt;test-&gt;result）<br>然后 Result 实时返回给项目成员<br>最后整个通过，我们手工点击，发布项目。</p>
 <p>这是持续交付，当然 jenkins 是持续集成，不知道这样说明不明确。</p>
-<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><img src="/2018/04/27/jenkins-auto-deploy/config-1.png">
+<h3 id="配置-git"><a href="#配置-git" class="headerlink" title="配置 git"></a>配置 git</h3><img src="/2018/04/27/jenkins-auto-deploy/config-1.png" class="">
 <p>选择版本工具，设置项目地址和证书权限，也能定义不同 Branch</p>
-<h3 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h3><p>安装 SSH 插件，并授权到发布 Server。这样 jenkins 可以和发布 Server 建立起通信关系。<br><img src="/2018/04/27/jenkins-auto-deploy/config-2.png" title="下载插件"><br><img src="/2018/04/27/jenkins-auto-deploy/config-3.png" title="配置ssh认证"><br><img src="/2018/04/27/jenkins-auto-deploy/config-4.png" title="配置ssh认证"></p>
-<p>可以定义上传 package 的路径，自定义一些 shell 脚本<br><img src="/2018/04/27/jenkins-auto-deploy/config-5.png" title="构建时候对远端server做一些处理"><br><img src="/2018/04/27/jenkins-auto-deploy/config-6.png" title="foo"></p>
-<h2 id="持续部署（github-hook）"><a href="#持续部署（github-hook）" class="headerlink" title="持续部署（github hook）"></a>持续部署（github hook）</h2><p>和持续集成不同的是，发布是自动触发的。这里拿 github hook 举例。<br><img src="/2018/04/27/jenkins-auto-deploy/example-3.jpg"></p>
-<h3 id="github-设置"><a href="#github-设置" class="headerlink" title="github 设置"></a>github 设置</h3><p>选择 github 权限，哪些 event 会触发任务<br><img src="/2018/04/27/jenkins-auto-deploy/github-1.png" title="设置token"></p>
+<h3 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a>配置 SSH</h3><p>安装 SSH 插件，并授权到发布 Server。这样 jenkins 可以和发布 Server 建立起通信关系。<br><img src="/2018/04/27/jenkins-auto-deploy/config-2.png" class="" title="下载插件"><br><img src="/2018/04/27/jenkins-auto-deploy/config-3.png" class="" title="配置ssh认证"><br><img src="/2018/04/27/jenkins-auto-deploy/config-4.png" class="" title="配置ssh认证"></p>
+<p>可以定义上传 package 的路径，自定义一些 shell 脚本<br><img src="/2018/04/27/jenkins-auto-deploy/config-5.png" class="" title="构建时候对远端server做一些处理"><br><img src="/2018/04/27/jenkins-auto-deploy/config-6.png" class="" title="foo"></p>
+<h2 id="持续部署（github-hook）"><a href="#持续部署（github-hook）" class="headerlink" title="持续部署（github hook）"></a>持续部署（github hook）</h2><p>和持续集成不同的是，发布是自动触发的。这里拿 github hook 举例。<br><img src="/2018/04/27/jenkins-auto-deploy/example-3.jpg" class=""></p>
+<h3 id="github-设置"><a href="#github-设置" class="headerlink" title="github 设置"></a>github 设置</h3><p>选择 github 权限，哪些 event 会触发任务<br><img src="/2018/04/27/jenkins-auto-deploy/github-1.png" class="" title="设置token"></p>
 <p>生成 token，这里在 jenkins 需要使用，切记保存好，下次会是不同的 token!</p>
-<img src="/2018/04/27/jenkins-auto-deploy/github-2.png" title="保存好token">
+<img src="/2018/04/27/jenkins-auto-deploy/github-2.png" class="" title="保存好token">
 <p>设置 Jenkins hook，github 最终调用这个 Api</p>
-<img src="/2018/04/27/jenkins-auto-deploy/github-3.png" title="进入项目，开启jenkins服务">
-<h3 id="jenkins-设置"><a href="#jenkins-设置" class="headerlink" title="jenkins 设置"></a>jenkins 设置</h3><p>将 github 的 token，配置到 jenkins 中<br><img src="/2018/04/27/jenkins-auto-deploy/github-4.png" title="设置github credentials"></p>
-<p>在全局设置中，测试 token 的链接状态<br><img src="/2018/04/27/jenkins-auto-deploy/github-5.png" title="配置github credentials"></p>
-<p>在 job 中，定义触发器<br><img src="/2018/04/27/jenkins-auto-deploy/github-6.png" title="开始hook"></p>
-<h2 id="现在的发布会变成什么样？"><a href="#现在的发布会变成什么样？" class="headerlink" title="现在的发布会变成什么样？"></a>现在的发布会变成什么样？</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.gif">
+<img src="/2018/04/27/jenkins-auto-deploy/github-3.png" class="" title="进入项目，开启jenkins服务">
+<h3 id="jenkins-设置"><a href="#jenkins-设置" class="headerlink" title="jenkins 设置"></a>jenkins 设置</h3><p>将 github 的 token，配置到 jenkins 中<br><img src="/2018/04/27/jenkins-auto-deploy/github-4.png" class="" title="设置github credentials"></p>
+<p>在全局设置中，测试 token 的链接状态<br><img src="/2018/04/27/jenkins-auto-deploy/github-5.png" class="" title="配置github credentials"></p>
+<p>在 job 中，定义触发器<br><img src="/2018/04/27/jenkins-auto-deploy/github-6.png" class="" title="开始hook"></p>
+<h2 id="现在的发布会变成什么样？"><a href="#现在的发布会变成什么样？" class="headerlink" title="现在的发布会变成什么样？"></a>现在的发布会变成什么样？</h2><img src="/2018/04/27/jenkins-auto-deploy/example-2.gif" class="">
 <p>我们要经历哪些步骤？</p>
 <ul>
 <li>提交代码</li>
@@ -609,7 +609,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057854').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521795').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -736,7 +736,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -758,7 +758,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

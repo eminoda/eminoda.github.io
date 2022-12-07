@@ -487,13 +487,13 @@
       
 
       
-        <img src="/2018/05/16/sercet-http-api/http.jpg">
+        <img src="/2018/05/16/sercet-http-api/http.jpg" class="">
 <p>近期，公司老板发起一个关于 api 设计、安全签名的探讨…，然后就有一项课后作业：</p>
 <blockquote>
 <p>有什么方式能提升 api 的安全</p>
 </blockquote>
 <h2 id="看看别人家怎么做的？"><a href="#看看别人家怎么做的？" class="headerlink" title="看看别人家怎么做的？"></a>看看别人家怎么做的？</h2><p>自身经验不多，来简单看下<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">微信的 access_token 机制来思考下</a>，我们有哪些可以学习。</p>
-<img src="/2018/05/16/sercet-http-api/wx.png" title="简易的用户授权过程">
+<img src="/2018/05/16/sercet-http-api/wx.png" class="" title="简易的用户授权过程">
 <ol>
 <li>用户除了主动授权，没有暴露过其他敏感信息–Oauth2</li>
 <li>授权获取的 code 具有<strong>唯一性</strong>和<strong>过期性</strong></li>
@@ -586,7 +586,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057419').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521485').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -713,7 +713,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -735,7 +735,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

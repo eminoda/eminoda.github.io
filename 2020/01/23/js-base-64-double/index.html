@@ -503,14 +503,14 @@
 </blockquote>
 <p>当然我们只讨论 js 中的 <strong>64 位的双精度</strong> 方式。</p>
 <h1 id="64-位的双精度"><a href="#64-位的双精度" class="headerlink" title="64 位的双精度"></a>64 位的双精度</h1><p>下图基本解释清楚 64 位数的组成部分：</p>
-<img src="/2020/01/23/js-base-64-double/double-number.png" title="64位的双精度（维基百科）">
+<img src="/2020/01/23/js-base-64-double/double-number.png" class="" title="64位的双精度（维基百科）">
 <ul>
 <li>sign bit（S 符号）：符号位，表示正负号（0 为负数，1 为正数）</li>
 <li>exponent（E 指数）：表示次方数，在（二进制的）科学计数法中定义 2 的多少次幂</li>
 <li>mantissa（M 尾数）：表示精确度（小数部分，规范中会省略个位数上的 1 ）</li>
 </ul>
 <p>那么一个双精度值的表达式如下：</p>
-<img src="/2020/01/23/js-base-64-double/double-format.png" title="64位的双精度（维基百科）">
+<img src="/2020/01/23/js-base-64-double/double-format.png" class="" title="64位的双精度（维基百科）">
 <p>我们下面来具体解释一下。</p>
 <h2 id="符号位-sign"><a href="#符号位-sign" class="headerlink" title="符号位 sign"></a>符号位 sign</h2><p>符号位很容易理解，表示整个数的正负值。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.pow(<span class="number">-1</span>, <span class="number">0</span>); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">Math</span>.pow(<span class="number">-1</span>, <span class="number">1</span>); <span class="comment">//-1</span></span><br></pre></td></tr></table></figure>
@@ -591,7 +591,7 @@
 <h2 id="最小精度"><a href="#最小精度" class="headerlink" title="最小精度"></a>最小精度</h2><p>在尾数的 52 位中，使得有一个最小的位定义（1.00000~ 中间 51 个 0~00001），即 2^-52 。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">-52</span>) == <span class="built_in">Number</span>.EPSILON; <span class="comment">//2.220446049250313e-16</span></span><br></pre></td></tr></table></figure>
 <h2 id="0-1-0-2-等于什么？"><a href="#0-1-0-2-等于什么？" class="headerlink" title="0.1+0.2 等于什么？"></a>0.1+0.2 等于什么？</h2><p>按照最小精度，即打满 52 位，那么像 0.1 和 0.2 最终无限循环后的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.0001100110011001100110011001100110011001100110011001101 + 0.0011001100110011001100110011001100110011001100110011010 = 0.0100110011001100110011001100110011001100110011001100111;</span><br><span class="line"></span><br><span class="line">等于：0.30000000000000004.toString(2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.0001100110011001100110011001100110011001100110011001101 + 0.0011001100110011001100110011001100110011001100110011010 &#x3D; 0.0100110011001100110011001100110011001100110011001100111;</span><br><span class="line"></span><br><span class="line">等于：0.30000000000000004.toString(2)</span><br></pre></td></tr></table></figure>
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>对于这个 IEEE 754 规范，我理解的还不是很透彻，不过对于 js 精度上的问题也算是有个初步的解答。</p>
 <p>如果有不对之处望各位留言指正。</p>
 
@@ -661,7 +661,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054409').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518477').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -788,7 +788,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -810,7 +810,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

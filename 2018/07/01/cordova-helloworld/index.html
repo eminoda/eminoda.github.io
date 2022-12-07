@@ -493,7 +493,7 @@
       
 
       
-        <img src="/2018/07/01/cordova-helloworld/cordova.png">
+        <img src="/2018/07/01/cordova-helloworld/cordova.png" class="">
 <h1 id="Cordova"><a href="#Cordova" class="headerlink" title="Cordova"></a><a href="http://cordova.apache.org/" target="_blank" rel="noopener">Cordova</a></h1><p>早已听过 Cordova 这个名词，但是 3 年多一直没有机会玩下。<br>通过 Cordova，可以把我们前端的 js、html、css 打包成 app 应用，使用原生 app 的功能。</p>
 <h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
 <li>跨平台重用代码<br>支持多个平台，android、ios…</li>
@@ -510,24 +510,24 @@
 环境变量需要配置：platform-tools和tools目录
 </code></pre><h2 id="安装-Andriod-Studio（我只有-win-系统，所以-ios-暂时玩不了）"><a href="#安装-Andriod-Studio（我只有-win-系统，所以-ios-暂时玩不了）" class="headerlink" title="安装 Andriod Studio（我只有 win 系统，所以 ios 暂时玩不了）"></a>安装 Andriod Studio（我只有 win 系统，所以 ios 暂时玩不了）</h2><ol>
 <li><p><a href="https://developer.android.google.cn/studio/" target="_blank" rel="noopener">下载 android studio</a></p>
-<img src="/2018/07/01/cordova-helloworld/download.png">
+<img src="/2018/07/01/cordova-helloworld/download.png" class="">
 </li>
 <li><p>安装（无脑下一步）</p>
-<img src="/2018/07/01/cordova-helloworld/install.png">
+<img src="/2018/07/01/cordova-helloworld/install.png" class="">
 </li>
 <li><p>建个项目</p>
 </li>
 </ol>
 <ul>
-<li>了解默认模板常见的 project 的结构<img src="/2018/07/01/cordova-helloworld/project.png"></li>
-<li>配置 AVD，后续 Cordova 会用到（当然可以使用 Cordova-cli，可惜第一次接触嫌麻烦，暂时没看）<img src="/2018/07/01/cordova-helloworld/version.png">
-注意版本，如果过高可能使用 Cordova 会出现一些错误。<img src="/2018/07/01/cordova-helloworld/error.png">
+<li>了解默认模板常见的 project 的结构<img src="/2018/07/01/cordova-helloworld/project.png" class=""></li>
+<li>配置 AVD，后续 Cordova 会用到（当然可以使用 Cordova-cli，可惜第一次接触嫌麻烦，暂时没看）<img src="/2018/07/01/cordova-helloworld/version.png" class="">
+注意版本，如果过高可能使用 Cordova 会出现一些错误。<img src="/2018/07/01/cordova-helloworld/error.png" class="">
 </li>
 </ul>
 <h2 id="Cordova-1"><a href="#Cordova-1" class="headerlink" title="Cordova"></a><a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="noopener">Cordova</a></h2><p>按照官网撸一边</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">npm install cordova -g //最好别cnpm，可能cordova安装会有问题</span><br><span class="line"></span><br><span class="line">cordova create hello com.example.hello HelloWorld //创建项目（文件夹+java pkg格式+app name，大概这意思）</span><br><span class="line"></span><br><span class="line">cordova platform add android //构建安卓平台，创建一个标准的安卓project目录</span><br><span class="line"></span><br><span class="line">cordova platform ls //核对平台环境信息</span><br><span class="line">    Installed platforms:</span><br><span class="line">        android 7.0.0</span><br><span class="line">    Available platforms:</span><br><span class="line">        browser ~5.0.1</span><br><span class="line">        ios ~4.5.4</span><br><span class="line">        osx ~4.0.1</span><br><span class="line">        windows ~5.0.0</span><br><span class="line">        www ^3.12.0</span><br><span class="line"></span><br><span class="line">cordova build android //构架一个apk包</span><br><span class="line">    xxx\hello\platforms\android\app\build\outputs\apk\debug\app-debug.apk</span><br><span class="line"></span><br><span class="line">cordova emulate android //启动一个模拟器</span><br><span class="line"></span><br><span class="line">cordova run android //将js代码构建成app方式，刷新模拟器</span><br></pre></td></tr></table></figure>
-<p>目录结构<br><img src="/2018/07/01/cordova-helloworld/dir.png" title="其实我们前端只关心下面www"></p>
-<img src="/2018/07/01/cordova-helloworld/adv.png" title="顺利的话，出现这个View">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">npm install cordova -g &#x2F;&#x2F;最好别cnpm，可能cordova安装会有问题</span><br><span class="line"></span><br><span class="line">cordova create hello com.example.hello HelloWorld &#x2F;&#x2F;创建项目（文件夹+java pkg格式+app name，大概这意思）</span><br><span class="line"></span><br><span class="line">cordova platform add android &#x2F;&#x2F;构建安卓平台，创建一个标准的安卓project目录</span><br><span class="line"></span><br><span class="line">cordova platform ls &#x2F;&#x2F;核对平台环境信息</span><br><span class="line">    Installed platforms:</span><br><span class="line">        android 7.0.0</span><br><span class="line">    Available platforms:</span><br><span class="line">        browser ~5.0.1</span><br><span class="line">        ios ~4.5.4</span><br><span class="line">        osx ~4.0.1</span><br><span class="line">        windows ~5.0.0</span><br><span class="line">        www ^3.12.0</span><br><span class="line"></span><br><span class="line">cordova build android &#x2F;&#x2F;构架一个apk包</span><br><span class="line">    xxx\hello\platforms\android\app\build\outputs\apk\debug\app-debug.apk</span><br><span class="line"></span><br><span class="line">cordova emulate android &#x2F;&#x2F;启动一个模拟器</span><br><span class="line"></span><br><span class="line">cordova run android &#x2F;&#x2F;将js代码构建成app方式，刷新模拟器</span><br></pre></td></tr></table></figure>
+<p>目录结构<br><img src="/2018/07/01/cordova-helloworld/dir.png" class="" title="其实我们前端只关心下面www"></p>
+<img src="/2018/07/01/cordova-helloworld/adv.png" class="" title="顺利的话，出现这个View">
 
       
     </div>
@@ -595,7 +595,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400057302').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400521339').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -722,7 +722,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -744,7 +744,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

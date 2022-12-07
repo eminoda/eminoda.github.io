@@ -496,7 +496,7 @@
 <p>出来混的，有些债迟早要还的！</p>
 </blockquote>
 <p>我尝试百度了下，都没有靠谱的解决方案，很崩溃：</p>
-<img src="/2020/10/29/webpack-circular-import/baidu.png">
+<img src="/2020/10/29/webpack-circular-import/baidu.png" class="">
 <p>那么现在探究下其中的原因了。</p>
 <h1 id="Demo-示例"><a href="#Demo-示例" class="headerlink" title="Demo 示例"></a>Demo 示例</h1><p>抛开复杂的项目结构，用简单的代码示例来还原问题场景：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./src/main.js'</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -520,22 +520,22 @@
 <p>我们可以打几个断点，更细致的看下其中的过程：</p>
 <ol>
 <li><p>进入 <strong>bundle</strong> 文件，执行立即函数，调用 <strong>__webpack_require__</strong> 方法，并传入参数：<strong>‘./src/main.js’</strong></p>
-<img src="/2020/10/29/webpack-circular-import/w1.png">
+<img src="/2020/10/29/webpack-circular-import/w1.png" class="">
 <p>由于初次调用，<strong>installedModules[moduleId]</strong> 肯定为空，接着通过 <strong>modules[moduleId].call</strong> 借用函数调用。</p>
 <p>被 <strong>call</strong> 的函数就是最开始，传入立即执行函数的参数，根据 <strong>moduleId</strong> 来对应的函数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">'./src/a.js'</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, **webpack_exports**, **webpack_require**</span>) </span>&#123;&#125;,</span><br><span class="line">    <span class="string">'./src/b.js'</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, **webpack_exports**, **webpack_require**</span>) </span>&#123;&#125;,</span><br><span class="line">    <span class="string">'./src/main.js'</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, **webpack_exports**, **webpack_require**</span>) </span>&#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>随后执行对应的 <strong>call</strong> 函数</p>
-<img src="/2020/10/29/webpack-circular-import/w2.png">
+<img src="/2020/10/29/webpack-circular-import/w2.png" class="">
 <p>能看到 <strong>main.js</strong> 里导入了 <strong>a.js</strong>，则又会调用 <strong>__webpack_require__</strong> 方法</p>
-<img src="/2020/10/29/webpack-circular-import/w3.png">
+<img src="/2020/10/29/webpack-circular-import/w3.png" class="">
 <p>注意，这里对 <strong>a.js</strong> 的调用并没有结束（返回值还没有拿到），由于 <strong>a.js</strong> 中又导入了 <strong>b.js</strong>，所以又会同上述步骤再执行 <strong>b.js</strong> 对应的函数。</p>
 </li>
 <li><p>前面 <strong>webpack</strong> 执行过程大概是这样：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">webpack_require(main.js)</span><br><span class="line">    modules[main.js].call</span><br><span class="line">        # import a from './a.js'</span><br><span class="line">        webpack_require(a.js)</span><br><span class="line">            modules[a.js].call</span><br><span class="line">                # import b from './b.js'</span><br><span class="line">                 webpack_require(b.js)</span><br><span class="line">                    modules[b.js].call</span><br><span class="line">                        # 打住，这里开始要注意了</span><br><span class="line">                        # import a from './a.js'</span><br><span class="line">                        webpack_require(a.js)</span><br></pre></td></tr></table></figure>
 <p>但到 <strong>modules[b.js].call</strong> 时就不同了，<strong>b.js</strong> 文件中导入了 <strong>a.js</strong> 文件，导致 <strong>a.js</strong> 作为参数又会进入到 <strong>__webpack_require__</strong> 方法。</p>
 <p>因为先前 <strong>webpack_require(a.js)</strong> 被执行过了，所以在 <strong>modules[b.js].call</strong> 环节执行 <strong>webpack_require(a.js)</strong> 中，<strong>installedModules[moduleId]</strong> 判断为 <strong>true</strong> 了：</p>
-<img src="/2020/10/29/webpack-circular-import/w4.png">
+<img src="/2020/10/29/webpack-circular-import/w4.png" class="">
 <p>而最开始第一次导入 <strong>a.js</strong> 时，其返回值还没有拿到，所以此时为 <strong>true</strong> 后，返回值就为 <strong>undefined</strong> ，这就是问题的出现原因。</p>
 </li>
 </ol>
@@ -618,7 +618,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400054174').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400518244').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -745,7 +745,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -767,7 +767,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

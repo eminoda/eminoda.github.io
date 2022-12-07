@@ -505,7 +505,7 @@
 <p>简单说，当我们访问一个网站时，浏览器会对源地址的不同部分（协议://域名:端口）做检查。比如防止利用它源的存储信息（Cookies…）做不安全的用途。</p>
 <h2 id="跨域-CORS"><a href="#跨域-CORS" class="headerlink" title="跨域 CORS"></a>跨域 CORS</h2><p>但凡被浏览器识别为不同源，浏览器都会认为是跨域，默认是不允许的。</p>
 <p>比如：试图在 <a href="http://127.0.0.1:4000" target="_blank" rel="noopener">http://127.0.0.1:4000</a> 中，请求 <a href="http://127.0.0.1:3000" target="_blank" rel="noopener">http://127.0.0.1:3000</a> 的资源会出现如下错误：</p>
-<img src="/2021/10/20/cors-and-options/cors-error.png" title="跨域错误">
+<img src="/2021/10/20/cors-and-options/cors-error.png" class="" title="跨域错误">
 <p>这也是前端 100% 在接口调试中会遇到的问题。</p>
 <p><strong>同源和跨域的判断规则</strong></p>
 <p>当前浏览器访问地址：<a href="http://domain/url" target="_blank" rel="noopener">http://domain/url</a></p>
@@ -551,29 +551,29 @@
 <blockquote>
 <p><a href="http://127.0.0.1:4000/" target="_blank" rel="noopener">http://127.0.0.1:4000/</a> 下，请求 <a href="http://127.0.0.1:3000" target="_blank" rel="noopener">http://127.0.0.1:3000</a> 不同端口的地址</p>
 </blockquote>
-<img src="/2021/10/20/cors-and-options/easy-request-1.png" title="简单请求">
+<img src="/2021/10/20/cors-and-options/easy-request-1.png" class="" title="简单请求">
 <p>域名不同，这已经跨域了。但由于请求方法为 <strong>GET</strong>，符合 <strong>简单请求</strong>，请求将正常工作。</p>
 <p><strong>复杂请求</strong>：不满足简单请求的都为复杂请求。在发送请求前，会使用 <strong>options</strong> 方法发起一个 <strong>预检请求（Preflight）</strong> 到服务器，以获知服务器是否允许该实际请求。</p>
 <p>模拟一个跨域请求：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 端口不同，content-type 也非限定值</span></span><br><span class="line">axios.post(</span><br><span class="line">  <span class="string">'http://127.0.0.1:3000/test/cors'</span>,</span><br><span class="line">  &#123;&#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'content-type'</span>: <span class="string">'application/json'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>能看到在请求之前浏览器会事先发起一个 <strong>Preflight 预检请求</strong>：</p>
-<img src="/2021/10/20/cors-and-options/options-1.png" title="Preflight">
+<img src="/2021/10/20/cors-and-options/options-1.png" class="" title="Preflight">
 <p>这个 <strong>预检请求</strong> 的请求方法为 <strong>options</strong>，同时会包含 <strong>Access-Control-xxx</strong> 的请求头：</p>
-<img src="/2021/10/20/cors-and-options/options-2.png" title="options请求信息">
+<img src="/2021/10/20/cors-and-options/options-2.png" class="" title="options请求信息">
 <p>当然，此时服务端没有做跨域处理（示例使用 express 起的服务，预检请求默认响应 200），就会出现浏览器 CORS 的错误警告。</p>
-<img src="/2021/10/20/cors-and-options/cors-error.png" title="跨域错误">
+<img src="/2021/10/20/cors-and-options/cors-error.png" class="" title="跨域错误">
 <h1 id="如何解决跨域"><a href="#如何解决跨域" class="headerlink" title="如何解决跨域"></a>如何解决跨域</h1><p>对于跨域，前端再熟悉不过，百度搜索能找到一堆解决方法，关键词不是 <strong>JSONP</strong>，或者添加些 <strong>Access-Control-XXX</strong> 响应头。</p>
 <p>本篇将详细说下后一种方式，姑且称为：服务端解决方案。</p>
 <h2 id="为-options-添加响应头"><a href="#为-options-添加响应头" class="headerlink" title="为 options 添加响应头"></a>为 options 添加响应头</h2><p>以 <strong>express</strong> 举例，首先对 <strong>OPTIONS</strong> 方法的请求添加这些响应头，它将根据告诉浏览器根据这些属性进行跨域限制：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (req.method == <span class="string">'OPTIONS'</span>) &#123;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Methods'</span>, <span class="string">'GET, PUT, POST, DELETE, OPTIONS'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'content-type'</span>);</span><br><span class="line">    res.status(<span class="number">200</span>).end();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>如果你不对 <strong>预检接口</strong> 做正确的设置，那么后续一切都是徒劳。</p>
 <p>打个比方：如果 <strong>Access-Control-Allow-Methods</strong> 只设置了 <strong>POST</strong>，如果客户端请求方法为 <strong>PUT</strong>，那么最终会出现跨域异常，并会指出 <strong>PUT</strong> 没有在预检请求中的 <strong>Access-Control-Allow-Methods</strong> 出现：</p>
-<img src="/2021/10/20/cors-and-options/cors-methods.png" title="跨域方法错误">
+<img src="/2021/10/20/cors-and-options/cors-methods.png" class="" title="跨域方法错误">
 <p>所以，以后读懂跨域异常对于正确的添加服务端响应信息非常重要。另外：<strong>GET、POST、HEAD</strong> 属于简单请求的方法，所以即使不在 <strong>Access-Control-Allow-Methods</strong> 定义也不碍事（如果不对请指出）</p>
 <h2 id="正式的跨域请求"><a href="#正式的跨域请求" class="headerlink" title="正式的跨域请求"></a>正式的跨域请求</h2><p>随后对我们代码发出的请求额外添加跨域响应头（这需要和前面的预检接口一致）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (req.method == <span class="string">'OPTIONS'</span>) &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// http://127.0.0.1:3000/test/cors</span></span><br><span class="line">  res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>);</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后能看到我们等请求正常请求到了：</p>
-<img src="/2021/10/20/cors-and-options/cors-success.png" title="跨域请求">
+<img src="/2021/10/20/cors-and-options/cors-success.png" class="" title="跨域请求">
 <h1 id="对于跨域请求头的说明"><a href="#对于跨域请求头的说明" class="headerlink" title="对于跨域请求头的说明"></a>对于跨域请求头的说明</h1><p>上例出现了我们经常见到的三个：<strong>Access-Control-Allow-Origin</strong>，<strong>Access-Control-Allow-Methods</strong>，<strong>Access-Control-Allow-Headers</strong>。</p>
 <p>参考 <strong>cors</strong> 库，另外还有其他用于预检请求的响应头：</p>
 <table>
@@ -624,7 +624,7 @@
 <blockquote>
 <p>Response to preflight request doesn’t pass access control check: The ‘Access-Control-Allow-Origin’ header contains multiple values ‘aaa,bbb’, but only one is allowed.</p>
 </blockquote>
-<img src="/2021/10/20/cors-and-options/cors-access-orgin.png" title="多源错误">
+<img src="/2021/10/20/cors-and-options/cors-access-orgin.png" class="" title="多源错误">
 <p>另外，也不建议 <strong>Access-Control-Allow-Origin</strong> 以通配符方式定义，这样会增加安全隐患，最好以请求方的 <strong>origin</strong> 来赋值。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> origin = req.headers.origin;</span><br><span class="line">res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, origin || <span class="string">'*'</span>);</span><br><span class="line"><span class="comment">// 因为会随着客户端请求的 Origin 变化，所以标识 Vary，让浏览器不要缓存</span></span><br><span class="line">res.setHeader(<span class="string">'Vary'</span>, <span class="string">'Origin'</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="Access-Control-Allow-Methods"><a href="#Access-Control-Allow-Methods" class="headerlink" title="Access-Control-Allow-Methods"></a>Access-Control-Allow-Methods</h2><p>被允许的 <strong>Http</strong> 方法，按照需要填写，支持多个，例如： <strong>GET</strong> , <strong>HEAD</strong> , <strong>PUT</strong> , <strong>PATCH</strong> , <strong>POST</strong> , <strong>DELETE</strong> 。</p>
@@ -634,14 +634,14 @@
 <blockquote>
 <p>Method DELETE is not allowed by Access-Control-Allow-Methods in preflight response.</p>
 </blockquote>
-<img src="/2021/10/20/cors-and-options/cors-access-method.png" title="方法错误">
+<img src="/2021/10/20/cors-and-options/cors-access-method.png" class="" title="方法错误">
 <h2 id="Access-Control-Allow-Headers"><a href="#Access-Control-Allow-Headers" class="headerlink" title="Access-Control-Allow-Headers"></a>Access-Control-Allow-Headers</h2><p>在 <strong>预检接口</strong> 告知客户端允许的请求头。</p>
 <p>像 <strong>简单请求</strong> 约定的请求头默认支持： <strong>Accept</strong> 、 <strong>Accept-Language</strong> 、 <strong>Content-Language</strong> 、 <strong>Content-Type</strong> （<strong>text/plain、multipart/form-data、application/x-www-form-urlencoded</strong>）</p>
 <p>如果客户端的请求头不在定义范围内，则会报错：</p>
 <blockquote>
 <p>Request header field abc is not allowed by Access-Control-Allow-Headers in preflight response.</p>
 </blockquote>
-<img src="/2021/10/20/cors-and-options/cors-access-headers.png" title="请求头错误">
+<img src="/2021/10/20/cors-and-options/cors-access-headers.png" class="" title="请求头错误">
 <p>需要将此头调整为：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'content-type, abc'</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="Access-Control-Max-Age"><a href="#Access-Control-Max-Age" class="headerlink" title="Access-Control-Max-Age"></a>Access-Control-Max-Age</h2><p>定义 <strong>预检接口</strong> 告知客户端允许的请求头可以缓存多久。</p>
@@ -655,12 +655,12 @@
 </ul>
 <p>比如设置为 5 秒后，客户端在第一次会发送 <strong>预检接口</strong> 后，5 秒内将不再发送 <strong>预检接口</strong>：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.setHeader(<span class="string">'Access-Control-Max-Age'</span>, <span class="string">'5'</span>);</span><br></pre></td></tr></table></figure>
-<img src="/2021/10/20/cors-and-options/cors-access-maxage.gif" title="缓存示例">
+<img src="/2021/10/20/cors-and-options/cors-access-maxage.gif" class="" title="缓存示例">
 <h2 id="Access-Control-Allow-Credentials"><a href="#Access-Control-Allow-Credentials" class="headerlink" title="Access-Control-Allow-Credentials"></a>Access-Control-Allow-Credentials</h2><p>跨域的请求，默认浏览器不会将当前地址的 Cookies 信息传给服务器，以确保信息的安全性。如果有需要，服务端需要设置 <strong>Access-Control-Allow-Credentials</strong> 响应头，另外客户端也需要开启 <strong>withCredentials</strong> 配置。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 客户端请求</span></span><br><span class="line">axios.post(</span><br><span class="line">  <span class="string">'http://127.0.0.1:3000/test/cors'</span>,</span><br><span class="line">  &#123;&#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'content-type'</span>: <span class="string">'application/json'</span>,</span><br><span class="line">      abc: <span class="string">'123'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    withCredentials: <span class="literal">true</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 所有请求</span></span><br><span class="line">res.setHeader(<span class="string">'Access-Control-Allow-Credentials'</span>, <span class="string">'true'</span>);</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，<strong>Access-Control-Allow-Origin</strong> 不能设置通配符“*”方式，会出现如下错误：</p>
-<img src="/2021/10/20/cors-and-options/cors-access-credentials.png" title="不支持通配符">
+<img src="/2021/10/20/cors-and-options/cors-access-credentials.png" class="" title="不支持通配符">
 <p>这个 <strong>Access-Control-Allow-Origin</strong> 必须是当前页面源的地址。</p>
 <h2 id="Access-Control-Expose-Headers"><a href="#Access-Control-Expose-Headers" class="headerlink" title="Access-Control-Expose-Headers"></a>Access-Control-Expose-Headers</h2><p>和 <strong>Access-Control-Allow-Credentials</strong> 类似，如果服务端有自定义设置的请求头，跨域的客户端请求在响应信息中是接收不到该请求头的。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端</span></span><br><span class="line">res.setHeader(<span class="string">'def'</span>, <span class="string">'123'</span>);</span><br></pre></td></tr></table></figure>
@@ -741,7 +741,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053580').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400517704').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -868,7 +868,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -890,7 +890,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

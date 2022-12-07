@@ -496,7 +496,7 @@
 <li>Fields 字段定义</li>
 <li>简单的 Kibana dashboards 仪表盘示例和 visualize 图标分析</li>
 </ul>
-<p>内置模块：<br><img src="/2019/04/12/elk-filebeat-module-nginx/modules.png" title="内置模块"></p>
+<p>内置模块：<br><img src="/2019/04/12/elk-filebeat-module-nginx/modules.png" class="" title="内置模块"></p>
 <p>这篇的目的通过修改 Filebeat 内置模块 nginx，以适应业务访问日志分析。</p>
 <h2 id="修改-nginx-modules"><a href="#修改-nginx-modules" class="headerlink" title="修改 nginx modules"></a>修改 nginx modules</h2><p>内置的 nginx modules 只是针对 nginx 的默认 log 格式，如下所示：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    log_format  main  <span class="string">'$remote_addr - $remote_user [$time_local] "$request" '</span></span><br><span class="line">                      <span class="string">'$status $body_bytes_sent "$http_referer" '</span></span><br><span class="line">                      <span class="string">'"$http_user_agent" "$http_x_forwarded_for"'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -529,7 +529,7 @@
 </li>
 <li><p>重建 Kibana Index 索引</p>
 <p>如果你能搜索到你新添加的 Field 字段，恭喜你成功了。</p>
-<img src="/2019/04/12/elk-filebeat-module-nginx/request_time.png">
+<img src="/2019/04/12/elk-filebeat-module-nginx/request_time.png" class="">
 <p>如果失败，可能有如下原因：</p>
 <ul>
 <li>参照步骤 4，可能还有其他数据需要删除</li>
@@ -538,7 +538,7 @@
 </li>
 </ol>
 <h2 id="Dashboard-实际效果"><a href="#Dashboard-实际效果" class="headerlink" title="Dashboard 实际效果"></a>Dashboard 实际效果</h2><p>成功添加字段后，可以在 Kibana 有更丰富的展示</p>
-<img src="/2019/04/12/elk-filebeat-module-nginx/dashboard.png" title="Dashboard">
+<img src="/2019/04/12/elk-filebeat-module-nginx/dashboard.png" class="" title="Dashboard">
 <p>左下角的耗时 pipe，根据 request_time 字段统计得出</p>
 
       
@@ -607,7 +607,7 @@
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056116').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400520087').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -734,7 +734,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -756,7 +756,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
