@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="xhr," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端为何要解析图片资源通常对于前端开发者来说，页面 HTML 中通过 img 标签来内嵌图片资源是家常便饭了，如果需要资源文件的下载，往往由后端提供一个下载链接，然后通过 a 标签进行“无脑”跳转即可。 但真实的场景往往更需要前端不得不通过 XHR 方式来获取图片资源，比如：  请求需要 token 授权，而 img 标签可没法自定义 header 业务上需要前端整合资源做下载功能 …  对于刚入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么通过 XHR 方式来处理图片资源的响应">
+<meta property="og:url" content="http://yoursite.com/2021/12/23/xhr-response-type/index.html">
+<meta property="og:site_name" content="NextInnovation">
+<meta property="og:description" content="前端为何要解析图片资源通常对于前端开发者来说，页面 HTML 中通过 img 标签来内嵌图片资源是家常便饭了，如果需要资源文件的下载，往往由后端提供一个下载链接，然后通过 a 标签进行“无脑”跳转即可。 但真实的场景往往更需要前端不得不通过 XHR 方式来获取图片资源，比如：  请求需要 token 授权，而 img 标签可没法自定义 header 业务上需要前端整合资源做下载功能 …  对于刚入">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-browser.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-image.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-text.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-arraybuffer.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-base64.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-blob.png">
+<meta property="og:image" content="http://yoursite.com/2021/12/23/xhr-response-type/a-download.png">
+<meta property="article:published_time" content="2021-12-22T17:01:58.000Z">
+<meta property="article:modified_time" content="2022-01-17T01:44:35.196Z">
+<meta property="article:author" content="Eminoda">
+<meta property="article:tag" content="xhr">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/12/23/xhr-response-type/responseType-browser.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+<script>
+  var PIXEL_RATIO = (function () {
+    var c = document.createElement("canvas"),
+    ctx = c.getContext("2d"),
+    dpr = window.devicePixelRatio || 1,
+    bsr = ctx['webkitBackingStorePixelRatio'] ||
+      ctx['mozBackingStorePixelRatio'] ||
+      ctx['msBackingStorePixelRatio'] ||
+      ctx['oBackingStorePixelRatio'] ||
+      ctx['backingStorePixelRatio'] || 1;
+    return dpr / bsr;
+  })();
+  var ratio = PIXEL_RATIO;
+  var width = 700;
+  var height = 360;
+  function drawCanvas(post){
+      // https://ant.design/docs/spec/colors-cn
+      var $canvas = document.getElementById(post.title);
+      $canvas.width = width*ratio
+      $canvas.height = height*ratio
+      $canvas.style.width = width + 'px';
+      $canvas.style.height = height + 'px';
+      var ctx = $canvas.getContext('2d')
+      var title = post.post_img.title || post.title;
+      var subTitle = post.post_img.sub_title;
+      // 背景色
+      ctx.fillStyle = post.post_img.bg_color||"#333";
+      ctx.fillRect(0, 0, width*ratio, height*ratio);
+      // 字体
+      ctx.textAlign = 'center'
+      ctx.font = '40px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+      ctx.fillStyle = post.post_img.title_color||"#fff";
+        $canvas.style.letterSpacing = '1px'
+      if(subTitle){
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+        ctx.font = '24px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+        ctx.fillStyle = post.post_img.sub_color||"#fff";
+        ctx.fillText(subTitle, width/2*ratio, 180*ratio+20);
+      }else{
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      (function($dom){
+        $dom.onclick = function(){
+          // 点击下载
+          var dlLink = document.createElement('a');
+          dlLink.download = post.title
+          dlLink.href = $dom.toDataURL("image/png");;
+          dlLink.dataset.downloadurl = ["image/png", dlLink.download, dlLink.href].join(':');
+
+          document.body.appendChild(dlLink);
+          dlLink.click();
+          document.body.removeChild(dlLink);
+        }
+      })($canvas)
+  }
+
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/12/23/xhr-response-type/"/>
+
+
+
+
+
+  <title>怎么通过 XHR 方式来处理图片资源的响应 | NextInnovation</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2ef1aa85abed08ce76cd8d41d5f2de71";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NextInnovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-topic">
+          <a href="/topic%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
+            
+            话题
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-gittalk">
+          <a href="/gittalk/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            留言板
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/23/xhr-response-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eminoda">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eminoda/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NextInnovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">怎么通过 XHR 方式来处理图片资源的响应</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-23T01:01:58+08:00">
+                2021-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">开发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">前端开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前端为何要解析图片资源"><a href="#前端为何要解析图片资源" class="headerlink" title="前端为何要解析图片资源"></a>前端为何要解析图片资源</h1><p>通常对于前端开发者来说，页面 <strong>HTML</strong> 中通过 <strong>img</strong> 标签来内嵌图片资源是家常便饭了，如果需要资源文件的下载，往往由后端提供一个下载链接，然后通过 <strong>a</strong> 标签进行“无脑”跳转即可。</p>
+<p>但真实的场景往往更需要前端不得不通过 <strong>XHR</strong> 方式来获取图片资源，比如：</p>
+<ul>
+<li>请求需要 <strong>token</strong> 授权，而 <strong>img</strong> 标签可没法自定义 <strong>header</strong></li>
+<li>业务上需要前端整合资源做下载功能</li>
+<li>…</li>
+</ul>
+<p>对于刚入门前端的开发来说，这可比原先要复杂多了。这篇将说明如何通过 XHR 来请求图片资源，如果你经验丰富可以给我提点宝贵意见，在此真心地希望所有人能有所收获。</p>
+<h1 id="如何通过-XHR-来解析图片资源"><a href="#如何通过-XHR-来解析图片资源" class="headerlink" title="如何通过 XHR 来解析图片资源"></a>如何通过 XHR 来解析图片资源</h1><p>先说下思路：</p>
+<ol>
+<li>通过 XHR 来发送图片资源的请求，定义 <strong>responseType</strong> 来约定响应回来的内容。</li>
+<li>如果是图片预览，借助 <strong>Blob</strong> 生成图片的地址， <strong>img</strong> 引用该值作为 <strong>src</strong> 即可。</li>
+<li>如果是下载，则通过 <strong>a</strong> 标签的 <strong>download</strong> 属性来触发浏览器下载功能。</li>
+</ol>
+<h2 id="有哪几种-XHR-responseType"><a href="#有哪几种-XHR-responseType" class="headerlink" title="有哪几种 XHR responseType"></a>有哪几种 XHR responseType</h2><p>平时常听到的 <strong>Ajax</strong> 这词，就是通过 <strong>XHR（XMLHttpRequest）</strong> 对象得以实现的。在 <strong>XHR</strong> 中有个 <strong>responseType</strong> 属性，依靠它可以更改服务端的响应类型。</p>
+<p><strong>responseType</strong> 共有如下可选值：</p>
+<ul>
+<li>text: DOMString 对象中的文本</li>
+<li>arraybuffer: 二进制数据的 ArrayBuffer 对象</li>
+<li>blob: 二进制数据的 Blob 对象</li>
+<li>json: 返回数据转 JSON 对象</li>
+<li>document: HTML 的 Document 对象</li>
+<li>ms-stream: （ie 专属）</li>
+</ul>
+<p>我们先看下：浏览器直接访问一个图片地址和 <strong>img</strong> 标签内嵌图片地址，他们返回头信息区别：</p>
+<img src="/2021/12/23/xhr-response-type/responseType-browser.png" title="浏览器直接请求">
+<img src="/2021/12/23/xhr-response-type/responseType-image.png" title="img标签内嵌">
+<p>这两种方式都依靠浏览器和 <strong>img</strong> 标签的特性约定了 <strong>Accept</strong> 接收内容的类型，并且都展示出了图片。而我们都不能在此之上针对最开始说的业务场景做什么特别处理，那怎么通过 <strong>XHR</strong> 方式来展示图片呢？</p>
+<p>先看下，直接使用 <strong>axios</strong> 默认配置请求图片地址有什么效果（不设置 responseType）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> imageSrc = <span class="string">"http://127.0.0.1:3000/image/google.png"</span>;</span><br><span class="line"></span><br><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">""</span>, <span class="comment">//text</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"text:"</span>, data);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>默认 <strong>responseType</strong> 不定义的话和 <strong>text</strong> 是一个效果，返回的图片内容被转成了字符串，也就是下面看到的乱码：</p>
+<img src="/2021/12/23/xhr-response-type/responseType-text.png" title="xhr直接请求">
+<p>显而易见，也只有 <strong>responseType</strong> 为 <strong>arraybuffer</strong> 或者 blob 时才能得到二进制的“原始数据”。</p>
+<h2 id="解析二进制数据"><a href="#解析二进制数据" class="headerlink" title="解析二进制数据"></a>解析二进制数据</h2><p>我们选用相对复杂的 <strong>arraybuffer</strong> 进行示例：</p>
+<p>首先将 <strong>responseType</strong> 设置为 <strong>arraybuffer</strong> 进行请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"arraybuffer"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> arraybuffer = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"arraybuffer:"</span>, arraybuffer);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>响应后，我们将得到 <strong>ArrayBuffer</strong> 对象类型的二进制字节数组：</p>
+<img src="/2021/12/23/xhr-response-type/responseType-arraybuffer.png" title="arraybuffer请求">
+<p>这个 <strong>ArrayBuffer</strong> 不能直接操作，需要转为 <strong>TypeArray</strong> 类型数组。再通过 <strong>String.fromCharCode</strong> 将字节数据转为 <strong>ASCII 码</strong>（即普通字符串）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bytes = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(arraybuffer);</span><br><span class="line"><span class="keyword">const</span> str = bytes.reduce(<span class="function">(<span class="params">acc, byte</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> acc + <span class="built_in">String</span>.fromCharCode(byte);</span><br><span class="line">&#125;, <span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+<p>得到普通字符串后，调用 <strong>window.btoa</strong> 方法，即可转为 <strong>base64</strong> 数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> base64 = <span class="built_in">window</span>.btoa(str);</span><br><span class="line"><span class="comment">// iVBORw0KGgo.....wAAAAAElFTkSuQmCC</span></span><br><span class="line">showToPage(<span class="string">"data:image/png;base64,"</span> + base64);</span><br></pre></td></tr></table></figure>
+<p>最后，页面 <strong>img</strong> 标签前加上 <strong>base64</strong> 前缀即可展示：</p>
+<img src="/2021/12/23/xhr-response-type/responseType-base64.png" title="base64图片展示">
+<p><strong>经过三步，我们通过 arraybuffer 方式解析了图片，那有什么简化办法呢？</strong></p>
+<p>肯定是有的：</p>
+<p>如果还是选择 <strong>arraybuffer</strong> 方式，对于支持 <strong>Blob</strong> <strong>对象的浏览器环境来说，ArrayBuffer</strong> 对象可以直接转成 <strong>Blob</strong>，然后通过 <strong>URL.createObjectURL</strong> 直接在内存创建该图片资源的引用地址。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"arraybuffer"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> arraybuffer = response.data;</span><br><span class="line">    <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([arraybuffer], &#123; <span class="attr">type</span>: <span class="string">"image/png"</span> &#125;);</span><br><span class="line">    <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">    showToPage(objectURL);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<img src="/2021/12/23/xhr-response-type/responseType-blob.png" title="blob图片展示">
+<p>也可以选择 <strong>responseType</strong> 为 <strong>blob</strong> 方式，响应回来的数据直接就是 <strong>blob</strong> 类型，直接生成 <strong>objectURL</strong> 即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">axios</span><br><span class="line">  .get(imageSrc, &#123;</span><br><span class="line">    responseType: <span class="string">"blob"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> blob = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"blob:"</span>, blob); <span class="comment">//  Blob &#123;size: 4026, type: 'image/png'&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> objectURL = URL.createObjectURL(blob);</span><br><span class="line">    showToPage(objectURL);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="题外话：a-标签的下载"><a href="#题外话：a-标签的下载" class="headerlink" title="题外话：a 标签的下载"></a>题外话：a 标签的下载</h2><p>对于一个图片的资源地址来说，浏览器直接访问是会预览该图片的，而不是出现下载弹框。另外，业务上为了实现追踪文件的下载进度这样的功能，我们借助 <strong>XHR</strong> 的 <strong>progress</strong> 就会很容易。</p>
+<p>不考虑浏览器兼容问题，我们可以通过 <strong>a</strong> 标签的 <strong>download</strong> 来实现，直接上代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成 objectURL 后</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">download</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> a = <span class="built_in">document</span>.createElement(<span class="string">"a"</span>);</span><br><span class="line">  a.href = url;</span><br><span class="line">  a.download = <span class="built_in">Date</span>.now() + <span class="string">".png"</span>;</span><br><span class="line">  a.style.display = <span class="string">"none"</span>;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(a);</span><br><span class="line">  a.click();</span><br><span class="line">  URL.revokeObjectURL(a.href); <span class="comment">// 释放 objectURL</span></span><br><span class="line">  a.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2021/12/23/xhr-response-type/a-download.png" title="a标签下载">
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p><strong>responseType</strong> 只是一个很简单的属性值，一般来说手头上的框架中都有已有相关功能的封装，而对于繁忙我们来说很容易忽视这些基本特性。</p>
+<p>抛砖引玉，本篇到此也只说了些皮毛，像 arraybuffer 和 blog 的区别，浏览器对于大文件下载兼容性都没有涉及。</p>
+<p>虽然社区都有成熟的插件，但这些都需要在业务中投入时间来实践尝试，毕竟要知其所以然。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <div>【长按关注】看看↓↓↓?</div>
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
+    <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
+    <div>欢迎留言，评论交流，一起讨论前端问题</div>
+</div>
+
+      </div>
+    
+    
+      <div>
+        <script>
+	var tags = []
+</script>
+
+	
+	<script>tags.push('xhr')</script>
+	
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+
+<script src="/lib/md5/md5.min.js"></script>
+<script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+<script type="text/javascript">
+	var id = md5('/2021/12/23/xhr-response-type/')
+	var gitalk = new Gitalk({
+	  clientID: 'f5e934819613a06d3a38',
+	  clientSecret: 'f9ff1926fed5174d6f6e438e5e37dd5341af81fe',
+	  repo: 'eminoda.github.io',
+	  owner: 'eminoda',
+	  admin: ['eminoda'],
+	  perPage: 20,
+	  id: id,//长度有限制
+	  title: '怎么通过 XHR 方式来处理图片资源的响应',
+	  body: '🚀 '+location.href+'\n\n欢迎通过 issues 留言 ，互相交流学习😊' 
+	})
+	gitalk.render('gitalk-container')
+</script>
+
+<style>
+	#issues_url{
+		text-align: center;
+    	font-size: 16px;
+	}
+	#issues_url a{
+		color:#6190e8;
+	}
+</style>
+<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113" target="_blank" rel="noopener">安全风险</a>，也可访问
+</div>
+
+<script>
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400053660').then(data=>{
+	if(data && data.length>0){
+		var issuesUrl = data[0].html_url
+		const $a = document.createElement('a')
+		$($a).attr('href',issuesUrl).attr('alt',issuesUrl).attr('target','blank').text('👉issues链接 ')
+		$('#issues_url').append($a).append('进行留言📝')
+	}
+})
+</script>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xhr/" rel="tag"># xhr</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/20/cors-and-options/" rel="next" title="CROS 和 OPTIOINS">
+                <i class="fa fa-chevron-left"></i> CROS 和 OPTIOINS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
+            
+              <p class="site-author-name" itemprop="name">Eminoda</p>
+              <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前端为何要解析图片资源"><span class="nav-number">1.</span> <span class="nav-text">前端为何要解析图片资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何通过-XHR-来解析图片资源"><span class="nav-number">2.</span> <span class="nav-text">如何通过 XHR 来解析图片资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有哪几种-XHR-responseType"><span class="nav-number">2.1.</span> <span class="nav-text">有哪几种 XHR responseType</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析二进制数据"><span class="nav-number">2.2.</span> <span class="nav-text">解析二进制数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话：a-标签的下载"><span class="nav-number">2.3.</span> <span class="nav-text">题外话：a 标签的下载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eminoda</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

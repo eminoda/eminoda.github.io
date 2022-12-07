@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="redis,">
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="全文参考：redis 数据类型 https://redis.io/topics/data-types-intro  redis 不是简单的键值对存储容器，它是一个具有数据结构的服务，支持不同数据类型：  String 字符串 Lists 列表 Sets 唯一、无序的元素集合 Sorted sets 和 Sets 类似，但每个元素具有一个 Score 标识分数，通过分数的高低来排序整个集合 Has">
-<meta name="keywords" content="redis">
+<meta name="description" content="全文参考：redis 数据类型 https:&#x2F;&#x2F;redis.io&#x2F;topics&#x2F;data-types-intro  redis 不是简单的键值对存储容器，它是一个具有数据结构的服务，支持不同数据类型：  String 字符串 Lists 列表 Sets 唯一、无序的元素集合 Sorted sets 和 Sets 类似，但每个元素具有一个 Score 标识分数，通过分数的高低来排序整个集合 Has">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis 数据类型说明">
 <meta property="og:url" content="http://yoursite.com/2018/12/03/redis-datatype/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="全文参考：redis 数据类型 https://redis.io/topics/data-types-intro  redis 不是简单的键值对存储容器，它是一个具有数据结构的服务，支持不同数据类型：  String 字符串 Lists 列表 Sets 唯一、无序的元素集合 Sorted sets 和 Sets 类似，但每个元素具有一个 Score 标识分数，通过分数的高低来排序整个集合 Has">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-11-23T00:59:35.412Z">
+<meta property="og:description" content="全文参考：redis 数据类型 https:&#x2F;&#x2F;redis.io&#x2F;topics&#x2F;data-types-intro  redis 不是简单的键值对存储容器，它是一个具有数据结构的服务，支持不同数据类型：  String 字符串 Lists 列表 Sets 唯一、无序的元素集合 Sorted sets 和 Sets 类似，但每个元素具有一个 Score 标识分数，通过分数的高低来排序整个集合 Has">
+<meta property="article:published_time" content="2018-12-03T08:05:20.000Z">
+<meta property="article:modified_time" content="2020-11-23T00:59:35.412Z">
+<meta property="article:author" content="Eminoda">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis 数据类型说明">
-<meta name="twitter:description" content="全文参考：redis 数据类型 https://redis.io/topics/data-types-intro  redis 不是简单的键值对存储容器，它是一个具有数据结构的服务，支持不同数据类型：  String 字符串 Lists 列表 Sets 唯一、无序的元素集合 Sorted sets 和 Sets 类似，但每个元素具有一个 Score 标识分数，通过分数的高低来排序整个集合 Has">
 
 
 
@@ -117,10 +116,69 @@
     }
   };
 </script>
+<script>
+  var PIXEL_RATIO = (function () {
+    var c = document.createElement("canvas"),
+    ctx = c.getContext("2d"),
+    dpr = window.devicePixelRatio || 1,
+    bsr = ctx['webkitBackingStorePixelRatio'] ||
+      ctx['mozBackingStorePixelRatio'] ||
+      ctx['msBackingStorePixelRatio'] ||
+      ctx['oBackingStorePixelRatio'] ||
+      ctx['backingStorePixelRatio'] || 1;
+    return dpr / bsr;
+  })();
+  var ratio = PIXEL_RATIO;
+  var width = 700;
+  var height = 360;
+  function drawCanvas(post){
+      // https://ant.design/docs/spec/colors-cn
+      var $canvas = document.getElementById(post.title);
+      $canvas.width = width*ratio
+      $canvas.height = height*ratio
+      $canvas.style.width = width + 'px';
+      $canvas.style.height = height + 'px';
+      var ctx = $canvas.getContext('2d')
+      var title = post.post_img.title || post.title;
+      var subTitle = post.post_img.sub_title;
+      // 背景色
+      ctx.fillStyle = post.post_img.bg_color||"#333";
+      ctx.fillRect(0, 0, width*ratio, height*ratio);
+      // 字体
+      ctx.textAlign = 'center'
+      ctx.font = '40px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+      ctx.fillStyle = post.post_img.title_color||"#fff";
+        $canvas.style.letterSpacing = '1px'
+      if(subTitle){
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+        ctx.font = '24px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+        ctx.fillStyle = post.post_img.sub_color||"#fff";
+        ctx.fillText(subTitle, width/2*ratio, 180*ratio+20);
+      }else{
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      (function($dom){
+        $dom.onclick = function(){
+          // 点击下载
+          var dlLink = document.createElement('a');
+          dlLink.download = post.title
+          dlLink.href = $dom.toDataURL("image/png");;
+          dlLink.dataset.downloadurl = ["image/png", dlLink.download, dlLink.href].join(':');
+
+          document.body.appendChild(dlLink);
+          dlLink.click();
+          document.body.removeChild(dlLink);
+        }
+      })($canvas)
+  }
+
+</script>
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/03/redis-datatype/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/03/redis-datatype/"/>
 
 
 
@@ -146,7 +204,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -164,7 +222,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">NextInnovation</span>
         <span class="logo-line-after"><i></i></span>
@@ -192,9 +250,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -202,9 +260,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -212,9 +270,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -222,9 +280,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -232,9 +290,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -242,9 +300,9 @@
       
         
         <li class="menu-item menu-item-topic">
-          <a href="/topic" rel="section">
+          <a href="/topic%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
             
             话题
           </a>
@@ -252,9 +310,9 @@
       
         
         <li class="menu-item menu-item-gittalk">
-          <a href="/gittalk/" rel="section">
+          <a href="/gittalk/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
             留言板
           </a>
@@ -267,7 +325,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -288,7 +346,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -328,7 +388,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -364,7 +424,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -376,7 +436,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -387,7 +447,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/数据库/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
                     <span itemprop="name">数据库</span>
                   </a>
                 </span>
@@ -499,7 +559,7 @@
       <div>
         <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
     <div>【长按关注】看看↓↓↓?</div>
-    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode/webcat.jpg" alt="Eminoda wechat" style="width: 200px; max-width: 100%;"/>
     <div>【前端雨爸】分享前端技术实践，持续输出前端技术文章</div>
     <div>欢迎留言，评论交流，一起讨论前端问题</div>
 </div>
@@ -551,11 +611,11 @@
 		color:#6190e8;
 	}
 </style>
-<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113">安全风险</a>，也可访问
+<div id="issues_url">📢 因为是开源博客，为避免 <strong>Gitalk授权 </strong>带来的 <a href="https://github.com/dear-github/dear-github/issues/113" target="_blank" rel="noopener">安全风险</a>，也可访问
 </div>
 
 <script>
-$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1634710993340').then(data=>{
+$.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gitalk,'+id+'&t=1670400056545').then(data=>{
 	if(data && data.length>0){
 		var issuesUrl = data[0].html_url
 		const $a = document.createElement('a')
@@ -667,7 +727,9 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
             
               <p class="site-author-name" itemprop="name">Eminoda</p>
               <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
@@ -678,7 +740,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
@@ -702,7 +764,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -735,7 +797,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Strings"><span class="nav-number">1.</span> <span class="nav-text">Redis Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单-set-get-示例："><span class="nav-number">1.1.</span> <span class="nav-text">简单 set/get 示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-可以设置-optios，完成一些特殊需求"><span class="nav-number">1.2.</span> <span class="nav-text">set 可以设置 optios，完成一些特殊需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#incr-累加"><span class="nav-number">1.3.</span> <span class="nav-text">incr 累加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并-merge-操作"><span class="nav-number">1.4.</span> <span class="nav-text">合并 merge 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存在和删除"><span class="nav-number">1.5.</span> <span class="nav-text">存在和删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型-Type"><span class="nav-number">1.6.</span> <span class="nav-text">类型 Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过期时间-Expires"><span class="nav-number">1.7.</span> <span class="nav-text">过期时间 Expires</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Lists"><span class="nav-number">2.</span> <span class="nav-text">Redis Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpush-amp-lpush"><span class="nav-number">2.1.</span> <span class="nav-text">rpush &amp; lpush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出栈-rpop-amp-lpop"><span class="nav-number">2.2.</span> <span class="nav-text">出栈 rpop &amp; lpop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#典型场景"><span class="nav-number">2.3.</span> <span class="nav-text">典型场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对-list-整体的操作"><span class="nav-number">2.4.</span> <span class="nav-text">对 list 整体的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Hashes"><span class="nav-number">3.</span> <span class="nav-text">Redis Hashes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Sets"><span class="nav-number">4.</span> <span class="nav-text">Redis Sets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-Sorted-sets"><span class="nav-number">4.1.</span> <span class="nav-text">Redis Sorted sets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitmaps"><span class="nav-number">5.</span> <span class="nav-text">Bitmaps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HyperLogLogs"><span class="nav-number">6.</span> <span class="nav-text">HyperLogLogs</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Strings"><span class="nav-number">1.</span> <span class="nav-text">Redis Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单-set-get-示例："><span class="nav-number">1.1.</span> <span class="nav-text">简单 set&#x2F;get 示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-可以设置-optios，完成一些特殊需求"><span class="nav-number">1.2.</span> <span class="nav-text">set 可以设置 optios，完成一些特殊需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#incr-累加"><span class="nav-number">1.3.</span> <span class="nav-text">incr 累加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并-merge-操作"><span class="nav-number">1.4.</span> <span class="nav-text">合并 merge 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存在和删除"><span class="nav-number">1.5.</span> <span class="nav-text">存在和删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型-Type"><span class="nav-number">1.6.</span> <span class="nav-text">类型 Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过期时间-Expires"><span class="nav-number">1.7.</span> <span class="nav-text">过期时间 Expires</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Lists"><span class="nav-number">2.</span> <span class="nav-text">Redis Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpush-amp-lpush"><span class="nav-number">2.1.</span> <span class="nav-text">rpush &amp; lpush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出栈-rpop-amp-lpop"><span class="nav-number">2.2.</span> <span class="nav-text">出栈 rpop &amp; lpop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#典型场景"><span class="nav-number">2.3.</span> <span class="nav-text">典型场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对-list-整体的操作"><span class="nav-number">2.4.</span> <span class="nav-text">对 list 整体的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Hashes"><span class="nav-number">3.</span> <span class="nav-text">Redis Hashes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Sets"><span class="nav-number">4.</span> <span class="nav-text">Redis Sets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-Sorted-sets"><span class="nav-number">4.1.</span> <span class="nav-text">Redis Sorted sets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitmaps"><span class="nav-number">5.</span> <span class="nav-text">Bitmaps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HyperLogLogs"><span class="nav-number">6.</span> <span class="nav-text">HyperLogLogs</span></a></li></ol></div>
             
 
           </div>
@@ -755,7 +817,7 @@ $.get('https://api.github.com/repos/eminoda/eminoda.github.io/issues?labels=Gita
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

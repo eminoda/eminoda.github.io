@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,16 +79,14 @@
 
 
 
-<meta name="description" content="I&apos;m a litter Full-Stack Developer.">
+<meta name="description" content="I&#39;m a litter Full-Stack Developer.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="NextInnovation">
 <meta property="og:url" content="http://yoursite.com/page/13/index.html">
 <meta property="og:site_name" content="NextInnovation">
-<meta property="og:description" content="I&apos;m a litter Full-Stack Developer.">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="I&#39;m a litter Full-Stack Developer.">
+<meta property="article:author" content="Eminoda">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NextInnovation">
-<meta name="twitter:description" content="I&apos;m a litter Full-Stack Developer.">
 
 
 
@@ -115,10 +113,69 @@
     }
   };
 </script>
+<script>
+  var PIXEL_RATIO = (function () {
+    var c = document.createElement("canvas"),
+    ctx = c.getContext("2d"),
+    dpr = window.devicePixelRatio || 1,
+    bsr = ctx['webkitBackingStorePixelRatio'] ||
+      ctx['mozBackingStorePixelRatio'] ||
+      ctx['msBackingStorePixelRatio'] ||
+      ctx['oBackingStorePixelRatio'] ||
+      ctx['backingStorePixelRatio'] || 1;
+    return dpr / bsr;
+  })();
+  var ratio = PIXEL_RATIO;
+  var width = 700;
+  var height = 360;
+  function drawCanvas(post){
+      // https://ant.design/docs/spec/colors-cn
+      var $canvas = document.getElementById(post.title);
+      $canvas.width = width*ratio
+      $canvas.height = height*ratio
+      $canvas.style.width = width + 'px';
+      $canvas.style.height = height + 'px';
+      var ctx = $canvas.getContext('2d')
+      var title = post.post_img.title || post.title;
+      var subTitle = post.post_img.sub_title;
+      // 背景色
+      ctx.fillStyle = post.post_img.bg_color||"#333";
+      ctx.fillRect(0, 0, width*ratio, height*ratio);
+      // 字体
+      ctx.textAlign = 'center'
+      ctx.font = '40px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+      ctx.fillStyle = post.post_img.title_color||"#fff";
+        $canvas.style.letterSpacing = '1px'
+      if(subTitle){
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+        ctx.font = '24px Tahoma,Helvetica,Arial,Georgia,sans-serif';
+        ctx.fillStyle = post.post_img.sub_color||"#fff";
+        ctx.fillText(subTitle, width/2*ratio, 180*ratio+20);
+      }else{
+        ctx.fillText(title, width/2*ratio, 140*ratio);
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      (function($dom){
+        $dom.onclick = function(){
+          // 点击下载
+          var dlLink = document.createElement('a');
+          dlLink.download = post.title
+          dlLink.href = $dom.toDataURL("image/png");;
+          dlLink.dataset.downloadurl = ["image/png", dlLink.download, dlLink.href].join(':');
+
+          document.body.appendChild(dlLink);
+          dlLink.click();
+          document.body.removeChild(dlLink);
+        }
+      })($canvas)
+  }
+
+</script>
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/13/">
+  <link rel="canonical" href="http://yoursite.com/page/13/"/>
 
 
 
@@ -144,7 +201,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -163,7 +220,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">NextInnovation</span>
         <span class="logo-line-after"><i></i></span>
@@ -191,9 +248,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -201,9 +258,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -211,9 +268,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -221,9 +278,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -231,9 +288,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -241,9 +298,9 @@
       
         
         <li class="menu-item menu-item-topic">
-          <a href="/topic" rel="section">
+          <a href="/topic%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-star"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
             
             话题
           </a>
@@ -251,9 +308,9 @@
       
         
         <li class="menu-item menu-item-gittalk">
-          <a href="/gittalk/" rel="section">
+          <a href="/gittalk/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
             留言板
           </a>
@@ -266,7 +323,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -287,7 +344,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -327,7 +386,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -367,7 +426,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -379,7 +438,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -390,7 +449,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -480,7 +539,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -520,7 +579,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -532,7 +591,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -543,7 +602,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -633,7 +692,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -673,7 +732,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -685,7 +744,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -696,7 +755,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -786,7 +845,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -826,7 +885,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -838,7 +897,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随记/" itemprop="url" rel="index">
+                  <a href="/categories/%E9%9A%8F%E8%AE%B0/" itemprop="url" rel="index">
                     <span itemprop="name">随记</span>
                   </a>
                 </span>
@@ -849,7 +908,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随记/高达/" itemprop="url" rel="index">
+                  <a href="/categories/%E9%9A%8F%E8%AE%B0/%E9%AB%98%E8%BE%BE/" itemprop="url" rel="index">
                     <span itemprop="name">高达</span>
                   </a>
                 </span>
@@ -939,7 +998,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -979,7 +1038,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -991,7 +1050,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1002,7 +1061,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index">
                     <span itemprop="name">运维部署</span>
                   </a>
                 </span>
@@ -1092,7 +1151,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -1132,7 +1191,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -1144,7 +1203,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1155,7 +1214,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -1245,7 +1304,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -1285,7 +1344,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -1297,7 +1356,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1308,7 +1367,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -1398,7 +1457,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -1438,7 +1497,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -1450,7 +1509,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1461,7 +1520,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/前端开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">前端开发</span>
                   </a>
                 </span>
@@ -1551,7 +1610,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -1591,7 +1650,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -1603,7 +1662,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1614,7 +1673,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index">
                     <span itemprop="name">运维部署</span>
                   </a>
                 </span>
@@ -1704,7 +1763,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eminoda">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/eminoda/header.jpg">
     </span>
 
@@ -1744,7 +1803,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -1756,7 +1815,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
                     <span itemprop="name">开发</span>
                   </a>
                 </span>
@@ -1767,7 +1826,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/运维部署/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index">
                     <span itemprop="name">运维部署</span>
                   </a>
                 </span>
@@ -1880,7 +1939,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/eminoda/header.jpg" alt="Eminoda">
+              <img class="site-author-image" itemprop="image"
+                src="/images/eminoda/header.jpg"
+                alt="Eminoda" />
             
               <p class="site-author-name" itemprop="name">Eminoda</p>
               <p class="site-description motion-element" itemprop="description">I'm a litter Full-Stack Developer.</p>
@@ -1891,7 +1952,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
@@ -1915,7 +1976,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1952,7 +2013,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
