@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Blowfish</title>
+    <title>Categories on 前端雨爸</title>
     <link>//localhost:1313/categories/</link>
-    <description>Recent content in Categories on Blowfish</description>
+    <description>Recent content in Categories on 前端雨爸</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>245978782@qq.com (Eminoda)</managingEditor>
     <webMaster>245978782@qq.com (Eminoda)</webMaster>
     <copyright>© 2025 Eminoda</copyright>
-    <atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Apr 2025 23:00:12 +0800</lastBuildDate><atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>前端开发/工程化</title>
+      <link>//localhost:1313/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/</link>
+      <pubDate>Mon, 21 Apr 2025 23:00:12 +0800</pubDate>
+      <author>245978782@qq.com (Eminoda)</author>
+      <guid>//localhost:1313/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/</guid>
+      <description></description>
+      
+    </item>
     
   </channel>
 </rss>
