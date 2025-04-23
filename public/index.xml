@@ -9,7 +9,17 @@
     <managingEditor>245978782@qq.com (Eminoda)</managingEditor>
     <webMaster>245978782@qq.com (Eminoda)</webMaster>
     <copyright>© 2025 Eminoda</copyright>
-    <lastBuildDate>Mon, 21 Apr 2025 23:00:12 +0800</lastBuildDate><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Apr 2025 22:54:54 +0800</lastBuildDate><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hello</title>
+      <link>//localhost:1313/posts/hello/</link>
+      <pubDate>Wed, 23 Apr 2025 22:54:54 +0800</pubDate>
+      <author>245978782@qq.com (Eminoda)</author>
+      <guid>//localhost:1313/posts/hello/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="//localhost:1313/posts/hello/featured.jpg" />
+    </item>
     
     <item>
       <title>My First Post</title>
@@ -17,6 +27,16 @@
       <pubDate>Mon, 21 Apr 2025 23:00:12 +0800</pubDate>
       <author>245978782@qq.com (Eminoda)</author>
       <guid>//localhost:1313/posts/my-first-post/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>WebGL 快速上手</title>
+      <link>//localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/quickstart-webgl/</link>
+      <pubDate>Mon, 21 Apr 2025 23:00:12 +0800</pubDate>
+      <author>245978782@qq.com (Eminoda)</author>
+      <guid>//localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/quickstart-webgl/</guid>
       <description></description>
       
     </item>

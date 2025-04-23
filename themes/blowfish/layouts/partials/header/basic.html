@@ -12,8 +12,8 @@
                 {{ $logo.Content | safeHTML }}
             </span>
             {{ else }}
-            <img src="{{ $logo.RelPermalink }}" width="{{ div $logo.Width 2 }}" height="{{ div $logo.Height 2 }}"
-                class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom" alt="{{ .Site.Title }}" />
+            <img src="{{ $logo.RelPermalink }}" width="{{ div $logo.Width 6 }}" height="{{ div $logo.Height 6 }}"
+                class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom rounded-[50%]" alt="{{ .Site.Title }}" />
             {{ end }}
 
         </a>
