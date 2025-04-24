@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Welcome to Blowfish! :tada: on 前端雨爸</title>
-    <link>//localhost:1313/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content in Welcome to Blowfish! :tada: on 前端雨爸</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>245978782@qq.com (Eminoda)</managingEditor>
     <webMaster>245978782@qq.com (Eminoda)</webMaster>
     <copyright>© 2025 Eminoda</copyright>
-    <lastBuildDate>Mon, 21 Apr 2025 23:00:12 +0800</lastBuildDate><atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Apr 2025 23:00:12 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>WebGL 快速上手</title>
-      <link>//localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</link>
+      <link>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</link>
       <pubDate>Mon, 21 Apr 2025 23:00:12 +0800</pubDate>
       <author>245978782@qq.com (Eminoda)</author>
-      <guid>//localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</guid>
+      <guid>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</guid>
       <description></description>
       
     </item>
