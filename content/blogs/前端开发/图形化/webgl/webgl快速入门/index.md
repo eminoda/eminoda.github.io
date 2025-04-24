@@ -1,9 +1,10 @@
 ---
 date: '2025-04-21T23:00:12+08:00'
 draft: true
-title: 'My First Post'
-tags: ["webpack", "css", "docs"]
-categories: ["前端开发/工程化"]
+title: 'WebGL 快速上手'
+tags: ["webgl"]
+slug: webgl-quickstart
+showHero: true
 ---
 ## Introduction
 
