@@ -65,7 +65,8 @@ jobs:
         run: git config core.quotepath false
       - name: Pull Gitee Code
         run: |
-          git clone https://eminoda:${{ secrets.GITEE_TOKEN }}@gitee.com/eminoda/blogs.git content
+          cd content
+          git clone https://eminoda:${{ secrets.GITEE_TOKEN }}@gitee.com/eminoda/blogs.git
         shell: bash
       - name: Build with Hugo
         run: |
