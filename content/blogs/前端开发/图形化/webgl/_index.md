@@ -1,4 +1,0 @@
----
-title: "WebGL"
-section: "webgl"
----
