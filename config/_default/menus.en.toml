@@ -54,7 +54,7 @@
 
 [[main]]
   name = "老博客"
-  url = "https://eminoda.github.io/"
+  url = "https://eminoda.github.io/legacy/"
   weight = 100
 
 [[main]]
