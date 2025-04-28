@@ -9,7 +9,17 @@
     <managingEditor>245978782@qq.com (Eminoda)</managingEditor>
     <webMaster>245978782@qq.com (Eminoda)</webMaster>
     <copyright>© 2025 Eminoda</copyright>
-    <lastBuildDate>Mon, 21 Apr 2025 23:00:12 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Apr 2025 16:37:11 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>初始 tapable</title>
+      <link>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</link>
+      <pubDate>Sat, 26 Apr 2025 16:37:11 +0800</pubDate>
+      <author>245978782@qq.com (Eminoda)</author>
+      <guid>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>WebGL 快速上手</title>
