@@ -2,41 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Welcome to Blowfish! :tada: on 前端雨爸</title>
-    <link>http://localhost:1313/</link>
+    <link>https://eminoda.github.io/</link>
     <description>Recent content in Welcome to Blowfish! :tada: on 前端雨爸</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>245978782@qq.com (Eminoda)</managingEditor>
     <webMaster>245978782@qq.com (Eminoda)</webMaster>
     <copyright>© 2025 Eminoda</copyright>
-    <lastBuildDate>Fri, 16 May 2025 23:54:34 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 May 2025 23:54:34 +0800</lastBuildDate><atom:link href="https://eminoda.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>WebGL编程指南03：绘制和变化三角形</title>
-      <link>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-triangles/</link>
+      <link>https://eminoda.github.io/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-triangles/</link>
       <pubDate>Fri, 16 May 2025 23:54:34 +0800</pubDate>
       <author>245978782@qq.com (Eminoda)</author>
-      <guid>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-triangles/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>WebGL 快速上手</title>
-      <link>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</link>
-      <pubDate>Mon, 28 Apr 2025 23:00:12 +0800</pubDate>
-      <author>245978782@qq.com (Eminoda)</author>
-      <guid>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-quickstart/</guid>
+      <guid>https://eminoda.github.io/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%9B%BE%E5%BD%A2%E5%8C%96/webgl/webgl-triangles/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>初始 tapable</title>
-      <link>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</link>
+      <link>https://eminoda.github.io/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</link>
       <pubDate>Sat, 26 Apr 2025 16:37:11 +0800</pubDate>
       <author>245978782@qq.com (Eminoda)</author>
-      <guid>http://localhost:1313/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</guid>
+      <guid>https://eminoda.github.io/blogs/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/%E5%B7%A5%E7%A8%8B%E5%8C%96/webpack/tapable-quickstart/</guid>
       <description></description>
       
     </item>
