@@ -88,7 +88,13 @@
         
         {{ partial "series/series.html" . }}
 
+        
         <div class="article-content max-w-prose mb-20">
+          <style>
+            img[alt="|300"]{
+              width: 300px !important;
+            }
+          </style>
           {{ .Content }}
           {{ $defaultReplyByEmail := .Site.Params.replyByEmail }}
           {{ $replyByEmail := default $defaultReplyByEmail .Params.replyByEmail }}
