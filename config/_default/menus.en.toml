@@ -59,7 +59,7 @@
 
 [[main]]
   name = "前端词云"
-  url = "https://127.0.0.1:1313/frontend-icon-word-cloud/"
+  url = "https://eminoda.github.io/frontend-icon-word-cloud/"
   weight = 100
 
 [[main]]
