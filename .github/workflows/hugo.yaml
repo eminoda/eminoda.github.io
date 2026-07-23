@@ -75,6 +75,10 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
+      - name: Publish GEO markdown and llms.txt
+        run: |
+          python3 scripts/publish-geo-md.py \
+            --base-url "${{ steps.pages.outputs.base_url }}"
       - name: Cache Save
         id: cache-save
         uses: actions/cache/save@v4
